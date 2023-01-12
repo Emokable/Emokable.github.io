@@ -1,13 +1,13 @@
 ---
 title: Emokable的从零搭建Hexo博客记录
-date: 2023-01-10 20:15:37
 tags:
-	- hexo
-	- blog
+  - hexo
+  - blog
 categories:
-	- 技术
+  - 技术
 index_img: /img/hello.jpg
-
+abbrlink: a266
+date: 2023-01-10 20:15:37
 ---
 
 ​	截止到2023年1月10日,我搭建好这个博客有好几天了,最近也忙着在增改博客的功能.我尽量用简单的语言,记录一下我的工作, 如果大佬看到能给出一点建议就更好了.
@@ -121,7 +121,15 @@ post_asset_folder: true
 
 不过我看网上还有图床cdn之类的优化方法,我还没有研究过,就先放着这里,等我弄懂了再细说
 
-> 2023/1/13:
+------
+
+> 2023/1/12
+>
+> 图床的原理我基本明白了,最简单的就是直接在github建个仓库就行,使用picgo配置好仓库和上传图片的文件夹,同时typora里也要更改,自定义域名采用cdn加速格式：https://cdn.jsdelivr.net/gh/username/repo，username为GitHub用户名，repo为新建的仓库，用于存储图片,我暂时还没有更改的必要,毕竟现在网页也已经采用全局cdn加速了,后续有兴趣我会考虑修改。
+
+
+
+> 2023/1/11:
 >
 > ### 	- 新增了压缩插件的使用,这个插件可以压缩图片,css,js,html加快博客加载速度
 >
@@ -240,17 +248,122 @@ post_asset_folder: true
 
 在本地的任意目录下执行git clone https://github.com/username/uesrname.github.io.git，
 将克隆下来的目录中除了.git文件夹外的所有文件删除
-将本地博客文件夹下除了.deploy_git的其他源文件全部复制过来, 如果之前克隆过themes中的主体文件，要将主题文件中的.git目录删除掉，否则无法备份主题文件
+将本地博客文件夹下除了.deploy_git的其他源文件全部复制过来(如果之前克隆过themes中的主体文件，要将主题文件中的.git目录删除掉)
 
-- 在用来备份的目录下执行以下语句：
+```shell
+git add .
+git commit -m "备注"
+git push
+```
 
-  ```shell
-  git add .
-  git commit -m "此次提交的备注"
-  git push
-  ```
+这样hexo博客的目录就备份好了,之后可以把.git文件夹移回原blog文件夹了,再次pull,重新提交,这样就不需要再弄插件了.
 
-这样你\hexo博客的目录就备份好了
+因为我们博客默认在main分支的,备份是在新建的hexo分区,因此使用hexo d和git push指向的分支各不干扰,写博客的时候正常写就行.
 
+## 九.DLC  7---设置博客rss订阅
 
+简易信息聚合是“Really Simple Syndication”或“Richsite summary”(网站内容摘要)的中文名字。是站点用来和其他站点之间共享内容的一种简易方式。英文缩写为RSS技术。
+
+RSS是一种信息聚合的技术，是某一站点和其他站点之间共享内容的一种简易信息发布与传递的方式，使得一个网站可以方便的调用其他提供[RSS订阅](https://baike.baidu.com/item/RSS订阅?fromModule=lemma_inlink)服务的网站内容，从而形成非常高效的信息聚合，让网站发布的内容在更大的范围内传播。他是一种用于共享新闻和其他WEB内容的数据交换规范，也是使用最广泛的一种扩展性标识语言。([粘自百度百科](https://baike.baidu.com/item/%E7%AE%80%E6%98%93%E4%BF%A1%E6%81%AF%E8%81%9A%E5%90%88/6453727))
+
+RSS算是比较古老的玩意了,而且需要阅读器支持,我用的是[innoreader](https://www.innoreader.com/),但大多数博客都有,所以我也做一个
+
+首先安装插件
+
+```
+ npm install hexo-generator-feed
+```
+
+然后在主目录下_config.yml添加
+
+```
+#RSS订阅
+feed: 
+type: atom #RSS的类型(atom/rss2)
+path: atom.xml #文件路径,默认是atom.xml/rss2.xml
+limit: 20 #展示文章的数量,使用0或则false代表展示全部
+hub: 
+content:  #在RSS文件中是否包含内容 ,有3个值 true/false默认不填为false
+content_limit: 140 #指定内容的长度作为摘要,仅仅在上面content设置为false和没有自定义的描述出现
+content_limit_delim: " " #上面截取描述的分隔符,截取内容是以指定的这个分隔符作为截取结束的标志.在达到规定的内容长度之前最后出现的这个分隔符之前的内容,防止从中间截断
+order_by: -date
+icon: #icon.png
+```
+
+这样在我们hexo g的时候就会生成atom.xml文件
+
+![在/public下](Emokable的从零搭建Hexo博客记录/image-20230112195456203.png)
+
+然后https://www.emokable.top/atom.xml 就是我的rss订阅连接,打开能看到我们的短消息
+
+![博客的所有内容](Emokable的从零搭建Hexo博客记录/image-20230112195636748.png)
+
+最后看看阅读器效果
+
+![文章已经有了](Emokable的从零搭建Hexo博客记录/image-20230112200035731.png)
+
+## 十.DLC  8---文章连接生成简化
+
+主题默认的文章连接是
+
+`:year/:month/:day/:tite`太长了,所以我最早考虑的是去掉日期(因为文章里面已经有日期了),只保留标题`permalink: :title/`.
+
+但是这样虽然看起来简化了,实际上中文连接在互联网的支持还是不够
+
+![虽然这样看上去还算正常](Emokable的从零搭建Hexo博客记录/image-20230112214112913.png)
+
+![汉字会变成不知所谓的样子](Emokable的从零搭建Hexo博客记录/image-20230112214238904.png)
+
+考虑过再次更改文章样式,比如换成随机数字字母或者拼音
+
+参考了这篇博客[cungudafa姑 ](https://cungudafa.gitee.io/post/9958.html),但最终还是没有采用......(人就是懒)
+
+**字母**:
+
+安装插件:
+
+```
+npm install hexo-abbrlink --save
+```
+
+文章生成处修改为    `permalink: :abbrlink.html`
+
+在插入处增加代码段:
+
+```
+abbrlink:
+	alg: crc16	#算法,默认crc16,可选crc32
+	rep: hex	#进制, 默认dec-10进制,可选hex-16进制
+```
+
+![此处修改,不过我最终还是换回去了](Emokable的从零搭建Hexo博客记录/image-20230112214732469.png)
+
+```
+ 效果:
+ crc16 & hex https://www.emokable.com/66c8.html 
+
+ crc16 & dec https://www.emokable.com/65535.html
+
+ crc32 & hex https://www.emokable.com/8ddf18fb.html 
+
+ crc32 & dec https://www.emokable.com/1690090958.html
+```
+
+**拼音:**
+
+安装插件: 
+
+```
+npm install hexo-permalink-pinyin --save
+```
+
+在下方相同位置插入
+
+```
+permalink_pinyin:
+	enable: true
+	separator: '-'	#间隔符
+```
+
+但最后我还是都没采用,因为我试了一下,网页是可以正常生成的,但是图片连接出了问题(我是引用的本地图片),最后懒得去矫正了,如果在写博客之前就修改应该是不错的选择.
 
