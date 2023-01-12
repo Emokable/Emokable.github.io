@@ -7,6 +7,7 @@ tags:
 categories:
 	- 技术
 index_img: /img/hello.jpg
+
 ---
 
 ​	截止到2023年1月10日,我搭建好这个博客有好几天了,最近也忙着在增改博客的功能.我尽量用简单的语言,记录一下我的工作, 如果大佬看到能给出一点建议就更好了.
@@ -139,7 +140,7 @@ post_asset_folder: true
 > cnpm install hexo-all-minifier --save    
 > ```
 >
->  我只是换成cnpm就成功了,其他人如果安装失败也可以试试
+> 我只是换成cnpm就成功了,其他人如果安装失败也可以试试
 >
 > 然后在根目录_comfig.yml里增加
 >
@@ -149,12 +150,12 @@ post_asset_folder: true
 > # minifier
 > all_minifier: true
 > html_minifier:
->   enable: true
->   ignore_error: true
->   exclude:
+> enable: true
+> ignore_error: true
+> exclude:
 > css_minifier:
->   enable: true
->   exclude:
+> enable: true
+> exclude:
 >     - '*.min.css'
 > js_minifier:
 >   enable: true
@@ -196,7 +197,7 @@ post_asset_folder: true
 
 > 2023/1/11 蚌埠住了,家人们,搞这个直接把hexo搞崩了,又把博客重新部署了一遍😔,心累,下次记得做好备份
 
-## 七.个性域名和cdn加速
+## 七.DLC  5---个性域名和cdn加速
 
 原来的username.github.io被我换成了现在的emokable.top, 这个域名是namesilo上花1刀买的,可以用支付宝,不过我目前还没有在国内做备案的打算,不然国内找找肯定有更便宜的,这里各家购买方式不一,网上资料也很多,没什么写的必要(偷懒)...
 
@@ -225,3 +226,31 @@ post_asset_folder: true
 ![修改域名服务器为这俩](Emokable的从零搭建Hexo博客记录/image-20230112152243896.png)
 
 之后就算开启了cloudflare的托管服务了,应该会自动安装好证书.
+
+## 八.DLC  6---博客备份,防止崩溃
+
+之前搞崩了一次真的很难受,github仓库里只存了博客网页的文件,而本地文件是没有的,所以重新备份一遍吧
+
+先创建新的分支
+
+- 登录GitHub网站，在博客的仓库下新建一个分支，命名为hexo
+- 在创建好分支后，在setting中将新建的分支设置为default
+
+再配置用来备份文件夹
+
+在本地的任意目录下执行git clone https://github.com/username/uesrname.github.io.git，
+将克隆下来的目录中除了.git文件夹外的所有文件删除
+将本地博客文件夹下除了.deploy_git的其他源文件全部复制过来, 如果之前克隆过themes中的主体文件，要将主题文件中的.git目录删除掉，否则无法备份主题文件
+
+- 在用来备份的目录下执行以下语句：
+
+  ```shell
+  git add .
+  git commit -m "此次提交的备注"
+  git push
+  ```
+
+这样你\hexo博客的目录就备份好了
+
+
+
