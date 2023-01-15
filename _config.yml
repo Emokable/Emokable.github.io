@@ -144,5 +144,7 @@ content_limit: 140 #指定内容的长度作为摘要,仅仅在上面content设�
 content_limit_delim: " " #上面截取描述的分隔符,截取内容是以指定的这个分隔符作为截取结束的标志.在达到规定的内容长度之前最后出现的这个分隔符之前的内容,，防止从中间截断
 order_by: -date
 icon: #icon.png
+
 sitemap:
    path: sitemap.xml 
+

@@ -367,3 +367,69 @@ permalink_pinyin:
 
 但最后我还是都没采用,因为我试了一下,网页是可以正常生成的,但是图片连接出了问题(我是引用的本地图片),最后懒得去矫正了,如果在写博客之前就修改应该是不错的选择.
 
+## 十一.DLC  9---添加站点运行时间
+
+经常看到别人的博客下面都会有显示站点时间的字段,这既反映了博客搭建的历史,和博主的用心程度.所以我也搞一个.
+
+不需要安装什么插件,直接进入博客主题目录下的这个路径
+
+![不是fluid主题的按自己的来](Emokable的从零搭建Hexo博客记录/image-20230113131305582.png)
+
+然后修改footer.esj,注意还是要根据博客主题找到恰当位置来改
+
+![fluid要改的在footer文件里](Emokable的从零搭建Hexo博客记录/image-20230113131655975.png)
+
+![一个是数据,一个是备案信息,我们修改数据就行了](Emokable的从零搭建Hexo博客记录/image-20230113131731088.png)
+
+直接在末尾插入下述代码
+
+```
+<span id="sitetime"></span>
+<script language=javascript>
+	function siteTime(){
+		window.setTimeout("siteTime()", 1000);
+		var seconds = 1000;
+		var minutes = seconds * 60;
+		var hours = minutes * 60;
+		var days = hours * 24;
+		var years = days * 365;
+		var today = new Date();
+		var todayYear = today.getFullYear();
+		var todayMonth = today.getMonth()+1;
+		var todayDate = today.getDate();
+		var todayHour = today.getHours();
+		var todayMinute = today.getMinutes();
+		var todaySecond = today.getSeconds();
+		/* 
+		Date.UTC() -- 返回date对象距世界标准时间(UTC)1970年1月1日午夜之间的毫秒数(时间戳)
+		year - 作为date对象的年份，为4位年份值
+		month - 0-11之间的整数，做为date对象的月份
+		day - 1-31之间的整数，做为date对象的天数
+		hours - 0(午夜24点)-23之间的整数，做为date对象的小时数
+		minutes - 0-59之间的整数，做为date对象的分钟数
+		seconds - 0-59之间的整数，做为date对象的秒数
+		microseconds - 0-999之间的整数，做为date对象的毫秒数
+        */
+		var t1 = Date.UTC(2023,01,09,15,00,00); //北京时间2023年1月9日
+		var t2 = Date.UTC(todayYear,todayMonth,todayDate,todayHour,todayMinute,todaySecond);
+		var diff = t2-t1;
+		var diffYears = Math.floor(diff/years);
+		var diffDays = Math.floor((diff/days)-diffYears*365);
+		var diffHours = Math.floor((diff-(diffYears*365+diffDays)*days)/hours);
+		var diffMinutes = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours)/minutes);
+		var diffSeconds = Math.floor((diff-(diffYears*365+diffDays)*days-diffHours*hours-diffMinutes*minutes)/seconds);
+		document.getElementById("sitetime").innerHTML=" 存活"+/*diffYears+" 年 "+*/diffDays+" 天 "+diffHours+" 小时 "+diffMinutes+" 分钟 "+diffSeconds+" 秒";
+	}
+	siteTime();
+</script>
+
+```
+
+效果如下:
+
+![小站建立不久,历史底蕴尚浅](Emokable的从零搭建Hexo博客记录/image-20230113132446163.png)
+
+突然发现fluid的[官方博客](https://hexo.fluid-dev.com/posts/fluid-footer-custom/)也有这个功能的实现,我换成另一个版本的时间统计了.
+
+![俩都可以用](Emokable的从零搭建Hexo博客记录/image-20230113160744449.png)
+
