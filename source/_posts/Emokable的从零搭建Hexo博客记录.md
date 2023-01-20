@@ -433,3 +433,64 @@ permalink_pinyin:
 
 ![俩都可以用](Emokable的从零搭建Hexo博客记录/image-20230113160744449.png)
 
+## 十二. DLC  10---添加steam库支持
+
+本来想写写steam玩了什么游戏的,突然想到再博客里加这个功能,github一搜,便找到一个,这个功能的实现我是照搬的[这个项目](https://github.com/HCLonely/hexo-steam-games),如果感兴趣可以去点个star支持一下原作者.
+
+#### 安装方法:
+
+```
+ npm install hexo-steam-games --save
+```
+
+将下面的配置写入站点的配置文件 `_config.yml` 里(不是主题的配置文件).
+
+```
+steam:
+  enable: true   # enable: 是否启用
+  steamId: '76561199236571966' #steam 64位Id,steamId: steam 64位Id(需要放在引号里面，不然会有BUG), 需要将steam库设置为公开！
+  path: #path: 番剧页面路径，默认steamgames/index.html
+  title: Steam游戏库  #该页面的标题
+  quote: ''  #写在页面开头的一段话,支持html语法
+  tab: recent   #all或recent, all: 所有游戏, recent: 最近游玩的游戏
+  length: 1000  #要显示游戏的数量，游戏太多的话可以限制一下
+  imgUrl:  #图片链接，在quote下面放一张图片，图片链接到Steam个人资料，可留空
+  proxy:  #如果无法访问steam社区的话请使用代理,这里我采用了和我的clash同样的代理方式
+    host:  127.0.0.1  # 代理ip或域名
+    port:  7890  #代理端口
+  extra_options:  #此配置会扩展到Hexo的page变量中
+    key: value
+```
+
+再到主题页的_config.yml里去添加菜单选项,具体操作各异,就不细说了.
+
+#### 使用语法:
+
+`hexo steam -u`命令更新steam游戏库数据
+
+`hexo steam -d `删除游戏库数据
+
+由于steam日常被墙,`hexo steam -u`命令获取游戏库数据失败,可以按插件文档操作,手动获取
+
+> 1. 浏览器打开`https://steamcommunity.com/profiles/{steamId}/games?tab={tab}`, `{steamId}`和`{tab}`分别替换为上面配置中提到的`steamId`和`tab`
+>
+> 2. 网页加载完成后，打开浏览器控制台(按`F12`)，输入以下代码并回车：
+>
+>    ```
+>    let script = jQuery('script[language="javascript"]');
+>    var games = [];
+>    for (let i = 0; i < script.length; i++) {
+>      if (script.eq(i).html().includes("rgGames")) {
+>        let rgGames = script.eq(i).html().match(/var.*?rgGames.*?=.*?(\[[\w\W]*?\}\}\]);/);
+>        if (rgGames) {
+>          games = JSON.parse(rgGames[1]);
+>          break;
+>        }
+>      }
+>    }
+>    document.write(JSON.stringify(games))
+>    ```
+>
+> 3. 将生成的内容复制到`博客根目录/node_modules/hexo-steam-games/data/games.json`文件内，如果没有对应的文件或目录，请自行创建
+
+> 数据拉取失败的问题也通过代理解决了,所以如果不是科学上网估计有些麻烦...我一开始采用手动的方式,同时把两个steam账号的数据手动组合了一下(按照正常的方式应该只能拉取到一个账号的数据),大概之后我懒得自己动手,采用插件方法,只会显示一个账号的数据,不过steam的图片使用了cloudflare的cdn大陆也不好加载.
