@@ -1,8 +1,10 @@
 ---
 title: Emokable的从零搭建Hexo博客记录
 tags:
-  - hexo
+  - Hexo
   - blog
+  - fluid
+  - 美化
 categories:
   - 技术
 index_img: /img/hello.jpg
