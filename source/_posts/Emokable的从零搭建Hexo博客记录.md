@@ -1,7 +1,7 @@
 ---
 title: Emokable的从零搭建Hexo博客记录
 tags:
-  - Hexo
+  - hexo
   - blog
   - fluid
   - 美化
@@ -496,3 +496,32 @@ steam:
 > 3. 将生成的内容复制到`博客根目录/node_modules/hexo-steam-games/data/games.json`文件内，如果没有对应的文件或目录，请自行创建
 
 > 数据拉取失败的问题也通过代理解决了,所以如果不是科学上网估计有些麻烦...我一开始采用手动的方式,同时把两个steam账号的数据手动组合了一下(按照正常的方式应该只能拉取到一个账号的数据),大概之后我懒得自己动手,采用插件方法,只会显示一个账号的数据,不过steam的图片使用了cloudflare的cdn大陆也不好加载.
+
+## 十三. DLC  11---添加天气组件
+
+我是采用的和风天气提供的免费服务实现的,当然其他的天气服务也可以,都是类似的操作..
+
+点击这个网站里申请样式[和风天气](https://widget.qweather.com/)
+
+![我用的简约插件](Emokable的从零搭建Hexo博客记录/image-20230125231454171.png)
+
+然后自己选择显示的内容
+
+![随便选啦~](Emokable的从零搭建Hexo博客记录/image-20230125231602400.png)
+
+再到博客主题目录下layout/_partials路径新建weather.ejs文件(或者你喜欢的名字),粘贴上面过程生成的所有代码.
+
+![这里呀](Emokable的从零搭建Hexo博客记录/image-20230125232252572.png)
+
+最后修改navigation.ejs,在合适位置插入
+
+```
+<!-- 和风天气-->>
+    <%- partial('_partials/weather.ejs')%>
+```
+
+最后hexo g ,hexo s就可以调试测试是否正确显示了.
+
+![这里](Emokable的从零搭建Hexo博客记录/image-20230125232326292.png)
+
+![图例](Emokable的从零搭建Hexo博客记录/image-20230125232353021.png)
