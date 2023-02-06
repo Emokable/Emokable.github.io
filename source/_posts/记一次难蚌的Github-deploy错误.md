@@ -2,7 +2,7 @@
 title: 记一次难蚌的Github deploy错误
 tags:
   - github
-  - Hexo
+  - hexo
   - error
   - blog
 categories:
