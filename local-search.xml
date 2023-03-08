@@ -4,6 +4,64 @@
   
   
   <entry>
+    <title>R5-240oem加P106-100玩具双卡经验</title>
+    <link href="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/"/>
+    <url>/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/</url>
+    
+    <content type="html"><![CDATA[<h1 id="一-为什么玩这个矿渣"><a href="#一-为什么玩这个矿渣" class="headerlink" title="一.为什么玩这个矿渣"></a>一.为什么玩这个矿渣</h1><p>首先是价格便宜，这一套也就100多点，性能在1060 5g -1060 6g之间（其实纯论性价比还得矿王rx580）</p><p>其次是方案成熟，在百度贴吧p106吧里提供了各路大神制作的魔改驱动和教程，P106作为立吧之本，适合小白尝试。</p><p>最后是因为我打算把之前的6700xt换成3070，6700xt已经被我挂咸鱼打包了，暂时把前几天到的p106利用起来，换n卡胜在驱动稳定以及对ai，深度学习的支持好，游戏性能实际是差不了多少的。</p><blockquote><p>碎碎谈：</p><p>最后这一波换卡浪费了我500元，虽然卖旧卡赚了200（我也不道矿卡咋还涨价了），虽然是以矿换矿，但是这多的300算是完成了从丐版换了旗舰（但最便宜的旗舰还是狗嘉的超级叼，火神&#x2F;超龙还贵200，猛禽贵400，而且多矿一年）卖家说清明节会回家把原盒寄过来，并且他应该认识机架的代理，出问题可以帮忙送保修。。。（台独技嘉苟都不买，新卡不推荐入）</p><p>要是去年就直接买3070（当时贵个200左右）应该会亏得少一点，不过应该也只会买个丐版。。。</p><p>而且本人作为个A粉兼AMD精神股东，购入一张a卡也是不得不品鉴的过程，在长达4个月的时间里，我的所有电脑设备全是amd，台式机是5600+6700xt，笔记本是5700u核显，家里的老电脑是个老apu。。。Intel浓度几乎为零（虽然这学期我买了Intel AX210网卡，原因是之前买的蓝牙接受器不稳定，经常断，换pcie网卡蓝牙后就没问题了）。最后的最后，不是还留了一张a卡（r5 240）吗？</p></blockquote><h1 id="二-看看外观"><a href="#二-看看外观" class="headerlink" title="二.看看外观"></a>二.看看外观</h1><p>我的原台式机，碍国嘉p106-100 6g（b站某矿up直播抽中购买资格78元包邮入手，海鲜价大概100左右，这款鸡架短pcb可以改itx散热器），戴尔办公机拆机r5-240 OEM 1G（海鲜市场60元包邮，超级亮机卡dp接口支持2k 144，gcn架构，支持dx12，就纯亮机用途而言比n卡gt710之类的便宜好用）</p><p>逐一亮相：</p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308213949839.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="专业矿卡P106背面"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308214135305.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="专业矿卡P106正面—碍国嘉"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308214223151.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="戴尔拆机卡"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308222855296.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="看看接口，p106是没有视频口的，挡板是NTR蓝宝石的"></p><h1 id="三-装装驱动"><a href="#三-装装驱动" class="headerlink" title="三.装装驱动"></a>三.装装驱动</h1><p>先把显卡插上，需要核显+pcie x16槽一个或者无核显平台两pcie x16槽，我所用的b450迫击炮max主板恰好有两个X 16槽满足了需求。</p><p>插上亮机卡和p106，使用DDU卸载旧N卡驱动</p><p>驱动下载见p106吧置顶。。。</p><p><a href="https://tieba.baidu.com/f?kw=p106&ie=utf-8&tp=0">https://tieba.baidu.com/f?kw=p106&amp;ie=utf-8&amp;tp=0</a></p><p>简单步骤：断网，安全模式装p106驱动，再正常启动，联网，windows会自动安装a卡驱动，再选择gpu调度选项，把需要显卡的应用都选为p106运行。。。</p><hr><blockquote><p>我实际遇到的困难：首先是系统不认卡，就是设备管理器和gpuz都无法识别p106，然后也无法上驱动，解决方法是先看设备管理器有无异常设备，再看鲁大师认不认卡（鲁大师可以识别就行，然后就可以把鲁大师删了），随便打个正常的驱动，等到gpuz能识别了，就可以去安全模式重新打驱动了。。。</p></blockquote><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224429080.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="典中典亮机卡，还支持uefi"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224406837.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="装好后的gpuz"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224725147.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="跑分4000在1065-1066之间"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308225704967.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="timespy 99-专业矿卡的含金量"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224549381.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="夹心面包，中间是网卡"></p><h1 id="四-游戏测试"><a href="#四-游戏测试" class="headerlink" title="四.游戏测试"></a>四.游戏测试</h1><p>我先试了黑魂三，2k全高差不多60帧的样子，法环不敢尝试股哦不了小蓝熊，空洞骑士1080p，114帧，感觉调用不是很稳定啊</p><p>开个动态壁纸，r5 240（只输出图像）都会占用100%，p106占用却不多，实际体验肯定是不如1060的。</p><p>不过作为过渡套装还是比较好的玩具，等下一张卖国嘉的卡到了就换下来了。</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>P106</tag>
+      
+      <tag>魔改</tag>
+      
+      <tag>矿卡</tag>
+      
+      <tag>亮机卡</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>嵌入式程序设计ch2-微处理器体系架构</title>
+    <link href="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/"/>
+    <url>/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/</url>
+    
+    <content type="html"><![CDATA[<h1 id="嵌入式系统设计-微处理器体系架构"><a href="#嵌入式系统设计-微处理器体系架构" class="headerlink" title="嵌入式系统设计-微处理器体系架构"></a>嵌入式系统设计-微处理器体系架构</h1><h2 id="一-嵌入式微处理器体系架构"><a href="#一-嵌入式微处理器体系架构" class="headerlink" title="一.嵌入式微处理器体系架构"></a>一.嵌入式微处理器体系架构</h2><h3 id="冯-·-诺依曼结构-vS-哈佛结构（每节课都在提）"><a href="#冯-·-诺依曼结构-vS-哈佛结构（每节课都在提）" class="headerlink" title="冯 · 诺依曼结构 vS 哈佛结构（每节课都在提）"></a>冯 · 诺依曼结构 vS 哈佛结构（每节课都在提）</h3><p>🔷冯 · 诺依曼结构 </p><ul><li>由中央处理器（CPU）和存储器组成</li><li>通过一组总线（包括地址总线和数据总线）连接 </li><li>指令和数据以同等地位存储在同一存储器中 </li><li>对指令和数据的访问都是通过这组总线来实现的</li><li>存储器访问通过分时复用的方式进行</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308165707640.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冯诺依曼"></p><p>🔷哈佛结构</p><ul><li>两个独立的存储模块，分别存储数据和指令 </li><li>两套独立的总线，分别作为CPU和两个存储器通信</li><li>指令和数据的访问可以同时进行，并且指令和数据可 以有不同的带宽</li><li>Microchip 公司的 PIC16 芯片的指令是 14 位宽度， 而数据是 8 位宽度</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308165834379.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="哈佛"></p><h3 id="CISC-amp-RISC-又又又出现了"><a href="#CISC-amp-RISC-又又又出现了" class="headerlink" title="CISC&amp;RISC(又又又出现了)"></a>CISC&amp;RISC(又又又出现了)</h3><p><strong>复杂指令集计算机（CISC）</strong></p><ul><li>依靠增加指令的复杂度，来改善计算性能 </li><li>指令格式不固定，指令可长可短，操作数可多可少 </li><li>CPU寻址方式复杂多样</li><li>采用微程序控制 </li><li>每条指令执行平均时钟周期数CPI超过5个时钟周期</li></ul><p>CISC指令的使用频率不均衡，且相差悬殊，20%&#x2F;80%定律 </p><p>CISC依靠增加指令数目，来改善其性能缺点</p><p> <strong>RISC</strong> </p><ul><li>RISC 统一了计算机的体系结构</li><li>指令非常少，通常只有几十条</li><li>每条指令长度统一，CPU寻址方式少 </li><li>便于应用流水线技术</li><li>大部分指令是单时钟周期完成</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308170329168.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="比较"></p><h2 id="二-ARM微处理器体系架构"><a href="#二-ARM微处理器体系架构" class="headerlink" title="二.ARM微处理器体系架构"></a>二.ARM微处理器体系架构</h2><h2 id="三-中断机制"><a href="#三-中断机制" class="headerlink" title="三.中断机制"></a>三.中断机制</h2><h2 id="四-嵌入式汇编语言"><a href="#四-嵌入式汇编语言" class="headerlink" title="四.嵌入式汇编语言"></a>四.嵌入式汇编语言</h2><h2 id="五-流水线技术"><a href="#五-流水线技术" class="headerlink" title="五.流水线技术"></a>五.流水线技术</h2>]]></content>
+    
+    
+    <categories>
+      
+      <category>学习资料</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>课件笔记</tag>
+      
+      <tag>嵌入式程序设计</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>计算机组成原理-L02-ISA</title>
     <link href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L02-ISA/"/>
     <url>/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L02-ISA/</url>

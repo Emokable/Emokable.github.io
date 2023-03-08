@@ -6,7 +6,7 @@
   <link href="https://www.emokable.top/atom.xml" rel="self"/>
   
   <link href="https://www.emokable.top/"/>
-  <updated>2023-03-07T16:19:15.655Z</updated>
+  <updated>2023-03-08T15:14:26.043Z</updated>
   <id>https://www.emokable.top/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>R5-240oem加P106-100玩具双卡经验</title>
+    <link href="https://www.emokable.top/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/"/>
+    <id>https://www.emokable.top/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/</id>
+    <published>2023-03-08T13:33:47.000Z</published>
+    <updated>2023-03-08T15:14:26.043Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="一-为什么玩这个矿渣"><a href="#一-为什么玩这个矿渣" class="headerlink" title="一.为什么玩这个矿渣"></a>一.为什么玩这个矿渣</h1><p>首先是价格便宜，这一套也就100多点，性能在1060 5g -1060 6g之间（其实纯论性价比还得矿王rx580）</p><p>其次是方案成熟，在百度贴吧p106吧里提供了各路大神制作的魔改驱动和教程，P106作为立吧之本，适合小白尝试。</p><p>最后是因为我打算把之前的6700xt换成3070，6700xt已经被我挂咸鱼打包了，暂时把前几天到的p106利用起来，换n卡胜在驱动稳定以及对ai，深度学习的支持好，游戏性能实际是差不了多少的。</p><blockquote><p>碎碎谈：</p><p>最后这一波换卡浪费了我500元，虽然卖旧卡赚了200（我也不道矿卡咋还涨价了），虽然是以矿换矿，但是这多的300算是完成了从丐版换了旗舰（但最便宜的旗舰还是狗嘉的超级叼，火神&#x2F;超龙还贵200，猛禽贵400，而且多矿一年）卖家说清明节会回家把原盒寄过来，并且他应该认识机架的代理，出问题可以帮忙送保修。。。（台独技嘉苟都不买，新卡不推荐入）</p><p>要是去年就直接买3070（当时贵个200左右）应该会亏得少一点，不过应该也只会买个丐版。。。</p><p>而且本人作为个A粉兼AMD精神股东，购入一张a卡也是不得不品鉴的过程，在长达4个月的时间里，我的所有电脑设备全是amd，台式机是5600+6700xt，笔记本是5700u核显，家里的老电脑是个老apu。。。Intel浓度几乎为零（虽然这学期我买了Intel AX210网卡，原因是之前买的蓝牙接受器不稳定，经常断，换pcie网卡蓝牙后就没问题了）。最后的最后，不是还留了一张a卡（r5 240）吗？</p></blockquote><h1 id="二-看看外观"><a href="#二-看看外观" class="headerlink" title="二.看看外观"></a>二.看看外观</h1><p>我的原台式机，碍国嘉p106-100 6g（b站某矿up直播抽中购买资格78元包邮入手，海鲜价大概100左右，这款鸡架短pcb可以改itx散热器），戴尔办公机拆机r5-240 OEM 1G（海鲜市场60元包邮，超级亮机卡dp接口支持2k 144，gcn架构，支持dx12，就纯亮机用途而言比n卡gt710之类的便宜好用）</p><p>逐一亮相：</p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308213949839.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="专业矿卡P106背面"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308214135305.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="专业矿卡P106正面—碍国嘉"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308214223151.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="戴尔拆机卡"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308222855296.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="看看接口，p106是没有视频口的，挡板是NTR蓝宝石的"></p><h1 id="三-装装驱动"><a href="#三-装装驱动" class="headerlink" title="三.装装驱动"></a>三.装装驱动</h1><p>先把显卡插上，需要核显+pcie x16槽一个或者无核显平台两pcie x16槽，我所用的b450迫击炮max主板恰好有两个X 16槽满足了需求。</p><p>插上亮机卡和p106，使用DDU卸载旧N卡驱动</p><p>驱动下载见p106吧置顶。。。</p><p><a href="https://tieba.baidu.com/f?kw=p106&ie=utf-8&tp=0">https://tieba.baidu.com/f?kw=p106&amp;ie=utf-8&amp;tp=0</a></p><p>简单步骤：断网，安全模式装p106驱动，再正常启动，联网，windows会自动安装a卡驱动，再选择gpu调度选项，把需要显卡的应用都选为p106运行。。。</p><hr><blockquote><p>我实际遇到的困难：首先是系统不认卡，就是设备管理器和gpuz都无法识别p106，然后也无法上驱动，解决方法是先看设备管理器有无异常设备，再看鲁大师认不认卡（鲁大师可以识别就行，然后就可以把鲁大师删了），随便打个正常的驱动，等到gpuz能识别了，就可以去安全模式重新打驱动了。。。</p></blockquote><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224429080.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="典中典亮机卡，还支持uefi"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224406837.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="装好后的gpuz"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224725147.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="跑分4000在1065-1066之间"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308225704967.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="timespy 99-专业矿卡的含金量"></p><p><img src="/R5-240oem%E5%8A%A0P106-100%E7%8E%A9%E5%85%B7%E5%8F%8C%E5%8D%A1%E7%BB%8F%E9%AA%8C/image-20230308224549381.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="夹心面包，中间是网卡"></p><h1 id="四-游戏测试"><a href="#四-游戏测试" class="headerlink" title="四.游戏测试"></a>四.游戏测试</h1><p>我先试了黑魂三，2k全高差不多60帧的样子，法环不敢尝试股哦不了小蓝熊，空洞骑士1080p，114帧，感觉调用不是很稳定啊</p><p>开个动态壁纸，r5 240（只输出图像）都会占用100%，p106占用却不多，实际体验肯定是不如1060的。</p><p>不过作为过渡套装还是比较好的玩具，等下一张卖国嘉的卡到了就换下来了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;一-为什么玩这个矿渣&quot;&gt;&lt;a href=&quot;#一-为什么玩这个矿渣&quot; class=&quot;headerlink&quot; title=&quot;一.为什么玩这个矿渣&quot;&gt;&lt;/a&gt;一.为什么玩这个矿渣&lt;/h1&gt;&lt;p&gt;首先是价格便宜，这一套也就100多点，性能在1060 5g -1060 6g</summary>
+      
+    
+    
+    
+    <category term="技术" scheme="https://www.emokable.top/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="P106" scheme="https://www.emokable.top/tags/P106/"/>
+    
+    <category term="魔改" scheme="https://www.emokable.top/tags/%E9%AD%94%E6%94%B9/"/>
+    
+    <category term="矿卡" scheme="https://www.emokable.top/tags/%E7%9F%BF%E5%8D%A1/"/>
+    
+    <category term="亮机卡" scheme="https://www.emokable.top/tags/%E4%BA%AE%E6%9C%BA%E5%8D%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>嵌入式程序设计ch2-微处理器体系架构</title>
+    <link href="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/"/>
+    <id>https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/</id>
+    <published>2023-03-08T08:50:38.000Z</published>
+    <updated>2023-03-08T09:05:14.454Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="嵌入式系统设计-微处理器体系架构"><a href="#嵌入式系统设计-微处理器体系架构" class="headerlink" title="嵌入式系统设计-微处理器体系架构"></a>嵌入式系统设计-微处理器体系架构</h1><h2 id="一-嵌入式微处理器体系架构"><a href="#一-嵌入式微处理器体系架构" class="headerlink" title="一.嵌入式微处理器体系架构"></a>一.嵌入式微处理器体系架构</h2><h3 id="冯-·-诺依曼结构-vS-哈佛结构（每节课都在提）"><a href="#冯-·-诺依曼结构-vS-哈佛结构（每节课都在提）" class="headerlink" title="冯 · 诺依曼结构 vS 哈佛结构（每节课都在提）"></a>冯 · 诺依曼结构 vS 哈佛结构（每节课都在提）</h3><p>🔷冯 · 诺依曼结构 </p><ul><li>由中央处理器（CPU）和存储器组成</li><li>通过一组总线（包括地址总线和数据总线）连接 </li><li>指令和数据以同等地位存储在同一存储器中 </li><li>对指令和数据的访问都是通过这组总线来实现的</li><li>存储器访问通过分时复用的方式进行</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308165707640.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冯诺依曼"></p><p>🔷哈佛结构</p><ul><li>两个独立的存储模块，分别存储数据和指令 </li><li>两套独立的总线，分别作为CPU和两个存储器通信</li><li>指令和数据的访问可以同时进行，并且指令和数据可 以有不同的带宽</li><li>Microchip 公司的 PIC16 芯片的指令是 14 位宽度， 而数据是 8 位宽度</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308165834379.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="哈佛"></p><h3 id="CISC-amp-RISC-又又又出现了"><a href="#CISC-amp-RISC-又又又出现了" class="headerlink" title="CISC&amp;RISC(又又又出现了)"></a>CISC&amp;RISC(又又又出现了)</h3><p><strong>复杂指令集计算机（CISC）</strong></p><ul><li>依靠增加指令的复杂度，来改善计算性能 </li><li>指令格式不固定，指令可长可短，操作数可多可少 </li><li>CPU寻址方式复杂多样</li><li>采用微程序控制 </li><li>每条指令执行平均时钟周期数CPI超过5个时钟周期</li></ul><p>CISC指令的使用频率不均衡，且相差悬殊，20%&#x2F;80%定律 </p><p>CISC依靠增加指令数目，来改善其性能缺点</p><p> <strong>RISC</strong> </p><ul><li>RISC 统一了计算机的体系结构</li><li>指令非常少，通常只有几十条</li><li>每条指令长度统一，CPU寻址方式少 </li><li>便于应用流水线技术</li><li>大部分指令是单时钟周期完成</li></ul><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230308170329168.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="比较"></p><h2 id="二-ARM微处理器体系架构"><a href="#二-ARM微处理器体系架构" class="headerlink" title="二.ARM微处理器体系架构"></a>二.ARM微处理器体系架构</h2><h2 id="三-中断机制"><a href="#三-中断机制" class="headerlink" title="三.中断机制"></a>三.中断机制</h2><h2 id="四-嵌入式汇编语言"><a href="#四-嵌入式汇编语言" class="headerlink" title="四.嵌入式汇编语言"></a>四.嵌入式汇编语言</h2><h2 id="五-流水线技术"><a href="#五-流水线技术" class="headerlink" title="五.流水线技术"></a>五.流水线技术</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;嵌入式系统设计-微处理器体系架构&quot;&gt;&lt;a href=&quot;#嵌入式系统设计-微处理器体系架构&quot; class=&quot;headerlink&quot; title=&quot;嵌入式系统设计-微处理器体系架构&quot;&gt;&lt;/a&gt;嵌入式系统设计-微处理器体系架构&lt;/h1&gt;&lt;h2 id=&quot;一-嵌入式微处理器</summary>
+      
+    
+    
+    
+    <category term="学习资料" scheme="https://www.emokable.top/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
+    
+    
+    <category term="课件笔记" scheme="https://www.emokable.top/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/"/>
+    
+    <category term="嵌入式程序设计" scheme="https://www.emokable.top/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>计算机组成原理-L02-ISA</title>
@@ -510,32 +566,6 @@
     
     
     <category term="Emoji" scheme="https://www.emokable.top/tags/Emoji/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机网络实践实验一-Protocol-Layer</title>
-    <link href="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/"/>
-    <id>https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/</id>
-    <published>2023-01-09T05:22:04.000Z</published>
-    <updated>2023-02-27T14:56:09.700Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="华东师范大学软件工程学院实验报告"><a href="#华东师范大学软件工程学院实验报告" class="headerlink" title="华东师范大学软件工程学院实验报告"></a>华东师范大学软件工程学院实验报告</h1><table><thead><tr><th><strong>实验课程</strong>：计算机网络实践</th><th><strong>年级</strong>：2021级</th><th><strong>实验成绩</strong>：</th></tr></thead><tbody><tr><td><strong>实验名称</strong>：Protocol Layer</td><td><strong>姓名</strong>：emokable</td><td></td></tr><tr><td><strong>实验编号</strong>：X</td><td><strong>学号</strong>：X</td><td><strong>实验日期</strong>：2022&#x2F;11&#x2F;17</td></tr><tr><td><strong>指导教师</strong>：章玥</td><td><strong>组号</strong>：</td><td><strong>实验时间</strong>：2022&#x2F;11&#x2F;17</td></tr></tbody></table><h2 id="一、实验目的"><a href="#一、实验目的" class="headerlink" title="一、实验目的"></a><strong>一、实验目的</strong></h2><ol><li><p>学习协议和分层如何用数据包表示; </p></li><li><p>熟悉wireshark软件、curl、wget等常用软件的使用，掌握网络抓包的方法，能在所用电脑上进 行抓包; </p></li><li><p>了解IP数据包格式，能应用该软件分析数据包格式，查看抓到的包的内容，并分析对应的IP数据 包格式; </p></li><li><p>抓包分析数据包，估算协议的开销; </p></li><li><p>通过数据包抓取实验，将理论与实践相结合，深入理解协议层的字段与结构特征.</p></li></ol><h2 id="二、实验内容与实验步骤"><a href="#二、实验内容与实验步骤" class="headerlink" title="二、实验内容与实验步骤"></a><strong>二、实验内容与实验步骤</strong></h2><p>1.安装wget和wireshark</p><p>2.使用软件抓包</p><p>3.启动Wireshark点击-&gt;捕获-&gt;选项-&gt;输入tab-&gt;选择本地网卡，过滤条件（所选择接口的捕获过滤 器）为 “tcp port 80”，在选项tab中勾选解析网络名称，点击开始按钮;关闭不必要的浏览器标签和窗口,避免跟踪非目的流量； </p><p>4.在命令行中选取一个URL，用wget获取,打开Wireshark停止捕获。 (我选的网站为<a href="http://www.baidu.com/">http://www.baidu.com</a>)</p><p>5.查看Wireshark界面中的封包列表中如果出现数据包则说明抓包成功； </p><p>6.分析抓包数据的结构</p><h2 id="三、实验环境"><a href="#三、实验环境" class="headerlink" title="三、实验环境"></a><strong>三、实验环境</strong></h2><p>Windos10 22h2专业版</p><h2 id="四、实验过程与分析"><a href="#四、实验过程与分析" class="headerlink" title="四、实验过程与分析"></a><strong>四、实验过程与分析</strong></h2><h3 id="抓包结果总览"><a href="#抓包结果总览" class="headerlink" title="抓包结果总览"></a><strong>抓包结果总览</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image002.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p>在抓取HTTP请求的GET方法时，分析其数据包，思考下列问题： </p><p>1、根据抓取的HTTP请求的GET方法的抓取结果，分析协议包的内容。</p><p>2、画一个关于使用GET方法的HTTP请求的图(与下图类似)，为了显示协议层的嵌套结构，请分别标出Ethernet， IP和TCP协议的头部的位置、大小以及其负载的范围。</p><p>3、根据数据包的抓取结果，分析协议开销。</p><p>4、 估计协议的开销或者是协议开销占用下载字节的百分比。对于下载的主要部分中的每一个包，我们需要分析 Ethernet，IP和TCP的开销，和有用的HTTP数据的开销，你认为这种开销是必要的吗？ （假设HTTP数据（头部和消息）是有用的，而TCP，IP和Ethernet头部认为是开销。）</p><p><strong>Ans:</strong></p><p>协议包主要包含以下信息：</p><p>Frame:  物理层的数据帧概况</p><p>Ethernet II: 数据链路层以太网帧头部信息</p><p>Internet Protocol Version 4: 互联网层IP包头部信息</p><p>Transmission Control Protocol: 传输层T的数据段头部信息，此处是TCP</p><p>Hypertext Transfer Protocol: 应用层的信息，此处是HTTP协议</p><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image004.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image008.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p>协议开销为分析 Ethernet，IP和TCP的头部大小之和即14+20+20&#x3D;54</p><p>开销占比:54&#x2F;165*100%&#x3D;32.7%</p><p>这种开销是必要的,因为在网络的各层中存在着许多不同的协议，每个协议的定义与数据的划分都不相同，接收方和发送方的对等实体之间的协议必须保持一致，否则一方将无法识别另一方发出的信息，从而造成不可避免的灾难，增加的协议开销可以保证传输包的安全性和可检测性及可恢复性。</p><h3 id="观察下载的以太网和IP头包回答下面问题"><a href="#观察下载的以太网和IP头包回答下面问题" class="headerlink" title="观察下载的以太网和IP头包回答下面问题"></a><strong>观察下载的以太网和IP头包回答下面问题</strong></h3><p>1、以太网头部中哪一部分是解复用（解复用： 找到正确的上一层协议来处理到达的包的行为叫做 解复用）键并且告知它的下一个高层指的是IP，在这一包内哪一个值可以表示IP？ </p><p>2、IP头部中哪一部分是解复用键并且告知它的下一个高层指的是TCP，在这一包内哪一个值可以表示TCP？</p><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image010.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image012.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p><strong>Ans:</strong></p><p>分析多路分解键，根据wireshark的功能，可以直接在下拉框找到IP、TCP协议对应的二进制符号</p><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image014.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p><p>表示IP的解复用键为IPv4(0x0800)</p><p>表示TCP的解复用键为TCP(6)</p><h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题:"></a><strong>思考题</strong>:</h3><ol><li><p>这里找到了一个54Bytes大小的tcp数据包，并且不包含更高层数据在TCP协议中，建立连接需要三次握手，结束连接需要4次挥手。这几次的数据传递均是不包括高层协议数据的，目的是为了确保连接建立的稳定和准确<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5%E5%AE%9E%E9%AA%8C%E4%B8%80-Protocol-Layer/clip_image016.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="img"></p></li><li><p>MSS是TCP 数据包一次可以传输的最大数据段。在建立连接时二者协商MSS的大小。对于第一个包的首部中，Connection字段值为：keep-alive，表明后续仍有数据。最后一个包请求头中Connection字段值为：close，表明传输结束。同时最后一个包中还会包含FIN&#x3D;1来请求关闭连接</p></li><li><p>加密的目的是为了保密内容，所以加密的类型和加密密钥不能随着加密数据一同发送。加密协议的种类和密钥应该在传输数据前进行协商确定。相较于现有的直接传输，不同加密协议在传输之前需要有额外的数据传输进行密钥的协商，以确保整个加密是有效的</p></li><li><p>和加密不同，压缩是为了节省传输流量，而非对数据保密内容，所以压缩的协议可直接指明在下层协议头中，便于接收方解压</p></li></ol><h2 id="五、实验结果总结"><a href="#五、实验结果总结" class="headerlink" title="五、实验结果总结"></a><strong>五、实验结果总结</strong></h2><p>总的来说,这次实验算是第一次对计算机网络抓包进行研究,一开始还不太清楚自己要做什么,问了助教之后自己又想了一会儿才将抓到的东西和课堂上将过的结构联系起来,然后就比较好分析了.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;华东师范大学软件工程学院实验报告&quot;&gt;&lt;a href=&quot;#华东师范大学软件工程学院实验报告&quot; class=&quot;headerlink&quot; title=&quot;华东师范大学软件工程学院实验报告&quot;&gt;&lt;/a&gt;华东师范大学软件工程学院实验报告&lt;/h1&gt;&lt;table&gt;
-&lt;thead&gt;
-&lt;</summary>
-      
-    
-    
-    
-    <category term="学习资料" scheme="https://www.emokable.top/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/"/>
-    
-    
-    <category term="计算机网络实践" scheme="https://www.emokable.top/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%AE%9E%E8%B7%B5/"/>
     
   </entry>
   
