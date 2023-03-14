@@ -153,7 +153,7 @@ steam:
   steamId: '76561199236571966' #steam 64位Id,steamId: steam 64位Id(需要放在引号里面，不然会有BUG), 需要将steam库设置为公开！
   path: #path: 番剧页面路径，默认steamgames/index.html
   title: Steam游戏库  #该页面的标题
-  quote: '截止到2023/1/19日包括了我的两个steam账号游戏的总和(只包括了游玩时间大于2h的游戏),不然太多了占据整整14页'  #写在页面开头的一段话,支持html语法
+  quote: '我的小号'  #写在页面开头的一段话,支持html语法
   tab: recent   #all或recent, all: 所有游戏, recent: 最近游玩的游戏
   length: 1000  #要显示游戏的数量，游戏太多的话可以限制一下
   imgUrl:  #图片链接，在quote下面放一张图片，图片链接到Steam个人资料，可留空
