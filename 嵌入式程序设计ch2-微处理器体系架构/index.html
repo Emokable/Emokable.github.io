@@ -58,7 +58,7 @@
 <meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230311100641570.png">
 <meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch2-%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84/image-20230311100723101.png">
 <meta property="article:published_time" content="2023-03-08T08:50:38.000Z">
-<meta property="article:modified_time" content="2023-03-11T02:09:32.072Z">
+<meta property="article:modified_time" content="2023-03-12T15:57:35.173Z">
 <meta property="article:author" content="emokable">
 <meta property="article:tag" content="课件笔记">
 <meta property="article:tag" content="嵌入式程序设计">
@@ -473,8 +473,7 @@ WIDGET = {
 </li>
 <li><p>应用在数字滤波、快速傅里叶变换、谱分析、语音编码、视频编</p>
 </li>
-<li><p>码、数据编码和雷达目标提取</p>
-<p> 类型</p>
+<li><p>码、数据编码和雷达目标提取类型</p>
 </li>
 <li><p>单片化设计</p>
 </li>
@@ -720,7 +719,10 @@ WIDGET = {
 </ul>
 <h3 id="汇编程序的结构-1"><a href="#汇编程序的结构-1" class="headerlink" title="汇编程序的结构"></a>汇编程序的结构</h3><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">AREA</span> HELLO, <span class="hljs-meta">CODE</span>, <span class="hljs-meta">READONLY</span><br><span class="hljs-symbol">ENTRY</span> <span class="hljs-comment">; 伪指令标识程序的入口点</span><br><span class="hljs-symbol">Start</span> <span class="hljs-comment">; Start函数的入口地址</span><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, <span class="hljs-number">=0x1</span><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R1</span>, <span class="hljs-number">#1</span><br><span class="hljs-symbol">...</span><br><span class="hljs-symbol">END</span> <span class="hljs-comment">; 伪指令表示代码段结束</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><p>▪Cortex-M4指令的助记符格式如下：<br>$$<br><opcode>{<cond>}{S}<Rd>,<Rn>{,<oprand2>}<br>$$</p>
+<h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><p>▪Cortex-M4指令的助记符格式如下：</p>
+<blockquote>
+<p><opcode><cond>S<Rd>,<Rn>，<oprand2></p>
+</blockquote>
 <ul>
 <li>&lt;&gt;为必选项，{}为可选项</li>
 <li>opcode：操作码，即指令助记符，如：ADD, LDR, STR等 </li>
