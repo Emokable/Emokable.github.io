@@ -694,8 +694,8 @@ int leaf_example (int g, int h, int i, int j)
 | leaf_example： **addi**    $sp,  $sp,  -8 #在栈中分配空间 |
 | **sw**   $t1, 4($sp)   #保存寄存器                        |
 | **sw**   $t0, 0($sp)                                      |
-| **add**   $t0, $a0, $a1                                   |
-| **add **  $t1, $a2, $a3                                   |
+| **add**    $t0, $a0, $a1                                  |
+| add  $t1, $a2, $a3                                        |
 | **sub**   $v0, $t0, $t1                                   |
 | **lw**   $t0, 0($sp)   #恢复寄存器                        |
 | **lw**   $t1, 4($sp)                                      |
@@ -729,37 +729,43 @@ int fact( int n)
 >
 > 假设参数n保存在$a0，返回值保存在$v0
 >
-> fact：**addi**  $sp, $sp, -8   #在栈中保存$ra和$a0
+> fact：
 >
->    **sw**   $ra, 4($sp)
+> ​		**addi**  $sp, $sp, -8   #在栈中保存$ra和$a0
 >
->    **sw**   $a0, 0($sp)
+> ​		**sw**   $ra, 4($sp)
 >
->    **slti**  $t0, $a0, 1   #测试n<1?
+> ​		**sw**   $a0, 0($sp)
 >
->    **beq**   $t0, $zero, L1
+> ​		**slti**  $t0, $a0, 1   #测试n<1?
 >
->    **addi**  $v0, $zero, 1  #将1置入$v0
+> ​		**beq**   $t0, $zero, L1
 >
->    **addi**   $sp, $sp, 8
+> ​		**addi**  $v0, $zero, 1  #将1置入$v0
 >
->    **jr**    $ra       #返回到caller
+> ​		**addi**   $sp, $sp, 8
 >
-> L1:  **addi**  $a0, $a0, -1   #如果n>=1，参数n-1
+> ​		**jr**    $ra       #返回到caller
 >
->    **jal**   fact       #调用fact并link
+> L1:  
+>
+> ​		**addi**  $a0, $a0, -1   #如果n>=1，参数n-1
+>
+> ​		**jal**   fact       #调用fact并link
 >
 > 
 >
-> bk_f: **lw**   $a0, 0($sp)   #在栈中弹出$ra和$a0，恢复旧值
+> bk_f: 
 >
->    **lw**    $ra, 4($sp)
+> ​		**lw**   $a0, 0($sp)   #在栈中弹出$ra和$a0，恢复旧值
 >
->    **addi**   $sp, $sp, 8
+> ​		**lw**    $ra, 4($sp)
 >
->    **mul**   $v0, $a0, $v0
+> ​		**addi**   $sp, $sp, 8
 >
->    **jr**    $ra       #返回到caller
+> ​		**mul**   $v0, $a0, $v0
+>
+> ​		**jr**    $ra       #返回到caller
 >
 > ------
 >
