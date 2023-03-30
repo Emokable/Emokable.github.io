@@ -1291,10 +1291,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-steam-games@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.npmjs.org/hexo-steam-games/-/hexo-steam-games-1.2.1.tgz"
-  integrity sha512-uw5p8joHI2a6tQej8xsxag60lKIbGKToyfcJyzUXq7Jh1mLMU89kecurWKy1dC7K1SfVBkKdHoZAYDF4mxbaFg==
+hexo-steam-games@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/hexo-steam-games/-/hexo-steam-games-1.3.1.tgz#3db43c4eb3d59eba1f39687ffbfaa40d5f871ff6"
+  integrity sha512-oYFJVTMymY6FbBxj2TPOV6RDYRxgan0jRxBT/D2lKSGzMNuPaDstB3xaqpRbLfFtr6Qxm9TchY18qlyeU2Vu/Q==
   dependencies:
     axios-https-proxy-fix "^0.17.1"
     cheerio "^1.0.0-rc.3"
