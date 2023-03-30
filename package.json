@@ -33,6 +33,6 @@
     "html-minifier-terser": "^7.1.0",
     "imagemin": "^8.0.1",
     "uglify-js": "^3.17.4",
-    "uuid": "^7.0.3"
+    "uuid": "^9.0.0"
   }
 }
