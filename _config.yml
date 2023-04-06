@@ -149,22 +149,25 @@ sitemap:
    path: sitemap.xml 
 
 steam:
-  enable: true   # enable: 是否启用
-  steamId: '76561199236571966' #steam 64位Id,steamId: steam 64位Id(需要放在引号里面，不然会有BUG), 需要将steam库设置为公开！
-  path: #path: 番剧页面路径，默认steamgames/index.html
+  enable: true  # enable: 是否启用
+  steamId: ' 76561199236571966' #steam 64位Id
+  apiKey: '09186CED1A6311DE24DCDFB83CFF94EC' #steam api key
+  steamInfos: # 多账号配置
+    - id: '  76561199236571966' #steam 64位Id
+      path:  # 为每个帐号游戏库单独配置页面路径，默认`steamgames/{steamId}/index.html`
+      # 76561198802948600  76561199236571966
+  freeGames: true  
+  path:
   title: Steam游戏库  #该页面的标题
-  quote: '我的小号'  #写在页面开头的一段话,支持html语法
-  tab: recent   #all或recent, all: 所有游戏, recent: 最近游玩的游戏
-  length: 1000  #要显示游戏的数量，游戏太多的话可以限制一下
-  imgUrl:  #图片链接，在quote下面放一张图片，图片链接到Steam个人资料，可留空
-  proxy:  #如果无法访问steam社区的话请使用代理
-    host:  127.0.0.1  # 代理ip或域名
-    port:  7890  #代理端口
-  extra_options:  #此配置会扩展到Hexo的page变量中
+  quote: '目前这个插件还是有点问题'  #写在页面开头的一段话,支持html语法
+  tab: recent  #all或recent, all: 所有游戏, recent: 最近游玩的游戏
+  length: 5000  #要显示游戏的数量，游戏太多的话可以限制一下
+  imgUrl: ''  #图片链接，在quote下面放一张图片，图片链接到Steam个人资料，可留空
+  proxy: #如果无法访问steam社区的话请使用代理
+    host:
+    port:
+  extra_options: #此配置会扩展到Hexo的page变量中
     key: value
-
-    
-
 
 
 
