@@ -2,7 +2,7 @@
 title: 计算机组成原理-L05-datapath
 date: 2023-04-05 01:31:57
 tags:
-- 计算机组成原理
+  - 计算机组成原理
   - 课件笔记
 categories:
   - 学习资料

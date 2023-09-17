@@ -2,7 +2,7 @@
 title: 计算机组成原理-L04-performance
 date: 2023-03-30 22:30:13
 tags:
-- 计算机组成原理
+  - 计算机组成原理
   - 课件笔记
 categories:
   - 学习资料
