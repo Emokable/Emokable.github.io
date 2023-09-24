@@ -93,7 +93,7 @@ ssh-keygen -t rsa -C yourname@mail.com
 
 然后安装hexo git 插件
 
-`npm install hexo-deployer-git –save`
+`npm install hexo-deployer-git –-save`
 
 安装完成后, `hexo -cl`    `hexo -g`  `hexo -v` 三连击,上传本地博客,结束!
 
