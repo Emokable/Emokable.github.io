@@ -1,0 +1,1036 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ARM体系结构与编程第4章 ARM程序设计基础4.2 汇编语言的语句格式 ARM（Thumb）汇编语言的语句格式为： {标号}  {指令或伪指令}  {；注释} 标号必须从一行的行头开始，并且符号中不能包含空格。 指令不能从一行的行头开始，即在一行语句中，指令的前面必须有空格或者标号。 在汇编语言程序设计中，每一条指令的助记符可以全部用大写、或全部用小写，但不允许在一条指令中大、小写混用。 寄存器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2">
+<meta property="og:url" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="ARM体系结构与编程第4章 ARM程序设计基础4.2 汇编语言的语句格式 ARM（Thumb）汇编语言的语句格式为： {标号}  {指令或伪指令}  {；注释} 标号必须从一行的行头开始，并且符号中不能包含空格。 指令不能从一行的行头开始，即在一行语句中，指令的前面必须有空格或者标号。 在汇编语言程序设计中，每一条指令的助记符可以全部用大写、或全部用小写，但不允许在一条指令中大、小写混用。 寄存器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/image-20230521221151411.png">
+<meta property="article:published_time" content="2023-05-21T14:07:29.000Z">
+<meta property="article:modified_time" content="2023-05-21T14:37:51.601Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="ARM体系结构与编程">
+<meta property="article:tag" content="课件笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/image-20230521221151411.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-21 22:07" pubdate>
+          2023年5月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          73 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：7 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ARM体系结构与编程"><a href="#ARM体系结构与编程" class="headerlink" title="ARM体系结构与编程"></a>ARM体系结构与编程</h1><h2 id="第4章-ARM程序设计基础"><a href="#第4章-ARM程序设计基础" class="headerlink" title="第4章 ARM程序设计基础"></a><strong>第4章</strong> ARM程序设计基础</h2><h2 id="4-2-汇编语言的语句格式"><a href="#4-2-汇编语言的语句格式" class="headerlink" title="4.2 汇编语言的语句格式"></a>4.2 汇编语言的语句格式</h2><ul>
+<li>ARM（Thumb）汇编语言的语句格式为：</li>
+<li><strong>{标号}  {指令或伪指令}  {；注释}</strong></li>
+<li>标号必须从一行的行头开始，并且符号中不能包含空格。</li>
+<li>指令不能从一行的行头开始，即在一行语句中，指令的前面必须有空格或者标号。</li>
+<li>在汇编语言程序设计中，每一条指令的助记符可以全部用大写、或全部用小写，但不允许在一条指令中大、小写混用。</li>
+<li>寄存器可以大写或小写。</li>
+<li>伪指令有些必须在一行的开头顶格书写，另外一些必须留有空格。</li>
+<li>注释以分号“；”开头，到行末结束。</li>
+<li>如果一条语句太长，可将该长语句分为若干行来书写，在行的末尾用“****”表示下一行与本行为同一条语句。</li>
+<li>在源程序中，语句之间可以插入空行，增强可读性。</li>
+</ul>
+<p><strong>常数：数值、布尔值、字符或字符串</strong></p>
+<ul>
+<li>数字：十进制数、十六进制数</li>
+<li>布尔值：{TRUE&#x2F;FALSE}</li>
+<li>字符：由左右单引号组成</li>
+<li>字符串：由左右双引号括住多个字符或空格组成</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/image-20230521221151411.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="主视图"></p>
+<p><strong>汇编语言的源程序主要由指令、伪指令、语句标号和注释组成。</strong></p>
+<ul>
+<li>指令：一条指令一般是一个简短的汇编语句行，由指令助记符和操作数、操作寄存器或语句标号组成。</li>
+<li>伪指令：<ul>
+<li>通过伪指令把设计意图表达给编译器，编译器依据这些伪指令，组织、编译和连接程序；</li>
+<li>大多数伪指令在编译后都不留痕迹。</li>
+</ul>
+</li>
+<li>语句标号：语句标号的主要作用有两个：<ul>
+<li>一是表达地址；</li>
+<li>二是为一段语句命名，以方便记忆和阅读。</li>
+</ul>
+</li>
+<li>注释：注释是为了方便阅读和记忆。</li>
+</ul>
+<h3 id="4-2-1-在汇编语言程序中常用的符号"><a href="#4-2-1-在汇编语言程序中常用的符号" class="headerlink" title="4.2.1 在汇编语言程序中常用的符号"></a><strong>4.2.1</strong> <strong>在汇编语言程序中常用的符号</strong></h3><ul>
+<li>在汇编语言程序设计中，经常使用各种符号代替地址、变量和常量等，以增加程序的可读性。</li>
+<li>尽管符号的命名由编程者决定，但并不是任意的，必须遵循以下的约定：<ul>
+<li><strong>符号由大小写字母、数字以及下划线组成；</strong></li>
+<li><strong>局部标号以数字开头，其他的符号都不能以数字开头；</strong></li>
+<li><strong>符号区分大小写，同名的大、小写符号会被编译器认为是两个不同的符号；</strong></li>
+<li><strong>符号在其作用范围内必须唯一；</strong></li>
+<li><strong>自定义的符号名不能与系统的保留字相同；</strong></li>
+<li><strong>符号名不应与指令或伪指令同名。</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="1、-程序中的变量"><a href="#1、-程序中的变量" class="headerlink" title="1、 程序中的变量"></a>1、 程序中的变量</h4><ul>
+<li>程序中的变量是指其值在程序的运行过程中可以改变的量。ARM（Thumb）汇编程序所支持的变量有数字变量、逻辑变量和字符串变量。</li>
+<li>数字变量用于在程序的运行中保存数字值，但注意数字值的大小不应超出数字变量所能表示的范围。</li>
+<li>逻辑变量用于在程序的运行中保存逻辑值，逻辑值只有两种取值情况：真{true}或假{false}。</li>
+<li>字符串变量用于在程序的运行中保存一个字符串，但注意字符串的长度不应超出字符串变量所能表示的范围。</li>
+<li>在ARM（Thumb）汇编语言程序设计中，可使用GBLA、GBLL、GBLS伪指令声明全局变量；使用LCLA、LCLL、LCLS伪指令声明局部变量；并可使用SETA、SETL和SETS对其进行初始化。</li>
+</ul>
+<h4 id="2、-程序中的常量"><a href="#2、-程序中的常量" class="headerlink" title="2、 程序中的常量"></a>2、 程序中的常量</h4><ul>
+<li>程序中的常量是指其值在程序的运行过程中不能被改变的量。ARM（Thumb）汇编程序所支持的常量有数字常量、逻辑常量和字符串常量。<ul>
+<li>数字常量一般为32位的整数，当作为无符号数时，其取值范围为0～232-1；当作为有符号数时，其取值范围为-2^31～2^31-1。</li>
+<li>逻辑常量只有两种取值情况：真或假。</li>
+<li>字符串常量为一个固定的字符串，一般用于程序运行时的信息提示。</li>
+</ul>
+</li>
+<li>使用EQU来定义数字常量。</li>
+</ul>
+<h4 id="3、-程序中的变量替换"><a href="#3、-程序中的变量替换" class="headerlink" title="3、 程序中的变量替换"></a>3、 程序中的变量替换</h4><ul>
+<li>程序中的变量可通过替换操作取得一个常量。</li>
+<li>替换操作符为“**$**”。<ul>
+<li>如果在数字变量前面有一个代换操作符“$”，编译器会将该数字变量的值转换为十六进制的字符串，并将该十六进制的字符串替换“$”后的数字变量。</li>
+<li>如果在逻辑变量前面有一个替换操作符“$”，编译器会将该逻辑变量替换为它的取值（真或假）。</li>
+<li>如果在字符串变量前面有一个替换操作符“$”，编译器会将该字符串变量的值替换“$”后的字符串变量。</li>
+</ul>
+</li>
+<li>使用示例：</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs armasm"> <span class="hljs-meta">LCLS</span> <span class="hljs-built_in">S1</span> ；定义局部字符串变量<span class="hljs-built_in">S1</span>和<span class="hljs-built_in">S2</span><br><br> <span class="hljs-meta">LCLS</span> <span class="hljs-built_in">S2</span> <br><br> <span class="hljs-built_in">S1</span> <span class="hljs-meta">SETS</span> “Test！”<br><br> <span class="hljs-built_in">S2</span> <span class="hljs-meta">SETS</span> “This is a $<span class="hljs-built_in">S1</span>” <br><br>；字符串变量<span class="hljs-built_in">S2</span>的值为“This is a Test！”<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>变量替换的特殊情况：</p>
+<ul>
+<li>如果需要字符$，则用$$来表示。</li>
+<li>包含在两个竖线（|）之间的$不进行变量替换，但如果竖线是在双引号内，则将进行变量替换。</li>
+<li>使用“**.**”来表示变量名称的结束。</li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
+<p>例如</p>
+</li>
+<li><p>&#96;&#96;&#96;<br> STR1  SETS  “STRING”<br> STR2  SETS  “THISISA$STR1.INSETENCE”</p>
+<figure class="highlight nestedtext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs nestedtext"><br>  <span class="hljs-comment">#### 4、标号</span><br><br>标号是表示程序中的指令或数据地址的符号，主要有三种：<br><br><span class="hljs-bullet">-</span> <span class="hljs-string">基于PC的标号</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">是位于目标指令前或者程序中数据定义伪操作前的标号。</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">被处理成PC值加上或减去一个数字常量。</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">基于寄存器的标号</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">通常用MAP和FIELD伪操作定义，或用EQU伪操作定义。</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">被处理成寄存器的值加上或减去一个数字常量。</span><br><span class="hljs-bullet">-</span> <span class="hljs-string">绝对地址</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">绝对地址是一个32位的数字量。</span><br>  <span class="hljs-bullet">-</span> <span class="hljs-string">寻址范围为0～231-1，即可以寻址整个内存空间。</span><br><br><span class="hljs-comment">#### 5、局部标号</span><br><br>局部标号主要在局部范围使用。<br><br>局部标号定义的语法格式：<br><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p>N{routname}</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs excel"><br><span class="hljs-built_in">N</span>为<span class="hljs-number">0</span>－<span class="hljs-number">99</span>的数字,routname为当前作用范围的名称。<br><br>局部变量引用的语法格式：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">    %&#123;F|B&#125;&#123;A|T&#125;   N&#123;routname&#125;
+</code></pre>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>### **<span class="hljs-number">4.2</span><span class="hljs-number">.2</span>** **汇编语言程序中的表达式和运算符**<br><br>在汇编语言程序设计中，也经常使用各种表达式，表达式一般由变量、常量、运算符和括号构成。<br><br>常用的表达式有数字表达式、逻辑表达式和字符串表达式，其运算次序遵循如下的优先级：<br><br>- 优先级相同的双目运算符的运算顺序为从左到右。<br>- 相邻的单目运算符的运算顺序为从右到左，且单目运算符的优先级高于其他运算符。<br>- 括号运算符的优先级最高。<br><br>#### <span class="hljs-number">1</span>、 数字表达式及运算符<br><br>数字表达式一般由数字常量、数字变量、数字运算符和括号构成。与数字表达式相关的运算符如下：<br><br> “＋”、“－”、“×”、“/” 及“MOD”算术运算符<br><br> 以上的算术运算符分别代表加、减、乘、除和取余数运算。例如，以X和Y表示两个数字表达式，则：<br><br></code></pre></td></tr></table></figure>
+<p>X＋Y			;表示X与Y的和<br>X－Y			;表示X与Y的差<br>X×Y			;表示X与Y的乘积<br>X&#x2F;Y			;表示X除以Y的商<br>X：MOD：Y		;表示X除以Y的余数</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><br>“<span class="hljs-keyword">ROL</span>”、“<span class="hljs-keyword">ROR</span>”、“<span class="hljs-keyword">SHL</span>”及“<span class="hljs-keyword">SHR</span>”移位运算符<br><br> 以X和Y表示两个数字表达式，以上的移位运算符代表的运算如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">X：ROL：Y		;表示将X循环左移Y位
+X：ROR：Y		;表示将X循环右移Y位
+X：SHL：Y		;表示将X左移Y位
+X：SHR：Y		;表示将X右移Y位
+</code></pre>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs tp"><br>“<span class="hljs-keyword">AND</span>”、“<span class="hljs-keyword">OR</span>”、“NOT”及“EOR”按位逻辑运算符<br><br> 以<span class="hljs-keyword">X</span>和<span class="hljs-keyword">Y</span>表示两个数字表达式，以上的**按位**逻辑运算符代表的运算如下：<br><br></code></pre></td></tr></table></figure>
+<p>X：AND：Y	;表示将X和Y按位作逻辑与的操作<br>X：OR：Y	;表示将X和Y按位作逻辑或的操作<br>：NOT：Y	;表示将Y按位作逻辑非的操作<br>X：EOR：Y	;表示将X和Y按位作逻辑异或的操作</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>#### <span class="hljs-number">2</span>、 逻辑表达式及运算符<br><br>逻辑表达式一般由逻辑量、逻辑运算符和括号构成，其表达式的运算结果为真或假。与逻辑表达式相关的运算符如下：<br><br> “=”、“&gt;”、“&lt;”、“&gt;=”、“&lt;= ”、“/=”、“ &lt;&gt;” 运算符<br><br>以X和Y表示两个逻辑表达式，以上的运算符代表的运算如下<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">X = Y		;表示X等于Y
+X &gt; Y		;表示X大于Y
+X &lt; Y		;表示X小于Y
+X &gt;= Y		;表示X大于等于Y
+X &lt;= Y		;表示X小于等于Y
+X /= Y		;表示X不等于Y
+X &lt;&gt; Y		;表示X不等于Y
+</code></pre>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs tp"><br>“LAND”、“LOR”、“LNOT”及“LEOR”运算符<br><br> 以<span class="hljs-keyword">X</span>和<span class="hljs-keyword">Y</span>表示两个逻辑表达式，以上的逻辑运算符代表的运算如下：<br><br></code></pre></td></tr></table></figure>
+<p>X：LAND：Y		;表示将X和Y作逻辑与的操作<br>X：LOR：Y		;表示将X和Y作逻辑或的操作<br>：LNOT：Y		;表示将Y作逻辑非的操作<br>X：LEOR：Y		;表示将X和Y作逻辑异或的操作</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>操作结果为&#123;FALSE&#125;或&#123;TRUE&#125;<br><br>#### <span class="hljs-number">3</span>、 字符串表达式及运算符<br><br>字符串表达式一般由字符串常量、字符串变量、运算符和括号构成。编译器所支持的字符串最大长度为<span class="hljs-number">512</span>字节。常用的与字符串表达式相关的运算符如下：<br><br>**LEN运算符**<br><br> LEN运算符返回字符串的长度（字符数），以X表示字符串表达式，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">：LEN：X
+</code></pre>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><br>**<span class="hljs-built_in">CHR</span>运算符**<br><br><span class="hljs-built_in">CHR</span>运算符将<span class="hljs-number">0</span>～<span class="hljs-number">255</span>之间的整数转换为一个ASCII字符，以M表示某一个整数，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">：CHR：M
+</code></pre>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs hsp"><br>**<span class="hljs-keyword">STR</span>运算符**<br><br><span class="hljs-keyword">STR</span>运算符将将一个数字表达式或逻辑表达式转换为一个字符串。对于数字表达式，<span class="hljs-keyword">STR</span>运算符将其转换为一个以十六进制组成的字符串；对于逻辑表达式，<span class="hljs-keyword">STR</span>运算符将其转换为字符串T或F，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">：STR：X
+</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"><br> 其中，X为一个数字表达式或逻辑表达式。<br><br>**<span class="hljs-attribute">LEFT</span>运算符**<br><br> <span class="hljs-attribute">LEFT</span>运算符返回某个字符串左端的一个子串，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">X：LEFT：Y
+</code></pre>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css"><br> 其中：X为源字符串，Y为一个整数，表示要返回的字符个数。<br><br>**<span class="hljs-attribute">RIGHT</span>运算符**<br><br> 与<span class="hljs-attribute">LEFT</span>运算符相对应，<span class="hljs-attribute">RIGHT</span>运算符返回某个字符串右端的一个子串，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">X：RIGHT：Y
+</code></pre>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stata"><br> 其中：X为源字符串，Y为一个整数，表示要返回的字符个数。<br><br><span class="hljs-comment">**CC运算符**</span><br><br> <span class="hljs-keyword">CC</span>运算符用于将两个字符串连接成一个字符串，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">X：CC：Y
+</code></pre>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br> 其中：X为源字符串<span class="hljs-number">1</span>，Y为源字符串<span class="hljs-number">2</span>，CC运算符将Y连接到X的后面。<br><br>#### <span class="hljs-number">4</span>、 与寄存器和程序计数器（PC）相关的表达式及运算符<br><br> 常用的与寄存器和程序计数器（PC）相关的表达式及运算符如下：<br><br> **BASE运算符**<br><br>BASE运算符返回基于寄存器的表达式中寄存器的编号，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<p> ：BASE：X</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><br> 其中，X为与寄存器相关的表达式。<br><br>**<span class="hljs-keyword">INDEX</span>运算符**<br><br> <span class="hljs-keyword">INDEX</span>运算符返回基于寄存器的表达式中相对于其基址寄存器的偏移量，其语法格式如下：<br><br></code></pre></td></tr></table></figure>
+<p> ：INDEX：X</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br> 其中，X为与寄存器相关的表达式。<br><br>####  <span class="hljs-number">5</span>、 其他常用运算符<br><br>**？运算符**<br><br> ？运算符返回某代码行所生成的可执行代码的长度，例如：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">?X
+</code></pre>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><br> 返回定义符号X的代码行所生成的可执行代码的字节数。<br><br>**<span class="hljs-keyword">DEF</span>运算符**<br><br> <span class="hljs-keyword">DEF</span>运算符判断是否定义某个符号，例如：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">：DEF：X
+</code></pre>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs gherkin"><br> 如果符号X已经定义，则结果为真，否则为假。<br><br>操作符运算顺序<br><br>|<span class="hljs-string">      </span>|<span class="hljs-string"> 单目操作                 </span>|<span class="hljs-string"> 备注           </span>|<br>|<span class="hljs-string"> ---- </span>|<span class="hljs-string"> ------------------------ </span>|<span class="hljs-string"> -------------- </span>|<br>|<span class="hljs-string"> 1    </span>|<span class="hljs-string"> *、/、MOD                </span>|<span class="hljs-string"> 乘除和取模     </span>|<br>|<span class="hljs-string"> 2    </span>|<span class="hljs-string"> SHL、SHR、ROR、ROL       </span>|<span class="hljs-string"> 移位运算       </span>|<br>|<span class="hljs-string"> 3    </span>|<span class="hljs-string"> +、-、AND、OR、EOR       </span>|<span class="hljs-string"> 加减和逻辑运算 </span>|<br>|<span class="hljs-string"> 4    </span>|<span class="hljs-string"> ==、&gt;、&gt;=、&lt;、&lt;=、/=、&lt;&gt; </span>|<span class="hljs-string"> 各种逻辑运算   </span>|<br>|<span class="hljs-string"> 5    </span>|<span class="hljs-string"> LAND、LOR、LEOR          </span>|<span class="hljs-string"> 逻辑运算       </span>|<br><br><span class="hljs-comment">## 4.3 汇编语言的程序结构</span><br><br><span class="hljs-comment">### **4.3.1** **汇编语言的程序结构**</span><br><br>在ARM（Thumb）汇编语言程序中，以程序<span class="hljs-symbol">*</span><span class="hljs-symbol">*</span>段<span class="hljs-symbol">*</span><span class="hljs-symbol">*</span>为单位组织代码。段是相对独立的指令或数据序列，具有特定的名称。<br><br>段可以分为代码段和数据段，代码段的内容为执行代码，数据段存放代码运行时需要用到的数据。<br><br>一个汇编程序至少应该有一个代码段，当程序较长时，可以分割为多个代码段和数据段，多个段在程序编译链接时最终形成一个可执行的映象文件。<br><br>可执行映象文件通常由以下几部分构成：<br><br>- <span class="hljs-symbol">*</span><span class="hljs-symbol">*</span>一个或多个代码段，代码段的属性为只读。<span class="hljs-symbol">*</span><span class="hljs-symbol">*</span><br>- <span class="hljs-symbol">*</span><span class="hljs-symbol">*</span>零个或多个包含初始化数据的数据段，数据段的属性为可读写。<span class="hljs-symbol">*</span><span class="hljs-symbol">*</span><br>- <span class="hljs-symbol">*</span><span class="hljs-symbol">*</span>零个或多个不包含初始化数据的数据段，数据段的属性为可读写<span class="hljs-symbol">*</span><span class="hljs-symbol">*</span><br><br>链接器根据系统默认或用户设定的规则，将各个段安排在存储器中的相应位置。因此源程序中段之间的相对位置与可执行的映象文件中段的相对位置一般不会相同。<br><br>文件应该按功能构成，尽可能把一个功能完整地编辑在同一个文件中，这样便于调试和修改。<br><br>尽量减少一个文件与其他文件之间的关联，尽量减少文件的入口和出口，这样使程序条理更加清晰。<br><br>一个文件中代码段和数据段地设立不要过多，应该把夹在代码段中的数据缓冲区尽可能的集中在一起。<br><br>最好把Thumb指令设计为单独的段，并把ARM指令段和Thumb指令段分开存储。<br><br>数据存储区也要按功能划分，特权模式和用户模式程序使用不同的存储区块，以便对这些存储区块进行属性定义。<br><br>以下是一个汇编语言源程序的基本结构：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">    AREA	Init，CODE，READONLY
+</code></pre>
+<p>     ENTRY<br>start<br>     LDR	R0，&#x3D;0x3FF5000<br>     LDR	R1，0xFF<br>     STR	R1，[R0]<br>     LDR	R0，&#x3D;0x3FF5008<br>     LDR	R1，0x01<br>     STR	R1，[R0]<br>     ………<br>     END</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><br>&gt; 在汇编语言程序中，用<span class="hljs-meta">AREA</span>伪指令定义一个段，并说明所定义段的相关属性，本例定义一个名为Init的代码段，属性为只读。<span class="hljs-meta">ENTRY</span>伪指令标识程序的入口点，接下来为指令序列，程序的末尾为<span class="hljs-meta">END</span>伪指令，该伪指令告诉编译器源文件的结束，每一个汇编源程序都必须有一条<span class="hljs-meta">END</span>伪指令，指示源程序的结束。<br><br><span class="hljs-comment">### **4.3.2** **汇编语言的子程序调用**</span><br><br>在<span class="hljs-meta">ARM</span>汇编语言程序中，子程序的调用一般是通过**BL**指令来实现的。在程序中，使用指令：<br><br></code></pre></td></tr></table></figure>
+<p> BL 子程序名</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><br> 即可完成子程序的调用。<br><br>该指令在执行时完成如下操作：<br><br>- 将子程序的返回地址存放在连接寄存器<span class="hljs-built_in">LR</span>中，同时将程序计数器<span class="hljs-built_in">PC</span>指向子程序的入口点。<br>- 当子程序执行完毕需要返回调用处时，只需要将存放在<span class="hljs-built_in">LR</span>中的返回地址重新拷贝给程序计数器<span class="hljs-built_in">PC</span>即可。<br><br>在调用子程序的同时，也可以完成参数的传递和从子程序返回运算的结果，通常可以使用寄存器<span class="hljs-built_in">R0</span>～<span class="hljs-built_in">R3</span>完成。<br><br><br><br>以下是使用BL指令调用子程序的汇编语言源程序的基本结构：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">AREA	Init，CODE，READONL
+ENTRY
+</code></pre>
+<p>  start<br>     LDR	R0，&#x3D;0x3FF5000<br>     LDR	R1，0xFF<br>     STR	R1，[R0]<br>     LDR	R0，&#x3D;0x3FF5008<br>     LDR	R1，0x01<br>     STR	R1，[R0]<br>     BL	PRINT_TEXT<br>     ;………<br>  PRINT_TEXT<br>     ;………<br>     ;………</p>
+<pre><code class="hljs"> MOV	PC，LR
+</code></pre>
+<p>         <br>   END</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs clean"><br>### **<span class="hljs-number">4.3</span><span class="hljs-number">.3</span>** **汇编语言程序示例**<br><br>以下是一个基于S3C4510B的串行通讯程序，在此仅说明一个完整汇编语言程序的基本结构：<br><br></code></pre></td></tr></table></figure>
+<pre><code class="hljs">; *********************************************************************
+;   Software Engineering Institute East China Normal University
+;    Description:  This example shows the UART communication！
+;    Author:   BBsitman
+;    Date:	
+;**********************************************************************
+UARTLCON0	EQU	0x3FFD000
+</code></pre>
+<p>    UARTCONT0	EQU	0x3FFD004<br>    UARTSTAT0	EQU 	0x3FFD008<br>    UTXBUF0	EQU	0x3FFD00C<br>    UARTBRD0	EQU	0x3FFD014<br>        AREA Init,CODE,READONLY<br>        ENTRY<br>    ;   **************************************************	<br>    ;   LED Display<br>    ;   **************************************************<br>        LDR	R1,&#x3D;0x3FF5000<br>        LDR	R0,&#x3D;&amp;ff<br>        STR	R0,[R1]<br>        LDR	R1,&#x3D;0x3FF5008<br>        LDR	R0,&#x3D;&amp;ff<br>        STR	R0,[R1]<br>    ;   *************************************************<br>    ;   UART0 line control register<br>    ;   *************************************************<br>        LDR	R1,&#x3D;UARTLCON0<br>        LDR	R0,&#x3D;0x03<br>        STR	R0,[R1]<br>    ;   **************************************************<br>    ;   UART0 control regiser<br>    ;   **************************************************<br>        LDR	R1,&#x3D;UARTCONT0<br>        LDR	R0,&#x3D;0x9<br>        STR	R0,[R1]<br>    ;   **************************************************<br>    ;   UART0 baud rate divisor regiser<br>    ;   Baudrate&#x3D;19200，对应于50MHz的系统工作频率<br>    ;  ***************************************************<br>        LDR	R1,&#x3D;UARTBRD0<br>        LDR	R0,&#x3D;0x500<br>        STR	R0,[R1]<br>    ;  ***************************************************<br>    ;  Print the messages!<br>    ;  ***************************************************<br>    LOOP	<br>        LDR	R0,&#x3D;Line1<br>        BL	PrintLine<br>        LDR	R0,&#x3D;Line2<br>        BL	PrintLine<br>        LDR	R0,&#x3D;Line3<br>        BL	PrintLine<br>        LDR	R0,&#x3D;Line4<br>        BL	PrintLine<br>        LDR	R1,&#x3D;0x7FFFFF<br>    LOOP1	<br>        SUBS	R1,R1,#1<br>        BNE	LOOP1	<br>        B	LOOP<br>    ;  ***************************************************<br>    ; Print line<br>    ; ***************************************************<br>    PrintLine<br>        MOV	R4,LR<br>        MOV	R5,R0<br>    Line	<br>        LDRB	R1,[R5],#1<br>        AND	R0,R1,#&amp;FF<br>        TST	R0,#&amp;FF<br>        MOVEQ	PC,R4<br>        BL	PutByte<br>        B	Line	<br>    PutByte	<br>        LDR	R3,&#x3D;UARTSTAT0<br>        LDR	R2,[R3]<br>        TST	R2,#&amp;40<br>        BEQ	PutByte<br>        LDR	R3,&#x3D;UTXBUF0	<br>        STR	R0,[R3]<br>        MOV	PC,LR<br>    Line1 DCB  &amp;A,&amp;D,”******************************************************************”,0<br>    Line2 DCB	&amp;A,&amp;D,”Chinese Academy of Sciences,Institute of Automation,Complex 	System Lab.”,0<br>    Line3 DCB	&amp;A,&amp;D,”ARM Development Board Based on Samsung ARM S3C4510B.”,0<br>    Line4 DCB  &amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,&amp;A<br>     DCB	&amp;D,&amp;A,&amp;D,&amp;A,&amp;D,0<br>    END</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><br><span class="hljs-comment">## 4.4 本章小节</span><br><br>本章介绍了<span class="hljs-meta">ARM</span>程序设计的一些基本概念，以及在汇编语言程序设计中常见的伪指令、汇编语言的基本语句格式等，汇编语言程序的基本结构等，这些问题均为程序设计中的基本问题，要求理解并掌握。<br><br>练习:<br><br><span class="hljs-number">1</span>、用LDM/STM实现一块连续内存单元之间的数据传输（块复制）。<br><br>- <span class="hljs-built_in">R12</span>指向数据块的起始地址，<span class="hljs-built_in">r14</span>指向数据块的结束地址，<span class="hljs-built_in">r13</span>指向目的处的起始地址。<br><br><span class="hljs-number">2</span>、函数的调用与返回<br><br>- 以题<span class="hljs-number">1</span>块拷贝的功能模块作为函数体，写出该函数原型；<br>- 写出函数blockcopy调用的相关代码。<br><br><span class="hljs-number">3</span>、利用<span class="hljs-meta">ARM</span>指令具有条件执行的功能写出下列C代码对应的汇编代码。要求按照<span class="hljs-meta">ARM</span>汇编程序语法书写。<br><br></code></pre></td></tr></table></figure>
+<p>int a&#x3D;1,b&#x3D;4;<br>if (a&gt;b)<br>   a&#x3D;b+1;<br>else<br>   b&#x3D;a+1;<br>return a-b;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
+<p>int i,a[10]&#x3D;{0,1,2,3,4,5,6,7,8,9};<br>for (i&#x3D;0;i&lt;10;i++)<br>   a[i]&#x3D;a[i]+i;</p>
+<pre><code class="hljs">
+</code></pre>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B/">#ARM体系结构与编程</a>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2</div>
+      <div>https://www.emokable.top/ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/" title="计算机组成原理-L010-cache">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理-L010-cache</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/" title="计算机组成原理-L09-memory">
+                        <span class="hidden-mobile">计算机组成原理-L09-memory</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1143 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -多核处理器一.简介指令级并行的局限将每个时钟周期处理36条指令的处理器提升一倍的性能，即每个时钟周期处理612条指令，需要该处理器每个时钟周期完成：  处理3~4个存储访问 决策2~3个分支指令 重命名并访问20多个寄存器 提取12~24条指令   实现上述性能的复杂度可能意味着牺牲最高时钟频率  二.Amdahl定律   Amdahl定律    加速比 S  &#x3D; 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L012-Mcore">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -多核处理器一.简介指令级并行的局限将每个时钟周期处理36条指令的处理器提升一倍的性能，即每个时钟周期处理612条指令，需要该处理器每个时钟周期完成：  处理3~4个存储访问 决策2~3个分支指令 重命名并访问20多个寄存器 提取12~24条指令   实现上述性能的复杂度可能意味着牺牲最高时钟频率  二.Amdahl定律   Amdahl定律    加速比 S  &#x3D; 1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png">
+<meta property="article:published_time" content="2023-06-06T16:12:19.000Z">
+<meta property="article:modified_time" content="2023-06-06T16:52:17.776Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L012-Mcore - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L012-Mcore"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-06-07 00:12" pubdate>
+          2023年6月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L012-Mcore</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：6 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-多核处理器"><a href="#计算机组成与实践-多核处理器" class="headerlink" title="计算机组成与实践 -多核处理器"></a><strong>计算机组成与实践</strong> -<strong>多核处理器</strong></h1><h1 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.简介</h1><h3 id="指令级并行的局限"><a href="#指令级并行的局限" class="headerlink" title="指令级并行的局限"></a><strong>指令级并行的局限</strong></h3><p>将每个时钟周期处理3<del>6条指令的处理器提升一倍的性能，即每个时钟周期处理6</del>12条指令，需要该处理器每个时钟周期完成：</p>
+<ul>
+<li>处理3~4个存储访问</li>
+<li>决策2~3个分支指令</li>
+<li>重命名并访问20多个寄存器</li>
+<li>提取12~24条指令</li>
+</ul>
+<blockquote>
+<p>实现上述性能的复杂度可能意味着牺牲最高时钟频率</p>
+</blockquote>
+<h1 id="二-Amdahl定律"><a href="#二-Amdahl定律" class="headerlink" title="二.Amdahl定律"></a>二.Amdahl定律</h1><table>
+<thead>
+<tr>
+<th>Amdahl定律</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加速比 S  &#x3D; 1&#x2F;(1 –  a + a&#x2F;n)</td>
+</tr>
+</tbody></table>
+<p>a：可并行计算部分的占比</p>
+<p>n：并行处理节点个数</p>
+<p>加速之前的执行时间 To</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时间占比图"></p>
+<p>加速之后的执行时间 Tp &#x3D; To  * （1 – a + a&#x2F;n）</p>
+<p><strong>例子1</strong></p>
+<p>如果希望在100个处理器上获得90的加速比，请问在原始计算负载中顺序执行部分最多占多少？</p>
+<blockquote>
+<p>答：假设可并行执行部分占比为a，根据加速比公式</p>
+<p>​    s &#x3D; 1 &#x2F; (1 – a + a&#x2F;n)</p>
+<p>​    90 &#x3D; 1 &#x2F; (1 – a + a&#x2F;100)</p>
+<p>​    a &#x3D; 0.999</p>
+<p>​    因此，顺序执行部分最多占0.1%</p>
+</blockquote>
+<h3 id="标量v-s-向量"><a href="#标量v-s-向量" class="headerlink" title="标量v.s 向量"></a><strong>标量v.s 向量</strong></h3><ul>
+<li>标量处理器一次只能处理一个数据</li>
+<li>向量处理器能够处理向量型并行计算<ul>
+<li>如果希望在100个处理器上获得90的加速比，标量在原始程序中的占比要少于0.1%</li>
+<li>由Amdahl定律可知，要在100个处理器上获得线性加速比，原始计算不能包含标量</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="左标量，计算只能一次处理一个数据"></p>
+<p><strong>例子2</strong></p>
+<p>执行两个加法：一个加法是10个标量的求和，另一个加法是一对10×10二维矩阵的求和。假设目前只有矩阵求和可以并行，使用10个和40个处理器达到的加速比分别是多少？</p>
+<p>答：</p>
+<p>​	10个处理器加速比是110t&#x2F;20t&#x3D;5.5</p>
+<p>​    40个处理器加速比是110t&#x2F;12.5t&#x3D;8.8</p>
+<blockquote>
+<p>这里的t是周期的意思，加速比是没加速花费的总时间和加速后的时间之比</p>
+</blockquote>
+<h1 id="三-线程级并行"><a href="#三-线程级并行" class="headerlink" title="三.线程级并行"></a><strong>三.线程级并行</strong></h1><h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a><strong>多线程</strong></h3><p>继续进行指令级并行（ILP）变得越来越复杂和困难</p>
+<p>探索线程级并行（Thread-level parallelism，TLP）</p>
+<blockquote>
+<p>多道程序间的TLP（独立运行的串行程序）</p>
+<p>多线程应用的TLP（程序运行采用多线程）</p>
+</blockquote>
+<p>多线程利用线程级并行提高单个处理器的效率</p>
+<h4 id="线程例子"><a href="#线程例子" class="headerlink" title="线程例子"></a><strong>线程例子</strong></h4><ul>
+<li>浏览器软件<ul>
+<li>一个线程显示图片</li>
+<li>一个线程从网络中检索数据</li>
+</ul>
+</li>
+<li>文字处理软件<ul>
+<li>一个线程显示图形</li>
+<li>一个线程读取键盘输入</li>
+<li>一个线程进行拼写检查</li>
+</ul>
+</li>
+<li>web服务器<ul>
+<li>一个线程接收访问请求</li>
+<li>接收到请求后，创建一个线程提供服务</li>
+<li>多个线程处理成千上万的用户请求</li>
+</ul>
+</li>
+</ul>
+<h4 id="硬件多线程"><a href="#硬件多线程" class="headerlink" title="硬件多线程"></a><strong>硬件多线程</strong></h4><table>
+<thead>
+<tr>
+<th><strong>硬件多线程</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在线程阻塞时处理器可以切换到另一个线程的实现</td>
+</tr>
+</tbody></table>
+<ul>
+<li>通过执行与造成阻塞的指令不相关的指令来隐藏阻塞开销的方法</li>
+<li>处理器必须为每个线程复制独立的状态<ul>
+<li>寄存器文件、PC、指令缓存等</li>
+</ul>
+</li>
+<li>缓存、TLBs、BHT、BTB等可以共享</li>
+<li>存储器自身可以通过虚拟存储器机制实现共享</li>
+<li>硬件必须支持高效的线程切换</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>细粒度多线程（fine-grained multithreading)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>每条指令之后都进行线程切换</td>
+</tr>
+</tbody></table>
+<ul>
+<li>多线程直接交叉执行，交叉以循环方式进行</li>
+<li>处理器能够在每个时钟周期进行切换</li>
+<li>☺可同时隐藏由短阻塞和长阻塞引起的吞吐量损失</li>
+<li>☹降低了单个线程的执行速度</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="sun"></p>
+<h5 id="Niagara整数流水线"><a href="#Niagara整数流水线" class="headerlink" title="Niagara整数流水线"></a>Niagara整数流水线</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="8细粒"></p>
+<table>
+<thead>
+<tr>
+<th>**粗粒度多线程（coarse-grained **multithreading</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>仅在高开销阻塞时进行线程切换，如最后一级缓存缺失</td>
+</tr>
+</tbody></table>
+<ul>
+<li>☺几乎不会降低单个线程的执行速度</li>
+<li>☹隐藏吞吐量损失能力受限，特别是短阻塞</li>
+<li>☹线程切换时，必须清空流水线，并填充流水线</li>
+<li>适合用来降低高开销阻塞带来的性能损失</li>
+</ul>
+<h4 id="同时多线程（SMT）"><a href="#同时多线程（SMT）" class="headerlink" title="同时多线程（SMT）"></a><strong>同时多线程（SMT）</strong></h4><table>
+<thead>
+<tr>
+<th><strong>同时多线程（simultaneous  multithreading，SMT）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>硬件多线程的变种，使用多发射动态调度流水线处理器的资源来挖掘线程级并行，并同时保持指令级并行</td>
+</tr>
+</tbody></table>
+<ul>
+<li>多发射处理器中通常有单线程难以充分利用的多个并行功能单元</li>
+<li>借助于寄存器重命名和动态调度，不需要考虑相关性，即可以发射来自不同线程的多条指令</li>
+<li>每个线程需要单独的重命名表（RUUs），或者需要指明一个表项属于哪个线程</li>
+<li>Intel Pentium 4的SMT称为超线程（hyperthreading）：支持两个线程</li>
+</ul>
+<h4 id="4个线程运行在超标量处理器（4路）"><a href="#4个线程运行在超标量处理器（4路）" class="headerlink" title="4个线程运行在超标量处理器（4路）"></a><strong>4个线程运行在超标量处理器（4路）</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="chu"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="粗粒度/细粒度/同时多线程"></p>
+<blockquote>
+<p>粗的就是到高阻塞才调度，细是每条指令，smt是不需要开销的每条指令轮换</p>
+</blockquote>
+<h1 id="四-多核"><a href="#四-多核" class="headerlink" title="四.多核"></a><strong>四.多核</strong></h1><table>
+<thead>
+<tr>
+<th><strong>多处理器</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>至少两个处理器的计算机系统</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核"></p>
+<p>通过任务级并行（task-level parallelism）或进程级并行实现高吞吐量（process-level parallelism）</p>
+<p>将单个程序运行在多个处理器上实现性能的提升，并行处理程序（parallel processing program）</p>
+<h3 id="多核处理器"><a href="#多核处理器" class="headerlink" title="多核处理器"></a><strong>多核处理器</strong></h3><ul>
+<li>很多科学问题需要更快速的计算机，可以通过集群（cluster）完成</li>
+<li>集群：通过局域网连接的一组计算机，其作用等同于一个大型的多处理器</li>
+<li>例如搜索引擎、web服务器、电子邮件服务器和数据库</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>主要挑战</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>如何构建易于正确编写并行处理程序的软硬件系统</td>
+</tr>
+</tbody></table>
+<h4 id="需要解决的关键问题"><a href="#需要解决的关键问题" class="headerlink" title="需要解决的关键问题"></a><strong>需要解决的关键问题</strong></h4><table>
+<thead>
+<tr>
+<th>1、如何共享数据？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>多处理器共享一个物理地址空间</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>2、如何合作处理任务？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>处理器通过存储器中的共享变量进行通信（load、store）</td>
+</tr>
+</tbody></table>
+<p>通过同步机制访问共享数据，最多一个处理器进行访问</p>
+<table>
+<thead>
+<tr>
+<th><strong>两种类型</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>统一存储访问（Uniform Memory  Access, UMA）</td>
+</tr>
+<tr>
+<td>非统一存储访问（Non-uniform Memory Access, NUMA）</td>
+</tr>
+</tbody></table>
+<h4 id="简单并行处理程序"><a href="#简单并行处理程序" class="headerlink" title="简单并行处理程序"></a><strong>简单并行处理程序</strong></h4><p>10个处理器求和</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="需要每层同步"></p>
+<h4 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a><strong>进程同步</strong></h4><ul>
+<li>通过多进程合作完成一项任务</li>
+<li>使用锁变量（信号量）实现进程合作与同步，需要架构提供仲裁机制</li>
+<li>仲裁机制决定哪个处理器获得锁变量的访问权</li>
+<li>单总线提供仲裁机制，只能通过单总线访问存储器</li>
+<li>处理器获得总线，共享数据需要加锁，可以通过原子交换实现</li>
+</ul>
+<h4 id="自旋锁同步"><a href="#自旋锁同步" class="headerlink" title="自旋锁同步"></a><strong>自旋锁同步</strong></h4><p>一个处理器成功获得锁变量表示成功将1写入锁变量，其他处理器获得返回值0</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="自旋"></p>
+<p><strong>例子</strong></p>
+<p>假设对100000个数字进行求和，运行在100个处理器上</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs prolog">sum[<span class="hljs-symbol">Pn</span>] = <span class="hljs-number">0</span>;<br>for (i = <span class="hljs-number">1000</span>*<span class="hljs-symbol">Pn</span>; i&lt;<span class="hljs-number">1000</span>*(<span class="hljs-symbol">Pn</span>+<span class="hljs-number">1</span>); i = i + <span class="hljs-number">1</span>)<br>	sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + <span class="hljs-symbol">A</span>[i];<br><span class="hljs-symbol">Repeat</span><br>   synch(); //synchronize first <br>   if (half<span class="hljs-comment">%2 != 0 &amp;&amp; Pn == 0) &#123; </span><br>        sum[<span class="hljs-number">0</span>] = sum[<span class="hljs-number">0</span>] + sum[half<span class="hljs-number">-1</span>]; <br>   &#125; <br>   half = half/<span class="hljs-number">2</span> <br>   if (<span class="hljs-symbol">Pn</span>&lt;half) &#123; <br>        sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + sum[<span class="hljs-symbol">Pn</span>+half] <br>   &#125; <br>until (half == <span class="hljs-number">1</span>); //final sum in sum[<span class="hljs-number">0</span>]<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="Synch-例子"><a href="#Synch-例子" class="headerlink" title="Synch()例子"></a><strong>Synch()例子</strong></h4><p>Synch()：生产者-消费者模型下，消费者处理器在提取数据之前必须先同步</p>
+<p>路障同步（Barrier）：处理器需要在路障处等待，直到满足条件</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="路障捏"></p>
+<h4 id="自旋锁实现路障"><a href="#自旋锁实现路障" class="headerlink" title="自旋锁实现路障"></a><strong>自旋锁实现路障</strong></h4><p>arrive、depart是自旋锁，arrive初始化未锁定，depart初始化锁定</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">synch</span><span class="hljs-params">()</span> <span class="hljs-comment">&#123; </span></span><br><span class="hljs-comment"><span class="hljs-function">    lock(arrive); </span></span><br><span class="hljs-comment"><span class="hljs-function">    count = count + 1; // count the processors as</span></span><br><span class="hljs-comment"><span class="hljs-function">    if (count &lt; n) &#123; // they arrive at barrier </span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(arrive) </span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> <span class="hljs-title">else</span> <span class="hljs-comment">&#123;</span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(depart);</span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> </span><br><span class="hljs-function">    <span class="hljs-title">lock</span><span class="hljs-params">(depart)</span>;</span> <br>    count = count - <span class="hljs-number">1</span>; <span class="hljs-comment">// count the processors as </span><br>    <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">&#123; // they leave barrier </span><br><span class="hljs-comment">          unlock(depart) </span><br><span class="hljs-comment">    &#125;</span> <span class="hljs-keyword">else</span> <span class="hljs-comment">&#123; </span><br><span class="hljs-comment">          unlock(arrive); </span><br><span class="hljs-comment">    &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="消息传递多核处理器（MPP）"><a href="#消息传递多核处理器（MPP）" class="headerlink" title="消息传递多核处理器（MPP）"></a><strong>消息传递多核处理器（MPP）</strong></h3><table>
+<thead>
+<tr>
+<th>1、如何共享数据？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>多处理器通过相互传递消息实现数据共享</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>2、如何合作处理任务？</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通过消息传递（send和receive）实现处理器间合作</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核-不共享内存"></p>
+<p><strong>例子</strong></p>
+<p>给每个处理器分配1000个数据进行求和</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Sum = 0;<br><span class="hljs-keyword">for</span> (i = 0; i&lt;1000; i = i + 1)<br>	<span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + A[i];<br>//将所有处理器计算结果相加 ，send(x,y)将数据y发送给处理器x<br><br>half = 100; l<br>imit = 100; <br>repeat &#123; <br>    half = (half+1)/2; //dividing line <br>    <span class="hljs-keyword">if</span> (Pn&gt;= half &amp;&amp; Pn&lt;<span class="hljs-built_in">limit</span>) send(Pn-half,<span class="hljs-built_in">sum</span>);<br>    <span class="hljs-keyword">if</span> (Pn&lt;(<span class="hljs-built_in">limit</span>/2)) <span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + receive(); <br>    <span class="hljs-built_in">limit</span> = half; <br>&#125; until (half == 1); //final <span class="hljs-built_in">sum</span> <span class="hljs-keyword">in</span> P0’s <span class="hljs-built_in">sum</span><br><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="消息传递"></p>
+<h1 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a><strong>五.小结</strong></h1><p>多核处理器基础</p>
+<ol>
+<li>如何共享数据？</li>
+<li>如何合作处理任务？</li>
+<li>架构的可扩展性如何？</li>
+</ol>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="m"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L012-Mcore</div>
+      <div>https://www.emokable.top/计算机组成原理-L012-Mcore/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年6月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E5%A4%A7%E4%B8%89%E5%BC%80%E5%AD%A6%EF%BC%8C%E6%84%9F%E8%A7%89%E6%97%B6%E9%97%B4%E5%A5%BD%E5%BF%ABe/" title="大三开学，感觉时间好快e">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">大三开学，感觉时间好快e</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L011-vm/" title="计算机组成原理-L011-vm">
+                        <span class="hidden-mobile">计算机组成原理-L011-vm</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

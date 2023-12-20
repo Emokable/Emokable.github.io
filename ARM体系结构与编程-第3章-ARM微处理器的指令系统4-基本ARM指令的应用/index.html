@@ -1,0 +1,1010 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ARM体系结构与编程3.5 基本ARM指令的应用 算术逻辑运算指令的应用 跳转指令的应用 Load&#x2F;store指令的应用 批量load&#x2F;store指令的应用 信号量指令的应用 与系统相关的一些指令的应用  3.5.1 算术逻辑运算指令的应用 位操作指令应用将r2中的高8位数据传送到r3的低8位中  12345678910MOV R0, R2, LSR #24ORR R3, R0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用">
+<meta property="og:url" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="ARM体系结构与编程3.5 基本ARM指令的应用 算术逻辑运算指令的应用 跳转指令的应用 Load&#x2F;store指令的应用 批量load&#x2F;store指令的应用 信号量指令的应用 与系统相关的一些指令的应用  3.5.1 算术逻辑运算指令的应用 位操作指令应用将r2中的高8位数据传送到r3的低8位中  12345678910MOV R0, R2, LSR #24ORR R3, R0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424213922924.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424214306057.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424214357365.png">
+<meta property="article:published_time" content="2023-04-24T13:32:43.000Z">
+<meta property="article:modified_time" content="2023-04-24T13:54:36.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="ARM体系结构与编程">
+<meta property="article:tag" content="课件笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424213922924.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-24 21:32" pubdate>
+          2023年4月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          37 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ARM体系结构与编程"><a href="#ARM体系结构与编程" class="headerlink" title="ARM体系结构与编程"></a><strong>ARM体系结构与编程</strong></h1><h2 id="3-5-基本ARM指令的应用"><a href="#3-5-基本ARM指令的应用" class="headerlink" title="3.5 基本ARM指令的应用"></a>3.5 基本ARM指令的应用</h2><ul>
+<li>算术逻辑运算指令的应用</li>
+<li>跳转指令的应用</li>
+<li>Load&#x2F;store指令的应用</li>
+<li>批量load&#x2F;store指令的应用</li>
+<li>信号量指令的应用</li>
+<li>与系统相关的一些指令的应用</li>
+</ul>
+<h3 id="3-5-1-算术逻辑运算指令的应用"><a href="#3-5-1-算术逻辑运算指令的应用" class="headerlink" title="3.5.1 算术逻辑运算指令的应用"></a>3.5.1 算术逻辑运算指令的应用</h3><ol>
+<li><h4 id="位操作指令应用"><a href="#位操作指令应用" class="headerlink" title="位操作指令应用"></a>位操作指令应用</h4>将r2中的高8位数据传送到r3的低8位中</li>
+</ol>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-keyword">LSR</span> <span class="hljs-number">#24</span><br><br><span class="hljs-keyword">ORR</span> <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R3</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-number">#8</span><br><br><span class="hljs-symbol">OR</span><br><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-keyword">ROR</span> <span class="hljs-number">#24</span><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R3</span>, <span class="hljs-number">#0</span> / <span class="hljs-keyword">BIC</span> <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R3</span>, <span class="hljs-number">#0xFF</span><br><span class="hljs-keyword">ORR</span> <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R3</span><br><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h4 id="实现乘法的指令段"><a href="#实现乘法的指令段" class="headerlink" title="实现乘法的指令段"></a>实现乘法的指令段</h4></li>
+</ol>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#1 ;2*R0</span><br><br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#1 ;3*R0</span><br><br>RSB <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#2 ;4*R0-R1</span><br><br><br><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#n ;2^n*R0</span><br><br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#n ;(2^n+1)*R0</span><br><br>RSB <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-meta">#n ;(2^n-1)*R0</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>ARM指令的特色：两个操作在一条指令中完成。</strong></p>
+</blockquote>
+<ol start="3">
+<li><h4 id="64位数据运算"><a href="#64位数据运算" class="headerlink" title="64位数据运算"></a>64位数据运算</h4></li>
+</ol>
+<p>R0,R1存放64位数据的低32位和高32位；R2,R3存放64位数据的低32位和高32位：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">ADDS</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span><br><br><span class="hljs-keyword">ADC</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R3</span> <span class="hljs-comment">;64位加法</span><br><br><br><br><span class="hljs-keyword">SUBS</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span><br><br><span class="hljs-keyword">SBC</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R3</span>  <span class="hljs-comment">;64位减法</span><br><br><br><br><span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R3</span><br><br><span class="hljs-keyword">CMPEQ</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span>  <span class="hljs-comment">;64位数据比较</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意:进位标志C在CPSR中</strong></p>
+<ol start="4">
+<li><h4 id="内存中数据存储方式的转换"><a href="#内存中数据存储方式的转换" class="headerlink" title="内存中数据存储方式的转换"></a>内存中数据存储方式的转换</h4></li>
+</ol>
+<p>big endian&lt;–&gt;  little endian</p>
+<p>R0&#x3D;ABCD  &lt;–&gt;  R0&#x3D;DCBA</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-keyword">EOR</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">ROR</span> <span class="hljs-meta">#16 	;R1=A^C,   B^D,	   C^A, 	D^B</span><br>BIC <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-meta">#0xFF0000 		;R1=A^C,     0,    C^A, 	D^B</span><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">ROR</span> <span class="hljs-meta">#8 			;R0=  D,     A,      B,       C</span><br><span class="hljs-keyword">EOR</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-keyword">LSR</span> <span class="hljs-meta">#8 		;LSR: 0,   A^C,      0,     C^A</span><br>							<span class="hljs-comment">;R0=  D,     C,      B,       A</span><br><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R2</span>, <span class="hljs-number">#0xFF</span>			<span class="hljs-comment">;R2=0xFF</span><br><span class="hljs-keyword">ORR</span> <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-number">#0xFF0000</span>	<span class="hljs-comment">;R2=0x00FF00FF</span><br><span class="hljs-keyword">AND</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R0</span>			<span class="hljs-comment">;R1= 0 B  0 D</span><br><span class="hljs-keyword">AND</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">ROR</span> <span class="hljs-number">#24</span>	<span class="hljs-comment">;R0= 0 C  0 A</span><br><span class="hljs-keyword">ORR</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-keyword">ROR</span> <span class="hljs-number">#8</span>	<span class="hljs-comment">;R0= D C B A</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-2-跳转指令的应用"><a href="#3-5-2-跳转指令的应用" class="headerlink" title="3.5.2 跳转指令的应用"></a>3.5.2 跳转指令的应用</h3><ol>
+<li><h4 id="子程序调用"><a href="#子程序调用" class="headerlink" title="子程序调用"></a>子程序调用</h4></li>
+</ol>
+<p>BL指令在指令跳转操作的同时保存当前PC寄存器值，用于从被调用的子程序中返回。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs armasm">		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">BL</span> function_name<br>		<span class="hljs-keyword">SUB</span> <span class="hljs-built_in">R2</span>,<span class="hljs-built_in">R1</span>,<span class="hljs-built_in">R0</span><br>		<span class="hljs-comment">;……</span><br><br><br><span class="hljs-symbol">function_name</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">MOV</span> <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">LR</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：B和BL指令的区别。</strong></p>
+</blockquote>
+<ol start="2">
+<li><h4 id="条件执行－最大公约数"><a href="#条件执行－最大公约数" class="headerlink" title="条件执行－最大公约数"></a>条件执行－最大公约数</h4></li>
+</ol>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424213922924.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="条件执行"></p>
+<p>最大公约数C语言代码：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">gcd</span> <span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">while</span> (a ! = b)<br>		<span class="hljs-keyword">if</span> (a &gt; b)<br>			a = a - b;<br>		<span class="hljs-keyword">else</span><br>			b = b - a;<br>  <span class="hljs-keyword">return</span> a;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>最大公约数ARM汇编代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">gcd</span> 	<span class="hljs-keyword">cmp</span> <span class="hljs-built_in">r0</span>, <span class="hljs-built_in">r1</span> 	<span class="hljs-comment">;reached the end?</span><br>		<span class="hljs-keyword">beq</span> stop<br>		<span class="hljs-keyword">blt</span> less 	<span class="hljs-comment">;if r0 &gt; r1</span><br>		<span class="hljs-keyword">sub</span> <span class="hljs-built_in">r0</span>, <span class="hljs-built_in">r0</span>, <span class="hljs-built_in">r1</span> 	<span class="hljs-comment">;subtract r1 from r0</span><br>		<span class="hljs-keyword">b</span>   gcd<br><span class="hljs-symbol">less</span> 	<span class="hljs-keyword">sub</span> <span class="hljs-built_in">r1</span>, <span class="hljs-built_in">r1</span>, <span class="hljs-built_in">r0</span> 	<span class="hljs-comment">;subtract r0 from r1</span><br>		<span class="hljs-keyword">b</span>   gcd<br><span class="hljs-symbol">stop</span>	<span class="hljs-comment">;……</span><br></code></pre></td></tr></table></figure>
+
+<p>最大公约数ARM汇编代码（条件执行）：</p>
+<p>代码执行前r0中存放a，r1中存放b；代码执行后r0中存放a和b的最大公约数：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">gcd</span><br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R1</span><br>		<span class="hljs-keyword">SUBGT</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R1</span><br>		<span class="hljs-keyword">SUBLT</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R0</span><br>		<span class="hljs-keyword">BNE</span> gcd<br>		<span class="hljs-keyword">MOV</span> <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">LR</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><h4 id="条件判断语句（C语言代码）"><a href="#条件判断语句（C语言代码）" class="headerlink" title="条件判断语句（C语言代码）"></a>条件判断语句（C语言代码）</h4></li>
+</ol>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">if</span> (a == <span class="hljs-number">0</span> || b == <span class="hljs-number">1</span>)<br>			<span class="hljs-attribute">c</span>= d + e;<br></code></pre></td></tr></table></figure>
+
+<p>代码执行前r0中存放a，r1中存放b；代码执行后r2中存放d和e的和：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-number">#0</span><br><span class="hljs-keyword">CMPNE</span> <span class="hljs-built_in">R1</span>, <span class="hljs-number">#1</span><br><span class="hljs-keyword">ADDEQ</span> <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R4</span><br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：两个条件按顺序进行判断，如果第一个条件不成立，则后面的条件无需进行判断</p>
+</blockquote>
+<ol start="4">
+<li><h4 id="循环语句"><a href="#循环语句" class="headerlink" title="循环语句"></a>循环语句</h4></li>
+</ol>
+<p>对于一个for或while循环：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm">		<span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-symbol">#loopcount</span> <span class="hljs-comment">;初始化计数器</span><br><span class="hljs-symbol">loop</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">SUBS</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-number">#1</span>	<span class="hljs-comment">;计数器的更新及CPSR的更新</span><br>		<span class="hljs-keyword">BNE</span> loop<br>		<span class="hljs-comment">;……</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：此时SUB指令必需带后缀S。</strong></p>
+</blockquote>
+<ol start="5">
+<li><h4 id="多路分支程序语句"><a href="#多路分支程序语句" class="headerlink" title="多路分支程序语句"></a>多路分支程序语句</h4></li>
+</ol>
+<p>代码根据maxindex的不同值跳转不同的代码段，这里要求各目标代码段的大小都为</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424214306057.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="size"></p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-symbol">#maxindex</span>	<span class="hljs-comment">;R0中保存了跳转的索引值</span><br><span class="hljs-keyword">ADDLO</span> <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-symbol">#RoutineSizeLog2</span><br><span class="hljs-keyword">B</span> IndexOutofRange<br>……<br><span class="hljs-symbol">Index0Handler</span>	<span class="hljs-comment">;索引值为0时对应的代码段</span><br>……<br><span class="hljs-symbol">Index1Handler</span><br>…..<br><span class="hljs-symbol">Index2Handler</span><br>……<br><span class="hljs-symbol">IndexOutofRange</span><br>……<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-3-load-x2F-store指令的应用"><a href="#3-5-3-load-x2F-store指令的应用" class="headerlink" title="3.5.3 load&#x2F;store指令的应用"></a>3.5.3 load&#x2F;store指令的应用</h3><ol>
+<li><h4 id="链表操作"><a href="#链表操作" class="headerlink" title="链表操作"></a>链表操作</h4></li>
+</ol>
+<p>在链表中搜索与某一个数据相等的元素。链表中的每个元素包括两个字，第一个字中包含一个字节数据；第二个字中包含指向下一个链表元素的指令，当这个指针为0时表示链表结束。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">llsearch</span><br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-number">#0</span>		<span class="hljs-comment">;R0是next pointer</span><br>		LDRNEB <span class="hljs-built_in">R2</span>, [<span class="hljs-built_in">R0</span>]<br>		<span class="hljs-keyword">CMPNE</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span>	<span class="hljs-comment">;R1存放要搜索的数据</span><br>		<span class="hljs-keyword">LDRNE</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R0</span>, <span class="hljs-number">#4</span>]<br>		<span class="hljs-keyword">BNE</span> llsearch<br>		<span class="hljs-keyword">MOV</span> <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">LR</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/image-20230424214357365.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="链表"></p>
+<ol start="2">
+<li><h4 id="简单的串比较"><a href="#简单的串比较" class="headerlink" title="简单的串比较"></a>简单的串比较</h4></li>
+</ol>
+<p>比较两个串的大小：R0指向第一个串，R1指向第二个串。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">strcmp</span><br>		<span class="hljs-keyword">LDRB</span> <span class="hljs-built_in">R2</span>, [<span class="hljs-built_in">R0</span>], <span class="hljs-number">#1</span>		<span class="hljs-comment">;注意字符寻址的偏移量</span><br>		<span class="hljs-keyword">LDRB</span> <span class="hljs-built_in">R3</span>, [<span class="hljs-built_in">R1</span>], <span class="hljs-number">#1</span><br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R2</span>, <span class="hljs-number">#0</span><br>		<span class="hljs-keyword">CMPNE</span> <span class="hljs-built_in">R3</span>, <span class="hljs-number">#0</span><br>		<span class="hljs-keyword">BEQ</span> return<br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R3</span><br>		<span class="hljs-keyword">BEQ</span> strcmp<br><span class="hljs-symbol">return</span><br>		<span class="hljs-keyword">SUB</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R3</span>			<span class="hljs-comment">;比较两字符的大小</span><br>		<span class="hljs-keyword">MOV</span> <span class="hljs-built_in">PC</span>, <span class="hljs-built_in">LR</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li><h4 id="长跳转"><a href="#长跳转" class="headerlink" title="长跳转"></a>长跳转</h4></li>
+</ol>
+<p>通过直接向PC寄存器中存取数据，程序可以实现在4GB的地址空间的任意跳转，这种跳转叫做<strong>长跳转</strong>。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs armasm">		<span class="hljs-keyword">ADD</span> <span class="hljs-built_in">LR</span>, <span class="hljs-built_in">PC</span>, <span class="hljs-number">#4</span>		<span class="hljs-comment">;保存返回地址，指向PC＋12处，即return_here</span><br>		<span class="hljs-keyword">LDR</span> <span class="hljs-built_in">PC</span>, [<span class="hljs-built_in">PC</span>, #-<span class="hljs-number">4</span>]	<span class="hljs-comment">;内存寻址指向DCD</span><br>		<span class="hljs-meta">DCD</span> <span class="hljs-meta">function</span><br><span class="hljs-symbol">return_here</span><br>		ADD<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><h4 id="多路跳转-（比较前面的5-多路分支程序语句）"><a href="#多路跳转-（比较前面的5-多路分支程序语句）" class="headerlink" title="多路跳转 （比较前面的5. 多路分支程序语句）"></a>多路跳转 （比较前面的5. 多路分支程序语句）</h4></li>
+</ol>
+<p>通过函数地址表实现多路转移，其中maxendex为跳转的最大索引号，R0中为跳转的索引号。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-symbol">#maxindex</span><br><span class="hljs-keyword">LDRLO</span> <span class="hljs-built_in">PC</span>, [<span class="hljs-built_in">PC</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-number">#2</span>]<br><span class="hljs-keyword">B</span> IndexOutofRange<br><span class="hljs-symbol">DCD</span> Handler0	<span class="hljs-comment">;子程序0的入口地址</span><br><span class="hljs-symbol">DCD</span> Handler1<br><span class="hljs-symbol">DCD</span> Handler2<br><span class="hljs-comment">;……</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>注意：这里子程序没有限定相同的大小。</strong></p>
+<h3 id="3-5-4-批量load-x2F-store指令的应用"><a href="#3-5-4-批量load-x2F-store指令的应用" class="headerlink" title="3.5.4 批量load&#x2F;store指令的应用"></a>3.5.4 批量load&#x2F;store指令的应用</h3><ol>
+<li><h4 id="简单的块复制"><a href="#简单的块复制" class="headerlink" title="简单的块复制"></a>简单的块复制</h4></li>
+</ol>
+<p>一次将48个字数据从R12作为首地址的一段连续的内存单元复制到R13作为首地址的一段连续的内存单元。R14为源数据区末地址。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">loop</span><br>		<span class="hljs-keyword">LDMIA</span> <span class="hljs-built_in">R12</span>!, &#123;<span class="hljs-built_in">R0</span>-<span class="hljs-built_in">R11</span>&#125;	<span class="hljs-comment">;每次12个字</span><br>		<span class="hljs-keyword">STMIA</span> <span class="hljs-built_in">R13</span>!, &#123;<span class="hljs-built_in">R0</span>-<span class="hljs-built_in">R11</span>&#125;<br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R12</span>, <span class="hljs-built_in">R14</span>			<span class="hljs-comment">;判断是否结束</span><br>		<span class="hljs-keyword">BLO</span> loop<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>思考：当数据块大小不是一次搬移数据的倍数时，程序如何设计？</strong></p>
+<h5 id="LDM-x2F-STM应用实例-上机编程实践"><a href="#LDM-x2F-STM应用实例-上机编程实践" class="headerlink" title="LDM&#x2F;STM应用实例-上机编程实践"></a><strong>LDM&#x2F;STM应用实例-上机编程实践</strong></h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">SOURCE</span>  		    DCD    <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>,  <span class="hljs-number">4</span>, <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>,  <span class="hljs-number">8</span>, <span class="hljs-number">9</span>, <span class="hljs-number">10</span><br>                    <span class="hljs-attribute">DCD</span>   <span class="hljs-number">11</span>,<span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">14</span>,<span class="hljs-number">15</span>,<span class="hljs-number">16</span>,<span class="hljs-number">17</span>,<span class="hljs-number">18</span>,<span class="hljs-number">19</span>,<span class="hljs-number">20</span><br>                    <span class="hljs-attribute">DCD</span>   <span class="hljs-number">21</span>,<span class="hljs-number">22</span>,<span class="hljs-number">23</span>,<span class="hljs-number">24</span>,<span class="hljs-number">25</span>,<span class="hljs-number">26</span>,<span class="hljs-number">27</span>,<span class="hljs-number">28</span>,<span class="hljs-number">29</span>,<span class="hljs-number">30</span><br>                    <span class="hljs-attribute">DCD</span>   <span class="hljs-number">31</span>,<span class="hljs-number">32</span>,<span class="hljs-number">33</span>,<span class="hljs-number">34</span>,<span class="hljs-number">35</span>,<span class="hljs-number">36</span>,<span class="hljs-number">37</span>,<span class="hljs-number">38</span>,<span class="hljs-number">39</span>,<span class="hljs-number">40</span><br>                    <span class="hljs-attribute">DCD</span>   <span class="hljs-number">41</span>,<span class="hljs-number">42</span>,<span class="hljs-number">43</span>,<span class="hljs-number">44</span>,<span class="hljs-number">45</span>,<span class="hljs-number">46</span>,<span class="hljs-number">47</span>,<span class="hljs-number">48</span><br>                    <br><span class="hljs-attribute">DEST</span>       		    DCD   <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><h4 id="子程序进入和退出时数据的保存和恢复"><a href="#子程序进入和退出时数据的保存和恢复" class="headerlink" title="子程序进入和退出时数据的保存和恢复"></a>子程序进入和退出时数据的保存和恢复</h4></li>
+</ol>
+<p>在调用子程序时，通常利用寄存器r0－r3传递参数和返回结果，这几个参数由子程序的调用者来保存，其他的子程序将要用到的寄存器在子程序入口处保存，在子程序返回前恢复这些寄存器。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">function</span><br>		STMFD <span class="hljs-built_in">R13</span>!, &#123;<span class="hljs-built_in">R4</span>-<span class="hljs-built_in">R12</span>, <span class="hljs-built_in">R14</span>&#125;	<span class="hljs-comment">;函数入口</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-comment">;function body</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">LDMFD</span> <span class="hljs-built_in">R13</span>!, &#123;<span class="hljs-built_in">R4</span>-<span class="hljs-built_in">R12</span>, <span class="hljs-built_in">PC</span>&#125; 	<span class="hljs-comment">;函数出口</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-5-信号量指令的应用"><a href="#3-5-5-信号量指令的应用" class="headerlink" title="3.5.5 信号量指令的应用"></a>3.5.5 信号量指令的应用</h3><p>信号量用于实现对临界区数据访问的同步。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs armasm">		<span class="hljs-keyword">MVN</span> <span class="hljs-built_in">R2</span>, <span class="hljs-number">#0</span> 			<span class="hljs-comment">;set -1</span><br><span class="hljs-symbol">spinin</span><br>		<span class="hljs-keyword">SWP</span> <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R2</span>, [<span class="hljs-built_in">R0</span>]	<span class="hljs-comment">;读取信号到R3，</span><br>							<span class="hljs-comment">;同时将信号设置成-1.</span><br>		<span class="hljs-keyword">CMN</span> <span class="hljs-built_in">R3</span>, <span class="hljs-number">#1</span>			<span class="hljs-comment">;判断R3是否为-1</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">BEQ</span> spinin			<span class="hljs-comment">;其它进程访问，继续查询</span><br>		<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R3</span>, <span class="hljs-number">#0</span>			<span class="hljs-comment">;不为0时表示其它进程拥有信号量</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">STRNE</span> <span class="hljs-built_in">R3</span>, [<span class="hljs-built_in">R0</span>]		<span class="hljs-comment">;恢复信号量的值</span><br>		<span class="hljs-comment">;……</span><br>		<span class="hljs-keyword">BNE</span> spinin			<span class="hljs-comment">;重新尝试获取信号量</span><br>		<span class="hljs-keyword">STR</span> <span class="hljs-built_in">R1</span>, [<span class="hljs-built_in">R0</span>]<br>		<span class="hljs-comment">;……</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="3-5-6-与系统相关的一些指令的应用"><a href="#3-5-6-与系统相关的一些指令的应用" class="headerlink" title="3.5.6 与系统相关的一些指令的应用"></a>3.5.6 与系统相关的一些指令的应用</h3><ol>
+<li><h4 id="SWI中断处理程序"><a href="#SWI中断处理程序" class="headerlink" title="SWI中断处理程序"></a>SWI中断处理程序</h4></li>
+</ol>
+<ul>
+<li>SWI指令使处理器切换到特权模式，在特权模式下请求特定的系统服务（由操作系统提供）。</li>
+<li>SWI指令执行时通常完成下面的工作：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">R14_svc</span> = SWI指令的下面一条指令的地址<br><span class="hljs-attribute">SPSR_svc</span> = CPSR<br><span class="hljs-attribute">CPSR</span>[<span class="hljs-number">4</span>:<span class="hljs-number">0</span>] = <span class="hljs-number">0</span>b10011 	; supervisor mode<br><span class="hljs-attribute">CPSR</span>[<span class="hljs-number">5</span>] = <span class="hljs-number">0</span>			; T<br><span class="hljs-attribute">CPSR</span>[<span class="hljs-number">6</span>] = <span class="hljs-number">1</span>			; F<br><span class="hljs-attribute">CPSR</span>[<span class="hljs-number">7</span>] = <span class="hljs-number">1</span>			; I<br><span class="hljs-attribute">if</span> high vectors configured then<br>		<span class="hljs-attribute">PC</span> = <span class="hljs-number">0</span>xFFFF0008<br><span class="hljs-attribute">else</span><br>		<span class="hljs-attribute">PC</span> = <span class="hljs-number">0</span>x00000008<br></code></pre></td></tr></table></figure>
+
+<p>当程序执行到SWI指令时，程序跳转到0x00000008处执行，由于该处是一条跳转指令，程序接着跳转到下面中断服务程序开始处执行。</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">SWIHandler</span><br>	STMFD <span class="hljs-built_in">sp</span>!, &#123;<span class="hljs-built_in">R0</span>-<span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R12</span>, <span class="hljs-built_in">LR</span>&#125;<br>	<span class="hljs-keyword">MRS</span> <span class="hljs-built_in">R0</span>, SPSR<br>	<span class="hljs-keyword">TST</span> <span class="hljs-built_in">R0</span>, <span class="hljs-number">#0x20</span><br>	LDRNEH <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">LR</span>, #-<span class="hljs-number">2</span>]<br>	<span class="hljs-keyword">BICNE</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-number">#0xFF00</span><br>	<span class="hljs-keyword">LDREQ</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">LR</span>, #-<span class="hljs-number">4</span>]<br>	<span class="hljs-keyword">BICEQ</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-number">#0xFF000000</span><br>	<span class="hljs-keyword">CMP</span> <span class="hljs-built_in">R0</span>, <span class="hljs-symbol">#MaxSWI</span><br>	<span class="hljs-keyword">LDRLS</span> <span class="hljs-built_in">PC</span>, [<span class="hljs-built_in">PC</span>, <span class="hljs-built_in">R0</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-number">#2</span>]<br>	<span class="hljs-keyword">B</span> SWIOutofRange<br>	<span class="hljs-comment">;switable</span><br>	<span class="hljs-meta">DCD</span> SWIHANDLER0<br>	<span class="hljs-meta">DCD</span> SWIHANDLER1<br>	<span class="hljs-comment">;……</span><br>	<span class="hljs-comment">;Code to handle SWI here</span><br>	<span class="hljs-comment">;……</span><br>	<span class="hljs-keyword">LDMFD</span> <span class="hljs-built_in">sp</span>!, &#123;<span class="hljs-built_in">R0</span>-<span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R12</span>, <span class="hljs-built_in">PC</span>&#125;^<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-5-本章小节"><a href="#3-5-本章小节" class="headerlink" title="3.5 本章小节"></a>3.5 本章小节</h2><p>本章系统的介绍了ARM指令集中的基本指令，以及各指令的应用场合及方法，由基本指令还可以派生出一些新的指令，但使用方法与基本指令类似。与常见的如X86、MIPS体系结构的汇编指令相比较，ARM指令系统无论是从指令集本身，还是从寻址方式上，都相对复杂一些。</p>
+<p>Thumb指令集作为ARM指令集的一个子集，其使用方法与ARM指令集类似，在此未作详细的描述，但这并不意味着Thumb指令集不如ARM指令集重要，事实上，他们各自有其自己的应用场合。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B/">#ARM体系结构与编程</a>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用</div>
+      <div>https://www.emokable.top/ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/" title="计算机组成原理-L08-ILP">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理-L08-ILP</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/" title="嵌入式程序设计ch3-嵌入式总线技术">
+                        <span class="hidden-mobile">嵌入式程序设计ch3-嵌入式总线技术</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

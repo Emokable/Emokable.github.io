@@ -1,0 +1,1080 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -数据通路（Datapath）一.指令执行概述处理器：指令执行MIPS的核心指令：  数据传输指令：lw、sw 算术与逻辑运算指令： add、addu、addi、addiu、sub、subu、and、andi、or、ori、xor、xori、nor、slt、slti、sltu、sltiu 决策指令：beq、j  指令执行：  PC -&gt;取指令（更新PC） 指令译码，读取寄存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L05-datapath">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -数据通路（Datapath）一.指令执行概述处理器：指令执行MIPS的核心指令：  数据传输指令：lw、sw 算术与逻辑运算指令： add、addu、addi、addiu、sub、subu、and、andi、or、ori、xor、xori、nor、slt、slti、sltu、sltiu 决策指令：beq、j  指令执行：  PC -&gt;取指令（更新PC） 指令译码，读取寄存">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102613034.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102646260.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102928688.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102953250.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103012267.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103035989.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103146841.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103230598.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103326447.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103342806.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103449988.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103548919.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103619250.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103659010.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405110907904.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405110938969.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112049981.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112227712.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112426529.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112509327.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112727073.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112818108.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112905116.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112955664.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113037530.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113114179.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113207512.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113256834.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113639194.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113708410.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113737350.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113803225.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113845355.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113905077.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114002399.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114041191.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114052009.png">
+<meta property="article:published_time" content="2023-04-04T17:31:57.000Z">
+<meta property="article:modified_time" content="2023-06-14T16:07:36.159Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102613034.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L05-datapath - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L05-datapath"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-05 01:31" pubdate>
+          2023年4月5日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          19 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L05-datapath</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：6 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-数据通路（Datapath）"><a href="#计算机组成与实践-数据通路（Datapath）" class="headerlink" title="计算机组成与实践 -数据通路（Datapath）"></a><strong>计算机组成与实践</strong> -<strong>数据通路（Datapath）</strong></h1><h2 id="一-指令执行概述"><a href="#一-指令执行概述" class="headerlink" title="一.指令执行概述"></a>一.<strong>指令执行概述</strong></h2><h3 id="处理器：指令执行"><a href="#处理器：指令执行" class="headerlink" title="处理器：指令执行"></a><strong>处理器：指令执行</strong></h3><p>MIPS的核心指令：</p>
+<ul>
+<li>数据传输指令：lw、sw</li>
+<li>算术与逻辑运算指令： add、addu、addi、addiu、sub、subu、and、andi、or、ori、xor、xori、nor、slt、slti、sltu、sltiu</li>
+<li>决策指令：beq、j</li>
+</ul>
+<p>指令执行：</p>
+<ul>
+<li>PC -&gt;取指令（更新PC）</li>
+<li>指令译码，读取寄存器</li>
+<li>执行指令</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102613034.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="转换"></p>
+<h3 id="指令实现的抽象图"><a href="#指令实现的抽象图" class="headerlink" title="指令实现的抽象图"></a><strong>指令实现的抽象图</strong></h3><p>核心指令子集实现的抽象视图，描述了主要功能单元及其连接</p>
+<ul>
+<li>单时钟周期实现</li>
+<li>哈佛模型：指令存储和数据存储分开</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102646260.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="指令实现"></p>
+<h3 id="逻辑设计的一般方法"><a href="#逻辑设计的一般方法" class="headerlink" title="逻辑设计的一般方法"></a><strong>逻辑设计的一般方法</strong></h3><ul>
+<li>二进制表示信息<ul>
+<li>低电压&#x3D;0；高电压&#x3D;1</li>
+<li>1bit一条线路</li>
+<li>多个bit的数据编码为多条线路</li>
+</ul>
+</li>
+<li>组合单元（Combinational Element）<ul>
+<li>处理数据值的单元</li>
+<li>输出只与输入相关，输入相同则输出也相同</li>
+</ul>
+</li>
+<li>状态单元（State Element 或者 Sequential Element）<ul>
+<li>存储信息</li>
+<li>时钟信号</li>
+</ul>
+</li>
+</ul>
+<h3 id="组合单元"><a href="#组合单元" class="headerlink" title="组合单元"></a><strong>组合单元</strong></h3><p>AND-gate</p>
+<p>Y &#x3D; A &amp; B</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102928688.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="and"></p>
+<p>Adder</p>
+<p>Y &#x3D; A + B</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405102953250.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="adder"></p>
+<p>Multiplexer</p>
+<p>Y &#x3D; S ? I1 : I0</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103012267.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="mult"></p>
+<p>Arithmetic&#x2F;Logic Unit</p>
+<p>Y &#x3D; F(A, B)</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103035989.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="arith"></p>
+<h3 id="时序单元（-Sequential-Element-）"><a href="#时序单元（-Sequential-Element-）" class="headerlink" title="时序单元（ Sequential Element ）"></a><strong>时序单元（</strong> <strong>Sequential Element</strong> <strong>）</strong></h3><ul>
+<li>寄存器：能够存储数据的电路<ul>
+<li>时钟信号决定何时更新存储的值</li>
+<li>边缘触发：只允许在时钟跳变的边沿时改变存储的值</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103146841.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="寄存器时序"></p>
+<ul>
+<li>带写信号的寄存器<ul>
+<li>当写信号有效时，才会在时钟边沿时更新存储的值</li>
+<li>当存储的值稍后使用时</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103230598.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="write的寄存器"></p>
+<h3 id="时钟方法（Clocking-Methodology）"><a href="#时钟方法（Clocking-Methodology）" class="headerlink" title="时钟方法（Clocking Methodology）"></a><strong>时钟方法（Clocking Methodology）</strong></h3><p>组合单元在时钟周期内对数据进行处理</p>
+<ul>
+<li>时钟边沿之间进行</li>
+<li>输入来自状态单元，输出给状态单元</li>
+<li>最长的延迟决定时钟周期时间</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103326447.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时钟循环"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103342806.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="简化版"></p>
+<h2 id="二-取指令实现"><a href="#二-取指令实现" class="headerlink" title="二.取指令实现"></a>二.<strong>取指令实现</strong></h2><h3 id="建立取指令数据通路"><a href="#建立取指令数据通路" class="headerlink" title="建立取指令数据通路"></a>建立取指令数据通路</h3><p>数据通路（Datapath）</p>
+<ul>
+<li>处理或保存处理器中数据的单元<ul>
+<li>数据通路部件：寄存器、ALU、多选器、存储器等</li>
+</ul>
+</li>
+<li>取指令的数据通路:PC寄存器、指令存储器（instruction memory）、加法器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103449988.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="取指令"></p>
+<blockquote>
+<p>读PC值，获得指令的地址</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103548919.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读pc"></p>
+<p>读指令存储器，获得指令</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103619250.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读指令存储器"></p>
+<p>更新PC&#x3D;PC+4，与读指令同时完成</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405103659010.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读指令的同时更新PC"></p>
+</blockquote>
+<h2 id="三-R型指令实现"><a href="#三-R型指令实现" class="headerlink" title="三.R型指令实现"></a>三.<strong>R型指令实现</strong></h2><p>R型指令：add、sub、slt、and、or</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405110907904.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="R"></p>
+<ul>
+<li>对寄存器rs和rt中的值进行运算（op和funct）</li>
+<li>将结果写回到寄存器rd</li>
+<li>使用写控制信号RegWrite</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405110938969.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Rxin"></p>
+<h4 id="R型指令：读寄存器"><a href="#R型指令：读寄存器" class="headerlink" title="R型指令：读寄存器"></a><strong>R型指令：读寄存器</strong></h4><p>根据rs和rt指令域获得寄存器地址（编号）</p>
+<p>对所有类型的指令，寄存器的读端口处于激活状态</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112049981.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读寄存器"></p>
+<h4 id="R型指令：ALU运算"><a href="#R型指令：ALU运算" class="headerlink" title="R型指令：ALU运算"></a><strong>R型指令：ALU运算</strong></h4><p>ALU根据控制信号（ALU operation）进行运算</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112227712.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="alu"></p>
+<h4 id="R型指令：写回"><a href="#R型指令：写回" class="headerlink" title="R型指令：写回"></a><strong>R型指令：写回</strong></h4><p>将ALU result写回寄存器</p>
+<p>rd是目标寄存器地址（编号）</p>
+<p>写控制信号RegWrite有效</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112426529.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="写回"></p>
+<blockquote>
+<p><strong>思考slt指令</strong></p>
+<p>要把0（或1）写回到$t0，0（或1）从哪里获得？</p>
+<p>  <strong>slt</strong> $t0, $s0, $s1 #如果$s0&lt;$s1,则$t0&#x3D;1；           #否则$t0&#x3D;0</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112509327.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="slt"></p>
+</blockquote>
+<h2 id="四-数据传输指令实现"><a href="#四-数据传输指令实现" class="headerlink" title="四.数据传输指令实现"></a><strong>四.数据传输指令实现</strong></h2><p>数据传输指令：lw和sw</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112727073.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="I"></p>
+<ul>
+<li>通过基址寄存器（rs）的值加指令中16 bits的常数，计算存储器地址<ul>
+<li>基址寄存器的值通过读寄存器获得</li>
+<li>16 bits的常数经符号扩展单元，有符号扩展成32 bits的常数</li>
+</ul>
+</li>
+<li><strong>lw</strong>指令：获得存储器地址后访问数据存储器，将值写回到目标寄存器（rt）</li>
+<li><strong>sw</strong>指令：读取寄存器rt中的值，根据获得的存储器地址将该值存入数据存储器</li>
+</ul>
+<p>使用写控制信号MemWrite和读控制信号MemRead控制数据存储器的写入和读出</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112818108.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="总"></p>
+<h4 id="读寄存器和符号扩展"><a href="#读寄存器和符号扩展" class="headerlink" title="读寄存器和符号扩展"></a><strong>读寄存器和符号扩展</strong></h4><p>根据rs和rt指令域获得寄存器地址（编号），读寄存器rs和rt</p>
+<p>16 bits符号扩展成32 bits</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112905116.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读寄存器"></p>
+<h4 id="ALU计算地址"><a href="#ALU计算地址" class="headerlink" title="ALU计算地址"></a><strong>ALU计算地址</strong></h4><p>ALU计算存储器地址：基地址（rs的值）加32 bits立即数</p>
+<p>寄存器rt中的值传输到数据存储器</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405112955664.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="alu"></p>
+<h4 id="sw-访问数据存储器"><a href="#sw-访问数据存储器" class="headerlink" title="sw:访问数据存储器"></a><strong>sw:访问数据存储器</strong></h4><p>根据获得的存储器地址，将数据（rt）写入存储器</p>
+<p>写控制信号MemWrite有效</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113037530.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="访问数据"></p>
+<h4 id="lw：访问数据存储器"><a href="#lw：访问数据存储器" class="headerlink" title="lw：访问数据存储器"></a><strong>lw：访问数据存储器</strong></h4><p>根据获得的存储器地址，从数据存储器读出数据</p>
+<p>读控制信号MemRead有效</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113114179.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="lw"></p>
+<h4 id="lw-写回"><a href="#lw-写回" class="headerlink" title="lw:写回"></a><strong>lw:写回</strong></h4><p>rt是目标寄存器地址（编号）</p>
+<p>写控制信号RegWrite有效</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113207512.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="lw写回"></p>
+<h2 id="五-分支指令实现"><a href="#五-分支指令实现" class="headerlink" title="五.分支指令实现"></a>五.<strong>分支指令实现</strong></h2><h3 id="条件分支指令实现"><a href="#条件分支指令实现" class="headerlink" title="条件分支指令实现"></a><strong>条件分支指令实现</strong></h3><p>条件分支指令：beq</p>
+<ul>
+<li><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113256834.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="I">****</li>
+<li>根据rs和rt指令域获得寄存器地址（编号），读寄存器</li>
+<li>ALU对两个值进行减法，结果为0则zero信号有效</li>
+<li>16 bits的常数经符号扩展单元，有符号扩展成32 bits，然后左移2位转化成字地址（32 bits常数）</li>
+<li>计算分支的目标地址：PC的值32 bits常数</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113639194.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="条件分支"></p>
+<h4 id="读寄存器和符号扩展-1"><a href="#读寄存器和符号扩展-1" class="headerlink" title="读寄存器和符号扩展"></a><strong>读寄存器和符号扩展</strong></h4><p>根据rs和rt指令域获得寄存器地址（编号），读寄存器rs和rt</p>
+<p>16 bits符号扩展成32 bits</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113708410.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读寄存器"></p>
+<h4 id="逻辑左移-amp"><a href="#逻辑左移-amp" class="headerlink" title="逻辑左移&amp;"></a><strong>逻辑左移&amp;</strong></h4><p>符号扩展后的32 bits常数左移2位转化成字地址</p>
+<p>ALU执行减法：寄存器rs的值减寄存器rt的值</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113737350.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="左移"></p>
+<h4 id="分支判断-amp-目标地址计算"><a href="#分支判断-amp-目标地址计算" class="headerlink" title="分支判断&amp;目标地址计算"></a><strong>分支判断&amp;目标地址计算</strong></h4><p>ALU减法结果为0，则<strong>Zero</strong>信号有效，传输给分支控制单元（控制是否更新PC为分支目标地址）</p>
+<p>加法器：PC+4加32 bits常数</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113803225.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分支判断计算"></p>
+<h4 id="无条件分支实现"><a href="#无条件分支实现" class="headerlink" title="无条件分支实现"></a><strong>无条件分支实现</strong></h4><p>无条件分支指令：j</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113845355.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="J"></p>
+<p>26 bits常数符号扩展成28 bits</p>
+<p>用28 bits将PC+4的低28位替换</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405113905077.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="🤣"></p>
+<h2 id="六-完整数据通路实现"><a href="#六-完整数据通路实现" class="headerlink" title="六.完整数据通路实现"></a>六.<strong>完整数据通路实现</strong></h2><h4 id="创建完整的数据通路"><a href="#创建完整的数据通路" class="headerlink" title="创建完整的数据通路"></a><strong>创建完整的数据通路</strong></h4><ul>
+<li>一个时钟周期执行一条指令<ul>
+<li>时钟周期由最长执行线路决定</li>
+</ul>
+</li>
+<li>将R型指令（算术逻辑指令）、存取指令和分支指令的数据通路中相同的部件重合</li>
+<li>使用多选器实现多个数据源的选择</li>
+<li>加入取指令的数据通路</li>
+</ul>
+<h4 id="加入多选器"><a href="#加入多选器" class="headerlink" title="加入多选器"></a><strong>加入多选器</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114002399.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多选器"></p>
+<p>ALU第二个操作数：寄存器或立即数</p>
+<p>写回到寄存器的数据：ALU计算结果或数据存储器</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114041191.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="操作"></p>
+<h4 id="完整的数据通路实现"><a href="#完整的数据通路实现" class="headerlink" title="完整的数据通路实现"></a><strong>完整的数据通路实现</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/image-20230405114052009.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230405114052009"></p>
+<h2 id="七-小结"><a href="#七-小结" class="headerlink" title="七.小结"></a><strong>七.小结</strong></h2><p>按照指令执行建立数据通路</p>
+<p>独立的指令存储器和数据存储器</p>
+<p>采用<strong>多选器</strong>实现多个数据源的选择</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L05-datapath</div>
+      <div>https://www.emokable.top/计算机组成原理-L05-datapath/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E6%98%BE%E5%8D%A1%E7%AA%81%E5%8F%91%E9%94%99%E8%AF%AF-%E4%BB%A3%E7%A0%8112%E7%9A%84%E7%A0%B4%E9%99%A4/" title="显卡突发错误-代码12的破除">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">显卡突发错误-代码12的破除</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式">
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

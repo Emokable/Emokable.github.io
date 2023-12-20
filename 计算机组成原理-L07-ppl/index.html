@@ -1,0 +1,1688 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -流水线（pipeline）一.流水线概述回顾：单时钟周期实现假设我们只关注指令运行中的：取指令、读寄存器、ALU运算、访问数据存储器、写回寄存器：  访问指令和数据存储器：4ns ALU和加法器：2ns 访问寄存器：1ns     指令类型 取指令 读寄存器 ALU运算 访问数据存储器 写回寄存器 时间    R型 4 1 2 0 1 8   lw 4 1 2 4 1 12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L07-ppl">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -流水线（pipeline）一.流水线概述回顾：单时钟周期实现假设我们只关注指令运行中的：取指令、读寄存器、ALU运算、访问数据存储器、写回寄存器：  访问指令和数据存储器：4ns ALU和加法器：2ns 访问寄存器：1ns     指令类型 取指令 读寄存器 ALU运算 访问数据存储器 写回寄存器 时间    R型 4 1 2 0 1 8   lw 4 1 2 4 1 12">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411124350418.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411124441758.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411125758798.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130038408.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130642864.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130714019.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130840653.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131345827.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131432740.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131455478.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131552267.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131635211.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131725492.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131809712.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132101226.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132129492.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132519176.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132637684.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133330625.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133508942.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133824610.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134104446.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134349134.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134648154.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135250916.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135445805.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135824830.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411140049276.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411140616534.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411141244615.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142031984.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142515324.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142704449.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142806090.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411143139271.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173544869.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173619957.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173733329.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173849423.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174042760.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174119194.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174307635.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174518723.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174558335.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174611356.png">
+<meta property="article:published_time" content="2023-04-11T04:30:56.000Z">
+<meta property="article:modified_time" content="2023-04-11T09:47:48.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411124350418.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L07-ppl - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L07-ppl"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-11 12:30" pubdate>
+          2023年4月11日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          59 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L07-ppl</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-流水线（pipeline）"><a href="#计算机组成与实践-流水线（pipeline）" class="headerlink" title="计算机组成与实践 -流水线（pipeline）"></a><strong>计算机组成与实践</strong> -<strong>流水线（pipeline）</strong></h1><h2 id="一-流水线概述"><a href="#一-流水线概述" class="headerlink" title="一.流水线概述"></a>一.<strong>流水线概述</strong></h2><h4 id="回顾：单时钟周期实现"><a href="#回顾：单时钟周期实现" class="headerlink" title="回顾：单时钟周期实现"></a><strong>回顾：单时钟周期实现</strong></h4><p>假设我们只关注指令运行中的：取指令、读寄存器、ALU运算、访问数据存储器、写回寄存器：</p>
+<ul>
+<li>访问指令和数据存储器：4ns</li>
+<li>ALU和加法器：2ns</li>
+<li>访问寄存器：1ns</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>指令类型</strong></th>
+<th><strong>取指令</strong></th>
+<th><strong>读寄存器</strong></th>
+<th>ALU运算</th>
+<th><strong>访问数据存储器</strong></th>
+<th><strong>写回寄存器</strong></th>
+<th><strong>时间</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R型</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>lw</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td>sw</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>11</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+</tr>
+<tr>
+<td>j</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<h4 id="单时钟周期设计的优缺点"><a href="#单时钟周期设计的优缺点" class="headerlink" title="单时钟周期设计的优缺点"></a><strong>单时钟周期设计的优缺点</strong></h4><p>☺：实现简单，易于理解</p>
+<p>😞：</p>
+<ul>
+<li>最长延迟决定时钟周期<ul>
+<li>关键路径：取数指令</li>
+<li>指令存储器-&gt;寄存器堆-&gt;ALU-&gt;数据存储器-&gt;寄存器堆</li>
+</ul>
+</li>
+<li>违背设计原则：加速大概率事件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>解决方法：流水线</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>现代处理器几乎都采用流水线实现性能的提升</td>
+</tr>
+<tr>
+<td>理想情况下，流水线的加速比是流水线的级数，例如5级流水线加速比接近于5</td>
+</tr>
+<tr>
+<td>加速比得益于吞吐量</td>
+</tr>
+</tbody></table>
+<h4 id="流水线概述"><a href="#流水线概述" class="headerlink" title="流水线概述"></a><strong>流水线概述</strong></h4><p>洗衣房问题（采用流水线技术）：重叠进行</p>
+<ul>
+<li>并行性提升性能</li>
+<li>4个任务<ul>
+<li>加速比&#x3D;8&#x2F;3.5&#x3D;2.3</li>
+</ul>
+</li>
+<li>任务足够多<ul>
+<li>加速比&#x3D;2n&#x2F;0.5n&#x3D;4</li>
+<li>&#x3D;stage的数量</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411124350418.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线"></p>
+<h4 id="MIPS流水线"><a href="#MIPS流水线" class="headerlink" title="MIPS流水线"></a><strong>MIPS流水线</strong></h4><p>五个阶段，每个阶段一个步骤</p>
+<ul>
+<li><ol>
+<li>**取指(IF)**：从指令存储器取指令</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>**译码(ID)**：译码并读寄存器堆</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>**执行(EX)**：执行运算或计算地址</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>**访存(MEM)**：访问（读取&#x2F;写数据）存储器</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>**写回(WB)**：将结果写回寄存器堆</li>
+</ol>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411124441758.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线"></p>
+<blockquote>
+<p><strong>最长的执行阶段决定时钟周期时间</strong></p>
+</blockquote>
+<h4 id="流水线性能"><a href="#流水线性能" class="headerlink" title="流水线性能"></a><strong>流水线性能</strong></h4><ul>
+<li>假设每个阶段的执行时间<ul>
+<li>读写寄存器堆：100ps</li>
+<li>其他阶段：200ps</li>
+</ul>
+</li>
+<li>比较流水线指令执行与单周期指令执行</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411125758798.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线性能，上为单周期下为低周期"></p>
+<h4 id="面向流水线的指令集设计"><a href="#面向流水线的指令集设计" class="headerlink" title="面向流水线的指令集设计"></a><strong>面向流水线的指令集设计</strong></h4><ul>
+<li>MIPS指令集</li>
+<li>所有指令长度相同，都是32bit<ul>
+<li>单时钟周期内可以取得指令</li>
+</ul>
+</li>
+<li>指令格式少，格式类似<ul>
+<li>可以一步完成译码和读寄存器</li>
+</ul>
+</li>
+<li>只有存&#x2F;取指令涉及到存储器访问<ul>
+<li>可以利用ALU计算地址，并在第4级访问存储器</li>
+</ul>
+</li>
+<li>所有操作数在存储器中对齐<ul>
+<li>数据访问只需要一个时钟周期</li>
+</ul>
+</li>
+</ul>
+<h2 id="二-流水线数据通路及其控制"><a href="#二-流水线数据通路及其控制" class="headerlink" title="二.流水线数据通路及其控制"></a>二.<strong>流水线数据通路及其控制</strong></h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130038408.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线数据通路"></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">lw  <span class="hljs-variable">$10</span>,20(<span class="hljs-variable">$1</span>)<br>sub <span class="hljs-variable">$11</span>,<span class="hljs-variable">$2</span>,<span class="hljs-variable">$3</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$12</span>,<span class="hljs-variable">$3</span>,<span class="hljs-variable">$4</span><br>lw  <span class="hljs-variable">$13</span>,24(<span class="hljs-variable">$1</span>)<br><span class="hljs-built_in">add</span> <span class="hljs-variable">$14</span>,<span class="hljs-variable">$5</span>,<span class="hljs-variable">$6</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>上升沿触发</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130642864.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130714019.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="cyc2"></p>
+<p><strong>在流水线各级间加入状态单元——流水线寄存器</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411130840653.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线寄存器"></p>
+<p><strong>流水线中的指令执行（0 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131345827.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="0cc"></p>
+<p><strong>流水线中的指令执行（1 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131432740.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1cc"></p>
+<p><strong>流水线中的指令执行（2 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131455478.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2cc"></p>
+<p><strong>流水线中的指令执行（3 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131552267.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="3CC"></p>
+<p><strong>流水线中的指令执行（4 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131635211.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4CC"></p>
+<p><strong>流水线中的指令执行（5 CC）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131725492.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="5CC"></p>
+<p><strong>正确的流水线数据通路</strong></p>
+<p>指令的信息随着指令执行在流水线寄存器中保存</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411131809712.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="RIGHT"></p>
+<h4 id="流水线控制"><a href="#流水线控制" class="headerlink" title="流水线控制"></a><strong>流水线控制</strong></h4><ul>
+<li>所有控制信号可以在译码阶段（ID）生成<ul>
+<li>将控制信号沿着流水线状态寄存器传递</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132101226.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="控制信号"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132129492.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="complex"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>EX</strong></th>
+<th></th>
+<th></th>
+<th></th>
+<th><strong>MEM</strong></th>
+<th></th>
+<th></th>
+<th><strong>WB</strong></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Reg  Dst</td>
+<td>ALU  Op1</td>
+<td>ALU  Op0</td>
+<td>ALU  Src</td>
+<td>Brch</td>
+<td>Mem  Read</td>
+<td>Mem  Write</td>
+<td>Reg  Write</td>
+<td>Mem  toReg</td>
+</tr>
+<tr>
+<td>R</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>lw</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>sw</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>X</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>X</td>
+</tr>
+</tbody></table>
+<h4 id="流水线操作"><a href="#流水线操作" class="headerlink" title="流水线操作"></a><strong>流水线操作</strong></h4><p>每个时钟周期，所有指令都会沿着流水线的数据通路从一个流水线寄存器传递到下一个流水线寄存器</p>
+<ul>
+<li>单时钟周期（Single-clock-cycle）流水线图<ul>
+<li>显示单个时钟周期的流水线使用情况</li>
+<li>着重显示使用的部件</li>
+</ul>
+</li>
+<li>多时钟周期（multi-clock-cycle）流水线图<ul>
+<li>随着时间的变化，展示执行的操作的图</li>
+</ul>
+</li>
+</ul>
+<h4 id="单时钟周期流水线图"><a href="#单时钟周期流水线图" class="headerlink" title="单时钟周期流水线图"></a><strong>单时钟周期流水线图</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132519176.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="single"></p>
+<h4 id="多时钟周期流水线图"><a href="#多时钟周期流水线图" class="headerlink" title="多时钟周期流水线图"></a><strong>多时钟周期流水线图</strong></h4><p>展示流水线中部件的使用情况</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411132637684.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="部件"></p>
+<h2 id="三-流水线冒险"><a href="#三-流水线冒险" class="headerlink" title="三.流水线冒险"></a>三.<strong>流水线冒险</strong></h2><p><strong>流水线冒险</strong></p>
+<p><strong>流水线每个时钟周期都可以执行一条指令吗？</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>流水线冒险（Pipeline Hazards）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>现流水线在下一个时钟周期不能执行下一条指令的情况</td>
+</tr>
+</tbody></table>
+<ul>
+<li>结构冒险（Structural Hazard ）</li>
+<li>数据冒险（Data Hazard）</li>
+<li>控制冒险（Control Hazard）</li>
+</ul>
+<p><strong>检测出冒险，解决冒险带来的问题</strong></p>
+<h3 id="☆结构冒险"><a href="#☆结构冒险" class="headerlink" title="☆结构冒险"></a>☆<strong>结构冒险</strong></h3><p>缺乏硬件导致的冒险</p>
+<p>1.MIPS流水线中的存储器使用冲突</p>
+<ul>
+<li>取指令需要访问存储器</li>
+<li>数据传输指令lw和sw需要访问存储器</li>
+</ul>
+<p>2.寄存器的访问冲突</p>
+<ul>
+<li>同一个时钟周期内，需要读和写寄存器</li>
+</ul>
+<p>对指令与数据，采用分开的L1缓存</p>
+<ul>
+<li>Icache和Dcache</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133330625.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="解决结构冒险1"></p>
+<p>时钟的前半部分进行写，时钟的后半部分进行读</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133508942.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="解决结构冒险2"></p>
+<h3 id="☆数据冒险"><a href="#☆数据冒险" class="headerlink" title="☆数据冒险"></a>☆<strong>数据冒险</strong></h3><p>无法提供指令执行所需要的数据，即需要等待前面某些指令执行完数据的读写</p>
+<p>1.寄存器导致的数据冒险</p>
+<ul>
+<li>一条指令的操作数来源于前面的某条指令</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">add	</span>$<span class="hljs-built_in">s0</span>, $<span class="hljs-built_in">t0</span>, $<span class="hljs-built_in">t1</span><br><span class="hljs-keyword">sub	</span>$<span class="hljs-built_in">t2</span>, $<span class="hljs-built_in">s0</span>, $<span class="hljs-built_in">t3</span><br></code></pre></td></tr></table></figure>
+
+<p>2.取数-使用型数据冒险</p>
+<ul>
+<li>在数据需要使用时，数据还没有从存储器读出</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">lw	</span>$<span class="hljs-built_in">s0</span>, <span class="hljs-number">20</span>($<span class="hljs-built_in">t1</span>)<br><span class="hljs-keyword">sub	</span>$<span class="hljs-built_in">t2</span>, $<span class="hljs-built_in">s0</span>, $<span class="hljs-built_in">t3</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411133824610.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冒险"></p>
+<h4 id="☆旁路"><a href="#☆旁路" class="headerlink" title="☆旁路"></a>☆<strong>旁路</strong></h4><p><strong>解决数据冒险1：旁路</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>前推（Forwarding）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在EX级产生结果之后马上发送给下一条指令</td>
+</tr>
+</tbody></table>
+<ul>
+<li>旁路（bypassing）：建立额外的数据通路连接ALU的输出到输入</li>
+<li>不需要等到结果写回到寄存器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134104446.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="forwarding"></p>
+<h5 id="数据依赖"><a href="#数据依赖" class="headerlink" title="数据依赖"></a><strong>数据依赖</strong></h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sub  <span class="hljs-variable">$2</span>, <span class="hljs-variable">$1</span>, <span class="hljs-variable">$3</span><br><span class="hljs-keyword">and</span>  <span class="hljs-variable">$12</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$5</span><br><span class="hljs-keyword">or</span>   <span class="hljs-variable">$13</span>, <span class="hljs-variable">$6</span>, <span class="hljs-variable">$2</span><br><span class="hljs-built_in">add</span>  <span class="hljs-variable">$14</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$2</span><br>sw   <span class="hljs-variable">$15</span>, 100(<span class="hljs-variable">$2</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>是否都会出现数据冒险？如何检测出这类数据冒险？</strong></p>
+<p><strong>数据依赖与旁路</strong></p>
+<h5 id=""><a href="#" class="headerlink" title=""></a><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134349134.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="旁路"></h5><h5 id="检测数据冒险"><a href="#检测数据冒险" class="headerlink" title="检测数据冒险"></a><strong>检测数据冒险</strong></h5><ul>
+<li>使用流水线寄存器字段<ul>
+<li>ID&#x2F;EX.RegisterRs：表示一个需要流水线寄存器ID&#x2F; EX 获得的源寄存器号</li>
+</ul>
+</li>
+<li>在EX级的ALU操作的两个寄存器号为：<ul>
+<li>ID&#x2F;EX.RegisterRs, ID&#x2F;EX.RegisterRt</li>
+</ul>
+</li>
+<li>当满足下列条件时会出现数据冒险：</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-number">1</span>a. EX<span class="hljs-regexp">/MEM.RegisterRd = ID/</span>EX.RegisterRs<br><br><span class="hljs-number">1</span>b. EX<span class="hljs-regexp">/MEM.RegisterRd = ID/</span>EX.RegisterRt<br><br><span class="hljs-number">2</span>a. MEM<span class="hljs-regexp">/WB.RegisterRd = ID/</span>EX.RegisterRs<br><br><span class="hljs-number">2</span>b. MEM<span class="hljs-regexp">/WB.RegisterRd = ID/</span>EX.RegisterRt<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>只有需要写回寄存器的指令才需要旁路<ul>
+<li>EX&#x2F;MEM.RegWrite, MEM&#x2F;WB.RegWrite</li>
+</ul>
+</li>
+<li>目的寄存器不能是$0</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">EX</span>/MEM.RegisterRd ≠ <span class="hljs-number">0</span>,<br><span class="hljs-attribute">MEM</span>/WB.RegisterRd ≠ <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="旁路的数据通路"><a href="#旁路的数据通路" class="headerlink" title="旁路的数据通路"></a><strong>旁路的数据通路</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411134648154.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="旁路datapath"></p>
+<h5 id="旁路多选器的控制信号"><a href="#旁路多选器的控制信号" class="headerlink" title="旁路多选器的控制信号"></a><strong>旁路多选器的控制信号</strong></h5><table>
+<thead>
+<tr>
+<th>Mux  control</th>
+<th>Source</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ForwardA &#x3D; 00</td>
+<td>ID&#x2F;EX</td>
+<td>第一个ALU操作数来自寄存器堆</td>
+</tr>
+<tr>
+<td>ForwardA  &#x3D; 10</td>
+<td>EX&#x2F;MEM</td>
+<td>第一个ALU操作数由上一个ALU运算结果旁路获得</td>
+</tr>
+<tr>
+<td>ForwardA  &#x3D; 01</td>
+<td>MEM&#x2F;WB</td>
+<td>第一个ALU 操作数从数据存储器或者往前数第二条指令的ALU 结果中旁路获得</td>
+</tr>
+<tr>
+<td>ForwardB  &#x3D; 00</td>
+<td>ID&#x2F;EX</td>
+<td>第二个ALU 操作数来自寄存器堆</td>
+</tr>
+<tr>
+<td>ForwardB  &#x3D; 10</td>
+<td>EX&#x2F;MEM</td>
+<td>第二个ALU 拱作做由上一个ALU 运算结果旁路获得</td>
+</tr>
+<tr>
+<td>ForwardB  &#x3D; 01</td>
+<td>MEM&#x2F;WB</td>
+<td>第二个ALU 操作般由数据存储器或者往前数第二条指令的ALU 结果旁路获得</td>
+</tr>
+</tbody></table>
+<h5 id="旁路条件"><a href="#旁路条件" class="headerlink" title="旁路条件"></a><strong>旁路条件</strong></h5><p><strong>EX</strong> <strong>冒险</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">if</span> (EX<span class="hljs-regexp">/MEM.RegWrite and (EX/</span>MEM.RegisterRd ≠ <span class="hljs-number">0</span>)<br><br> and (EX<span class="hljs-regexp">/MEM.RegisterRd = ID/</span>EX.RegisterRs)) ForwardA = <span class="hljs-number">10</span><br><br><span class="hljs-keyword">if</span> (EX<span class="hljs-regexp">/MEM.RegWrite and (EX/</span>MEM.RegisterRd ≠ <span class="hljs-number">0</span>)<br><br> and (EX<span class="hljs-regexp">/MEM.RegisterRd = ID/</span>EX.RegisterRt)) ForwardB = <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>MEM</strong> <strong>冒险</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">if</span> (MEM<span class="hljs-regexp">/WB.RegWrite and (MEM/</span>WB.RegisterRd ≠ <span class="hljs-number">0</span>)<br><br> and (MEM<span class="hljs-regexp">/WB.RegisterRd = ID/</span>EX.RegisterRs)) ForwardA = <span class="hljs-number">01</span><br><br><span class="hljs-keyword">if</span> (MEM<span class="hljs-regexp">/WB.RegWrite and (MEM/</span>WB.RegisterRd ≠ <span class="hljs-number">0</span>)<br><br> and (MEM<span class="hljs-regexp">/WB.RegisterRd = ID/</span>EX.RegisterRt)) ForwardB= <span class="hljs-number">01</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="两种冒险"><a href="#两种冒险" class="headerlink" title="两种冒险"></a><strong>两种冒险</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135250916.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h5 id="潜在数据冒险"><a href="#潜在数据冒险" class="headerlink" title="潜在数据冒险"></a><strong>潜在数据冒险</strong></h5><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">add</span> <span class="hljs-variable">$1</span>, <span class="hljs-variable">$1</span>, <span class="hljs-variable">$2</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$1</span>, <span class="hljs-variable">$1</span>, <span class="hljs-variable">$3</span><br><span class="hljs-built_in">add</span> <span class="hljs-variable">$1</span>, <span class="hljs-variable">$1</span>, <span class="hljs-variable">$4</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135445805.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="潜在数据冒险"></p>
+<ul>
+<li>两类数据冒险都会发生：<ul>
+<li>MEM级的数据是最新结果，使用MEM级数据进行旁路</li>
+</ul>
+</li>
+<li>更改MEM冒险的条件<ul>
+<li>EX冒险的条件不成立时</li>
+</ul>
+</li>
+</ul>
+<h5 id="更改后的旁路条件"><a href="#更改后的旁路条件" class="headerlink" title="更改后的旁路条件"></a><strong>更改后的旁路条件</strong></h5><p><strong>MEM冒险</strong></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-keyword">if</span> (MEM/WB<span class="hljs-selector-class">.RegWrite</span><br>	and (MEM/WB<span class="hljs-selector-class">.RegisterRd</span> ≠ <span class="hljs-number">0</span>)<br>	and <span class="hljs-built_in">not</span>(EX/MEM<span class="hljs-selector-class">.RegWrite</span> and (EX/MEM<span class="hljs-selector-class">.RegisterRd</span> ≠ <span class="hljs-number">0</span>)<br>		and (EX/MEM<span class="hljs-selector-class">.RegisterRd</span> ≠ ID/EX.RegisterRs))<br>	and (MEM/WB<span class="hljs-selector-class">.RegisterRd</span> = ID/EX.RegisterRs)) ForwardA = <span class="hljs-number">01</span><br><span class="hljs-keyword">if</span> (MEM/WB<span class="hljs-selector-class">.RegWrite</span><br>	and (MEM/WB<span class="hljs-selector-class">.RegisterRd</span> ≠ <span class="hljs-number">0</span>)<br>	and <span class="hljs-built_in">not</span>(EX/MEM<span class="hljs-selector-class">.RegWrite</span> and (EX/MEM<span class="hljs-selector-class">.RegisterRd</span> ≠ <span class="hljs-number">0</span>)<br>		and (EX/MEM<span class="hljs-selector-class">.RegisterRd</span> ≠ ID/EX.RegisterRt))<br>	and (MEM/WB<span class="hljs-selector-class">.RegisterRd</span> = ID/EX.RegisterRt)) ForwardB = <span class="hljs-number">01</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="☆阻塞"><a href="#☆阻塞" class="headerlink" title="☆阻塞"></a>☆<strong>阻塞</strong></h4><h5 id="解决数据冒险2：阻塞"><a href="#解决数据冒险2：阻塞" class="headerlink" title="解决数据冒险2：阻塞"></a><strong>解决数据冒险2：阻塞</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411135824830.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="阻塞"></p>
+<ul>
+<li>即使使用旁路也不能消除冒险</li>
+<li>必须让流水线阻塞一个时钟周期</li>
+</ul>
+<p><strong>怎样阻塞流水线？</strong></p>
+<h5 id="空指令"><a href="#空指令" class="headerlink" title="空指令"></a><strong>空指令</strong></h5><table>
+<thead>
+<tr>
+<th><strong>空指令（nop）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一种不进行任何操作或不改变任何状态的指令</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411140049276.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="NOP"></p>
+<p><strong>需要在译码（ID）阶段检测出！</strong></p>
+<h5 id="取数使用型数据冒险检测"><a href="#取数使用型数据冒险检测" class="headerlink" title="取数使用型数据冒险检测"></a><strong>取数使用型数据冒险检测</strong></h5><ul>
+<li><p>ALU操作数寄存器号可以在ID级获得：</p>
+<ul>
+<li>IF&#x2F;ID.RegisterRs, IF&#x2F;ID.RegisterRt</li>
+</ul>
+</li>
+<li><p>取数使用型冒险发生条件：</p>
+<ul>
+<li>ID&#x2F;EX.MemRead</li>
+</ul>
+<p> and ((ID&#x2F;EX.RegisterRd &#x3D; IF&#x2F;ID.RegisterRs)<br> or (ID&#x2F;EX.RegisterRd &#x3D; IF&#x2F;ID.RegisterRt))</p>
+</li>
+<li><p>如果检测到冒险发生，阻塞流水线一个时钟周期</p>
+</li>
+</ul>
+<h5 id="如何阻塞流水线"><a href="#如何阻塞流水线" class="headerlink" title="如何阻塞流水线"></a><strong>如何阻塞流水线</strong></h5><ul>
+<li>将ID&#x2F;EX寄存器中的控制信号置为0（nop指令）<ul>
+<li>EX，MEM，WB级不进行操作</li>
+</ul>
+</li>
+<li>阻止PC和IF&#x2F;ID寄存器更新<ul>
+<li>正在运行的指令重复译码</li>
+<li>重复提取下一条指令</li>
+<li>阻塞一个时钟周期可以让取数操作取得数据，接下来可以旁路到EX级</li>
+</ul>
+</li>
+</ul>
+<h5 id="冒险检测的数据通路"><a href="#冒险检测的数据通路" class="headerlink" title="冒险检测的数据通路"></a><strong>冒险检测的数据通路</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411140616534.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DATAPATH"></p>
+<h5 id="阻塞与性能"><a href="#阻塞与性能" class="headerlink" title="阻塞与性能"></a><strong>阻塞与性能</strong></h5><ul>
+<li>阻塞降低性能<ul>
+<li>为了获得正确的结果，需要阻塞</li>
+</ul>
+</li>
+<li>编译器可以通过调整指令执行顺序减少冒险和阻塞<ul>
+<li>需要了解流水线结构</li>
+</ul>
+</li>
+</ul>
+<h5 id="编译器优化：指令调度避免阻塞"><a href="#编译器优化：指令调度避免阻塞" class="headerlink" title="编译器优化：指令调度避免阻塞"></a><strong>编译器优化：指令调度避免阻塞</strong></h5><p>改变指令顺序，避免产生取数-使用型数据冒险</p>
+<p>C代码：A&#x3D;B+E；</p>
+<p>​        C&#x3D;B+F；</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411141244615.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="优化"></p>
+<h3 id="☆控制冒险"><a href="#☆控制冒险" class="headerlink" title="☆控制冒险"></a>☆<strong>控制冒险</strong></h3><p>分支冒险（branch hazard），指令执行不是顺序执行，即下一条指令的地址不是PC+4，而是依赖于正在执行的指令</p>
+<ul>
+<li>无条件分支（j、jal、jr）</li>
+<li>条件分支（beq、bne）</li>
+<li>异常</li>
+</ul>
+<p>解决方案：</p>
+<ul>
+<li>阻塞：影响性能</li>
+<li>提前产生分支结果：需要额外的硬件</li>
+<li>延迟分支决策：需要编译器的支持</li>
+<li>分支预测（ Branch Prediction ）</li>
+</ul>
+<h4 id="控制冒险1：跳转"><a href="#控制冒险1：跳转" class="headerlink" title="控制冒险1：跳转"></a><strong>控制冒险1：跳转</strong></h4><ul>
+<li>假定分支不发生</li>
+<li>跳转指令在译码阶段（ID）才能得到跳转地址，需要清除流水线</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>清除（FLUSH）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>因发生了意外而丢弃流水线中的指令</td>
+</tr>
+</tbody></table>
+<p>用IF.Flush将IF&#x2F;ID流水线寄存器中的指令置为空指令</p>
+<h4 id="支持ID级跳转的数据通路"><a href="#支持ID级跳转的数据通路" class="headerlink" title="支持ID级跳转的数据通路"></a><strong>支持ID级跳转的数据通路</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142031984.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ID跳转"></p>
+<h4 id="控制冒险2：条件分支"><a href="#控制冒险2：条件分支" class="headerlink" title="控制冒险2：条件分支"></a><strong>控制冒险2：条件分支</strong></h4><p>分支结果在MEM级获得</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142515324.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="条件分支"></p>
+<h4 id="解决控制冒险2：等待分支结果"><a href="#解决控制冒险2：等待分支结果" class="headerlink" title="解决控制冒险2：等待分支结果"></a><strong>解决控制冒险2：等待分支结果</strong></h4><p>分支结果在MEM级获得</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142704449.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分支结果"></p>
+<h4 id="解决控制冒险2：提前计算分支结果"><a href="#解决控制冒险2：提前计算分支结果" class="headerlink" title="解决控制冒险2：提前计算分支结果"></a><strong>解决控制冒险2：提前计算分支结果</strong></h4><p>将生成分支结果的硬件放在ID级</p>
+<ul>
+<li>目的地址加法器</li>
+<li>寄存器比较器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411142806090.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="提前分支"></p>
+<h4 id="ID级生成分支结果"><a href="#ID级生成分支结果" class="headerlink" title="ID级生成分支结果"></a><strong>ID级生成分支结果</strong></h4><p>计算分支目标地址</p>
+<ul>
+<li>将分支地址计算电路从EX级移到ID级</li>
+</ul>
+<p>判断分支条件</p>
+<ul>
+<li>决定是否将数据旁路到相等检测单元进行检测（beq、bnq）</li>
+<li>可能发生数据冒险，需要阻塞流水线<ul>
+<li>分支指令前是R型指令，计算的结果是分支指令的源操作数，发生一个阻塞</li>
+<li>分支指令前是lw指令，载入的数据是分支指令的源操作数，发生两个阻塞</li>
+</ul>
+</li>
+</ul>
+<h4 id="ID级分支旁路问题"><a href="#ID级分支旁路问题" class="headerlink" title="ID级分支旁路问题"></a><strong>ID级分支旁路问题</strong></h4><p>分支指令beq的操作数是需要写回的数据</p>
+<p> 需要将MEM&#x2F;WB寄存器的数据旁路到ID级的比较硬件</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411143139271.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p>需要将EX&#x2F;MEM寄存器的数据旁路到ID级的比较硬件</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173544869.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h4 id="旁路条件-1"><a href="#旁路条件-1" class="headerlink" title="旁路条件"></a><strong>旁路条件</strong></h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs smali">EX 冒险<span class="hljs-built_in"></span><br><span class="hljs-built_in">if </span>(IDcontrol.Branch <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd != 0)<br>   <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd == IF/ID.RegisterRs)   ForwardC = 10<span class="hljs-built_in"></span><br><span class="hljs-built_in">if </span>(IDcontrol.Branch<span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd != 0)<br>   <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd == IF/ID.RegisterRt)    ForwardD = 10<br>MEM 冒险<span class="hljs-built_in"></span><br><span class="hljs-built_in">if </span>(IDcontrol.Branch <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd != 0)<br>   <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd == IF/ID.RegisterRs)   ForwardC = 01<span class="hljs-built_in"></span><br><span class="hljs-built_in">if </span>(IDcontrol.Branch<span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd != 0)<br>   <span class="hljs-built_in"> and </span>(EX/MEM.RegisterRd == IF/ID.RegisterRt)    ForwardD = 01<br></code></pre></td></tr></table></figure>
+
+<h4 id="支持ID级分支的数据通路"><a href="#支持ID级分支的数据通路" class="headerlink" title="支持ID级分支的数据通路"></a><strong>支持ID级分支的数据通路</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173619957.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ID分支"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173733329.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="放大"></p>
+<h4 id="编译器优化：延迟分支"><a href="#编译器优化：延迟分支" class="headerlink" title="编译器优化：延迟分支"></a><strong>编译器优化：延迟分支</strong></h4><table>
+<thead>
+<tr>
+<th><strong>延迟分支</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MIPS编译器将一条指令I移到分支指令之后，可以延迟分支目的指令的执行，从而隐藏分支延迟</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411173849423.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="调度"></p>
+<p>方案A最佳，分支发生概率大时选择方案B（循环），分支不发生概率大时选择C </p>
+<h4 id="动态分支预测"><a href="#动态分支预测" class="headerlink" title="动态分支预测"></a><strong>动态分支预测</strong></h4><ul>
+<li>流水线级数的增加，预测错误的代价增加</li>
+<li>静态分支预测是粗略的预测方法</li>
+<li>动态分支预测<ul>
+<li>分支预测缓存（Branch prediction buffer ）或分支历史记录表（branch history table）</li>
+<li>分支指令的地址低位索引</li>
+<li>存储分支结果（taken&#x2F;not taken）</li>
+</ul>
+</li>
+<li>执行分支<ul>
+<li>查表，预测的结果与上次分支结果一样</li>
+<li>按照预测结果取指令</li>
+<li>如果出错，清洗流水线并重新提取正确的指令</li>
+<li>将表中预测结果取反</li>
+</ul>
+</li>
+</ul>
+<h4 id="1位预测器"><a href="#1位预测器" class="headerlink" title="1位预测器"></a><strong>1位预测器</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174042760.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="预测器"></p>
+<p>内层循环至少两次预测错误</p>
+<ul>
+<li>最后一次预测会出错：前面分支都是发生的，最后一次不发生</li>
+<li>第一次预测会出错：上一次的预测不发生，跳出内层循环之后，再次进入内层循环也会预测不发生</li>
+</ul>
+<p><strong>2位预测器</strong></p>
+<p>只有连续两次预测错误时才会改变预测结果</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174119194.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2bit"></p>
+<h4 id="计算分支目标地址"><a href="#计算分支目标地址" class="headerlink" title="计算分支目标地址"></a><strong>计算分支目标地址</strong></h4><ul>
+<li>结合分支预测器，需要计算分支目标地址<ul>
+<li>分支发生会产生1个时钟周期的开销</li>
+</ul>
+</li>
+<li>延迟分支</li>
+<li>分支目标缓存（Branch target buffer）<ul>
+<li>缓存分支目标地址</li>
+<li>取指令时，由PC中的地址索引<ul>
+<li>如果预测正确，并且分支指令发生，可以直接提取到分支目标地址</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="四-异常"><a href="#四-异常" class="headerlink" title="四.异常"></a>四.<strong>异常</strong></h2><table>
+<thead>
+<tr>
+<th><strong>异常</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>指打断程序正常执行的突发事件，会改变指令执行顺序</td>
+</tr>
+</tbody></table>
+<ul>
+<li>异常（exceptions）<ul>
+<li>产生原因可能来自处理器内部或者外部</li>
+<li>例如，使用未定义的指令，算术溢出，系统调用</li>
+<li>与程序执行同步，必须停止随后的指令在流水线中运行</li>
+</ul>
+</li>
+<li>中断（Interrupt）<ul>
+<li>由处理器外部引起的事件</li>
+<li>例如I&#x2F;O设备请求</li>
+<li>与程序执行不同步，可以等流水线中指令执行结束再处理</li>
+</ul>
+</li>
+<li>处理异常和中断会牺牲系统性能</li>
+</ul>
+<h4 id="流水线中的异常"><a href="#流水线中的异常" class="headerlink" title="流水线中的异常"></a><strong>流水线中的异常</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174307635.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水线"></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>发生的流水级</strong></th>
+<th><strong>是否同步</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>算术溢出</td>
+<td>EX</td>
+<td>是</td>
+</tr>
+<tr>
+<td>未定义的指令</td>
+<td>ID</td>
+<td>是</td>
+</tr>
+<tr>
+<td>TLB或页缺失</td>
+<td>IF，MEM</td>
+<td>是</td>
+</tr>
+<tr>
+<td>I&#x2F;O设备请求</td>
+<td>全部</td>
+<td>否</td>
+</tr>
+<tr>
+<td>硬件故障</td>
+<td>全部</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<p><strong>多种异常可能同时发生</strong></p>
+<h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a><strong>异常处理</strong></h4><ul>
+<li>保存出错指令的地址<ul>
+<li>异常程序计数器(Exception Program Counter，EPC)</li>
+</ul>
+</li>
+<li>保存引起异常的原因<ul>
+<li>状态寄存器（Cause寄存器）</li>
+<li>MIPS体系结构中是32 bits</li>
+<li>一个字段用于记录异常产生的原因，例如未定义指令&#x3D;10，算术溢出&#x3D;12</li>
+</ul>
+</li>
+<li>向量中断（vectored interrupt）<ul>
+<li>未定义指令-&gt;8000 0000（16进制），算术溢出-&gt;8000 0180（16）</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>向量中断</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>由异常原因决定中断控制转移地址的中断</td>
+</tr>
+</tbody></table>
+<h4 id="异常处理操作"><a href="#异常处理操作" class="headerlink" title="异常处理操作"></a><strong>异常处理操作</strong></h4><ul>
+<li>读取异常或中断原因，找到相应的处理程序</li>
+<li>决定需要的处理操作</li>
+<li>如果可以处理，最后要重新启动程序<ul>
+<li>执行相应处理操作</li>
+<li>使用EPC返回程序继续执行</li>
+</ul>
+</li>
+<li>如果不能处理<ul>
+<li>结束程序</li>
+<li>用EPC和cause寄存器报告错误</li>
+</ul>
+</li>
+</ul>
+<h4 id="流水线实现中的异常"><a href="#流水线实现中的异常" class="headerlink" title="流水线实现中的异常"></a><strong>流水线实现中的异常</strong></h4><ul>
+<li>另一种形式的控制冒险</li>
+<li>在EX级加法出现算术溢出<ul>
+<li>add $1, $2, $1</li>
+<li>停止运行add指令</li>
+<li>add之前的指令可以正常运行</li>
+<li>清空add及其之后的指令</li>
+<li>设置EPC和cause的值</li>
+<li>将控制权交给处理程序</li>
+</ul>
+</li>
+<li>与处理分支预测错误相似</li>
+</ul>
+<h4 id="处理异常的数据通路与控制"><a href="#处理异常的数据通路与控制" class="headerlink" title="处理异常的数据通路与控制"></a>处理异常的数据通路与控制</h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174518723.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="e"></p>
+<blockquote>
+<p><strong>例子</strong></p>
+<p>异常发生在add</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">40 sub <span class="hljs-variable">$11</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$4</span><br> 44 <span class="hljs-keyword">and</span> <span class="hljs-variable">$12</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$5</span><br> 48 <span class="hljs-keyword">or</span>  <span class="hljs-variable">$13</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$6</span><br> 4C <span class="hljs-built_in">add</span> <span class="hljs-variable">$1</span>, <span class="hljs-variable">$2</span>, <span class="hljs-variable">$1</span><br> 50 slt <span class="hljs-variable">$15</span>, <span class="hljs-variable">$6</span>, <span class="hljs-variable">$7</span><br> 54 lw  <span class="hljs-variable">$16</span>, 50(<span class="hljs-variable">$7</span>)<br></code></pre></td></tr></table></figure>
+
+
+<p> …</p>
+<p>异常处理程序:</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">80000180</span> sw $<span class="hljs-number">26</span>, <span class="hljs-number">1000</span>($<span class="hljs-number">0</span>)<br> <span class="hljs-attribute">80000184</span>  sw $<span class="hljs-number">27</span>, <span class="hljs-number">1004</span>($<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+
+<p> …</p>
+<p>给出add 指令发生溢出异常时流水线的情况</p>
+</blockquote>
+<h4 id="算术溢出异常例子"><a href="#算术溢出异常例子" class="headerlink" title="算术溢出异常例子"></a><strong>算术溢出异常例子</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174558335.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="examp"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L07-ppl/image-20230411174611356.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="example"></p>
+<h4 id="多个异常"><a href="#多个异常" class="headerlink" title="多个异常"></a><strong>多个异常</strong></h4><ul>
+<li>流水线各级都可能发生异常<ul>
+<li>5级流水线可能同时发生异常</li>
+</ul>
+</li>
+<li>处理最早最先发生异常的指令<ul>
+<li>清洗掉接下来的所有指令</li>
+<li>精确（precise）异常</li>
+</ul>
+</li>
+<li>在更复杂的流水线中<ul>
+<li>每个时钟周期处理多条指令</li>
+<li>指令乱序执行</li>
+<li>保持精确异常非常困难</li>
+</ul>
+</li>
+</ul>
+<h4 id="非精确异常"><a href="#非精确异常" class="headerlink" title="非精确异常"></a><strong>非精确异常</strong></h4><ul>
+<li>停止流水线并保存状态<ul>
+<li>包括异常发生的原因</li>
+</ul>
+</li>
+<li>让处理程序去完成<ul>
+<li>确定是哪条指令发生了异常</li>
+<li>哪条指令可以完成，哪条需要清洗</li>
+</ul>
+</li>
+<li>简化硬件设计，但是处理程序将变得更加复杂</li>
+<li>对于复杂多发射乱序执行流水线不适用</li>
+</ul>
+<h2 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a>五.<strong>小结</strong></h2><ul>
+<li>所有现代处理器都采用流水线设计</li>
+<li>流水线时钟频率由最慢的流水线阶段决定——流水线各阶段的划分很重要</li>
+<li>流水线正确运行必须能够检测并解决各类冒险<ul>
+<li>结构冒险：流水线设计阶段</li>
+<li>数据冒险：旁路和阻塞</li>
+<li>控制冒险：阻塞、延迟分支决策、静态分支预测和动态分支预测</li>
+</ul>
+</li>
+<li>流水线复杂的异常处理</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L07-ppl</div>
+      <div>https://www.emokable.top/计算机组成原理-L07-ppl/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月11日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F3-%E7%89%B9%E6%AE%8A%E6%8C%87%E4%BB%A4/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统3-特殊指令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统3-特殊指令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F2-%E7%AE%97%E6%9C%AF%E6%8C%87%E4%BB%A4/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统2-算术指令">
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统2-算术指令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

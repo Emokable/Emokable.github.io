@@ -1,0 +1,1634 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第三章   嵌入式总线技术 系统总线概述 总线结构与协议 DMA ARM CPU总线结构 总线的性能分析  3.1 系统总线概述总线的定义：一种描述电子信号传输线路的物理结构形式，是一组信号线（电线）的集合  一组信息传输的信号线 总线协议  分类按功能的分类  数据总线 - 传输数据 地址总线 –传输地址 控制总线 –传输控制指令&#x2F;信号 扩展总线 – 不常使用的部件的扩展  按信息位置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式程序设计ch3-嵌入式总线技术">
+<meta property="og:url" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="第三章   嵌入式总线技术 系统总线概述 总线结构与协议 DMA ARM CPU总线结构 总线的性能分析  3.1 系统总线概述总线的定义：一种描述电子信号传输线路的物理结构形式，是一组信号线（电线）的集合  一组信息传输的信号线 总线协议  分类按功能的分类  数据总线 - 传输数据 地址总线 –传输地址 控制总线 –传输控制指令&#x2F;信号 扩展总线 – 不常使用的部件的扩展  按信息位置">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144032815.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144134567.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144144531.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144337647.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144404807.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144555953.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144625789.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144639854.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144720639.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144937009.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426125151078.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145043808.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145246404.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145410196.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421150536817.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151053037.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151257939.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151325457.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151349691.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151432183.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151559605.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421152024302.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421152227939.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153009656.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153105428.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153244064.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153300733.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153502824.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153614789.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153638491.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153708077.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153929680.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154135262.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154226268.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154326747.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154351761.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421155310052.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160140659.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160450002.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160638232.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160820971.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426125616694.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161000419.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161048952.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161142764.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161304505.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161504120.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161606334.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161648037.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161836867.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421162548145.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421162852771.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163010958.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163155421.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163306740.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426130513677.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163441026.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131413469.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131550351.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131652671.png">
+<meta property="article:published_time" content="2023-04-21T06:32:28.000Z">
+<meta property="article:modified_time" content="2023-04-26T05:30:48.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="嵌入式程序设计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144032815.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>嵌入式程序设计ch3-嵌入式总线技术 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="嵌入式程序设计ch3-嵌入式总线技术"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-21 14:32" pubdate>
+          2023年4月21日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          94 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">嵌入式程序设计ch3-嵌入式总线技术</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第三章-嵌入式总线技术"><a href="#第三章-嵌入式总线技术" class="headerlink" title="第三章   嵌入式总线技术"></a>第三章   嵌入式总线技术</h1><ul>
+<li>系统总线概述</li>
+<li>总线结构与协议</li>
+<li>DMA</li>
+<li>ARM CPU总线结构</li>
+<li>总线的性能分析</li>
+</ul>
+<h2 id="3-1-系统总线概述"><a href="#3-1-系统总线概述" class="headerlink" title="3.1 系统总线概述"></a>3.1 系统总线概述</h2><p>总线的定义：一种描述电子信号传输线路的物理结构形式，是一组信号线（电线）的集合</p>
+<ul>
+<li>一组信息传输的信号线</li>
+<li>总线协议</li>
+</ul>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>按功能的分类</p>
+<ul>
+<li>数据总线 - 传输数据</li>
+<li>地址总线 –传输地址</li>
+<li>控制总线 –传输控制指令&#x2F;信号</li>
+<li>扩展总线 – 不常使用的部件的扩展</li>
+</ul>
+<p>按信息位置：内部总线和外部总线</p>
+<p>按时空组织特性：串行总线和并行总线</p>
+<h2 id="3-2总线结构和协议"><a href="#3-2总线结构和协议" class="headerlink" title="3.2总线结构和协议"></a>3.2总线结构和协议</h2><p>CPU总线的结构</p>
+<ul>
+<li>CPU通过总线和外设进行数据交换</li>
+<li>通常CPU是总线的主控</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144032815.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="总线"></p>
+<h3 id="四周期握手协议-最常见的总线协议"><a href="#四周期握手协议-最常见的总线协议" class="headerlink" title="四周期握手协议-最常见的总线协议"></a>四周期握手协议-最常见的总线协议</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144134567.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144144531.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="😊"></p>
+<ol>
+<li><p>设备1提出请求</p>
+</li>
+<li><p>设备2响应该请求</p>
+</li>
+<li><p>一旦数据传送完成，设备发出接收完数据的信号</p>
+</li>
+<li><p>设备1结束请求</p>
+</li>
+</ol>
+<h4 id="典型的总线"><a href="#典型的总线" class="headerlink" title="典型的总线"></a>典型的总线</h4><ul>
+<li>Clock：时钟，用于同步总线组件</li>
+<li>R&#x2F;W：总线的读或写使能信号</li>
+<li>Address：地址总线，一束信号线</li>
+<li>Data：数据总线，一束信号线</li>
+<li>DataReady：数据就绪</li>
+</ul>
+<h4 id="总线读"><a href="#总线读" class="headerlink" title="总线读"></a>总线读</h4><p>▪时钟信号上升沿，设置地址使能信号，地址线上设置所需地址值 </p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144337647.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="read"> 表示读 </p>
+<p>▪ 在第一个时钟周期后，外设将相应地址的数据传送至数据线，数据准备线使能 </p>
+<p>▪ CPU读取数据，在第二个时钟周期末，撤去地址线上的地址，外设清除数据线上的数据值。</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144404807.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="read"></p>
+<h4 id="总线写"><a href="#总线写" class="headerlink" title="总线写"></a>总线写</h4><p>时钟信号上升沿，设置地址使能信号，地址线上设置所需值 </p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144555953.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="write">表示写 </p>
+<p>▪ 在第一个时钟周期后，CPU 将数据传送至数据线，数据准备线使能 </p>
+<p>▪ 外设向相应地址的存储单元写数据，在第二个时钟周期末，撤去地址线上的地址，并清除数据线上的数据</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144625789.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="write"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144639854.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="read&amp;write"></p>
+<h4 id="读操作的等待状态"><a href="#读操作的等待状态" class="headerlink" title="读操作的等待状态"></a>读操作的等待状态</h4><p>总线上连接的是速度比它慢的设备</p>
+<p>▪等待状态通常用于将慢速、廉价的存储器连到总线上</p>
+<p>▪等待状态：数据可以被读取的最早时间与真正被读取的时间之间的周期</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144720639.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="wait time"></p>
+<h4 id="突发状态（Brust-Transfer）"><a href="#突发状态（Brust-Transfer）" class="headerlink" title="突发状态（Brust Transfer）"></a>突发状态（Brust Transfer）</h4><p>▪收到一个地址，传输一组数据序列</p>
+<p>▪增加一根线路：Burst，低电平有效</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421144937009.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="突发"></p>
+<h3 id="南北桥体系下的总线"><a href="#南北桥体系下的总线" class="headerlink" title="南北桥体系下的总线"></a>南北桥体系下的总线</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426125151078.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="bus"></p>
+<ul>
+<li>处理器 CPU 和北桥之间的是速度最快的处理器总线</li>
+<li>北桥通过DRAM控制器连接高速主存</li>
+<li>北桥与南桥之间是 PCI 总线</li>
+<li>南桥上连接 USB 等接口和相关设备</li>
+<li>南桥之下是ISA、 EISA等传统的慢速 I&#x2F;O 扩展总线</li>
+</ul>
+<h4 id="STM32F42系列芯片总线"><a href="#STM32F42系列芯片总线" class="headerlink" title="STM32F42系列芯片总线"></a>STM32F42系列芯片总线</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145043808.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="stm32"></p>
+<h4 id="典型总线结构及协议"><a href="#典型总线结构及协议" class="headerlink" title="典型总线结构及协议"></a>典型总线结构及协议</h4><ul>
+<li>ISA总线</li>
+<li>PCI总线</li>
+<li>APG总线</li>
+<li>PCI-express总线</li>
+<li>CAN总线</li>
+<li>以太网总线</li>
+</ul>
+<h4 id="ISA总线"><a href="#ISA总线" class="headerlink" title="ISA总线"></a>ISA总线</h4><ul>
+<li>1981年在IBM PC&#x2F;XT计算机中采用</li>
+<li>有8位&#x2F;16位ISA总线规范<ul>
+<li>8位最大传输速率8MB&#x2F;s</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145246404.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<ul>
+<li>1988年扩展到32位，形成EISA总线<ul>
+<li>工作频率仍为8MHz</li>
+<li>与 8 位&#x2F;16 位的 ISA 总线完全兼容</li>
+<li>最大传输速率达到了 32MB&#x2F;s</li>
+</ul>
+</li>
+<li>在 20 世纪 90 年代初，逐步被 PCI 总线取代</li>
+<li>在工业和军事领域，ISA 总线目前仍在使用</li>
+</ul>
+<h4 id="PCI总线"><a href="#PCI总线" class="headerlink" title="PCI总线"></a>PCI总线</h4><ul>
+<li>1992年Intel公司提出32位的PCI总线<ul>
+<li>工作频率 33MHz，传输带宽为 133MB&#x2F; s</li>
+<li>基本上满足了当时处理器与显卡、声卡、网卡、硬盘控制器等高速外围设备的通信需要</li>
+<li>Adaptec公司的 32 位SCSI适配器</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421145410196.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="例子"></p>
+<ul>
+<li>PCI 1.0采用5V供电，PCI 2.0及以后3.3V供电</li>
+<li>PCI 2.1支持66MHz工作频率</li>
+<li>PCI 2.2引入Mini PCI，以支持笔记本</li>
+</ul>
+<blockquote>
+<p>版本系列：</p>
+<p>PCI 1.0（1992年发布）、PCI 2.0（1993年发布）、</p>
+<p>PCI 2.1（1995年发布）、PCI 2.2（1998年发布）、</p>
+<p>PCI 2.3（2002年发布）、PCI 3.0（2004年发布）</p>
+</blockquote>
+<p>为支持在服务器领域更高传输速率，1999年制定了PCI-X </p>
+<p>PCI-X 1.0是64位、133MHz版本的PCI，保持PCI总线的兼容</p>
+<p>PCI-X 2.0、3.0频率经历过266MHz、533MHz、甚至1GHz</p>
+<ul>
+<li>实际通信效率远远达不到理论值 </li>
+<li>频率增高后通信信号串扰严重</li>
+<li>共享式总线造成资源竞争</li>
+</ul>
+<p><strong>PCI-X总线特点：</strong></p>
+<ul>
+<li>寄存器到寄存器的信号传输方式</li>
+<li>使用总线事务分割概念，请求和响应是分开的 <ul>
+<li>第一个操作是请求传输</li>
+<li>然后总线可以做其它操作</li>
+<li>等数据准备好后，传输随后开始</li>
+</ul>
+</li>
+<li>引入消息触发中断机制</li>
+</ul>
+<p>PCI和PCI-X总线统称并行PCI总线</p>
+<h4 id="AGP总线-Accelerated-Graphics-Port"><a href="#AGP总线-Accelerated-Graphics-Port" class="headerlink" title="AGP总线-Accelerated Graphics Port"></a>AGP总线-Accelerated Graphics Port</h4><p>Intel1997年8月推出AGP接口和总线</p>
+<ul>
+<li>显卡专用的局部总线，基于PCI 2.1版总线规范扩充修改而成</li>
+<li>工作频率为66MHz</li>
+<li>1X模式下带宽为266MB&#x2F;s，是当时PCI总线的带宽的两倍</li>
+<li>后来又推出了AGP 2X、AGP 4X、AGP 8X，传输速度达到了2.1GB&#x2F;s。 </li>
+<li>专门针对显示器，后续也被淘汰，让位于PCIe</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421150536817.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="最离谱的agp/pcie双插槽显卡，来自已倒闭显卡品牌希仕（未发布），HIS Radeon X1600 Pro Dual Interface"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151053037.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ati"></p>
+<h4 id="PCI-Express总线"><a href="#PCI-Express总线" class="headerlink" title="PCI-Express总线"></a>PCI-Express总线</h4><p>▪PCI Express是Intel在2001年公布的旨在取代PCI总线的第三代总线</p>
+<p>▪ 2002年7月23日，公布了PCIe 1.0规范</p>
+<p>▪ 2007年正式推出PCIe 2.0</p>
+<p>▪ 2018年公布PCIe 4.0</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151257939.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="pcie"></p>
+<ul>
+<li>引入道的概念<ul>
+<li>由两个分别用于发送和接收数据的差分信号对组成，同时双向传输字节包数据</li>
+</ul>
+</li>
+<li>全双工</li>
+<li>设备之间通过双向的Link相连接，每个Link支持1到32个道</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151325457.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tu"></p>
+<ul>
+<li>串行总线<ul>
+<li>每道在每个方向上只有一对差分信号线，不需外部时钟信号可达到很高的速率</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151349691.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="串行"></p>
+<ul>
+<li>支持热插拔</li>
+</ul>
+<h5 id="技术指标"><a href="#技术指标" class="headerlink" title="技术指标"></a>技术指标</h5><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151432183.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图表"></p>
+<p>8b&#x2F;10b编码的特性之一是保证DC 平衡</p>
+<ul>
+<li>采用8b&#x2F;10b编码方式，使得发送的0、1数量保持基本一致，连续的1或0不超过5位，即每5个连续的1或0后必须插入一位0或1，从而保证信号DC平衡</li>
+<li>128b&#x2F;130b编码是在128 bit的Payload前面加上了2 bit的同步头</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421151559605.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="PCIe具有兼容性，显卡最高支持pcie4.0*16，我的主板只有3.0*16也能兼容运行"></p>
+<h4 id="补充概念：差分信号"><a href="#补充概念：差分信号" class="headerlink" title="补充概念：差分信号"></a>补充概念：差分信号</h4><p>差分方式传输：发送端在两条信号线上传输的幅值是相等的，相位是相反的电信号</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421152024302.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="差分"></p>
+<ul>
+<li>接收端，将会对接收的两条信号做减法运算，这样就获得了幅值翻倍的信号</li>
+<li>抗干扰原理是：假如两条信号都收到同样的干扰信号，接收端是两条线信号做减法，因此干扰信号基本抵消。 </li>
+<li>两条信号线受到干扰信号相同的办法：将两根线扭在一起的“双绞线”<ul>
+<li>电磁学定理：双绞线收到的干扰信号是同相、等幅度的 </li>
+<li>差分信号在信号传输中用的比较多，因为抗干扰性强</li>
+</ul>
+</li>
+</ul>
+<h4 id="CAN总线-Controller-Area-Network"><a href="#CAN总线-Controller-Area-Network" class="headerlink" title="CAN总线-Controller Area Network"></a>CAN总线-Controller Area Network</h4><ul>
+<li>德国Bosch公司开发的，后来成为国际标准ISO11898和ISO11519，是应用最广泛的现场总线之一</li>
+<li>CAN总线协议是汽车计算机控制系统和嵌入式工业控制局域网的标准总线协议</li>
+<li>CAN 总线定义了物理层、数据链路层和应用层三层模型结构</li>
+<li>基于消息的异步通信，利用一对差分信号线减少设备通信线束中连接线的数量</li>
+<li>可以点对点、一点对多点、或全局广播等方式的传送接收数据</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>采用多主控器的串行总线标准</li>
+<li>CAN 信号由 CAN_H 和 CAN_L 双绞线构成</li>
+<li>物理层可采用闭环或开环总线构成<ul>
+<li>闭环结构<ul>
+<li>遵循ISO11898标准，高速短距离网络，总线最大长度为40m，通信速度最高为1Mbps</li>
+<li>在 CAN_H 和 CAN_L 间连接值为 120Ω 的终端匹配电阻</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421152227939.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="闭环结构"></p>
+<p>- </p>
+<ul>
+<li>开环结构<ul>
+<li>遵循ISO11519-2标准，低速远距离网络，最大传输距离为1km，最高通信速率为125kb&#x2F;s</li>
+<li>两根信号线是独立的、不形成闭环</li>
+</ul>
+</li>
+<li>系统要求每根总线上各串联有一个 2.2kΩ 的电阻</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153009656.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="开环"></p>
+<h5 id="Can总线收发器"><a href="#Can总线收发器" class="headerlink" title="Can总线收发器"></a>Can总线收发器</h5><p>CAN 设备是通过 CAN 收发器来连接的 </p>
+<p>▪负责TTL逻辑电平和差分信号电平之间的转换</p>
+<p>▪CAN控制芯片输出TTL逻辑电平到CAN收发器</p>
+<p>▪CAN收发器通过内部将TTL逻辑电平转换为差分信号输出到CAN总线上</p>
+<p>▪TTL电平信号：+5V等价于逻辑“1”，0V等价于逻辑“0”，这样数据通信及电平规定方式，被称做TTL</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153105428.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="**一种可能的引脚定义**"></p>
+<h5 id="信号定义"><a href="#信号定义" class="headerlink" title="信号定义"></a>信号定义</h5><p>信号有两种不同的信号状态</p>
+<p>▪显性的（Dominant）：逻辑 0 </p>
+<p>▪隐形的（Recessive）：逻辑 1 </p>
+<p>ISO11898标准定义当CANH和CANL电平很接近甚至相等时，总线信号为隐性逻辑1，而两线电平差较大时则为显性逻辑0 </p>
+<p>在每次传输完后不需要返回到显性逻辑0，应用不归零NRZ码位填充技术来确定信号值</p>
+<h5 id="仲裁"><a href="#仲裁" class="headerlink" title="仲裁"></a>仲裁</h5><p>信号采用“线与”规则进行总线仲裁和定义</p>
+<ul>
+<li>总线上只要有一个节点将总线拉到低电平（逻辑 0）的显性状态，总线就为低电平（逻辑 0）的显性状态</li>
+<li>只有所有节点都为高电平（逻辑1）的隐性状态，总线才为高电平（逻辑 1）的隐性状态</li>
+</ul>
+<h5 id="通信速率与距离"><a href="#通信速率与距离" class="headerlink" title="通信速率与距离"></a>通信速率与距离</h5><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153244064.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="v"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153300733.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="s"></p>
+<h5 id="CAN总线报文传输"><a href="#CAN总线报文传输" class="headerlink" title="CAN总线报文传输"></a>CAN总线报文传输</h5><p>帧格式</p>
+<p>▪ 标准帧：11位标识符</p>
+<p>▪ 扩展帧：29位标识符</p>
+<p>帧类型</p>
+<ul>
+<li>数据帧：数据从发送器传输到接收器</li>
+<li>远程帧：总线节点发出远程帧，请求发送同一标识符数据帧</li>
+<li>错误帧：虽然 CAN 可靠性很高，但还可能发生错误，节点单元检测到总线错误时就发出错误帧 </li>
+<li>过载帧：在相邻数据帧或远程帧之间提供附加的延时</li>
+</ul>
+<h6 id="数据帧："><a href="#数据帧：" class="headerlink" title="数据帧："></a><strong>数据帧：</strong></h6><ul>
+<li>7个段：帧起始、仲裁段、控制段、数据段、CRC段、ACK段和帧结束</li>
+<li>有标准格式（ID为11位）和扩展格式（ID为29位）</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153502824.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据帧"></p>
+<p><strong>帧起始和帧结束：界定一个数据帧</strong></p>
+<ul>
+<li>帧起始为单个显性位</li>
+<li>帧结束为 7 个连续的隐性位</li>
+</ul>
+<p><strong>仲裁段</strong></p>
+<ul>
+<li>标准帧：12位，其中ID为11位；扩展帧32为，ID为29位 </li>
+<li>在总线上的所有节点都可监听总线上传输的数据</li>
+<li>采用“线与”规则进行总线仲裁</li>
+<li>若出现不匹配的位不在仲裁期间则，产生错误事件</li>
+<li>报文的帧 ID 号码越小，优先级越高 </li>
+<li>数据帧的远程传输请求位 RTR 为显性电平，远程帧为隐性电平，数据帧优先于远程帧</li>
+<li>标准帧扩展标识符位 IDE 为显性电平，扩展帧的为隐性电平，则标准帧优先级比扩展帧高</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153614789.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="仲裁段"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153638491.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="仲裁段"></p>
+<p>使用ID逐位仲裁方法解决竞争问题</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153708077.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="逐位仲裁"></p>
+<p><strong>控制段</strong></p>
+<p>控制段：6位 </p>
+<p>▪标准帧：标志位IDE、保留位r0、数据长度码DLC</p>
+<p>▪扩展帧：2个保留位r1、r0、数据长度码DLC</p>
+<p>▪ IDE：1位，扩展帧标志位 </p>
+<p>▪DLC：4位：数据长度码，允许的字节数0-8</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421153929680.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<h5 id="数据段"><a href="#数据段" class="headerlink" title="数据段"></a><strong>数据段</strong></h5><p>▪为0-8个字节，传输时最高有效位先传输。</p>
+<p><strong>CRC（循环冗余码）校验段</strong>：15+1位 </p>
+<p>▪由帧起始段、仲裁段、控制段和数据段计算得到的15位CRC值和1位隐性电平定界符构成</p>
+<p>▪RCR最适用于低于127位帧检查，多项式除法，其系数是模2计算</p>
+<p><strong>ACK段</strong></p>
+<ul>
+<li>ACK槽：1位 <ul>
+<li>发送节点发送隐性电平、接收正确的节点发送显性电平</li>
+<li>总线线与结果为显性电平，发送成功，否则失败</li>
+</ul>
+</li>
+<li>ACK界定符：1位 <ul>
+<li>一个隐性电平</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154135262.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ack"></p>
+<h6 id="其他帧格式"><a href="#其他帧格式" class="headerlink" title="其他帧格式"></a>其他帧格式</h6><p>远程帧：作为某数据接收器的节点，可以发送远程帧启动资源节点传输数据</p>
+<p>​	无数据段，6个段：帧起始、仲裁段、控制段、CRC段、ACK段和帧结束</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154226268.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="远程"></p>
+<p>错误帧：由2个域组成</p>
+<ul>
+<li>错误标记：不同节点提供的错误标志的叠加</li>
+<li>错误界定符 ：连续6个连续的隐性位</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154326747.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="错误"></p>
+<p>过载域：2个域，接收节点用来向 CAN 总线发送节点告知自身接收能力的帧，接收节点来不及处理数据了</p>
+<ul>
+<li>过载标志</li>
+<li>过载界定符</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421154351761.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="过载"></p>
+<h4 id="以太网络总线"><a href="#以太网络总线" class="headerlink" title="以太网络总线"></a>以太网络总线</h4><ul>
+<li>1980年Xerox公司和英特尔、DEC公司一起开发了基带局域网规范，后续发展成为当今局域网采用的最通用的通信协议标准。</li>
+<li>以太网总线协议由IEEE 802.3标准定义<ul>
+<li>物理层的连线 </li>
+<li>电信号和媒体访问控制子层的实现方法</li>
+<li>十兆、百兆、千兆和万兆以太网</li>
+</ul>
+</li>
+<li>IEEE 802.3af定义了将未使用的接口线用于直流供电，即有源以太网</li>
+<li>IEEE 802.3ah版本</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><ul>
+<li>10Base-5使用直径0.4英寸，阻抗为50欧姆的粗同轴线缆，最大网段长度500m，采用基带传输方法，拓扑结构为总线型，以太网卡为AUI接口。</li>
+<li>10Base-2使用直径为0.2英寸，阻抗为50欧姆的细同轴线缆，最大网段长度185m，采用基带传输方法，拓扑结构为总线型，以太网卡为BNC接口。</li>
+<li>10Base-T使用非屏蔽双绞线线缆，最大网段程度100m，拓扑结构为星型，接口为RJ-45。 </li>
+<li>1Base-5使用双绞线线缆，最大网段长度500m，传输速度1Mbps。 </li>
+<li>10Broad-36使用同轴线缆（RG-59&#x2F;U CATV），网络跨度为3600m，网段最大长度为1800m，是一种宽带传输方式。</li>
+<li>10Base-F使用光纤传输媒介，传输速率为10Mbps。</li>
+</ul>
+<h5 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h5><ul>
+<li>工作原理：一种广播型的总线标准，工作过程包含侦听、发送、检测、冲突处理四个处理阶段</li>
+<li>侦听：在节点准备发送前先侦听总线上是否有数据正在传输。</li>
+<li>若“忙”则进入后述的“退避”处理程序，进而进一步反复进行侦听工作</li>
+<li>若“闲”，则采用一定算法原则（例如“X-坚持”算法）决定如何发送数据</li>
+<li>发送：当确定要发送后，通过发送单元，向总线发送数据</li>
+<li>检测：数据发送后，也可能发生数据冲突。因此，要对数据边发送，边检测，以判断是否冲突</li>
+<li>冲突处理：当确认发生冲突后，进入冲突处理程序</li>
+<li>若侦听中发现线路忙，则等待一个延时后再次侦听<ul>
+<li>冲突检测时间一般设定为 2<em>α</em>，其中 <em>α</em> 为网络中最远两个节点的传输线路延迟时间</li>
+</ul>
+</li>
+<li>若发送过程中发现数据碰撞，则先发送阻塞信息连续几字节的全 1，一般为 32～48 位），强化冲突，再进行侦听工作，以待下次重新发送</li>
+<li>涉及的算法：退避算法-截断的二进制指数退避算法<ul>
+<li>当一个节点发现线路忙时，要等待延时时间 M，再进行侦听工作</li>
+<li>M 取 0～（2^k − 1 ）一个随机数乘以 512 比特传输时间，其中 k 为冲突（碰撞）的次数</li>
+<li>当M 的最大值为1023，即当 k &#x3D; 10 时获得。随后 M 始终是 0～1023 的一个随机值与 512 比特传输时间的乘积</li>
+<li>k 增加到 16 时，就发出错误信息</li>
+</ul>
+</li>
+</ul>
+<h5 id="总线实现"><a href="#总线实现" class="headerlink" title="总线实现"></a>总线实现</h5><ul>
+<li>将以太网总线放到用应用层、传输层、网络层、数据链路层和物理层5层定义的以太网协议栈中</li>
+<li>与数据链路层、物理层强相关，可以作为芯片接口，也可以依据需要完全封装到芯片内。</li>
+<li>以太网帧格式多达5种</li>
+</ul>
+<blockquote>
+<p> Ethernet V1（1980年发布）</p>
+<p> Ethernet V2（ARPA于1982年发布）</p>
+<p> RAW 802.3（Novell公司于1983年发布）</p>
+<p> IEEE 802.3&#x2F;802.2 SNAP（1985年发布）</p>
+<p> IEEE 802.3&#x2F;802.2 LLC（1985年发布）</p>
+</blockquote>
+<blockquote>
+<p><strong>Ethernet V2：</strong></p>
+<p>由RFC 894定义。</p>
+<p>▪ 前导码（7字节0x55，一串1、0间隔，用于信号同步）</p>
+<p>▪ 帧起始定界符SFD（1字节0xD5） </p>
+<p>▪ 目的MAC地址（6字节）</p>
+<p>▪ 源MAC地址（6字节）</p>
+<p>▪ 类型&#x2F;长度（2字节，其中 0～1500保留为长度域值，1536～65535保留为类型域值0x0600～0xFFFF） </p>
+<p>▪ 数据（46～1500字节）</p>
+<p>▪ CRC帧校验序列（4字节，使用CRC计算从目的MAC地址到数据域这部分内容而得到的校验和）</p>
+</blockquote>
+<h2 id="3-3DMA"><a href="#3-3DMA" class="headerlink" title="3.3DMA"></a>3.3DMA</h2><h3 id="I-x2F-O传输"><a href="#I-x2F-O传输" class="headerlink" title="I&#x2F;O传输"></a>I&#x2F;O传输</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421155310052.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="三种"></p>
+<ul>
+<li>直接存储器存取：Direct Memory Access，DMA</li>
+<li>DMA的主要作用<ul>
+<li>将数据从一个地址空间复制到另外一个地址空间</li>
+<li>CPU初始化DMA后，传输由DMA控制器来执行和完成</li>
+</ul>
+</li>
+<li>CPU在执行DMA初始化后就可以执行其他进程</li>
+</ul>
+<h3 id="DMA和cpu分时使用内存"><a href="#DMA和cpu分时使用内存" class="headerlink" title="DMA和cpu分时使用内存"></a>DMA和cpu分时使用内存</h3><ul>
+<li><strong>停止CPU访问内存</strong>：当外设要求传送一批数据时，由DMA控制器发一个信号给CPU。DMA控制器获得总线控制权后，开始进行数据传送。一批数据传送完毕后，DMA控制器通知CPU可以使用内存，并把总线控制权交还给CPU。 </li>
+<li><strong>周期挪用</strong>：当I&#x2F;O设备没有 DMA请求时，CPU按程序要求访问内存；一旦 I&#x2F;O设备有DMA请求，则I&#x2F;O设备挪用一个或几个周期。数据输入或输出过程中实际占用了CPU时间</li>
+<li><strong>DMA与CPU交替访问内存</strong>：一个CPU周期可分为2个周期，一个专供DMA控制器访内，另一个专供CPU访内。不需要总线使用权的申请、建立和归还过程</li>
+</ul>
+<h3 id="DMA访问过程"><a href="#DMA访问过程" class="headerlink" title="DMA访问过程"></a>DMA访问过程</h3><p>一个完整的DMA传输过程经过<strong>DMA请求、DMA响应、DMA传输和DMA结束</strong>四个步骤。</p>
+<p>分时控制</p>
+<ul>
+<li>CPU和DMA控制器各自有自己的访问内存地址寄存器、数据寄存器和读&#x2F;写控制寄存器。</li>
+<li>在DMA分时控制周期中，如果DMA控制器有访问内存请求，可将地址、数据等信号送到总线上。</li>
+<li>在CPU分时控制周期中，如CPU有访问内存请求，同样传输地址、数据等信号到总线上。</li>
+<li>分时控制采用多路控制器实现高效切换。</li>
+</ul>
+<h3 id="直接存储器访存（DMA）"><a href="#直接存储器访存（DMA）" class="headerlink" title="直接存储器访存（DMA）"></a>直接存储器访存（DMA）</h3><ul>
+<li>DMA无需CPU的加入来完成数据的传输<ul>
+<li>CPU 设置传输</li>
+<li>DMA 直接完成设备与内存的读写操作</li>
+</ul>
+</li>
+<li>需要一个DMA控制单元</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160140659.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DMA"></p>
+<h3 id="总线主控器（BUS-MASTERSHIP）"><a href="#总线主控器（BUS-MASTERSHIP）" class="headerlink" title="总线主控器（BUS MASTERSHIP）"></a>总线主控器（BUS MASTERSHIP）</h3><ul>
+<li>总线主控器是能够启动总线传输的设备</li>
+<li>缺省时，CPU是总线主控器，并初始化传输</li>
+<li>DMA可以成为总线主控器来完成传输<ul>
+<li>DMA 成为总线主控器时，CPU不能使用总线</li>
+</ul>
+</li>
+<li>通过四周期握手协议获得总线主控器<ul>
+<li>总线请求（Bus request） </li>
+<li>总线授权（Bus grant）</li>
+</ul>
+</li>
+</ul>
+<h3 id="DMA控制器"><a href="#DMA控制器" class="headerlink" title="DMA控制器"></a>DMA控制器</h3><p>CPU通过DMA控制器的寄存器来控制DMA</p>
+<p>▪ 起始地址寄存器：指明传输从何处开始</p>
+<p>▪ 长度寄存器：指明将要传输的字的数目</p>
+<p>▪ 状态寄存器：用于CPU操作DMA控制器</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160450002.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="控制器"></p>
+<h3 id="DMA操作"><a href="#DMA操作" class="headerlink" title="DMA操作"></a>DMA操作</h3><ul>
+<li>CPU 设置 DMA寄存器，如开始地址，要读写的长度</li>
+<li>DMA 状态寄存器允许CPU操作DMA控制器</li>
+<li>一旦DMA成为总线主控制器，它就自动传输</li>
+<li>可以连续传输直到传输完成</li>
+<li>也可以使用几个总线周期</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160638232.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="操作"></p>
+<h3 id="STM32F4系列DMA控制器结构和DMA特点"><a href="#STM32F4系列DMA控制器结构和DMA特点" class="headerlink" title="STM32F4系列DMA控制器结构和DMA特点"></a>STM32F4系列DMA控制器结构和DMA特点</h3><p>DMA是一个AMBA AHB模块，有三个AHB端口，</p>
+<ul>
+<li>一个从设备接口用于DMA编程</li>
+<li>两个主设备端口用于外设和存储器访问</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421160820971.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DMA controller"></p>
+<ul>
+<li>两个通用的8个数据流双端口DMA控制器，支持16个数据流，每个数据流有多达8个可选通道（即硬件请求）</li>
+<li>通道选择由软件通过寄存器DMA_SxCR[29:27]即CHSEL[2:0]设置，并允许多个外设初始化DMA请求，数</li>
+<li>据流之间传输的数据大小是独立的</li>
+<li>对于APB或者AHB外设，采用专用FIFO，支持最大外设访问带宽，支持猝发传输。</li>
+<li>两个DMA控制器支持的典型外设包括SPI和I2S、I2C、USART、通用的或高级控制定时器TIMx、DAC、SDIO、</li>
+<li>摄像头接口（DCMI）和ADC</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426125616694.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DMA1请求映射"></p>
+<ul>
+<li>DMA数据流&#x2F;通道：一个数据流任一时间仅有一个通道（请求）被激 活</li>
+<li>数据流的优先级：优先级可软件配置；若相同，使用硬件优先级</li>
+<li>源和目的地址：在 AHB 或 APB 存储器范围内并与传输尺寸对齐</li>
+<li>传输模式：外设到存储器、存储器到外设、存储器到存储器</li>
+<li>传输尺寸：在流控控制器时被定义；地址增加或者非增加 </li>
+<li>源、目数据宽度：字节、半字或字；</li>
+<li>FIFO 模式：每个数据流有独立四字 FIFO</li>
+<li>源或者目的猝发尺寸： 单次传输、4X、8X、16X 数据单位</li>
+<li>双缓冲器模式、流控</li>
+</ul>
+<h4 id="FIFO的结构"><a href="#FIFO的结构" class="headerlink" title="FIFO的结构"></a>FIFO的结构</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161000419.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161048952.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<h4 id="FIFO的阈值配置"><a href="#FIFO的阈值配置" class="headerlink" title="FIFO的阈值配置"></a>FIFO的阈值配置</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161142764.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="阈值"></p>
+<h3 id="节拍与数据传输"><a href="#节拍与数据传输" class="headerlink" title="节拍与数据传输"></a>节拍与数据传输</h3><ul>
+<li>节拍：DMA请求产生一次就是一个节拍</li>
+<li>数据的大小：1个字节、半字、字</li>
+<li>传输的数据量，即DMA数据缓冲区大小，最大值为65535</li>
+<li>例：单次传输，传输大小为半字，DMA请求产生一次（一个节拍）数据传输，总共传输数据 16 &#x2F; 8* 65535 &#x3D;131070Byte， 大概传输了128KByte</li>
+<li>例：单次传输，传输大小为半字，突发4个节拍，4*126kb</li>
+<li>例：单次传输，传输大小为半字，突发8个节拍，8*126kb</li>
+<li>例：单次传输，传输大小为半字，突发16个节拍，8*126kb</li>
+</ul>
+<h3 id="DMA设置"><a href="#DMA设置" class="headerlink" title="DMA设置"></a>DMA设置</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161304505.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DMA setting"></p>
+<h3 id="DMA传输：外设到存储器传输模式"><a href="#DMA传输：外设到存储器传输模式" class="headerlink" title="DMA传输：外设到存储器传输模式"></a>DMA传输：外设到存储器传输模式</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161504120.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="外设到存储器"></p>
+<ul>
+<li>使能这种模式时，每次产生外设请求，数据流都会启动数据源到FIFO 的传输。</li>
+<li>达到 FIFO 的阈值级别时，FIFO 的内容移出并存储到存储器中</li>
+</ul>
+<h3 id="DMA传输：存储器到外设传输模式"><a href="#DMA传输：存储器到外设传输模式" class="headerlink" title="DMA传输：存储器到外设传输模式"></a>DMA传输：存储器到外设传输模式</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161606334.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="存储器到外设"></p>
+<ul>
+<li>使能这种模式时，数据流会立即启动传输，从存储器填充 FIFO</li>
+<li>发生外设请求时，FIFO 的内容移出并存储到外设</li>
+</ul>
+<h3 id="DMA传输：存储器到存储器传输模式"><a href="#DMA传输：存储器到存储器传输模式" class="headerlink" title="DMA传输：存储器到存储器传输模式"></a>DMA传输：存储器到存储器传输模式</h3><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161648037.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="存储器到存储器"></p>
+<ul>
+<li>DMA 通道在没有外设请求触发的情况下实现存储器到存储器模式。 </li>
+<li>通过将使能位 (EN) 置 1 来使能数据流，数据流填充FIFO，达到阈值后，FIFO 的内容会移出，并存储到目标中</li>
+</ul>
+<h3 id="DMA请求的仲裁"><a href="#DMA请求的仲裁" class="headerlink" title="DMA请求的仲裁"></a>DMA请求的仲裁</h3><p>DMA控制器嵌入一个仲裁器，基于两个AHB主设备接口上的优先级来管理8个DMA数据流请求发起外设&#x2F;存储器访问序列。</p>
+<ul>
+<li>优先级管理分为两个阶段：<ul>
+<li>软件：每个数据流优先级在 DMA_SxCR 中配置。分为四个级别<ul>
+<li>非常高优先级</li>
+<li>高优先级</li>
+<li>中优先级</li>
+<li>低优先级</li>
+</ul>
+</li>
+<li>硬件：如果两个请求具有相同的软件优先级，则编号低的数据流优先于编号高的数据流。例如，数据流 2 的优先级高于数据流 4</li>
+</ul>
+</li>
+</ul>
+<p>例：DMA数据流请求1和请求2同时触发的两个循环DMA请求的服务</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421161836867.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="仲裁"></p>
+<h3 id="DMA延迟性能"><a href="#DMA延迟性能" class="headerlink" title="DMA延迟性能"></a>DMA延迟性能</h3><p>DMA 数据流的总体传输时间</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">TS</span> = TSP + TSM<br></code></pre></td></tr></table></figure>
+
+<p>其中： </p>
+<ul>
+<li>TSP是DMA 外设端口访问和传输的总时间</li>
+<li>TSM是 DMA 存储器端口访问和传输的总时间</li>
+</ul>
+<h2 id="3-4-ARM-CPU的总线结构"><a href="#3-4-ARM-CPU的总线结构" class="headerlink" title="3.4 ARM CPU的总线结构"></a>3.4 ARM CPU的总线结构</h2><h3 id="3-4-1"><a href="#3-4-1" class="headerlink" title="3.4.1"></a>3.4.1</h3><p>ARM CPU的总线发展历史</p>
+<p>▪ ARM公司于1996年提出<strong>AMBA</strong>总线，包括ASB和APB </p>
+<p>▪ 1999年提出AMBA 2，增加了AHB，相关协议是单时钟边沿协议</p>
+<p>▪ 2003年提出AMBA 3，增加了AXI以获得更高性能互联，增加了ATB作为Coresight片上调试和跟踪解决方案</p>
+<p>▪ 2010年的AMBA 4 AXI 4</p>
+<p>▪ 2011年用AMBA 4 ACE扩展了系统一致性</p>
+<p>▪ 2013年提出了AMBA 5 CHI ，高速传输层协议得到了重新设计，总线的拥塞控制也有改善</p>
+<h4 id="AMBA2架构"><a href="#AMBA2架构" class="headerlink" title="AMBA2架构"></a>AMBA2架构</h4><p>AMBA 2协议规范包括四个部分：AHB、ASB、APB和Test Methodology</p>
+<ul>
+<li>AHB相连采用了带有主从设备的共享总线结构形式</li>
+<li>主设备是向从设备发出读写操作的模块</li>
+<li>从设备是接收命令并做出反应的模块</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421162548145.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="AMBA2架构"></p>
+<h3 id="3-4-2-ARM总线结构"><a href="#3-4-2-ARM总线结构" class="headerlink" title="3.4.2 ARM总线结构"></a>3.4.2 ARM总线结构</h3><h4 id="AHB总线（soc的片上系统总线）："><a href="#AHB总线（soc的片上系统总线）：" class="headerlink" title="AHB总线（soc的片上系统总线）："></a>AHB总线（soc的片上系统总线）：</h4><p>a) 最多可以支持16个主设备和任意多个从设备，如果主设备数目大于16，则需再加一层结构，通过桥接器形成多层AHB来扩展。</p>
+<p>b) AHB主要用于重要和速度要求较高的模块（如CPU、DMA和DSP等）之间的连接。</p>
+<p>c) 作为SoC的片上系统总线，它包括以下特性：</p>
+<ul>
+<li>单个时钟边沿操作；</li>
+<li>支持多个主控制器；</li>
+<li>非三态的实现方式；</li>
+<li>可配置成32位-128位总线宽度；</li>
+<li>支持猝发传输；</li>
+<li>支持流水线操作；</li>
+<li>支持分段传输；</li>
+<li>支持字节、半字节和字的传输。</li>
+</ul>
+<p>d) AHB总线连接构成的系统由主设备、从设备和基础结构3部分组成</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421162852771.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<h4 id="APB总线："><a href="#APB总线：" class="headerlink" title="APB总线："></a>APB总线：</h4><p>APB桥既是APB总线上唯一的主设备，也是AHB系统总线上的从设备。从而实现AHB协议到APB协议的转换。</p>
+<ul>
+<li>锁存来自AHB系统总线的地址、数据和控制信号</li>
+<li>提供二级译码以产生APB外围设备的选择信号</li>
+</ul>
+<p>APB主要用于低带宽的周边外设之间的连接，例如UART、IEEE 1284并口等。</p>
+<ul>
+<li>APB特性包括：<ul>
+<li>两个时钟周期传输；</li>
+<li>无需等待周期和回应信号；</li>
+<li>控制逻辑简单；</li>
+<li>只有四个控制信号</li>
+</ul>
+</li>
+</ul>
+<h5 id="状态转换如图"><a href="#状态转换如图" class="headerlink" title="状态转换如图"></a>状态转换如图</h5><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163010958.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="apb总线"></p>
+<ul>
+<li>系统初始化为 IDLE（空闲）状态，此时没有传输操作，也没有选中任何从设备。</li>
+<li>当有传输要进行时，PSELx ＝ 1，PENABLE ＝ 0 </li>
+<li>系统进入 ENABLE 状态时，维持之前在 SETUP 状态的PADDR、PSEL、PWRITE不变，并将 PENABLE 置为 1</li>
+</ul>
+<h4 id="AXI总线："><a href="#AXI总线：" class="headerlink" title="AXI总线："></a>AXI总线：</h4><p>具有单向通道体系结构，使得片上的信息流只以单方向传输，减少了延时和降低了复杂性。AXI总线目前有三个版本：</p>
+<ul>
+<li><p>AXI4：主要面向高性能地址映射通信的需求。</p>
+</li>
+<li><p>AXI4-Lite：是一个简单的吞吐量地址映射性通信总线。（例，状态寄存器的通信）</p>
+</li>
+<li><p>AXI4-Stream：面向高速流数据传输。</p>
+</li>
+</ul>
+<p>特点为：</p>
+<ul>
+<li><p>单方向传输：信号流只以单方向传输，从而简化时钟域间的桥接，减少逻辑门数量，还能减少通信延迟。</p>
+</li>
+<li><p>支持猝发操作：通过并行执行猝发操作，极大地提高了数据吞吐能力，在满足高性能要求的同时，又减少了功耗。</p>
+</li>
+<li><p>地址和数据路径是独立的：地址和数据路径分开，能对单一路径进行独立优化，可以根据需要控制路径时序，将时钟频率提高，以降低通信延迟。</p>
+</li>
+<li><p>增强的灵活性：AXI技术拥有对称的主从接口，无论在点对点或在多层系统中，都能十分方便地使用AXI技术</p>
+</li>
+</ul>
+<h5 id="读操作采用两个通道来实现："><a href="#读操作采用两个通道来实现：" class="headerlink" title="读操作采用两个通道来实现："></a>读操作采用两个通道来实现：</h5><p>读地址通道从主设备发送到从设备，以便设置地址和部分控制信号</p>
+<p>此地址的数据通过读数据通道，由从设备发送到主设备</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163155421.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="axi"></p>
+<h5 id="写操作采用3个独立的通道实现："><a href="#写操作采用3个独立的通道实现：" class="headerlink" title="写操作采用3个独立的通道实现："></a><strong>写操作采用3个独立的通道实现：</strong></h5><p>写地址通道从主设备发送到从设备，以便设置地址和部分控制信号</p>
+<p>数据通过写数据通道从主设备发射到从设备，以写入此地址</p>
+<p>写反馈通过写反馈响应通道由从设备发送到主设备，返回传输是否成功</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163306740.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="axi总线"></p>
+<h5 id="AXI握手机制"><a href="#AXI握手机制" class="headerlink" title="AXI握手机制"></a>AXI握手机制</h5><p>使用双向握手机制，传输在 VALID、READY同时有效时，分 3 种情况</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426130513677.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="AXI"></p>
+<p>▪ VALID 在 READY 之前有效握手</p>
+<p>▪ READY 在 VALID 之前有效握手</p>
+<p>▪ VALID 和READY 同时有效握手</p>
+<h3 id="3-4-3多层总结矩阵结构"><a href="#3-4-3多层总结矩阵结构" class="headerlink" title="3.4.3多层总结矩阵结构"></a>3.4.3多层总结矩阵结构</h3><blockquote>
+<p>就STM32F4系列芯片来说，嵌入了多个主设备和从设备</p>
+<p>主设备包括Cortex Mx芯核AHB总线，DMA1存储器总线，DMA2存储器总线，DMA2外设总线，以太网DMA总线，USB高速DMA总线，Chrom-ART加速器总线，LCD-TFT总线等。</p>
+<p>从设备包括内部Flash接口，内部SRAM1和辅助内部SRAM（当可以访问SRAM2，SRAM3时的情况），AHB1外设（包括AHB-APB桥和APB外设），AHB2外设，AHB3外设（例如FMC，Quad-SPI外设）等。</p>
+<p>采用多层总线矩阵结构来支持，保证并发访问和有效操作。</p>
+</blockquote>
+<p>多层总结矩阵结构</p>
+<p>主设备：八条主控总线</p>
+<p>从设备：七条被控总线</p>
+<p>借助总线矩阵，实现主控总线到被控总线的访问</p>
+<p>总线矩阵用于主控总线之间的访问仲裁管理。仲裁采用循环调度算法</p>
+<p>借助两个 AHB&#x2F;APB 总线桥 APB1 和 APB2，可在 AHB 总线与两个 APB 总线之间实现完全同步的连接在多个高速外设同时运行期间，系统也可以实现并发访问和高效运行</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230421163441026.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多层总线"></p>
+<h3 id="3-4-4-矩阵总线访问优先权"><a href="#3-4-4-矩阵总线访问优先权" class="headerlink" title="3.4.4 矩阵总线访问优先权"></a>3.4.4 矩阵总线访问优先权</h3><p>在矩阵总线结构中，采用了轮询调度的优先权体系来保证主设备使用极低</p>
+<p>延迟来访问从设备，这是因为：</p>
+<p>① 轮询调度允许总线带宽的公平分配；</p>
+<p>② 最大延迟有上限；</p>
+<p>③ 轮询调度粒度是1X传输</p>
+<h2 id="3-5总线的性能分析"><a href="#3-5总线的性能分析" class="headerlink" title="3.5总线的性能分析"></a>3.5总线的性能分析</h2><ul>
+<li>影响总线性能的因素<ul>
+<li>传输带宽、数据位宽和工作频率</li>
+</ul>
+</li>
+<li>总线的带宽<ul>
+<li>单位时间内总线上传输的数据量</li>
+<li>影响带宽的因素：总线位宽和工作频率<ul>
+<li>总线的带宽＝总线的工作频率 × 总线的位宽</li>
+<li>实际有效数据传输：传输数据的总线</li>
+<li>有效带宽要比理论带宽窄</li>
+</ul>
+</li>
+<li>总线能同时传输的二进制数据的位数</li>
+<li>总线的位宽越宽，每个时钟数据传输率越大，总线的带宽也就越宽</li>
+</ul>
+</li>
+<li>总线的工作频率</li>
+<li>总线的工作时钟频率以兆赫兹为单位</li>
+<li>工作频率越高，总线工作速度越快，则总线带宽越宽</li>
+</ul>
+<h3 id="带宽与性能"><a href="#带宽与性能" class="headerlink" title="带宽与性能"></a>带宽与性能</h3><ul>
+<li>带宽应用到下面的部件：<ul>
+<li>内存</li>
+<li>总线</li>
+<li>CPU</li>
+</ul>
+</li>
+<li>系统的不同部件具有不同的时钟频率</li>
+<li>不同的部件有不同的带宽</li>
+</ul>
+<h3 id="带宽与数据的传输"><a href="#带宽与数据的传输" class="headerlink" title="带宽与数据的传输"></a>带宽与数据的传输</h3><ul>
+<li>视频一帧：1920 x 1080 x 3 &#x3D; 6 220 800bytes. <ul>
+<li>在 1&#x2F;30 秒&#x3D;0.033 秒通过一帧</li>
+</ul>
+</li>
+<li>若总线传输速度 1 byte&#x2F;10ns, 则0.062 秒每帧. <ul>
+<li>太慢</li>
+</ul>
+</li>
+<li>增加总线带宽<ul>
+<li>增加总线的位宽</li>
+<li>每次传输 4 bytes&#x2F;10ns, 则需要0.0155 s&#x2F;帧，达到要求</li>
+<li>增加总线时钟的频率</li>
+<li>总线时钟200MHz, 1byte&#x2F;5ns，则需要0.031s&#x2F;帧，达到要求</li>
+</ul>
+</li>
+</ul>
+<h3 id="总线的带宽"><a href="#总线的带宽" class="headerlink" title="总线的带宽"></a>总线的带宽</h3><ul>
+<li>T: 总线的周期数</li>
+<li>P: 总线时钟周期<ul>
+<li>time&#x2F;bus_cycle</li>
+</ul>
+</li>
+<li>总的传输时间: <ul>
+<li>t &#x3D; TP</li>
+</ul>
+</li>
+<li>W:基本总线位宽，字节单位. </li>
+<li>N：传送的字节数</li>
+<li>D: 传输W字节宽的数据消耗D个时钟周期. </li>
+<li>额外消耗：O&#x3D;O1 + O2</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131413469.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="非突发传输"></p>
+<p><strong>B: 一次突发传送连续执行了B次传输</strong></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131550351.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="突发传输"></p>
+<h3 id="基于总线的性能瓶颈"><a href="#基于总线的性能瓶颈" class="headerlink" title="基于总线的性能瓶颈"></a>基于总线的性能瓶颈</h3><p>每秒传输30帧：</p>
+<ul>
+<li>每帧 1920 x 1080 像素</li>
+<li>30帧传输的字节：<ul>
+<li>1920* 1080* 3* 30.</li>
+</ul>
+</li>
+</ul>
+<p>那么瓶颈是总线还是内存?</p>
+<p>每个视频帧1920*1080，30帧&#x2F;秒 </p>
+<p>总线: 频率：100 MHz bus, D&#x3D;1, O&#x3D;3,w&#x3D;2字节, </p>
+<ul>
+<li>Tbasic &#x3D; (1+3)1920 <em>1080 * 3&#x2F;2 &#x3D; 12.4</em>106 时钟周期 &#x3D; 0.124秒. </li>
+<li>0.124*30&#x3D;3.72秒</li>
+</ul>
+<p>内存: 突发模式，B&#x3D;4, w&#x3D;2,D&#x3D;1,O&#x3D;4 ,存储器的访问时间5ns, </p>
+<ul>
+<li>Tmem &#x3D; (4* 1+4) 1920 * 1080* 3&#x2F;(4* 2) &#x3D; 6.2*106 时钟周期&#x3D; 0.031 秒. </li>
+<li>0.062*30&#x3D;0.93秒</li>
+</ul>
+<p>瓶颈：总线</p>
+<blockquote>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%80%BB%E7%BA%BF%E6%8A%80%E6%9C%AF/image-20230426131652671.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230426131652671"></p>
+<p>算一下我电脑每秒170帧，每帧2560*1440像素,其他参数就按题目算了</p>
+<p>Tbasic &#x3D; (1+3)2560 *1440 * 3&#x2F;2 &#x3D; 22118400 时钟周期 &#x3D;0.221184秒</p>
+<p>0.221184*170&#x3D;37.60128s（这个周期过于离谱了吧。。。实际参数肯定不一样）</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>总线的概念</li>
+<li>典型总线</li>
+<li>DMA</li>
+<li>ARM总线结构</li>
+<li>总线的性能分析</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">#嵌入式程序设计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>嵌入式程序设计ch3-嵌入式总线技术</div>
+      <div>https://www.emokable.top/嵌入式程序设计ch3-嵌入式总线技术/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F3-%E7%89%B9%E6%AE%8A%E6%8C%87%E4%BB%A4/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统3-特殊指令">
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统3-特殊指令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1069 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 这个系列用来整理老师（谷守珍）上课的ppt  一.课程信息课程教材🔷《Computer Organization and Design, The Hardware&#x2F;Software Interface》(Fifth Edition)，作者：David A. Patterson和John. Hennessy  🔷电子版，amazon.com 软件：Logisim 课程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L01-intro">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 这个系列用来整理老师（谷守珍）上课的ppt  一.课程信息课程教材🔷《Computer Organization and Design, The Hardware&#x2F;Software Interface》(Fifth Edition)，作者：David A. Patterson和John. Hennessy  🔷电子版，amazon.com 软件：Logisim 课程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305105717963.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305105721293.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305111401411.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112358864.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112446922.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112527453.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112618902.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112710563.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112728412.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112841824.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113215908.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113234190.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113513317.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114047757.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114238999.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114300928.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305122944259.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305123217592.png">
+<meta property="article:published_time" content="2023-03-05T02:43:46.000Z">
+<meta property="article:modified_time" content="2023-03-05T04:33:56.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305105717963.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L01-intro - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L01-intro"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-05 10:43" pubdate>
+          2023年3月5日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L01-intro</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：10 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践"><a href="#计算机组成与实践" class="headerlink" title="计算机组成与实践"></a><strong>计算机组成与实践</strong></h1><blockquote>
+<p>这个系列用来整理老师（谷守珍）上课的ppt</p>
+</blockquote>
+<h2 id="一-课程信息"><a href="#一-课程信息" class="headerlink" title="一.课程信息"></a>一.课程信息</h2><h3 id="课程教材"><a href="#课程教材" class="headerlink" title="课程教材"></a>课程教材</h3><p>🔷《Computer Organization and Design, The Hardware&#x2F;Software Interface》(Fifth Edition)，作者：David A. Patterson和John. Hennessy</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305105717963.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230305105717963"><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305105721293.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230305105721293"></p>
+<p>🔷电子版，amazon.com</p>
+<p>软件：Logisim</p>
+<h3 id="课程教学内容及目标"><a href="#课程教学内容及目标" class="headerlink" title="课程教学内容及目标"></a><strong>课程教学内容及目标</strong></h3><p>🔷高级语言的程序如何翻译成硬件可执行的语言</p>
+<p>​	•硬件如何执行程序</p>
+<p>🔷什么是软硬件之间的接口</p>
+<p>​	•软件如何指导硬件完成功能</p>
+<p>🔷哪些因素决定了程序的性能</p>
+<p>​	•程序员如何改进程序性能</p>
+<p>🔷哪些技术可以改进计算机性能</p>
+<p>🔷串行处理为什么发展为并行处理</p>
+<h3 id="如何学习这门课"><a href="#如何学习这门课" class="headerlink" title="如何学习这门课"></a><strong>如何学习这门课</strong></h3><p><strong>基础知识</strong></p>
+<p>​	♦基础的逻辑设计与电路知识</p>
+<p>​	♦FSMs，与或非逻辑</p>
+<p>​	♦处理器，存储器，I&#x2F;O基本知识</p>
+<p>​	♦编写、编译、运行程序</p>
+<p><strong>推荐学习方式</strong></p>
+<p>​	♦关注并学习具体实例的运行</p>
+<p>​	♦以例子为基础，学习基本原理</p>
+<h2 id="二-背景"><a href="#二-背景" class="headerlink" title="二.背景"></a>二.背景</h2><h3 id="计算机的发展"><a href="#计算机的发展" class="headerlink" title="计算机的发展"></a>计算机的发展</h3><p><strong>电子计算机时代</strong>（1947贝尔实验室第一个晶体管&#x2F;1951第一台商业计算机UNIVAC-1）–<strong>集成电路计算机时代</strong>(1958德州仪器发明集成电路&#x2F;代表IBM360)–<strong>微处理器（CPU）的诞生</strong>（1971，intel4004）</p>
+<h3 id="电子技术的发展"><a href="#电子技术的发展" class="headerlink" title="电子技术的发展"></a><strong>电子技术的发展</strong></h3><p>🔷容量增大，性能提升</p>
+<p>🔷制造成本降低</p>
+<h3 id="半导体（Semiconductor）技术"><a href="#半导体（Semiconductor）技术" class="headerlink" title="半导体（Semiconductor）技术"></a><strong>半导体（Semiconductor）技术</strong></h3><p>🔷<strong>硅：</strong>导电能力不强，称为半导体</p>
+<p>🔷<strong>加入其他材料，将硅转变成包含三种属性的区域</strong></p>
+<p>•良好的导电体</p>
+<p>•良好的绝缘体</p>
+<p>•可控的导电体或绝缘体</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305111401411.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230305111401411"></p>
+<p>成品率：合格芯片数占总芯片数的百分比（想到显卡cpu都是按最高标准生产晶圆，合格的做成i9-13900，ad102（rtx6000Ada），不合格的就屏蔽部分做出i7-13700，ad102-300-A1（rtx4090）以及之后的各档次）</p>
+<h3 id="集成电路成本"><a href="#集成电路成本" class="headerlink" title="集成电路成本"></a><strong>集成电路成本</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112358864.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230305112358864"></p>
+<p>🔷每个晶圆的价格和面积是固定的</p>
+<p>🔷制造工艺决定瑕疵率</p>
+<p>🔷体系结构和电路设计决定芯片面积</p>
+<p>🔷芯片的成本取决于成品率以及芯片和晶圆的面积</p>
+<h3 id="摩尔定律"><a href="#摩尔定律" class="headerlink" title="摩尔定律"></a>摩尔定律</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112446922.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="然而老黄天天说摩尔定律已死，这从他的定价可以看出"></p>
+<h3 id="各厂商制程线路图"><a href="#各厂商制程线路图" class="headerlink" title="各厂商制程线路图"></a><strong>各厂商制程线路图</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112527453.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="台积电搬到美国去了"></p>
+<h3 id="芯片制程"><a href="#芯片制程" class="headerlink" title="芯片制程"></a><strong>芯片制程</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112618902.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意图"></p>
+<table>
+<thead>
+<tr>
+<th><strong>栅极（Gate）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电流从源极（Source）流入漏极（Drain），栅极（Gate）相当于闸门，负责控制电流的通和断。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>芯片“nm”的制程数值</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>指的是芯片中最小的栅极宽度。而栅极宽度决定了电流通过时的损耗，栅极越窄、功耗越低，性能越高。</td>
+</tr>
+</tbody></table>
+<p>功耗计算：</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112710563.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="CMOS技术"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112728412.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="公式"></p>
+<p>我现在的r5 5600电压是1.26，主频4.7GHz</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305112841824.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="目前我用的cpu"></p>
+<p>🔷例子：设计新处理器</p>
+<p>​	•负载电容是旧处理器的85%</p>
+<p>​	•电压和开关频率减少15%</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113215908.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="用途"></p>
+<p>🔷功耗墙(TDP,上面那颗就是65w)</p>
+<p>​	•不能再减少电压</p>
+<p>​	•不能解决散热问题</p>
+<p>🔷怎样提升性能？</p>
+<h3 id="单核处理器转向多核处理器"><a href="#单核处理器转向多核处理器" class="headerlink" title="单核处理器转向多核处理器"></a><strong>单核处理器转向多核处理器</strong></h3><p>原因：功耗, 指令级并行, 存储访问延迟影响</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113234190.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230305113234190"></p>
+<p>🔷多核微处理器</p>
+<p>​	•单芯片集成更多处理器（processor）</p>
+<p>🔷需要显性并行编程</p>
+<p>​	•与指令级并行相比</p>
+<p>​	•硬件可以同时执行多条指令</p>
+<p>​	•程序员不可见硬件并行</p>
+<p>•难点</p>
+<p>​	•如何提升性能</p>
+<p>​	•负载均衡问题</p>
+<p>​	•通信与同步技术</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305113513317.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="6C12T,六核十二线程"></p>
+<h3 id="个人计算机（Personal-Computers）"><a href="#个人计算机（Personal-Computers）" class="headerlink" title="个人计算机（Personal Computers）"></a><strong>个人计算机（Personal Computers）</strong></h3><table>
+<thead>
+<tr>
+<th><strong>个人计算机</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通用型计算机  运行第三方软件  性价比高  (DIY)</td>
+</tr>
+</tbody></table>
+<h3 id="服务器（-Server-Computers）"><a href="#服务器（-Server-Computers）" class="headerlink" title="服务器（ Server Computers）"></a><strong>服务器（ Server Computers）</strong></h3><table>
+<thead>
+<tr>
+<th><strong>服务器</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>通过网络访问  执行大负载任务、高性能、高可靠性  高能耗、高成本  分为通用服务器和专用服务器，例如超级计算机（Supercomputers）是用于计算的专用服务器</td>
+</tr>
+</tbody></table>
+<h3 id="嵌入式计算机（Embedded-Computers）"><a href="#嵌入式计算机（Embedded-Computers）" class="headerlink" title="嵌入式计算机（Embedded Computers）"></a><strong>嵌入式计算机（Embedded Computers）</strong></h3><table>
+<thead>
+<tr>
+<th><strong>嵌入式计算机</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>面向单一任务  严格限制成本、性能、能耗</td>
+</tr>
+</tbody></table>
+<h3 id="仓储规模计算机（WSC）"><a href="#仓储规模计算机（WSC）" class="headerlink" title="仓储规模计算机（WSC）"></a><strong>仓储规模计算机（WSC）</strong></h3><table>
+<thead>
+<tr>
+<th><strong>仓储规模计算机（WSC）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WSC是云计算的核心  软件即服务（  Software as a Service ）  部分软件运行在移动端设备，部分软件运行在云端  重视互动应用程序、大规模存储、可靠性和很高的因特网带宽</td>
+</tr>
+</tbody></table>
+<h3 id="个人移动终端（Personal-Mobile-Device，PMD）"><a href="#个人移动终端（Personal-Mobile-Device，PMD）" class="headerlink" title="个人移动终端（Personal Mobile Device，PMD）"></a><strong>个人移动终端（Personal Mobile Device，PMD）</strong></h3><table>
+<thead>
+<tr>
+<th>个人移动终端</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>电池供电  无线方式连接网络  个人移动终端销售量远大于桌面终端</td>
+</tr>
+</tbody></table>
+<h2 id="三-课程内容简介"><a href="#三-课程内容简介" class="headerlink" title="三.课程内容简介"></a>三.课程内容简介</h2><h3 id="计算机构成"><a href="#计算机构成" class="headerlink" title="计算机构成"></a>计算机构成</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114047757.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冯诺依曼"></p>
+<table>
+<thead>
+<tr>
+<th><strong>主要组成部件</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据通路（运算）单元  控制单元  存储器（缓存、内存和硬盘等）  输入设备（鼠标、键盘等）  输出设备（显示器和打印机等）</td>
+</tr>
+</tbody></table>
+<p><strong>学习处理器（数据通路和控制单元）与存储器的基本设计方法、相互间的协调合作</strong></p>
+<p>​	🔷处理器与存储器由几百至几千万晶体管实现</p>
+<p>​	🔷深入到学习每个晶体管的功能不现实</p>
+<p>​	🔷需要采用抽象的方式来学习</p>
+<h3 id="程序概念入门"><a href="#程序概念入门" class="headerlink" title="程序概念入门"></a><strong>程序概念入门</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114238999.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意图"></p>
+<p>🔷<strong>应用软件</strong></p>
+<p>​	🔷高级编程语言，例如C、Java、Python等</p>
+<p>🔷<strong>系统软件</strong></p>
+<p>​	🔷编译程序：将高级语言程序翻译成</p>
+<pre><code class="hljs">  硬件可执行的指令
+</code></pre>
+<p>​	🔷操作系统：为应用软件与硬件交互</p>
+<p>​	  提供服务的软件</p>
+<p>​	🔷处理基本输入输出</p>
+<p>​	🔷分配内外存</p>
+<p>​	🔷对任务进行调度，提供共享计算机资源的服务</p>
+<p>🔷<strong>硬件</strong></p>
+<p>🔷处理器，存储设备，I&#x2F;O控制器等</p>
+<h3 id="高级程序语言"><a href="#高级程序语言" class="headerlink" title="高级程序语言"></a><strong>高级程序语言</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305114300928.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="各种语言"></p>
+<p>​	🔷程序员可以根据需要选择高级编程语言，以类似自然语言的方式编写程序代码</p>
+<p>​	🔷可读性高，容易纠错，提升了程序员的代码生产力</p>
+<p>​	🔷程序维护性高</p>
+<p>​	🔷不依赖于硬件平台，可移植性好</p>
+<p>​	🔷优化编译器可以基于机器平台进行高效的汇编代码优化</p>
+<h3 id="高级程序语言的运行"><a href="#高级程序语言的运行" class="headerlink" title="高级程序语言的运行"></a><strong>高级程序语言的运行</strong></h3><p>高级程序语言程序（C语言）–编译–汇编语言程序（MIPS）–汇编– 机器代码（MIPS）</p>
+<p>运行流程：</p>
+<p>​	①代码通过输入设备加载到计算机</p>
+<p>​	②代码输入到计算机后，保存在存储器中</p>
+<p>​	③处理器从存储器提取指令</p>
+<p>​	④控制器对指令进行译码，获得指令的执行信息</p>
+<p>​	⑤数据通路根据控制信号执行指令</p>
+<p>​	<img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305122944259.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="参考"></p>
+<h3 id="指令集体系结构（ISA）"><a href="#指令集体系结构（ISA）" class="headerlink" title="指令集体系结构（ISA）"></a><strong>指令集体系结构（ISA）</strong></h3><p>硬件和底层软件之间的接口，被命名为计算机的<strong>指令集体系结构（instruction set architecture，ISA）或简称体系结构（architecture）</strong></p>
+<p>​	🔷<strong>体系结构</strong>有指令、寄存器、存储器访问、I&#x2F;O等编写机器语言程序所需的所有信息。</p>
+<p>​	🔷隐藏底层细节，使程序员只需要考虑功能</p>
+<p>​	🔷基本指令集和操作系统接口被称为<strong>应用二进制接口（Application binary interface，ABI）</strong></p>
+<p>​	🔷体系结构的实现：遵循体系结构抽象的硬件</p>
+<h2 id="四-小结"><a href="#四-小结" class="headerlink" title="四.小结"></a>四.小结</h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L01-intro/image-20230305123217592.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ee"></p>
+<h3 id="软硬件协同工作："><a href="#软硬件协同工作：" class="headerlink" title="软硬件协同工作："></a>软硬件协同工作：</h3><p>​	🔷多个层次间通过<strong>抽象</strong>相互合作</p>
+<p>​	🔷各项技术都在快速的发展</p>
+<p>​	🔷设计、测试与评估方法复杂</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L01-intro</div>
+      <div>https://www.emokable.top/计算机组成原理-L01-intro/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月5日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="嵌入式程序设计ch1-嵌入式系统概论">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">嵌入式程序设计ch1-嵌入式系统概论</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E6%96%B0%E5%AD%A6%E6%9C%9F%E4%BA%86%EF%BC%8C%E6%9C%AC%E5%8D%9A%E5%AE%A2%E6%88%90%E5%8A%9F%E8%BF%81%E7%A7%BB%E8%87%B3%E5%AE%BF%E8%88%8D%E5%8F%B0%E5%BC%8F%E6%9C%BA/" title="博客成功迁移至宿舍台式机">
+                        <span class="hidden-mobile">博客成功迁移至宿舍台式机</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

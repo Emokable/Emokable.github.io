@@ -1,0 +1,1458 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="嵌入式系统设计-嵌入式输入&#x2F;输出设备接口一.I&#x2F;O接口硬件结构接口结构：连接外设与CPU的中间接口电路  满足外设具备多样性、复杂性、异构性的要求  中间接口电路即输入&#x2F;输出接口电路，简称I&#x2F;O接口  I&#x2F;O接口在嵌入式系统中具有重要的位置    I&#x2F;O接口组成I&#x2F;O接口组成  数据缓存  信号电平转换  数据格式转换  外设选">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式程序设计ch5-嵌入式输入&#x2F;输出设备接口">
+<meta property="og:url" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="嵌入式系统设计-嵌入式输入&#x2F;输出设备接口一.I&#x2F;O接口硬件结构接口结构：连接外设与CPU的中间接口电路  满足外设具备多样性、复杂性、异构性的要求  中间接口电路即输入&#x2F;输出接口电路，简称I&#x2F;O接口  I&#x2F;O接口在嵌入式系统中具有重要的位置    I&#x2F;O接口组成I&#x2F;O接口组成  数据缓存  信号电平转换  数据格式转换  外设选">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319001217846.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319002907631.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319002955582.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319004521702.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319005040231.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319005232629.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319092359626.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093510034.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093620555.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093726394.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093901787.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094202102.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094252857.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094448468.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319095521043.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100138868.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100217991.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100734422.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100846788.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100914335.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319102809756.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319104112006.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319104300040.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111143172.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111228570.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111314475.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111818511.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112012915.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112121853.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112254392.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112324895.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112518769.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112624350.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112725054.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112820409.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319113011405.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319142311892.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319142557032.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143112279.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143131037.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143349187.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143512659.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144145533.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144815401.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144939823.png">
+<meta property="article:published_time" content="2023-03-18T16:10:13.000Z">
+<meta property="article:modified_time" content="2023-03-19T06:50:16.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="嵌入式程序设计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319001217846.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>嵌入式程序设计ch5-嵌入式输入/输出设备接口 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="嵌入式程序设计ch5-嵌入式输入/输出设备接口"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-19 00:10" pubdate>
+          2023年3月19日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          99 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">嵌入式程序设计ch5-嵌入式输入/输出设备接口</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：9 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="嵌入式系统设计-嵌入式输入-x2F-输出设备接口"><a href="#嵌入式系统设计-嵌入式输入-x2F-输出设备接口" class="headerlink" title="嵌入式系统设计-嵌入式输入&#x2F;输出设备接口"></a>嵌入式系统设计-嵌入式输入&#x2F;输出设备接口</h1><h2 id="一-I-x2F-O接口"><a href="#一-I-x2F-O接口" class="headerlink" title="一.I&#x2F;O接口"></a>一.I&#x2F;O接口</h2><h3 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h3><p>接口结构：连接外设与CPU的中间接口电路</p>
+<ul>
+<li><p>满足外设具备多样性、复杂性、异构性的要求</p>
+</li>
+<li><p>中间接口电路即输入&#x2F;输出接口电路，简称I&#x2F;O接口</p>
+</li>
+<li><p>I&#x2F;O接口在嵌入式系统中具有重要的位置</p>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319001217846.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意"></p>
+<h3 id="I-x2F-O接口组成"><a href="#I-x2F-O接口组成" class="headerlink" title="I&#x2F;O接口组成"></a>I&#x2F;O接口组成</h3><p>I&#x2F;O接口组成</p>
+<ul>
+<li><p>数据缓存</p>
+</li>
+<li><p>信号电平转换</p>
+</li>
+<li><p>数据格式转换</p>
+</li>
+<li><p>外设选择</p>
+</li>
+<li><p>中断管理</p>
+</li>
+<li><p>CPU命令接收和执行</p>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319002907631.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="组成图"></p>
+<p>I&#x2F;0接口的三个基本功能模块：数据缓存、逻辑控制和外设连接</p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a>寄存器</h3><p>数据缓存功能模块：负责I&#x2F;O交互过程的控制、记录和数据的存储</p>
+<ul>
+<li>数据寄存器：存放交互过程中需传输的数据</li>
+<li>控制寄存器：存放外设、I&#x2F;O接口的控制命令</li>
+<li>状态寄存器：记录外设、I&#x2F;O接口的状态信息</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319002955582.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="寄存器"></p>
+<h3 id="控制与外设"><a href="#控制与外设" class="headerlink" title="控制与外设"></a>控制与外设</h3><p>逻辑控制功能模块</p>
+<ul>
+<li>接收CPU传输过来的地址，根据地址进行外设选择</li>
+</ul>
+<p>外设连接功能模块</p>
+<ul>
+<li>I&#x2F;O接口与外设的交互接口</li>
+</ul>
+<h3 id="I-x2F-O设备的分类"><a href="#I-x2F-O设备的分类" class="headerlink" title="I&#x2F;O设备的分类"></a>I&#x2F;O设备的分类</h3><p>计算机所管理的I&#x2F;O设备按输入输出对象的不同可以分为以下3类：</p>
+<ul>
+<li><strong>用户可读写</strong>设备，用于用户与计算机通信。如：显示器、键盘、鼠标、打印机等</li>
+<li><strong>机器可读写</strong>设备，用于电子装置与计算机通信。如：硬盘、U盘、控制器</li>
+<li><strong>通信</strong>设备，用于与远程设备通信。如：Modem、ISDN终端</li>
+</ul>
+<h2 id="二-数据传输"><a href="#二-数据传输" class="headerlink" title="二.数据传输"></a>二.数据传输</h2><h3 id="I-x2F-O接口的数据传输"><a href="#I-x2F-O接口的数据传输" class="headerlink" title="I&#x2F;O接口的数据传输"></a>I&#x2F;O接口的数据传输</h3><p>🔷程序查询方式，也称忙等I&#x2F;O</p>
+<p>CPU负责查询外设的状态寄存器，判断外设的数据是否就绪。若就绪，直接传输数据；否则，CPU等待数据就绪或继续查询其他外设</p>
+<p>🔷中断方式</p>
+<p>当外设数据就绪时，外设向CPU发出中断服务请求信号，CPU响应外设的中断服务请求，并处理中断请求</p>
+<p>🔷直接访存方式，DMA</p>
+<p>数据传输无需CPU的参与，在外设与内存之间建立直接的数据传输通道</p>
+<h3 id="I-x2F-O编程"><a href="#I-x2F-O编程" class="headerlink" title="I&#x2F;O编程"></a>I&#x2F;O编程</h3><p>两种方法支持I&#x2F;O编程</p>
+<p>特殊的I&#x2F;O指令</p>
+<ul>
+<li>Intel x86 提供 in, out 指令</li>
+</ul>
+<p>内存映射I&#x2F;O</p>
+<ul>
+<li>大多数CPUs 应用内存映射I&#x2F;O</li>
+<li>支持I&#x2F;O 指令的CPU并不排除内存映射I&#x2F;O</li>
+</ul>
+<h4 id="内存映射IO"><a href="#内存映射IO" class="headerlink" title="内存映射IO"></a>内存映射IO</h4><p>为每一个I&#x2F;O设备的寄存器提供地址</p>
+<p>程序使用普通的CPU读写指令来与设备通信</p>
+<p>为设备定义地址:</p>
+<p>​	DEV1 EQU 0x1000</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">Read</span>/write 编码:<br><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r1</span>,=<span class="hljs-symbol">#DEV1</span> <br><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r0</span>,[<span class="hljs-built_in">r1</span>] ；read<br><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r0</span>,=<span class="hljs-number">#8</span> <br><br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">r0</span>,[<span class="hljs-built_in">r1</span>] ；write<br></code></pre></td></tr></table></figure>
+
+<h5 id="内存映射IO-高级语言（PEEK和POKE函数）"><a href="#内存映射IO-高级语言（PEEK和POKE函数）" class="headerlink" title="内存映射IO-高级语言（PEEK和POKE函数）"></a>内存映射IO-高级语言（PEEK和POKE函数）</h5><ul>
+<li>读操作</li>
+</ul>
+<p>int peek(char *location) {</p>
+<p>return *location; }</p>
+<ul>
+<li>写操作</li>
+</ul>
+<p>void poke (char *location, char newval) {</p>
+<p>(*location) &#x3D; newval; }</p>
+<h4 id="程序查询方式，忙等I-x2F-O方式"><a href="#程序查询方式，忙等I-x2F-O方式" class="headerlink" title="程序查询方式，忙等I&#x2F;O方式"></a>程序查询方式，忙等I&#x2F;O方式</h4><p>轮询（polling）:通过CPU反复读I&#x2F;O设备状态寄存器来询问设备是否空闲</p>
+<ul>
+<li>设备比CPU慢，需要多个周期完成一项工作</li>
+<li>必须等待前一个操作完成后再进行下一个操作</li>
+<li>比如CPU向设备写数据，即输出<ul>
+<li>通过读设备状态寄存器来询问设备是否空闲</li>
+<li>若空闲，则写数据到数据寄存器</li>
+<li>若忙，则等待。</li>
+</ul>
+</li>
+</ul>
+<h5 id="忙等IO方式-输出设备编程"><a href="#忙等IO方式-输出设备编程" class="headerlink" title="忙等IO方式-输出设备编程"></a>忙等IO方式-输出设备编程</h5><p>将一个字符串写到输出设备</p>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs hsp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_CHAR <span class="hljs-number">0</span>x1000 <span class="hljs-comment">/* data register*/</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_STATUS <span class="hljs-number">0</span>x1001 <span class="hljs-comment">/* status register*/</span></span><br><br>Char *mystring=“Hello,world.”<span class="hljs-comment">;</span><br><br>Char *current_char<span class="hljs-comment">;</span><br><br>current_char = mystring<span class="hljs-comment">;</span><br><br><span class="hljs-keyword">while</span> (*current_char != ‘\<span class="hljs-number">0</span>’) &#123;<br><br>	<span class="hljs-keyword">poke</span>(OUT_CHAR,*current_char)<span class="hljs-comment">;</span><br><br>	<span class="hljs-keyword">poke</span>(OUT_STATUS,<span class="hljs-number">1</span>)<span class="hljs-comment">;</span><br><br><span class="hljs-keyword">while</span> (<span class="hljs-keyword">peek</span>(OUT_STATUS) != <span class="hljs-number">0</span>)<span class="hljs-comment">;</span><br><br>	current_char++<span class="hljs-comment">;</span><br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="忙等IO方式-输入-x2F-输出同步方式编程"><a href="#忙等IO方式-输入-x2F-输出同步方式编程" class="headerlink" title="忙等IO方式-输入&#x2F;输出同步方式编程"></a>忙等IO方式-输入&#x2F;输出同步方式编程</h5><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319004521702.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="忙等I/O"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">define</span> in_CHAR 0x1000 </span><br><span class="hljs-comment">/* input data register */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> in_STATUS 0x1001 </span><br><span class="hljs-comment">/* input status register */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_CHAR 0x1100</span><br><span class="hljs-comment">/* output data register */</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUT_STATUS 0x1101</span><br><span class="hljs-comment">/* output status register </span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>输入设备</strong>：</p>
+<ul>
+<li>当有新字符能够被CPU读取， in_STATUS&#x3D;1</li>
+<li>当字符被CPU读取或无字符可读，in_STATUS&#x3D;&#x3D;0</li>
+</ul>
+<p><strong>输出设备</strong>：</p>
+<ul>
+<li><p>当CPU写入字符，有新字符能够被写入到输出设备</p>
+<p>​	out_STATUS&#x3D;1</p>
+</li>
+<li><p>当字符被输出设备读取或设备无字符可读</p>
+<p>​	in_STATUS&#x3D;&#x3D;0</p>
+</li>
+</ul>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gcode"><span class="hljs-keyword">while</span> <span class="hljs-comment">(TRUE)</span> &#123;<br><span class="hljs-comment">/* read */</span><br><span class="hljs-keyword">while</span> <span class="hljs-comment">(peek(IN_STATUS)</span> == <span class="hljs-number">0</span>);<br>achar = <span class="hljs-comment">(char)</span>peek<span class="hljs-comment">(IN_DATA)</span>;<br>poke<span class="hljs-comment">(IN_STATUS,0)</span>;<br><span class="hljs-comment">/* write */</span><br>poke<span class="hljs-comment">(OUT_DATA,achar)</span>;<br>poke<span class="hljs-comment">(OUT_STATUS,1)</span>;<br><span class="hljs-keyword">while</span> <span class="hljs-comment">(peek(OUT_STATUS)</span> != <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="I-x2F-O中断"><a href="#I-x2F-O中断" class="headerlink" title="I&#x2F;O中断"></a>I&#x2F;O中断</h4><p>▪忙等I&#x2F;O效率非常低</p>
+<ul>
+<li>I&#x2F;O设备的速度远远小于CPU的速度</li>
+<li>除了测试，CPU不能做其它任何事情</li>
+</ul>
+<p>▪CPU的很多操作是可以与I&#x2F;O并行执行</p>
+<ul>
+<li>计算操作</li>
+<li>控制其它I&#x2F;O设备</li>
+</ul>
+<p>▪中断机制：</p>
+<ul>
+<li>可以改变CPU的控制流顺序</li>
+<li>强制CPU执行一段特定代码——中断处理子例程（设备驱动程序）</li>
+</ul>
+<blockquote>
+<p>▪ 由I&#x2F;O设备逻辑决定什么时候中断，发中断请求</p>
+<p>▪ CPU响应中断——可能无法立即响应</p>
+<p>​	一旦响应，将程序计数器（PC）指向中断处理子例程</p>
+<p>▪ 前台程序：无中断情况下CPU运行的程序</p>
+<p>▪ 后台程序：中断处理子程序</p>
+</blockquote>
+<h4 id="中断机制"><a href="#中断机制" class="headerlink" title="中断机制"></a>中断机制</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319005040231.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<p>◼ CPU 和设备通过CPU总线连接</p>
+<p>◼ CPU 和设备通过握手协议进行通信</p>
+<ul>
+<li>设备发出中断请求</li>
+<li>CPU准备处理I&#x2F;O设备请求时，CPU发出中断响应</li>
+</ul>
+<h4 id="中断行为"><a href="#中断行为" class="headerlink" title="中断行为"></a>中断行为</h4><p>基于调用中断服务子例程的形式</p>
+<ul>
+<li>(保护现场)中断强制下一条指令调用中断服务子例程</li>
+<li>执行中断子例程</li>
+<li>（恢复现场）返回前台程序</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319005232629.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="中断行为"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319092359626.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="应用基本中断讲字符从输入设备复制到输出设备"></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">//中断子例程（输入/输出都会引发中断）</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">input_handler</span>() <span class="hljs-comment">/*输入中断子例程*/</span></span><br><br>&#123;achar = peek(IN_DATA);<br><br>gotchar = TRUE;<br><br>poke(IN_STATUS,<span class="hljs-number">0</span>);&#125;<br><br><span class="hljs-comment">/*当字符输出完成时会发出中断信号*/</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">output_handler</span>() <span class="hljs-comment">/*输出中断子例程*/</span></span><br><br>&#123; &#125;<br>main() &#123;<br><span class="hljs-keyword">while</span> (TRUE) &#123;<br><span class="hljs-keyword">if</span> (gotchar) 	&#123;<br>	poke(OUT_DATA,achar);<br>	poke(OUT_STATUS,<span class="hljs-number">1</span>);<br>	gotchar = FALSE;<br>		&#125; <br>	&#125;<br>&#125;<br><span class="hljs-comment">//特点：读一个字符，然后写一个字符；</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="例：具有缓冲区的中断IO"><a href="#例：具有缓冲区的中断IO" class="headerlink" title="例：具有缓冲区的中断IO"></a>例：具有缓冲区的中断IO</h5><p>为了使读和写完全独立，使用缓冲区机制</p>
+<ul>
+<li>允许输入输出设备以不同的速率运行</li>
+<li>前台的工作完全独立于输入输出设备</li>
+<li>通过输入中断、输出中断完成与I&#x2F;O的通信</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-comment">//缓冲区的设计</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> BUF_SIZE 8</span><br><span class="hljs-built_in">char</span> io_buf[BUF_SIZE];<br><span class="hljs-built_in">int</span> buf_head=<span class="hljs-number">0</span>,buf_tail=<span class="hljs-number">0</span>;<br><span class="hljs-built_in">int</span> error=<span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">empty_buffer</span>()</span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">full_buffer</span>()</span>;<br><span class="hljs-function"><span class="hljs-built_in">int</span> <span class="hljs-title">nchars</span>()</span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add_char</span>(<span class="hljs-params"><span class="hljs-built_in">char</span> achar</span>)</span>;<br><span class="hljs-function"><span class="hljs-built_in">char</span> <span class="hljs-title">remove_char</span>()</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-comment">//基于缓冲区的输入的中断子例程</span><br>void input<span class="hljs-constructor">_handler()</span> &#123;<br><span class="hljs-built_in">char</span> achar;<br><span class="hljs-keyword">if</span> (full<span class="hljs-constructor">_buffer()</span>) error = <span class="hljs-number">1</span>;<br><span class="hljs-keyword">else</span> &#123; achar = peek(IN_DATA); <br>add<span class="hljs-constructor">_char(<span class="hljs-params">achar</span>)</span>; &#125;<br>poke(IN_STATUS,<span class="hljs-number">0</span>);<br><span class="hljs-keyword">if</span> (nchars<span class="hljs-literal">()</span><span class="hljs-operator"> == </span><span class="hljs-number">1</span>) <br>&#123; poke(OUT_DATA,remove<span class="hljs-constructor">_char()</span>); <br>poke(OUT_STATUS,<span class="hljs-number">1</span>); &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-comment">//基于缓冲区的输出的中断子例程</span><br>void <span class="hljs-built_in">output_handler</span>() &#123;<br>if (!empty_buffer())&#123;<br><span class="hljs-built_in">poke</span>(OUT_DATA, remove_char());<br><span class="hljs-built_in">poke</span>(OUT_STATUS,<span class="hljs-number">1</span>);<br>	&#125; <br>&#125;<br><span class="hljs-comment">/*若io_buf有字符，则输出可以自行引发一个输出中断；</span><br><span class="hljs-comment">▪ 若无，需要外部在新字符到达时启动输出处理子程序。</span><br><span class="hljs-comment">	▪ 输入处理子程序启动此种情况</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="调试中断代码"><a href="#调试中断代码" class="headerlink" title="调试中断代码"></a>调试中断代码</h5><p>若忘记改变(或恢复)寄存器的内容</p>
+<p>▪前台程序会展示一些非常奇怪的错误</p>
+<p>▪错误很难重现—它依赖与中断</p>
+<p>例：（handler（）中一个错误应发j的改变）</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs inform7">for(i=0;i&lt;M;i++)&#123;<br>	y<span class="hljs-comment">[i]</span>=b<span class="hljs-comment">[i]</span>;<br>	for(j=0;j&lt;N;j++)<br>		y<span class="hljs-comment">[i]</span>=y<span class="hljs-comment">[i]</span>+A<span class="hljs-comment">[i,j]</span>*x<span class="hljs-comment">[j]</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="如何发现中断"><a href="#如何发现中断" class="headerlink" title="如何发现中断"></a>如何发现中断</h4><ul>
+<li>在开始执行每条指令之前检查中断请求信号是否有中断请求</li>
+<li>一旦出现中断，PC将指向中断服务子例程</li>
+<li>注意：要保护和恢复现场</li>
+</ul>
+<h4 id="中断优先级和中断向量"><a href="#中断优先级和中断向量" class="headerlink" title="中断优先级和中断向量"></a>中断优先级和中断向量</h4><ul>
+<li>两种机制允许中断处理更多的设备<ul>
+<li><strong>优先级（Priorities）</strong>：确定哪种中断首先获得CPU</li>
+<li><strong>向量（Vectors）</strong>： 允许中断设备灵活定义其中断服务子例程</li>
+</ul>
+</li>
+<li>大多数CPU这两种方式都支持</li>
+</ul>
+<h4 id="具有优先级的中断"><a href="#具有优先级的中断" class="headerlink" title="具有优先级的中断"></a>具有优先级的中断</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093510034.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="如"></p>
+<p>使用轮询让几个设备共享一个中断</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093620555.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="轮询访问"></p>
+<p>例： 优先级 I&#x2F;O（A的优先级最高，C的优先级最低）</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093726394.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="按优先级询问"></p>
+<blockquote>
+<p>优先级排序：</p>
+<ul>
+<li><p>Masking(屏蔽): 发生中断的优先级比正在中断的优先级低，CPU将不响应该优先级低的中断。</p>
+</li>
+<li><p>Nonmaskable interrupt (NMI,不可屏蔽中断): 最高优先级，永不屏蔽</p>
+</li>
+<li><p>电源故障</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319093901787.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ARM Cortex-M4"></p>
+</li>
+</ul>
+</blockquote>
+<h4 id="中断向量"><a href="#中断向量" class="headerlink" title="中断向量"></a>中断向量</h4><p>▪不同的设备有不同的中断服务子例程</p>
+<p>▪中断向量表</p>
+<p>​	-设备存贮其向量号</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094202102.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="中断表"></p>
+<h4 id="一般的中断机制"><a href="#一般的中断机制" class="headerlink" title="一般的中断机制"></a>一般的中断机制</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094252857.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程图"></p>
+<h4 id="中断开销"><a href="#中断开销" class="headerlink" title="中断开销"></a>中断开销</h4><ul>
+<li>中断服务子例程执行的时间</li>
+<li>中断机制的开销</li>
+<li>寄存器存储&#x2F;恢复</li>
+<li>流水相关补偿</li>
+<li>Cache相关补偿</li>
+</ul>
+<h4 id="IO接口传输对比"><a href="#IO接口传输对比" class="headerlink" title="IO接口传输对比"></a>IO接口传输对比</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319094448468.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="IO接口传输对比"></p>
+<h2 id="三-通信接口"><a href="#三-通信接口" class="headerlink" title="三.通信接口"></a>三.通信接口</h2><p>用于实现外设与处理器之间的交互</p>
+<ul>
+<li>UART、SPI和I2C等 </li>
+<li>与 GPIO 的区别主要体现在通信时序、速度等方面</li>
+</ul>
+<h3 id="通信接口的分类"><a href="#通信接口的分类" class="headerlink" title="通信接口的分类"></a>通信接口的分类</h3><h5 id="并行-x2F-串行通信"><a href="#并行-x2F-串行通信" class="headerlink" title="并行&#x2F;串行通信"></a>并行&#x2F;串行通信</h5><ul>
+<li>并行通信：外设和微处理器之间存在多根数据传输线，数据的多个比特位可同时传输，例IEEE1284，主要用于点阵式打印机和绘图仪</li>
+<li>串行通信：外设和微处理器之间仅存在一根数据传输线，数据必须按照顺序一位一位传输，例如USB</li>
+</ul>
+<h5 id="同步-x2F-异步通信"><a href="#同步-x2F-异步通信" class="headerlink" title="同步&#x2F;异步通信"></a>同步&#x2F;异步通信</h5><ul>
+<li>同步通信：外设和微处理器之间有同步时钟，两者之间的数据传输受同步时钟的控制</li>
+<li>采用阻塞模式，发送方发出数据后需接收到接收方响应后才发送下一个数据</li>
+<li>例如IEEE1588标准，SPI，I2C </li>
+<li>异步通信：外设和微处理之间没有同步时钟，借助缓存进行数据传输<ul>
+<li>异步通信过程中，通信双方必须约定通信协议和传输速率</li>
+<li>采用非阻塞模式，即发送方发出数据后，无需等待接收方相应便可直接发送下一个数据</li>
+<li>例如UART</li>
+</ul>
+</li>
+</ul>
+<h5 id="单工-x2F-半双工-x2F-全双工通信（按照传输方向）"><a href="#单工-x2F-半双工-x2F-全双工通信（按照传输方向）" class="headerlink" title="单工&#x2F;半双工&#x2F;全双工通信（按照传输方向）"></a>单工&#x2F;半双工&#x2F;全双工通信（按照传输方向）</h5><ul>
+<li>单工制式：数据只能从发送方往接收方传输</li>
+<li>半双工制式：数据能在发送接收方之间双向传输，但在任何时刻数据只能一个方向传输，例如I2C </li>
+<li>全双工制式：接收和发送数据占用不同的线路，因此数据可同时在两个方向上传输，例如UART</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319095521043.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="UART,SPI，I2C比较"></p>
+<h3 id="串行通信"><a href="#串行通信" class="headerlink" title="串行通信"></a>串行通信</h3><p>▪ 使用方便、成本低廉、编程简单</p>
+<p>▪ 各微处理器提供的常见串行通信接口：通用异步收发器（UART） </p>
+<p>▪ STM32系列微处理器提供：通用UART和USART（同步&#x2F;异步收发器接口）</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100138868.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="rs232很像vga啊，但百度告诉我不是，凹凸都不同"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100217991.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="串行通信过程"></p>
+<h4 id="USART优点"><a href="#USART优点" class="headerlink" title="USART优点"></a>USART优点</h4><p>◼支持全双工、异步通信</p>
+<p>◼采用分数波特率发生器，可配置，最高可支持10.5Mb&#x2F;s波特</p>
+<p>率</p>
+<p>◼可编程配置的数据字长度（8 位或 9 位）</p>
+<p>◼可配置的停止位（1 位或 2 位）</p>
+<p>◼USART 实现同步数据通信时，发送端提供时钟</p>
+<p>◼支持奇偶校验</p>
+<p>◼发送奇偶校验位，接收数据奇偶校验</p>
+<p>◼支持 4 种错误检测：溢出错误、噪声错误、帧错误和校验错误</p>
+<p>◼……</p>
+<blockquote>
+<p>USART通信接口通过3个引脚与外设之间进行通信</p>
+<ul>
+<li>RX：接收数据输入</li>
+<li>TX：发送数据输出</li>
+</ul>
+<p>▪ SW_RX：在单线和智能卡模式下，接收数据</p>
+<p>▪USART与外设通信至少需要RX和TX两个引脚</p>
+<p>▪USART的部分引脚仅用于同步模式，如SCLK、IrDA模式、硬件流量控制模式</p>
+</blockquote>
+<h4 id="USART结构"><a href="#USART结构" class="headerlink" title="USART结构"></a>USART结构</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100734422.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构图"></p>
+<h5 id="分数波特率计算"><a href="#分数波特率计算" class="headerlink" title="分数波特率计算"></a>分数波特率计算</h5><p>波特率寄存器(USART_BRR)A</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100846788.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="寄存器示意图"></p>
+<p>▪位 31:16 保留</p>
+<p>▪位 15:4 DIV_Mantissa[11:0]：USARTDIV 的整数部分</p>
+<p>▪位 3:0 DIV_Fraction[3:0]：USARTDIV 的小数部分</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319100914335.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="公式"></p>
+<blockquote>
+<p>▪ fck是给外设的时钟</p>
+<p>▪设置波特率位115200，fck &#x3D; 36MHz，则USARTDIV &#x3D; 19.5</p>
+<p>▪整数部分为19 &lt;&lt; 4 &#x3D; 304</p>
+<p>▪小数部分为0.5*16 &#x3D; 8</p>
+<p>▪ USART_BRR寄存器的值位304+8&#x3D;312&#x3D;0x138</p>
+</blockquote>
+<h4 id="USART的数据发送过程"><a href="#USART的数据发送过程" class="headerlink" title="USART的数据发送过程"></a>USART的数据发送过程</h4><p>（1）写USART_CR1寄存器的UE位为1来使能USART</p>
+<p>（2）写USART_CR1寄存器的M位来定义数据帧长度为8位或9位 </p>
+<p>（3）写USART_CR2寄存器的STOP来配置停止位</p>
+<p>（4）如果采用多缓冲区通信的话，写USART_CR3寄存器的DMAT位来使能DMA传输，此时需按多缓冲区通信中的描述配置DMA寄存器</p>
+<p>（5）写USART_BRR寄存器来配置波特率</p>
+<p>（6）初次传输时需设置USART_CR1寄存器中的TE位来发送一个空闲帧</p>
+<p>（7）把需传输的数据写到USART_DR寄存器，帧已发送（停止位后）且TXE 位置 1，可在单缓冲区通信时将重复进行此动作来进行数据传输</p>
+<p>（8）在写入最后一个数据到USART_DR寄存器后，等待USART_SR寄存器的<strong>TC</strong>信号变为1，此时表明最后一个数据帧传输结束</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319102809756.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时序图"></p>
+<h4 id="USART的数据接收过程"><a href="#USART的数据接收过程" class="headerlink" title="USART的数据接收过程"></a>USART的数据接收过程</h4><p>（1）写USART_CR1寄存器的UE位为1来使能USART</p>
+<p>（2）写USART_CR1寄存器的M位来定义数据帧长度为8位或9位 </p>
+<p>（3）写USART_CR2寄存器来的STOP配置停止位</p>
+<p>（4）如果采用多缓冲区通信的话，写USART_CR3寄存器的DMAT位来使能DMA传输，此时需按多缓冲区通信中的描述配置DMA寄存器</p>
+<p>（5）写USART_BRR寄存器来配置波特率</p>
+<p>（6）写USART_CR1寄存器中的RE位使能数据接收。当接收到一个数据帧时，USART_SR寄存器中的RXNE位被设置，此时表明移位寄存器中的数据传输到了RDR，数据帧可以被录取</p>
+<h3 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h3><p>串行外设接口（Serial Peripheral Interface，SPI） </p>
+<p>▪ 同步串行通信接口，主要用于微处理器与外设之间的串行通信</p>
+<p>▪ 高速、全双工、同步，占用4个引脚 -&gt; 节约芯片引脚</p>
+<p>（1）MISO引脚：主设备数据输入，从设备数据输出</p>
+<p>（2）MOSI引脚：主设备数据输出，从设备数据输入</p>
+<p>（3）SCLK引脚：时钟信号，由主设备产生</p>
+<p>（4）CS引脚：从设备片选信号，由主设备控制</p>
+<p>▪ SPI是一种不对等的通信接口，通信的发起、结束均由主机控制，SPI通信双方时钟产生和片选控制的一方即为主机</p>
+<h4 id="spi的硬件连线图"><a href="#spi的硬件连线图" class="headerlink" title="spi的硬件连线图"></a>spi的硬件连线图</h4><p>一个SPI总线可连接多个主机和多个从机，但是在同一个时刻只允许由一个主机来操作总线</p>
+<p>在每次传输的过程中，主机总是向从机发送一个字节的数据，从机也是向主机发送一个字节的数据</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319104112006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h4 id="spi工作方式"><a href="#spi工作方式" class="headerlink" title="spi工作方式"></a>spi工作方式</h4><p>SPI接口可根据外设通信的需求，对串行同步时钟的极性（CPOL）和相位（CPHA）进行配置</p>
+<ul>
+<li>CPOL对SPI接口的通信影响不大，CPOL&#x3D;0，串行同步时钟的空闲状态为低电平；CPOL&#x3D;1，串行同步时钟的空闲状态为高电平</li>
+<li>CPHA决定了SPI接口上数据的采样位置，CPHA&#x3D;0，在串行同步时钟的第一个跳变沿数据将被采样；CPHA&#x3D;1，在串行同步时钟的第二个跳变沿数据才被采样；</li>
+</ul>
+<p>SPI接口可根据外设通信的需求，对串行同步时钟的极性（CPOL）和相位（CPHA）进行配置</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319104300040.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230319104300040"></p>
+<h4 id="SPI内部结构"><a href="#SPI内部结构" class="headerlink" title="SPI内部结构"></a>SPI内部结构</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111143172.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h4 id="SPI寄存器"><a href="#SPI寄存器" class="headerlink" title="SPI寄存器"></a>SPI寄存器</h4><p>SPI寄存器：通过SPI_CR1寄存器的配置来设置SPI的</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111228570.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h4 id="工作模式-主机模式和从机模式"><a href="#工作模式-主机模式和从机模式" class="headerlink" title="工作模式-主机模式和从机模式"></a><strong>工作模式</strong>-主机模式和从机模式</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111314475.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230319111314475"></p>
+<blockquote>
+<p>在主机模式下</p>
+<ul>
+<li>主机使用一个IO引脚选择从机</li>
+<li>传输的起始由主机发送数据来启动</li>
+<li>时钟（SCK）信号由主机产生</li>
+<li>通过MOSI引脚发送数据</li>
+<li>通过MISO引脚接收数据</li>
+</ul>
+</blockquote>
+<blockquote>
+<p> 在从机模式下</p>
+<ul>
+<li>数据传输在SSEL被主机拉低后开始</li>
+<li>接收主机输出的时钟信号</li>
+<li>通过MOSI引脚接收数据</li>
+<li>通过MOSI引脚发送数据</li>
+</ul>
+</blockquote>
+<h5 id="SPI的从模式配置"><a href="#SPI的从模式配置" class="headerlink" title="SPI的从模式配置"></a>SPI的从模式配置</h5><p><strong>配置SPI为从模式的过程（SCK引脚用于接收主机的串行时钟）</strong></p>
+<p>（1）设置DEF位来定义数据帧格式（8位或16位）</p>
+<p>（2）设置CPOL位和CPHA位来定义数据传输和串行时钟之间的相位关系，保持主机和从机CPOL位和CPHA位的一致</p>
+<p>（3）保持主机和从机帧格式的一致</p>
+<p>（4）在通信的过程中，必须保证CS片选信号处于低电平</p>
+<p>（5）清除MSTR位，设置SPE位使相应引脚处于SPI工作模式</p>
+<p><strong>从模式下的数据传输</strong></p>
+<ul>
+<li>数据发送过程：在写操作过程中，数据字被并行写入发送缓冲器；当从设备收到时钟信号并且在MOSI引脚上出现第一个数据位时，发送过程开始，剩下的数据位被写入移位寄存器；当发送缓冲器中的数据字写入移位寄存器时，SPI_SP寄存器的TXE位被置位，如果设置了SPI_CR2寄存器中的TXEIE位，将触发中断</li>
+<li>数据接收过程：当数据接收完成时，移位寄存器中的数据传输到接收缓冲器中，SPI_SR寄存器中的RXNE标志位被置位，如果设置了SPI_CR2寄存器中的RXNEIE位，将触发中断</li>
+<li>在最后一个采样时钟边沿后，RXNE位被置位，移位寄存器中的数据字被写入接收缓冲器。当读SPI_DR寄存器时，SPI设备返回接收缓冲器接收到的数据字</li>
+</ul>
+<h5 id="SPI的主模式配置"><a href="#SPI的主模式配置" class="headerlink" title="SPI的主模式配置"></a>SPI的主模式配置</h5><p><strong>配置SPI为主模式的过程（SCK引脚用于产生时钟信号）</strong></p>
+<p>（1）通过SPI_CR1寄存器的BR[2:0]位定义串行时钟波特率</p>
+<p>（2）设置CPOL位和CPHA位来定义数据传输和串行时钟之间的相位关系</p>
+<p>（3）设置DEF位来定义数据帧格式（8位或16位）</p>
+<p>（4）设置SPI_CR1寄存器的LSBFIRST位来定义帧格式</p>
+<p>（5）在通信的过程中，必须保证CS片选信号处于高电平</p>
+<p><strong>主模式下的数据传输</strong></p>
+<ul>
+<li>数据发送过程：当写入数据到发送缓冲器时，发送过程开始；当发送第一个数据位时，数据被并行写入移位寄存器，然后串行地移出到MOSI引脚；数据字的高位在前还是低位在前传输，取决于SPI_SP寄存器的LSBFIRST位的配置；当数据字从发送缓冲器写入移位寄存器时，SPI_SP寄存器的TXE位被置位，如果设置了SPI_CR2寄存器中的TXEIE位，将触发中断</li>
+<li>数据接收过程：当数据传输完成时，移位寄存器中的数据字被写入接收缓冲器，并且SRXNE标志位被置位，如果设置了SPI_CR2寄存器中的RXNEIE位，将触发中断；在最后采样时钟边沿，RXNE位被置位，移位寄存器接收到的数据字被写入缓冲器。读SPI_DR寄存器时，SPI设备返回接收缓冲器接收到的数据字，RXNE位被清除</li>
+<li>一旦数据传输开始，如果下一个将要发送的数据字被写入了发送缓冲器，就可以维持持续的数据字传输。在写发送缓冲器之前，需确认TXE标志位是否被置位</li>
+</ul>
+<h3 id="I2C"><a href="#I2C" class="headerlink" title="I2C"></a>I2C</h3><ul>
+<li><p>串行通信总线（Inter-Integrated Circuit，I2C）概述</p>
+</li>
+<li><p>双向数据传输，传输速度0～100Kbps，高速模式达0～400Kbps</p>
+</li>
+<li><p>简单灵活可扩展，总线中的所有设备仅有唯一地址，通过软件寻址</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319111818511.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="典型结构"></p>
+</li>
+</ul>
+<blockquote>
+<p>➢ 总线上可同时连接多个能控制总线的设备</p>
+<p>➢ 只能有一个控制设备获得总线控制权而成为主机</p>
+<p>➢ 总线系统能同步所有控制设备所产生的时钟信号</p>
+</blockquote>
+<h4 id="I2C数据传输"><a href="#I2C数据传输" class="headerlink" title="I2C数据传输"></a>I2C数据传输</h4><ul>
+<li>I2C总线上每传输一个数据位必须产生一个时钟脉冲，通信双方之间每次发送一个字节的数据</li>
+<li>SDA线上的数据必须在时钟线SCL的高电平期间保持稳定，SDA线的电平状态只有在SCL线的时钟信号为低电平时才能发送改变</li>
+<li>I2C总线上的4种信号<ul>
+<li>起始信号：SCL为高电平，SDA由高跳变低，开始数据传输</li>
+<li>停止信号：SCL为高电平，SDA由低跳变高，终止数据传输</li>
+<li>应答信号：接收器向发送器发出特定的低电平脉冲信号，表示已经接收到数据</li>
+<li>非应答信号：主机向从机发送一个高电平有效脉冲信号，表示接收完最后一个数据字节，使从机释放数据线</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112012915.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="传输过程"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112121853.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="主-&gt;从机通信"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112254392.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="主&lt;-从机通信"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112324895.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="主&lt;-&gt;从机通信"></p>
+<h2 id="四-人机交互-LCD"><a href="#四-人机交互-LCD" class="headerlink" title="四.人机交互-LCD"></a>四.人机交互-LCD</h2><p><strong>液晶显示器</strong>（Liquid Crystal Display，LCD）是一种被动的显示器材，本身不能发光，需借助于周围环境的光</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112518769.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="原理"></p>
+<h4 id="LCD的基本原理"><a href="#LCD的基本原理" class="headerlink" title="LCD的基本原理"></a>LCD的基本原理</h4><ul>
+<li>LCD将液晶置于两个导电玻璃之间，通过两个电极间电场的驱动引起液晶分子有规则地旋转形成扭曲角，发生扭曲向列效应，从而控制投射光的强度</li>
+<li>完全投射即白色，完全阻挡即黑色，不同投射程度呈现不同的灰阶</li>
+<li>LCD分类：根据工作原理，将LCD划分为扭曲向列型液晶TN-LCD、超扭曲向列型液晶STN-LCD和薄膜晶体管液晶TFT-LCD</li>
+</ul>
+<h4 id="LCD显示的控制方法"><a href="#LCD显示的控制方法" class="headerlink" title="LCD显示的控制方法"></a>LCD显示的控制方法</h4><h5 id="LCD的两种驱动方式"><a href="#LCD的两种驱动方式" class="headerlink" title="LCD的两种驱动方式"></a>LCD的两种驱动方式</h5><ul>
+<li>扫描驱动的LCD驱动器：将显示缓存中的图像数据通过动态扫描的方式传输到LCD显示屏</li>
+<li>总线驱动的液晶模块（LCD Module，LCM）：将液晶显示屏、连接件、驱动和控制集成电路、PCB线路板、背光源等装配在一起的显示控制器</li>
+</ul>
+<p>TFT-LCD的LCM内置有与液晶像素点对应的显示数据RAM区，若要改变一个像素点的颜色，只需对该点所对应的16位显存进行操作即可</p>
+<h5 id="TFT-LCD模块的两种操作：对控制寄存器的读-x2F-写操作、对显存的读-x2F-写操"><a href="#TFT-LCD模块的两种操作：对控制寄存器的读-x2F-写操作、对显存的读-x2F-写操" class="headerlink" title="TFT-LCD模块的两种操作：对控制寄存器的读&#x2F;写操作、对显存的读&#x2F;写操"></a>TFT-LCD模块的两种操作：对控制寄存器的读&#x2F;写操作、对显存的读&#x2F;写操</h5><p>两种操作均通过对ILI9341的寄存器的操作来完成</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112624350.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时序读写"></p>
+<p> TFT-LCD的使用：当对TFT-LCD显示面板上的某一点（X，Y）</p>
+<p>进行操作时，需要先通过地址定位到该点所对应的RAM显存地址，然后通过光标的上下左右移动的控制来连续写入或读取显存数据</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112725054.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<h2 id="六-ADC-x2F-DAC"><a href="#六-ADC-x2F-DAC" class="headerlink" title="六.ADC&#x2F;DAC"></a>六.ADC&#x2F;DAC</h2><ul>
+<li>模数转换器（Analog-to-Digital Converter，ADC）负责将物理环境中的模拟信号（连续物理量）转换为计算机可处理的数字信号（离散数字量）</li>
+<li>数模转换器（Digital-to-Analog Converter，DAC）负责将数字信号还原为模拟信号</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319112820409.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="效果图"></p>
+<h4 id="ADC接口的内部结构"><a href="#ADC接口的内部结构" class="headerlink" title="ADC接口的内部结构"></a>ADC接口的内部结构</h4><ul>
+<li>ADC一般经过取样、保持、量化和编码4个过程，并且4个往往同时实现</li>
+<li>ADC转换分为两个通道组：规则通道组和注入通道组</li>
+<li>规则通道组相当于正常运行的程序，而注入通道组相当于中断。在正常执行程序的时候，中断可以打断其执行</li>
+</ul>
+<h4 id="Cortex-M4处理器的ADC结构"><a href="#Cortex-M4处理器的ADC结构" class="headerlink" title="Cortex-M4处理器的ADC结构"></a>Cortex-M4处理器的ADC结构</h4><ul>
+<li>12位逐次逼近模数转换器，支持19路信号输入，分别是16路外部信号（ADCx_IN0~ADCx_IN15）、2路内部信号（温度传感器和VREFINT）和VBAT电源信号</li>
+<li>Cortex-M4处理器中一个规则通道组最多支持16路转换输入，一个注入通道组最多支持4路转换输入</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319113011405.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="配图"></p>
+<h4 id="CORTEX-M4处理器的ADC特点"><a href="#CORTEX-M4处理器的ADC特点" class="headerlink" title="CORTEX-M4处理器的ADC特点"></a>CORTEX-M4处理器的ADC特点</h4><ul>
+<li>多种分辨率</li>
+<li>中断的产生</li>
+<li>单转换模式&#x2F;连续转换模式</li>
+<li>扫描模式的自动切换</li>
+<li>间隔采样模式</li>
+</ul>
+<h4 id="ADC的引脚描述"><a href="#ADC的引脚描述" class="headerlink" title="ADC的引脚描述"></a>ADC的引脚描述</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319142311892.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="table"></p>
+<h3 id="ADC功能"><a href="#ADC功能" class="headerlink" title="ADC功能"></a>ADC功能</h3><ul>
+<li>启动与时钟</li>
+<li>时序</li>
+<li>单次转换模式</li>
+<li>连续转换模式</li>
+<li>扫描模式</li>
+<li>注入通道管理</li>
+<li>间断模式</li>
+<li>快速转换模式</li>
+<li>校准</li>
+<li>数据对齐</li>
+</ul>
+<h4 id="启动与时钟"><a href="#启动与时钟" class="headerlink" title="启动与时钟"></a>启动与时钟</h4><p>ADC_CR2寄存器中的ADON位决定ADC接口的供电与掉电；SWSTART或JSWSTART位置1可启动ADC转 换</p>
+<p>ADC的两种时钟方案</p>
+<ul>
+<li>ADCCLK时钟用于模拟电路，可供所有ADC连接公用。RCC控制器位ADC时钟提供一个专用的可编程预分频器，ADCCLK时钟可通过APB2分频来得到</li>
+<li>用于数字接口的时钟，等同于APB2时钟。可通过RCC APB2外设时钟使能寄存器分别为每个ADC使能&#x2F;禁止数字接口时钟</li>
+</ul>
+<h4 id="时序"><a href="#时序" class="headerlink" title="时序"></a>时序</h4><p>ADC在开始精确转换之前需要一段稳定时间tSTAB。ADC开始转换并经过15个时钟周期后，EOC标志置1，转换结果将存放在16位ADC数据寄存器中</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319142557032.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时序图"></p>
+<h4 id="单次转换模式"><a href="#单次转换模式" class="headerlink" title="单次转换模式"></a>单次转换模式</h4><p>ADC仅执行一次转换，完成后ADC停止</p>
+<h5 id="单次转换模式的启动方式"><a href="#单次转换模式的启动方式" class="headerlink" title="单次转换模式的启动方式"></a>单次转换模式的启动方式</h5><p>（1）将ADC_CR2寄存器中的SWSTART位置1（适用于规则通道）</p>
+<p>（2）将JSWSTART位置1（适用于注入通道）</p>
+<p>（3）外部触发（同时适用于规则&#x2F;注入通道）</p>
+<p>完成所选通道的信号转换之后</p>
+<ul>
+<li>如果规则通道完成转换：转换数据存储在16位ADC_DR寄存器中；EOC转换结束标志位置1；EOCIE位置1时产生中断</li>
+<li>如果注入通道完成转换：转换数据存储在16位ADC_JDR1寄存器中；JEOC转换结束标志位置1；JEOCIE位置1时产生中断</li>
+</ul>
+<h4 id="连续转换模式"><a href="#连续转换模式" class="headerlink" title="连续转换模式"></a>连续转换模式</h4><p>ADC一次转换结束后立即启动下一次的转换</p>
+<ul>
+<li>该模式通过外部触发或ADC_CR2寄存器中的ADON位启动</li>
+<li>每次规则通道完成转换：转换数据存储在16位ADC_DR寄存器中；EOC转换结束标志位置1；EOCIE位置1时产生中断</li>
+</ul>
+<p>注：注入通道一般不能采用连续转换模式，唯一的例外情况是注入通道配置为在规则通道之后自动转换时</p>
+<h4 id="扫描模式-x2F-注入通道管理-x2F-间断模式"><a href="#扫描模式-x2F-注入通道管理-x2F-间断模式" class="headerlink" title="扫描模式&#x2F;注入通道管理&#x2F;间断模式"></a>扫描模式&#x2F;注入通道管理&#x2F;间断模式</h4><p><strong>扫描模式</strong>：用来扫描一组模拟通道，通过设置ADC_CR1寄存器的SCAN位来选择</p>
+<p><strong>注入通道管理</strong></p>
+<ul>
+<li>触发注入：清除ADC_CR1寄存器中的JAUTO位，并设置SCAN 位 </li>
+<li>自动注入：如果设置了JAUTO位，在规则组通道转换完成之后，注入组通道将自动启动转换</li>
+</ul>
+<p><strong>间断模式</strong></p>
+<ul>
+<li>规则组：间断模式通过设置ADC_CR1寄存器的DISCEN位激活</li>
+<li>注入组：间断模式通过设置ADC_CR1寄存器的JDISCEN位激活</li>
+</ul>
+<h4 id="快速转换模式"><a href="#快速转换模式" class="headerlink" title="快速转换模式"></a>快速转换模式</h4><p>▪降低ADC分辨率（转换精确度）可以提高转换速度</p>
+<p>▪RES位用于选择数据寄存器中可用的位数</p>
+<p>▪各种分辨率对应的最小转换时间计算方法</p>
+<ul>
+<li>12位：3+12&#x3D;15 ADCCLK周期</li>
+<li>10位：3+10&#x3D;13 ADCCLK周期</li>
+<li>8 位：3+8&#x3D;11 ADCCLK周期</li>
+<li>6 位：3+6&#x3D;9 ADCCLK周期</li>
+</ul>
+<p>▪总转换时间的计算公式</p>
+<p>​	Tconv&#x3D;采样时间+12个时钟周期</p>
+<h4 id="校准"><a href="#校准" class="headerlink" title="校准"></a>校准</h4><ul>
+<li>由于ADC接口中会因内部电容器组的变化而造成转换精确度误差，ADC内置自动校准模式</li>
+<li>通过设置ADC_CR2寄存器中的CAL位启动校准，校准结束CAL位将被硬件复位，随后ADC可开始正常转换</li>
+<li>校准结束后，校准码存储在ADC_DR<strong>寄存器中</strong></li>
+</ul>
+<h4 id="数据对齐"><a href="#数据对齐" class="headerlink" title="数据对齐"></a>数据对齐</h4><p>ADC_CR2寄存器中的ALIGN位用于选择转换得到数据的存储对齐方式，数据可以左对齐或右对齐</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143112279.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="转换结果数据的左对齐存储"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143131037.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="转换结果数据的右对齐存储"></p>
+<h3 id="DAC转换-DAC接口的内部结构"><a href="#DAC转换-DAC接口的内部结构" class="headerlink" title="DAC转换-DAC接口的内部结构"></a>DAC转换-DAC接口的内部结构</h3><p>DAC模块是12位离散数字输入、连续电压输出的数模转换器</p>
+<p>▪ DAC可以按8位或12位模式进行配置，并且可与DMA控制器配合使用</p>
+<p>​	 在12位模式下，数据可以采用左对齐或右对齐方式进行存储</p>
+<p>▪ DAC有两个输出通道，每个通道各有一个转换器</p>
+<p>​	在DAC双通道模式下，每个通道可以单独进行转换</p>
+<p>​	 当两个通道组合在一起同步执行更新操作时，也可同时进行转换</p>
+<p>▪ DAC可通过一个输入参考电压引脚VREF+（与ADC共享）来提高分辨率</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143349187.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="附图"></p>
+<h4 id="CORTEX-M4处理器的DAC特点"><a href="#CORTEX-M4处理器的DAC特点" class="headerlink" title="CORTEX-M4处理器的DAC特点"></a>CORTEX-M4处理器的DAC特点</h4><ul>
+<li>包含2个DAC转换器，每个转换器对应一个输出通道</li>
+<li>支持8位或12位的单调输出</li>
+<li>12位模式下支持数据的左对齐或者右对齐存储</li>
+<li>具备同步更新功能</li>
+<li>可生成噪声波形</li>
+<li>可生成三角波形</li>
+</ul>
+<h4 id="DAC的引脚描述"><a href="#DAC的引脚描述" class="headerlink" title="DAC的引脚描述"></a>DAC的引脚描述</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319143512659.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DAC引脚"></p>
+<h4 id="DAC功能"><a href="#DAC功能" class="headerlink" title="DAC功能"></a>DAC功能</h4><ul>
+<li>DAC通道使能</li>
+<li>DAC输出缓存使能</li>
+<li>DAC输出电压</li>
+<li>DAC数据格式</li>
+<li>DAC转换</li>
+</ul>
+<h4 id="DAC通道使能"><a href="#DAC通道使能" class="headerlink" title="DAC通道使能"></a>DAC通道使能</h4><ul>
+<li><p>将DAC_CR寄存器的ENx位置1即可打开DAC通道x的供电，经过一段启动时间tWAKEUP之后，DAC通道x即被使能</p>
+</li>
+<li><p>ENx位置位只使能DAC通道x的模拟部分，即便该位被置0，DAC通道x的数字部分仍然继续工作</p>
+</li>
+<li><p>DAC输出缓存使能</p>
+<p>​	DAC接口中集成了2个输出缓存，可以用来减少输出阻抗，无需外部运放即可直接驱动外部负载。每个DAC通道输出缓存可以通过设置DAC_CR寄存器中的BOFFx位来使能或者关闭</p>
+</li>
+</ul>
+<h4 id="DAC输出电压"><a href="#DAC输出电压" class="headerlink" title="DAC输出电压"></a>DAC输出电压</h4><p>▪ 数字输入经过DAC被线性转换为模拟电压输出，其范围0到VREF+</p>
+<p>▪ 任一DAC通道引脚上的输出电压均满足关系式</p>
+<p>​	DAC输出&#x3D;VREF×（DOR&#x2F;4095） </p>
+<p>▪ DAC数据格式</p>
+<ul>
+<li>根据不同的配置模式，数据以不同的方式写入指定的寄存器</li>
+<li>对于DAC单通道x，存在三种可能的写入方式</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144145533.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="对齐例子"></p>
+<p>对于DAC双通道，存在三种可能的写入方式</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144815401.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="双通道"></p>
+<h4 id="DAC转换"><a href="#DAC转换" class="headerlink" title="DAC转换"></a>DAC转换</h4><ul>
+<li>DAC_DORx寄存器无法直接写入数据，任何输出到DAC通道x的数据都必须先写入DAC_DHRx寄存器才能传到通道x <ul>
+<li>如果未选中硬件触发，存入寄存器DAC_DHRx中的数据会在一个APB1时钟周期后自动传输至寄存器DAC_DORx</li>
+<li>如果选中硬件触发，数据传输在触发发生之后3个APB1时钟周期后完成</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BE%93%E5%85%A5-%E8%BE%93%E5%87%BA%E8%AE%BE%E5%A4%87%E6%8E%A5%E5%8F%A3/image-20230319144939823.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DAC触发关闭时的转换时序图"></p>
+<p>当数据从DAC_DHRx寄存器写入DAC_DORx寄存器，在经过时延tSETTLING之后，DAC的输出即有效，该时延的长短依赖于电源电压和模拟输出负载的大小</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>I&#x2F;O接口的结构、编程方法</li>
+<li>通信接口</li>
+<li>人机交互</li>
+<li>ADC&#x2F;DAC转换</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">#嵌入式程序设计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>嵌入式程序设计ch5-嵌入式输入/输出设备接口</div>
+      <div>https://www.emokable.top/嵌入式程序设计ch5-嵌入式输入-输出设备接口/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AF%95%E7%9D%80%E7%99%BD%E5%AB%96%E5%BE%AE%E8%BD%AFU%E7%9B%98/" title="试着白嫖微软U盘">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">试着白嫖微软U盘</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/3dmark%E8%B6%85%E9%A2%91%E8%AE%B0%E5%BD%95%E4%B9%8B3070/" title="3dmark超频记录之3070">
+                        <span class="hidden-mobile">3dmark超频记录之3070</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

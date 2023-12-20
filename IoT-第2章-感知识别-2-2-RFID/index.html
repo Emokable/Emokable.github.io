@@ -1,0 +1,1522 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第二章 物联网感知识别2.2 RFID  RFID是射频识别技术（Radio Frequency Identification）的英文缩写，利用射频信号通过空间耦合（交变磁场或电磁场）实现无接触信息传递并通过所传递的信息达到识别目的。 它是上世纪90年代兴起的自动识别技术，首先在欧洲市场上得以使用，随后在世界范围内普及。 RFID较其它技术明显的优点是电子标签和阅读器无需接触便可完成识别。射频识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoT__第2章__感知识别__2.2_RFID">
+<meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="第二章 物联网感知识别2.2 RFID  RFID是射频识别技术（Radio Frequency Identification）的英文缩写，利用射频信号通过空间耦合（交变磁场或电磁场）实现无接触信息传递并通过所传递的信息达到识别目的。 它是上世纪90年代兴起的自动识别技术，首先在欧洲市场上得以使用，随后在世界范围内普及。 RFID较其它技术明显的优点是电子标签和阅读器无需接触便可完成识别。射频识别">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195032140.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195042841.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195124630.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195203568.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195236669.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195307181.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195432353.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195527917.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195558007.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195644611.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195904377.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195927999.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200008558.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200047669.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200134811.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200216741.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200254153.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200325340.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200410164.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200401821.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200448443.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200509030.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200552864.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200610188.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200647960.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200758115.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200937055.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200941942.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201001726.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201014569.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201045878.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201104839.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201137601.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201206242.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201241930.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201404261.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924202810104.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203147938.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203234633.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203414081.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204155131.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204451446.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204507055.png">
+<meta property="article:published_time" content="2023-09-24T11:48:29.000Z">
+<meta property="article:modified_time" content="2023-09-24T12:45:18.841Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="物联网技术与应用">
+<meta property="article:tag" content="IoT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195032140.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>IoT__第2章__感知识别__2.2_RFID - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="IoT__第2章__感知识别__2.2_RFID"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-24 19:48" pubdate>
+          2023年9月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          83 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IoT__第2章__感知识别__2.2_RFID</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：3 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第二章-物联网感知识别"><a href="#第二章-物联网感知识别" class="headerlink" title="第二章 物联网感知识别"></a><strong>第二章 物联网感知识别</strong></h1><h2 id="2-2-RFID"><a href="#2-2-RFID" class="headerlink" title="2.2 RFID"></a><strong>2.2</strong> <strong>RFID</strong></h2><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195032140.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="RFID"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195042841.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="process"></p>
+<p>RFID是射频识别技术（Radio Frequency Identification）的英文缩写，利用射频信号通过空间耦合（交变磁场或电磁场）实现无接触信息传递并通过所传递的信息达到识别目的。</p>
+<p>它是上世纪90年代兴起的自动识别技术，首先在欧洲市场上得以使用，随后在世界范围内普及。</p>
+<p>RFID较其它技术明显的优点是电子标签和阅读器无需接触便可完成识别。射频识别技术改变了条形码依靠“有形”的一维或二维几何图案来提供信息的方式，通过芯片来提供存储在其中的数量巨大的“无形”信息。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195124630.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="some logos"></p>
+<h3 id="RFID-系统组成"><a href="#RFID-系统组成" class="headerlink" title="RFID 系统组成"></a><strong>RFID</strong> <strong>系统组成</strong></h3><p>RFID系统主要由电子标签、阅读器、中间件和位于后台的中央信息系统组成 </p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195203568.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="RFID系统组成框图"></p>
+<h3 id="RFID系统工作原理"><a href="#RFID系统工作原理" class="headerlink" title="RFID系统工作原理"></a><strong>RFID系统工作原理</strong></h3><p>RFID系统工作原理</p>
+<p>标签进入磁场后，只要接收到阅读器发出的射频信号，就能产生感应电流获得能量，然后发送出存储在芯片中的信息，或者是主动发送信号（限于有源标签），阅读器读取标签信息，进行解码后送至后台的中央信息系统进行数据处理。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195236669.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="扫描"></p>
+<p>RFID 的两种耦合方式：电感耦合、电磁反向散射耦合</p>
+<p>电子标签与阅读器之间通过耦合元件实现射频信号的非接触的空间耦合，从而根据时序关系，实现能量、数据的交换</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195307181.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2-ways"></p>
+<h3 id="RFID-设备基本组件"><a href="#RFID-设备基本组件" class="headerlink" title="RFID 设备基本组件"></a><strong>RFID</strong> <strong>设备基本组件</strong></h3><p>RFID 设备的基本组件构成</p>
+<ul>
+<li>阅读器 (Reader)</li>
+<li>天线 (Antenna)</li>
+<li>标签 (Tag)</li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195432353.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="basic parts"></p>
+<h4 id="RFID-组件：阅读器"><a href="#RFID-组件：阅读器" class="headerlink" title="RFID 组件：阅读器"></a><strong>RFID</strong> <strong>组件：阅读器</strong></h4><p>阅读器：读取或读写电子标签信息的设备。主要任务是控制射频模块向标签发射信号，并接收标签的应答，对标签的对象识别信息及其它信息进行解码，传输到后台主机以供处理。</p>
+<p>因其工作模式一般是主动向标签询问标识信息，所以又被称为询问器（Interrogator）。</p>
+<p>固定式阅读器通过有线接口、手持式阅读器通过无线接口，同后台主机相连。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195527917.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="reader"></p>
+<h4 id="RFID-组件：天线"><a href="#RFID-组件：天线" class="headerlink" title="RFID 组件：天线"></a><strong>RFID</strong> <strong>组件：天线</strong></h4><p>天线：在标签和阅读器之间传递射频信号。阅读器可以连接一个或多个天线。</p>
+<p>RFID系统的工作频率从低频到微波，这使得天线与标签芯片之间的匹配问题变得很复杂。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195558007.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="天线"></p>
+<h4 id="RFID-组件：标签"><a href="#RFID-组件：标签" class="headerlink" title="RFID 组件：标签"></a><strong>RFID</strong> <strong>组件：标签</strong></h4><p>标签（Tag）：由微型天线、耦合元件、芯片组成。芯片内保存有一定格式的电子数据，每个标签内部存有唯一的电子编码，作为标识性信息的数据载体，可附着在物体上用于标识目标对象。</p>
+<p>标签进入 RFID 阅读器扫描场以后，接收到阅读器发出的射频信号，凭借感应电流获得的能量发送出存储在芯片中的电子编码（被动式标签），或者主动发送某一频率的信号（主动式标签）。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195644611.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tags"></p>
+<h5 id="标签分类："><a href="#标签分类：" class="headerlink" title="标签分类："></a><strong>标签分类</strong>：</h5><ul>
+<li>被动式标签（Passive Tag）：因内部没有电源设备又被称为无源标签。被动式标签内部的集成电路通过接收由阅读器发出的电磁波进行驱动，向阅读器发送数据。</li>
+<li>主动标签（Active Tag）：因标签内部携带电源又被称为有源标签。主动式标签要比被动式标签体积大、价格昂贵。但主动标签通信距离更远，可达数十米。</li>
+<li>半主动标签（Semi-active Tag）：兼有被动标签和主动标签的所有优点，内部携带电池，能够为标签内部计算提供电源。<ul>
+<li>这种标签可以携带传感器，可用于检测环境参数，如温度、湿度、是否移动等。</li>
+<li>然而与主动式标签不同的是它们的通信并不需要电池提供能量，而是像被动式标签一样通过阅读器发射的电磁波获取通信能量</li>
+</ul>
+</li>
+</ul>
+<h3 id="RFID技术分析：频率"><a href="#RFID技术分析：频率" class="headerlink" title="RFID技术分析：频率"></a><strong>RFID技术分析：频率</strong></h3><p>频率是RFID系统的一个很重要的参数，它决定了系统工作原理、通信距离、成本、天线形状和应用领域等因素。</p>
+<p>RFID典型的工作频率有125KHz、133KHz、13.56MHz、27.12MHz、433MHz、860-960MHz、2.45GHz、5.8GHz等。按照工作频率的不同，RFID系统集中在低频、高频和超高频三个区域。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195904377.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="f"></p>
+<h4 id="标签分类：按-RFID-频率"><a href="#标签分类：按-RFID-频率" class="headerlink" title="标签分类：按 RFID 频率"></a><strong>标签分类：按</strong> <strong>RFID</strong> <strong>频率</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924195927999.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分类"></p>
+<h4 id="阅读器及标签分类"><a href="#阅读器及标签分类" class="headerlink" title="阅读器及标签分类"></a><strong>阅读器及标签分类</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200008558.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分类"></p>
+<h3 id="阅读器操作规范"><a href="#阅读器操作规范" class="headerlink" title="阅读器操作规范"></a>阅读器操作规范</h3><p><strong>为保证阅读器的性能满足应用需求，在阅读器的使用过程中通常要遵循相应的操作规范。</strong></p>
+<p><strong>在操作规范中，下面几点是选择使用阅读器时需要重点考虑的方面：</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200047669.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="思维图"></p>
+<h4 id="阅读器组成"><a href="#阅读器组成" class="headerlink" title="阅读器组成"></a>阅读器组成</h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200134811.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="reader"></p>
+<h3 id="标签操作规范"><a href="#标签操作规范" class="headerlink" title="标签操作规范"></a>标签操作规范</h3><p><strong>与阅读器类似，在实际系统中，标签的操作规范也要考虑很多因素，下面几个是需要重点考虑的：</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200216741.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="10"></p>
+<h4 id="标签组成"><a href="#标签组成" class="headerlink" title="标签组成"></a>标签组成</h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200254153.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="标签"></p>
+<h3 id="标签天线"><a href="#标签天线" class="headerlink" title="标签天线"></a>标签天线</h3><p><strong>天线是一种专门设计用来耦合、辐射电磁能量的导体结构。</strong></p>
+<p><strong>通常标签天线尺寸越小，天线辐射阻抗越小，标签工作距离越短，工作效率越低。</strong></p>
+<p><strong>天线性能包括方向特性、天线效率、天线增益等。</strong></p>
+<p><strong>根据工作原理不同，可以将标签天线分为三类：</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200325340.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="三类"></p>
+<h3 id="标签芯片"><a href="#标签芯片" class="headerlink" title="标签芯片"></a>标签芯片</h3><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200410164.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="三"></p>
+<p><strong>可分为：模拟前端、控制部件和存储部件</strong></p>
+<p><strong>模拟前端：整流天线输入信号提供稳定电压、将天线输入检波得到数字信号、调制控制部件发送信号给天线发送、为控制模块提供时钟。</strong></p>
+<p><strong>控制部件：数据解码、数据校验、数据编码、加密解密、防碰撞、读写控制。</strong></p>
+<p><strong>存储部件：标签数据载体。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200401821.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<h3 id="标签制造"><a href="#标签制造" class="headerlink" title="标签制造"></a>标签制造</h3><p><strong>标签的制作工艺主要有：</strong></p>
+<p><strong>线圈绕制法、化学蚀刻法和印刷法</strong></p>
+<p><strong>制造过程分为：</strong></p>
+<p><strong>天线制造和芯片组装</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200448443.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<h4 id="声表面波电子标签结构"><a href="#声表面波电子标签结构" class="headerlink" title="声表面波电子标签结构"></a><strong>声表面波电子标签结构</strong></h4><p><strong>声表面波</strong></p>
+<p>–<strong>Surface Acoustic Wave</strong></p>
+<p>–<strong>SAW</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200509030.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<h4 id="RFID-中间件"><a href="#RFID-中间件" class="headerlink" title="RFID 中间件"></a><strong>RFID</strong> <strong>中间件</strong></h4><p>RFID 中间件的主要功能</p>
+<ul>
+<li>对读写器或数据采集设备的管理、协同、控制</li>
+<li>数据过滤与数据处理</li>
+<li>事件数据报告生成与发送</li>
+<li>访问安全控制</li>
+<li>发布&#x2F;订阅模型</li>
+<li>提供符合标准的接口、集中统一的管理界面</li>
+<li>进程管理与负载均衡</li>
+<li>数据路由与集成</li>
+</ul>
+<h4 id="RFID-标签的存储结构"><a href="#RFID-标签的存储结构" class="headerlink" title="RFID 标签的存储结构"></a><strong>RFID</strong> <strong>标签的存储结构</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200552864.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="EPC Class1 Generation 标签存储区示意图"></p>
+<h4 id="RFID系统组件原理小结"><a href="#RFID系统组件原理小结" class="headerlink" title="RFID系统组件原理小结"></a><strong>RFID系统组件原理小结</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200610188.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="总结"></p>
+<h3 id="EPCglobal-的-RFID-体系架构"><a href="#EPCglobal-的-RFID-体系架构" class="headerlink" title="EPCglobal 的 RFID 体系架构"></a>EPCglobal 的 RFID 体系架构</h3><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200647960.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h3 id="RFID标签与条形码相比的优点"><a href="#RFID标签与条形码相比的优点" class="headerlink" title="RFID标签与条形码相比的优点"></a><strong>RFID标签与条形码相比的优点</strong></h3><p><strong>体积小且形状多样：RFID标签在读取上并不受尺寸大小与形状限制，不需要为了读取精度而配合纸张的固定尺寸和印刷品质。</strong></p>
+<p><strong>环境适应性：纸张容易被污染而影响识别。但RFID对水、油等物质却有极强的抗污性。另外，即使在黑暗的环境中，RFID标签也能够被读取。</strong></p>
+<p><strong>可重复使用：标签具有读写功能，电子数据可被反复覆盖，因此可以被回收而重复使用。</strong></p>
+<p><strong>穿透性强：标签在被纸张、木材和塑料等非金属或非透明的材质包裹的情况下也可以进行穿透性通讯。</strong></p>
+<p><strong>数据安全性：标签内的数据通过循环冗余校验的方法来保证标签发送的数据准确性。</strong></p>
+<h3 id="RFID和物联网"><a href="#RFID和物联网" class="headerlink" title="RFID和物联网"></a><strong>RFID和物联网</strong></h3><p>基于RFID标签对物体的唯一标识特性，引发了物联网初期的应用场景和热潮。</p>
+<p>通过给物品贴上RFID标签，在现有互联网基础之上构建所有参与流通的物品信息网络。</p>
+<p>通过RFID接入物联网，世界上任何物品都可以随时随地按需被标识、追踪和监控。</p>
+<p>RFID和物联网的建立将对生产制造、销售、运输、使用、回收等物品流通的各个环节以及政府、企业和个人行为带来深刻影响。</p>
+<h3 id="RFID的标签识别协议"><a href="#RFID的标签识别协议" class="headerlink" title="RFID的标签识别协议"></a><strong>RFID的标签识别协议</strong></h3><p><strong>RFID系统支持多目标识别，在多个阅读器和多个电子标签同时工作的情况下，会造成阅读器和电子标签之间的相互干扰，无法读取信息，这种现象称为冲突（或碰撞、干扰）。</strong></p>
+<p><strong>RFID系统中，主要存在以下两种类型的信号干扰：</strong>标签冲突、阅读器冲突</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200758115.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冲突"></p>
+<p><strong>因此，需要降低阅读器之间以及标签之间的冲突来提高对标签的识别效率。</strong></p>
+<h4 id="RFID系统的防冲突（防碰撞）技术"><a href="#RFID系统的防冲突（防碰撞）技术" class="headerlink" title="RFID系统的防冲突（防碰撞）技术"></a><strong>RFID系统的防冲突（防碰撞）技术</strong></h4><ul>
+<li><strong>空分多址法</strong><ul>
+<li><strong>按空间区域进行划分</strong><ul>
+<li><strong>读写器和天线的作用距离</strong></li>
+</ul>
+</li>
+<li><strong>相控阵天线</strong><ul>
+<li><strong>天线的方向</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>频分多址法</strong><ul>
+<li><strong>不同载波频率</strong><ul>
+<li><strong>副载波</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>时分多址法</strong><ul>
+<li><strong>ALOHA算法</strong></li>
+<li><strong>基于二进制算法（确定性算法）</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200937055.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924200941942.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<p><strong>针对阅读器之间的冲突问题，存在一些典型的防冲突协议：</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201001726.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="协议"></p>
+<p><strong>与阅读器相比，标签受硬件资源限制，存储能力和计算能力很有限。这使得标签没有冲突检测功能，标签之间不能相互的通信，所有的冲突检测都需要借助于阅读器完成。从系统的复杂度以及成本方面考虑，TDMA</strong> <strong>可用于检测</strong> <strong>RFID</strong> <strong>标签之间的冲突。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201014569.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="算法"></p>
+<h4 id="基于纯-ALOHA-的防冲突算法"><a href="#基于纯-ALOHA-的防冲突算法" class="headerlink" title="基于纯 ALOHA 的防冲突算法"></a><strong>基于纯</strong> <strong>ALOHA</strong> <strong>的防冲突算法</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201045878.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="aloha"></p>
+<p><strong>算法简单，易于实现，但信道利用率仅为</strong> <strong>18.4%，性能差。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201104839.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="性能"></p>
+<h4 id="基于时隙-ALOHA-的防冲突算法"><a href="#基于时隙-ALOHA-的防冲突算法" class="headerlink" title="基于时隙 ALOHA 的防冲突算法"></a><strong>基于时隙</strong> <strong>ALOHA</strong> <strong>的防冲突算法</strong></h4><p><strong>S-ALOHA</strong> <strong>算法将纯</strong> <strong>ALOHA</strong> <strong>的时间分为若干时隙，每个时隙大于或等于标签标识符发送的时间长度，并且每个标签只能在时隙开始时刻发送标识符。由于系统进行了时间同步，S‐ALOHA</strong> <strong>协议的信道利用率达到36.8%，是纯</strong> <strong>ALOHA</strong> <strong>的两倍。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201137601.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="性能"></p>
+<h4 id="基于帧的时隙-ALOHA-FSA-防冲突算法"><a href="#基于帧的时隙-ALOHA-FSA-防冲突算法" class="headerlink" title="基于帧的时隙 ALOHA (FSA) 防冲突算法"></a><strong>基于帧的时隙</strong> <strong>ALOHA</strong> <strong>(FSA)</strong> <strong>防冲突算法</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201206242.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="帧"></p>
+<p><strong>1、每一帧开始时，阅读器广播帧长度</strong> <strong>f（时隙个数），并激活所有标签。</strong></p>
+<p><strong>各个标签在接收 f 以后随机在0 ~ ( f – 1 ) 中选择一个整数，作为其发送标识符的时隙序号 SN，并存于其寄存器内。</strong></p>
+<p><strong>2、阅读器通过时隙开始命令启动一个新时隙。对每个标签而言：</strong></p>
+<p><strong>如果 SN &#x3D; 0 则立即发送标识符；否则就不发送并且设 SN &#x3D; SN – 1 。</strong></p>
+<p><strong>若标签发送成功即无冲突发生，则立即休眠即不再活动；否则，该标签进入等待，在下一帧中再选择一个时隙重新发送标识符。</strong></p>
+<p><strong>3、重复此过程，直到阅读器在某一帧中没有收到标签信号，即标签均被识别</strong></p>
+<p><strong>例：帧长</strong> <strong>f &#x3D; 3，每个标签产生</strong> <strong>0 ~ 2</strong> <strong>的随机数</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201241930.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="例"></p>
+<p><strong>冲突时隙：不止一个标签响应</strong>  <strong>（响应标签#</strong> <strong>&gt; 1）</strong></p>
+<p><strong>单 时 隙：只有一个标签响应</strong>    <strong>（响应标签#</strong>  <strong>&#x3D; 1）</strong></p>
+<p><strong>空 时 隙：没有标签响应</strong>           <strong>（响应标签#</strong>  <strong>&#x3D; 0）</strong></p>
+<blockquote>
+<p><strong>FSA</strong> <strong>算法的优点在于逻辑简单，电路设计简单，所需内存少，且在帧内只随机发送一次，这样能够更进一步降低了冲突的概率。</strong></p>
+<p><strong>FSA</strong> <strong>成为</strong> <strong>RFID</strong> <strong>系统中最常用的一种基于</strong> <strong>ALOHA</strong> <strong>的防冲突算法</strong></p>
+</blockquote>
+<p><strong>FSA</strong> <strong>算法局限性：</strong></p>
+<p>   <strong>帧的长度</strong> <strong>L</strong> <strong>固定（标签数</strong> <strong>n</strong> <strong>动态变化）</strong></p>
+<ul>
+<li><strong>当标签数远小于帧长度：时隙会巨大浪费，识别时间也会增加</strong></li>
+<li><strong>当标签数远大于帧长度：标签冲突概率增大，识别标签的时间会极大地增加</strong></li>
+<li><strong>当帧长度等于标签的数目（L &#x3D; n）时，FSA</strong> <strong>才能获得最佳的识别性能。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924201404261.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="性能计算"></p>
+<h4 id="FSA-帧长调整-gt-Q-算法"><a href="#FSA-帧长调整-gt-Q-算法" class="headerlink" title="FSA + 帧长调整    -&gt;Q 算法"></a><strong>FSA +</strong> <strong>帧长调整</strong>    -&gt;<strong>Q</strong> <strong>算法</strong></h4><p><strong>实际中标签的数量是未知的，并且动态变化。</strong></p>
+<p><strong>动态自适应设置帧长度的算法可以解决</strong> <strong>FSA</strong> <strong>的局限性。</strong></p>
+<p><strong>常见的帧长调整方法：</strong></p>
+<p><strong>方法一：根据前一帧通信获取的空时隙数目，发生碰撞的时隙数目、成功识别标签的时隙数目，来估计当前的标签数并设置下一帧的最优长度；</strong> <strong>（ISO&#x2F;IEC 18000-6</strong> <strong>中</strong> <strong>Type A</strong> <strong>标准）</strong></p>
+<p><strong>方法二：根据前一时隙的反馈，动态调整帧长为</strong> <strong>2</strong> <strong>的整数倍，最具代表性的是</strong> <strong>EPCglobalGen2</strong> <strong>标准中的</strong> <strong>Q</strong> <strong>算法</strong> <strong>（ISO&#x2F;IEC 18000-6</strong> <strong>中</strong> <strong>Type C</strong> <strong>标准）</strong></p>
+<ul>
+<li><strong>当一个帧出现过多的冲突时隙时，阅读器会提前结束该帧，并重新启动一个更长的帧；</strong></li>
+<li><strong>当一个帧出现过多的空闲时隙时，阅读器也会提前结束帧，并重新启动一个更短的帧</strong></li>
+</ul>
+<blockquote>
+<p><strong>Q</strong> <strong>算法过程</strong>：</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924202810104.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<ul>
+<li><strong>用</strong> <strong>Q</strong> <strong>值标记</strong> <strong>FSA</strong> <strong>中帧长</strong> <strong>2Q</strong> <strong>，Q</strong> <strong>值取值范围</strong> <strong>0 ~ 15，作为</strong> <strong>Query</strong> <strong>命令参数。</strong></li>
+<li><strong>Qfp</strong> <strong>作为</strong> <strong>Q</strong> <strong>的浮点表示形式，初始值为</strong> <strong>4.0。</strong></li>
+<li><strong>常量</strong> <strong>c</strong> <strong>是</strong> <strong>Q</strong> <strong>的浮动因子，取值为</strong> <strong>0.1 ~ 0.5。</strong></li>
+<li><strong>reader</strong> <strong>广播帧长：</strong> <strong>帧开始命令Query</strong> <strong>中包含了</strong> <strong>Q值</strong> <strong>(帧长</strong> <strong>2Q</strong> <strong>)。</strong></li>
+<li><strong>tag</strong> <strong>选时隙：非休眠的标签收到</strong> <strong>Query</strong> <strong>时，随机产生</strong> <strong>0 ~ 2Q-1</strong> <strong>并存入寄存器SN</strong> <strong>，每过一时隙减一。</strong></li>
+<li><strong>当</strong> <strong>SN</strong> <strong>减至</strong> <strong>0</strong> <strong>则向阅读器回复。</strong></li>
+<li><strong>reader</strong> <strong>根据前一个时隙的回复情况来更改</strong> <strong>Qfp</strong> <ul>
+<li><strong>如没有标签回复：Qfp</strong> <strong>减去</strong> <strong>c</strong>  </li>
+<li><strong>如多个标签回复：Qfp</strong> <strong>加上</strong> <strong>c</strong> </li>
+<li><strong>如一个标签回复：Qfp</strong> <strong>不变</strong></li>
+</ul>
+</li>
+<li><strong>根据</strong> <strong>Q &#x3D; round(Qfp)</strong> <strong>是否变化，决定是继续该帧还是重新开启新帧。</strong></li>
+</ul>
+<p><strong>Q</strong> <strong>算法自适应地调整帧长为</strong> <strong>2Q</strong> <strong>，识别效率高，该算法以及改进算法在超高频射频识别系统中得到广泛的应用。</strong></p>
+</blockquote>
+<h4 id="基于-ALOHA-算法的不足"><a href="#基于-ALOHA-算法的不足" class="headerlink" title="基于 ALOHA 算法的不足"></a><strong>基于</strong> <strong>ALOHA</strong> <strong>算法的不足</strong></h4><ul>
+<li><h5 id="基于-ALOHA-的防冲突算法简单，并且兼顾了公平性。"><a href="#基于-ALOHA-的防冲突算法简单，并且兼顾了公平性。" class="headerlink" title="基于 ALOHA 的防冲突算法简单，并且兼顾了公平性。"></a><strong>基于</strong> <strong>ALOHA</strong> <strong>的防冲突算法简单，并且兼顾了公平性。</strong></h5></li>
+<li><p><strong>但是，标签存在饿死的问题。当一个标签选择的时隙总是冲突时隙，则该标签可能永远无法被识别。</strong></p>
+</li>
+</ul>
+<p><strong>确定性算法可解决上述问题。</strong></p>
+<p><strong>基于确定性二进制的防冲突算法</strong></p>
+<ul>
+<li><strong>BSA</strong> <strong>二进制搜索算法、FBSA</strong> <strong>动态二进制搜索算法、基于查询二进制树</strong></li>
+<li><strong>特点：</strong><ul>
+<li><strong>无状态协议，标签只需要根据阅读器广播的标示符作比较，可用于无可写存储区的标签</strong></li>
+<li><strong>不存在标签饿死</strong></li>
+<li><strong>识别时延受标签ID分布及长度影响</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>基于随机二进制树的防冲突算法</strong></p>
+<ul>
+<li><strong>自适应</strong> <strong>B</strong> <strong>树算法</strong><ul>
+<li><strong>状态协议，标签需要可写存储区</strong></li>
+<li><strong>仍有可能存在标签饿死</strong></li>
+<li><strong>识别时延受标签ID分布及长度影响</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="二进制搜索算法-BSA"><a href="#二进制搜索算法-BSA" class="headerlink" title="二进制搜索算法  BSA"></a><strong>二进制搜索算法</strong>  <strong>BSA</strong></h4><p><strong>算法原理</strong></p>
+<ul>
+<li><strong>标签</strong> <strong>SN：每个标签具有自身唯一的序号SN（假设序号长度一致）。</strong></li>
+<li><strong>每一轮选择：阅读器多次向标签群发送命令，每次命令都会把标签群分成两组，多次分组，最后得到此轮唯一的一个标签。</strong></li>
+<li><strong>对剩余的标签群继续上述操作。每轮选中一个标签，直至选完所有标签。</strong></li>
+</ul>
+<p><strong>算法基本命令</strong></p>
+<ul>
+<li><strong>请求</strong> <strong>Request (SN)：携带一个参数</strong> <strong>SN，当标签收到该命令时，将自身的</strong> <strong>SN</strong> <strong>与收到的</strong> <strong>SN</strong> <strong>对比，若自身</strong> <strong>SN</strong> <strong>小于或等于收到的</strong> <strong>SN，则向阅读器回复标签SN。</strong></li>
+<li><strong>休眠</strong> <strong>Sleep (SN)：携带一个参数</strong> <strong>SN，若标签自身的</strong> <strong>SN</strong> <strong>与收到的</strong> <strong>SN</strong> <strong>相等，则被阅读器选中，完成数据传送后，进入休眠状态。</strong></li>
+</ul>
+<h5 id="BSA-算法步骤："><a href="#BSA-算法步骤：" class="headerlink" title="BSA 算法步骤："></a><strong>BSA</strong> <strong>算法步骤</strong>：</h5><p><strong>阅读器发出请求序列号</strong> <strong>SN，属于</strong> <strong>{ tag |</strong> <strong>SNtag</strong> <strong>&lt;&#x3D; SN}</strong> <strong>的标签回复自身序列号</strong></p>
+<p>1.<strong>阅读器第一次发送请求Request命令；参数设为最大序列号（11 … 11），因此所有标签向阅读器回复自身。</strong></p>
+<p>2.<strong>当存在两个以上的标签同时回复阅读器时，必然发生碰撞，设这些标签序列号出现不一致的最高位为</strong> <strong>C（碰撞位），阅读器更新自身序列号：第</strong> <strong>C</strong> <strong>位置0，高于该位的置为这些标签序列号相同的前</strong> <strong>C - 1</strong> <strong>位，低于该位的置</strong> <strong>1。阅读器发送Request命令，参数采用新序列号。</strong></p>
+<p>3.<strong>标签接收到新一轮的请求序列号， 只有序列号小于或等于此序列号的标签，才向阅读器回复自身序列号。</strong></p>
+<p>4.<strong>循环执行</strong> <strong>2 - 3，依次排除序列号较大的标签，选出一个序列号最小的标签；阅读器与此标签通信，结束后发送休眠</strong> <strong>Sleep</strong> <strong>命令使其休眠，即对阅读器发送的请求命令不进行响应。</strong></p>
+<p><strong>重复上述过程，可以按照序列号从小到大的次序，完成所有标签的识别和读取。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203147938.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="BAS"></p>
+<h4 id="动态二进制搜索算法-FBSA"><a href="#动态二进制搜索算法-FBSA" class="headerlink" title="动态二进制搜索算法 FBSA"></a><strong>动态二进制搜索算法</strong> <strong>FBSA</strong></h4><p>传统二进制搜索算法，每次传输的数据是全部长度的序列号，造成了识别所需时间和所消耗功率的浪费。</p>
+<p>动态二进制树搜索算法FBSA，其改进思路是把数据分成两部分，阅读器和标签双方各自传送其中的一部分数据，阅读器只发送前面一致部分，标签只发送其余的比特位（阅读传送部分+ 标签传送部分&#x3D;** 序列号总长度）。因此总的传输量减小一半，缩短防碰撞执行时间</p>
+<p>FBSA的主要命令和传统BSA算法一样，只是传输策略上有所不同。</p>
+<h5 id="FBSA-算法步骤"><a href="#FBSA-算法步骤" class="headerlink" title="FBSA 算法步骤"></a><strong>FBSA</strong> <strong>算法步骤</strong></h5><p>1.<strong>阅读器第一次发送请求</strong> <strong>Request</strong> <strong>命令；参数设为最大序列号（11 … 11），所有标签回复其自身的序列号。</strong></p>
+<p>2.<strong>阅读器检测到碰撞位，将最高碰撞位（C）置</strong> <strong>0。阅读器发送Request命令，只传输</strong> <strong>C</strong> <strong>~</strong> <strong>N</strong> <strong>的位作为下一次的请求序列号。</strong></p>
+<p>3.<strong>标签接收到新一轮的请求序列号，只有序列号与</strong> <strong>C</strong> <strong>~</strong> <strong>N</strong> <strong>位相同（序列号 ≤ 请求序列号）的标签，才会把其剩余的序列号（1</strong> <strong>~</strong> <strong>C-1）回复给阅读器。</strong></p>
+<p>4.<strong>循环执行</strong> <strong>2 - 3，选出一个序列号最小的标签；阅读器与此标签通信，结束后发送休眠</strong> <strong>Sleep</strong> <strong>命令使其休眠，即对阅读器发送的请求命令不进行响应。</strong></p>
+<p>5.<strong>重复上述过程，可以按照序列号从小到大的次序，完成所有标签的识别和读取。</strong></p>
+<h5 id="图例：-BSA-算法及-FBSA算法"><a href="#图例：-BSA-算法及-FBSA算法" class="headerlink" title="图例： BSA 算法及 FBSA算法"></a><strong>图例：</strong> <strong>BSA</strong> <strong>算法及</strong> <strong>FBSA算法</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203234633.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="TU"></p>
+<h4 id="基于随机二进制树的防冲突算法"><a href="#基于随机二进制树的防冲突算法" class="headerlink" title="基于随机二进制树的防冲突算法"></a><strong>基于随机二进制树的防冲突算法</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924203414081.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="TU"></p>
+<ul>
+<li><strong>基于</strong> <strong>B</strong> <strong>树算法</strong> <strong>（ISO&#x2F;IEC 18000-6</strong> <strong>中</strong> <strong>Type B</strong> <strong>标准）</strong></li>
+<li><strong>需要每个标签维持一个计数器（初始值为</strong> <strong>0）。</strong></li>
+<li><strong>标签在每一个时隙开始时，检查计数器值，决定是否响应：</strong><ul>
+<li><strong>如果计数器为</strong> <strong>0</strong> <strong>则立即响应发送自己的标识符号，</strong></li>
+<li><strong>否则，标签在该时隙不响应。</strong></li>
+<li><strong>标签被成功识别后将进入沉默状态，对以后时隙的阅读器命令均不响应。</strong></li>
+</ul>
+</li>
+<li><strong>如果阅读器收到有冲突响应，则广播</strong> <strong>FAIL</strong> <strong>命令。</strong></li>
+<li><strong>当标签收到</strong> <strong>FAIL</strong> <strong>命令后，查看并调整自己的计数器</strong><ul>
+<li><strong>如果计数器不为</strong> <strong>0，则把计数器加</strong> <strong>1，推后发送时间</strong></li>
+<li><strong>反之，生成</strong> <strong>1</strong> <strong>或</strong> <strong>0</strong> <strong>的随机数，并加到计数器（产生1的标签退出下一个时隙的竞争，产生</strong> <strong>0</strong> <strong>的标签继续下一时隙的竞争）</strong></li>
+</ul>
+</li>
+<li><strong>如果阅读器收到的响应数为</strong> <strong>0，则广播</strong> <strong>Success</strong> <strong>命令。</strong></li>
+<li><strong>如果只有一个标签的计数器为</strong> <strong>0，则阅读器感知到无冲突，于是发送</strong> <strong>Read</strong> <strong>命令（包含</strong> <strong>ID），与该标签完成数据交换后，阅读器广播</strong> <strong>Success</strong> <strong>命令。</strong></li>
+<li><strong>收到</strong> <strong>Success</strong> <strong>命令的所有标签将计数器减</strong> <strong>1</strong> <strong>。</strong></li>
+<li><strong>如果全部标签都成功发送数据，则结束算法。</strong></li>
+</ul>
+<p><strong>B</strong> <strong>树算法示例</strong>:</p>
+<table>
+<thead>
+<tr>
+<th><strong>角色</strong></th>
+<th><strong>命令</strong></th>
+<th>时隙<strong>1</strong></th>
+<th>时隙  2</th>
+<th>时隙3</th>
+<th>时隙 4</th>
+<th>时隙5</th>
+<th>时隙5</th>
+<th>时隙 <strong>7</strong></th>
+<th>时隙5</th>
+<th>时隙5</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>阅读器</strong></td>
+<td><strong>Group_Select</strong></td>
+<td></td>
+<td></td>
+<td><strong>Read</strong></td>
+<td></td>
+<td><strong>Read</strong></td>
+<td><strong>Read</strong></td>
+<td></td>
+<td><strong>Read</strong></td>
+<td><strong>Read</strong></td>
+</tr>
+<tr>
+<td><strong>标签1</strong></td>
+<td></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>标签2</strong></td>
+<td></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>标签3</strong></td>
+<td></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong>  <strong>( 1 ? )</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>标签4</strong></td>
+<td></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong>  <strong>( 1 ? )</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>标签5</strong></td>
+<td></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>冲突</strong></td>
+<td><strong>冲突</strong></td>
+<td><strong>发送1</strong></td>
+<td><strong>冲突</strong></td>
+<td><strong>发送4</strong></td>
+<td><strong>发送3</strong></td>
+<td><strong>冲突</strong></td>
+<td><strong>发送5</strong></td>
+<td><strong>发送2</strong></td>
+</tr>
+</tbody></table>
+<h3 id="防冲突算法的性能对比"><a href="#防冲突算法的性能对比" class="headerlink" title="防冲突算法的性能对比"></a><strong>防冲突算法的性能对比</strong></h3><p><strong>基于ALOHA的防冲突算法</strong></p>
+<ul>
+<li><strong>标签“饿死”</strong></li>
+<li><strong>最坏情况，识别时延趋于+∞</strong></li>
+<li><strong>低负载情况，识别时延小</strong></li>
+<li><strong>结果可进行统计性分析</strong></li>
+<li><strong>标签需要可写存储区</strong></li>
+</ul>
+<p><strong>基于确定性二进制（BSA、FBSA、查询二进制树）的防冲突算法</strong></p>
+<ul>
+<li><strong>标签在确定时间内可识别，不存在“饿死”</strong></li>
+<li><strong>识别时延受标签ID分布及长度影响</strong></li>
+<li><strong>标签不需要可写存储区</strong></li>
+</ul>
+<p><strong>基于随机二进制树的防冲突算法</strong></p>
+<ul>
+<li><strong>存在标签“饿死”</strong></li>
+<li><strong>识别时延受标签ID分布及长度影响</strong></li>
+<li><strong>标签需要可写存储区</strong></li>
+</ul>
+<h3 id="RFID分类及应用"><a href="#RFID分类及应用" class="headerlink" title="RFID分类及应用"></a><strong>RFID分类及应用</strong></h3><p><strong>无源RFID的有效识别距离通常较短，一般用于近距离的接触式识别。无源RFID主要工作在较低频段125KHz、13.56MKHz等，其典型应用包括：公交卡、二代身份证（高频频段，通讯协议</strong> <strong>ISO14443B）、校园卡、食堂餐卡等。</strong></p>
+<p><strong>有源RFID的远距性、高效性，使得它在一些需要高性能、大范围的射频识别应用场合里必不可少。一个典型的有源RFID标签能在百米之外主动与射频识别阅读器建立联系，读取率可达1,700read&#x2F;sec。有源RFID主要工作在900MHz、2.45GHz、5.8GHz等较高频段，且具有可以同时识别多个标签的功能。其典型应用包括：高速公路电子不停车收费系统等。</strong></p>
+<p><strong>半有源RFID，又称作低频激活触发技术。无源RFID自身不供电，但有效识别距离太短。有源RFID识别距离足够长，但需外接电源，体积较大。而半有源RFID就是为这一矛盾而妥协的产物。在通常情况下，半有源RFID产品处于休眠状态，仅对标签中保持数据的部分进行供电，因此耗电量较小，可维持较长时间。当标签进入射频识别阅读器识别范围后，阅读器先以125KHz低频信号在小范围内精确激活标签使之进入工作状态，再通过2.4GHz微波与其进行信息传递。也即是说，先利用低频信号精确定位，再利用高频信号快速传输数据。其通常应用场景为：在一个高频信号所能所覆盖的大范围中，在不同位置安置多个低频阅读器用于激活半有源RFID产品。这样既完成了定位，又实现了信息的采集与传递。</strong></p>
+<h3 id="RFID的通信协议"><a href="#RFID的通信协议" class="headerlink" title="RFID的通信协议"></a><strong>RFID的通信协议</strong></h3><p><strong>RFID</strong> <strong>空中接口</strong></p>
+<p><strong>规范阅读器与标签之间的信息交互，实现不同厂商设备之间的互联互通。</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>协议</strong></th>
+<th><strong>内容及适用范围</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ISO&#x2F;IEC</strong> <strong>18000-1</strong></td>
+<td><strong>参考结构和标准化的参数定义。规范协议中应共同遵守的阅读器与标签的通信参数表、知识产权基本规则等</strong></td>
+</tr>
+<tr>
+<td><strong>ISO&#x2F;IEC</strong> <strong>18000-2</strong></td>
+<td><strong>适用于</strong> <strong>125 – 134 KHz</strong></td>
+</tr>
+<tr>
+<td><strong>ISO&#x2F;IEC</strong> <strong>18000-3</strong></td>
+<td><strong>适用于</strong> <strong>13.56 MHz</strong></td>
+</tr>
+<tr>
+<td><strong>ISO&#x2F;IEC</strong> <strong>18000-4</strong></td>
+<td><strong>适用于</strong> <strong>2.45 GHz</strong></td>
+</tr>
+<tr>
+<td><strong>ISO&#x2F;IEC</strong>  <strong>18000-6</strong></td>
+<td><strong>适用于</strong> <strong>860 – 930 MHz</strong></td>
+</tr>
+<tr>
+<td><strong>ISO&#x2F;IEC</strong> <strong>18000-7</strong></td>
+<td><strong>适用于</strong>  <strong>433.92</strong>  <strong>MHz</strong></td>
+</tr>
+</tbody></table>
+<p><strong>RFID</strong> <strong>数据标准</strong></p>
+<ul>
+<li><strong>主要规定数据的表示形式。</strong></li>
+<li><strong>ISO&#x2F;IEC 15961</strong> <strong>规定阅读器与应用软件之间的接口，侧重于交换数据的标准方式，这样应用软件可以完成对标签数据的读取、写入、修改、删除等操作。</strong></li>
+<li><strong>ISO&#x2F;IEC 15962</strong> <strong>规定数据的编码、压缩、逻辑内存映射格式，以及如何将标签中的数据转化为对应用软件有意义的形式。</strong></li>
+</ul>
+<h4 id="ISO-x2F-IEC-18000-6-协议"><a href="#ISO-x2F-IEC-18000-6-协议" class="headerlink" title="ISO&#x2F;IEC 18000-6 协议"></a><strong>ISO&#x2F;IEC 18000-6</strong> <strong>协议</strong></h4><p><strong>规定了阅读器与标签之间的物理接口、协议和命令，以及防冲突仲裁机制等</strong></p>
+<ul>
+<li><strong>物理层：</strong> <strong>RFID</strong> <strong>频率。数据编码方式、调制格式、数据传输速率等</strong></li>
+<li><strong>标签标识层： 阅读器读写标签的各种指令</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>参数</strong></th>
+<th><strong>Type</strong> <strong>B</strong></th>
+<th><strong>Type C</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>调制方式</strong></td>
+<td><strong>ASK</strong></td>
+<td><strong>SSB-ASK, DSB-ASK, PR-ASK</strong></td>
+</tr>
+<tr>
+<td><strong>前向链路编码</strong></td>
+<td><strong>曼切斯特编码</strong></td>
+<td><strong>PIE</strong> <strong>编码</strong></td>
+</tr>
+<tr>
+<td><strong>返向链路编码</strong></td>
+<td><strong>FM0</strong></td>
+<td><strong>FM0</strong> <strong>或</strong> <strong>Miller</strong>  <strong>子载波</strong></td>
+</tr>
+<tr>
+<td><strong>标签唯一标识号长度</strong></td>
+<td><strong>64</strong> <strong>位</strong></td>
+<td><strong>16 – 496</strong> <strong>位</strong></td>
+</tr>
+<tr>
+<td><strong>数据速率</strong></td>
+<td><strong>10</strong> <strong>kbps</strong> <strong>或</strong>  <strong>40 kbps</strong></td>
+<td><strong>26.7 kbps – 128 kbps</strong></td>
+</tr>
+<tr>
+<td><strong>标签容量</strong></td>
+<td><strong>2048</strong> <strong>位</strong></td>
+<td><strong>最大</strong> <strong>512</strong> <strong>位</strong></td>
+</tr>
+<tr>
+<td><strong>防冲突算法</strong></td>
+<td><strong>自适应二进制树（B树）</strong></td>
+<td><strong>随机时隙反碰撞（Q算法）</strong></td>
+</tr>
+</tbody></table>
+<h5 id="部分-ISO-x2F-IEC-18000-6B-命令表"><a href="#部分-ISO-x2F-IEC-18000-6B-命令表" class="headerlink" title="部分 ISO&#x2F;IEC 18000-6B 命令表"></a><strong>部分</strong> <strong>ISO&#x2F;IEC 18000-6B</strong> <strong>命令表</strong></h5><table>
+<thead>
+<tr>
+<th><strong>命令码</strong></th>
+<th><strong>类型</strong></th>
+<th><strong>命令名称</strong></th>
+<th><strong>备注</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>00</strong></td>
+<td><strong>强制</strong></td>
+<td><strong>GROUP_SELECT_EQ</strong></td>
+<td><strong>选择标签作为识别对象</strong></td>
+</tr>
+<tr>
+<td><strong>08</strong></td>
+<td><strong>强制</strong></td>
+<td><strong>FAIL</strong></td>
+<td><strong>失败命令</strong></td>
+</tr>
+<tr>
+<td><strong>09</strong></td>
+<td><strong>强制</strong></td>
+<td><strong>SUCCESS</strong></td>
+<td><strong>成功命令</strong></td>
+</tr>
+<tr>
+<td><strong>0A</strong></td>
+<td><strong>强制</strong></td>
+<td><strong>INT</strong></td>
+<td><strong>初始化</strong></td>
+</tr>
+<tr>
+<td><strong>0C</strong></td>
+<td><strong>强制</strong></td>
+<td><strong>READ</strong></td>
+<td><strong>从标签读数据</strong></td>
+</tr>
+<tr>
+<td><strong>0D</strong></td>
+<td><strong>可选</strong></td>
+<td><strong>WRITE</strong></td>
+<td><strong>向标签写数据</strong></td>
+</tr>
+<tr>
+<td><strong>0F</strong></td>
+<td><strong>可选</strong></td>
+<td><strong>LOCK</strong></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="RFID-典型应用领域"><a href="#RFID-典型应用领域" class="headerlink" title="RFID 典型应用领域"></a><strong>RFID</strong> <strong>典型应用领域</strong></h3><p><strong>1、物流</strong></p>
+<p><strong>物流仓储是RFID最有潜力的应用领域之一，可应用的过程包括：物流过程中的货物追踪、信息自动采集、仓储管理应用、港口应用、邮政包裹、快递等。</strong></p>
+<p><strong>2、交通</strong></p>
+<p><strong>出租车管理、公交车枢纽管理、铁路机车识别等。</strong></p>
+<p><strong>3、身份识别</strong></p>
+<p><strong>RFID技术由于具有快速读取与难伪造性，所以被广泛应用于个人的身份识别证件中。如电子护照、我国第二代身份证、学生证等其他各种电子证件。</strong></p>
+<p><strong>4、防伪</strong></p>
+<p><strong>RFID具有很难伪造的特性，但是如何应用于防伪还需要政府和企业的积极推广。可以应用的领域包括贵重物品（烟、酒、药品）的防伪和票证的防伪等。</strong></p>
+<p><strong>5、资产管理</strong></p>
+<p><strong>可应用于各类资产的管理，包括贵重物品、数量大相似性高的物品或危险品等。随着标签价格的降低，RFID几乎可以管理所有的物品。</strong></p>
+<p><strong>6、食品</strong></p>
+<p><strong>可应用于水果、蔬菜、生鲜、食品等管理。需要在标签的设计及应用模式上有所创新。</strong></p>
+<h2 id="NFC-近场通讯"><a href="#NFC-近场通讯" class="headerlink" title="NFC 近场通讯"></a><strong>NFC</strong> <strong>近场通讯</strong></h2><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204155131.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<p><strong>NFC</strong> <strong>（Near Field Communication）即近场无线通讯，是一种非接触式识别和互联技术，可以在移动设备、消费类电子产品、PC和智能控件工具间进行近距离无线通信。</strong></p>
+<p><strong>NFC</strong> <strong>技术起源于</strong> <strong>RFID，但是与</strong> <strong>RFID</strong> <strong>相比有一定的区别</strong></p>
+<p>–<strong>NFC</strong> <strong>将非接触读卡器、非接触卡和点对点功能整合进一块单芯片，而</strong> <strong>RFID</strong> <strong>必须由阅读器和标签组成</strong></p>
+<p>–<strong>NFC</strong> <strong>技术则强调的是信息交互，而</strong> <strong>RFID</strong> <strong>只能实现信息的读取以及判定</strong></p>
+<p><strong>NFC设备的功能定位</strong></p>
+<p>–<strong>NFC</strong> <strong>设备内置</strong> <strong>NFC</strong> <strong>芯片，组成</strong> <strong>RFID</strong> <strong>模块的一部分，可以当作</strong> <strong>RFID</strong> <strong>无源标签使用进行支付费用；</strong></p>
+<p>–<strong>也可以当作</strong> <strong>RFID</strong> <strong>读写器，用作数据交换与采集，还可以进行</strong> <strong>NFC</strong> <strong>设备之间的数据通信。</strong></p>
+<h3 id="NFC-与-RFID-的区别"><a href="#NFC-与-RFID-的区别" class="headerlink" title="NFC 与 RFID 的区别"></a><strong>NFC</strong> <strong>与</strong> <strong>RFID</strong> <strong>的区别</strong></h3><ul>
+<li><strong>工作频段</strong><ul>
+<li><strong>NFC</strong> <strong>的工作频段为</strong> <strong>13.56MHz，而</strong> <strong>RFID</strong> <strong>有低频，高频（13.56MHz）及超高频。</strong></li>
+</ul>
+</li>
+<li><strong>工作有效距离</strong><ul>
+<li><strong>NFC</strong> <strong>的工作距离理论上为</strong> <strong>0</strong> <strong>~</strong> <strong>20 cm，但是在产品实现上，由于采用了特殊功率抑制技术，使其工作距离只有</strong> <strong>0</strong> <strong>~</strong> <strong>10 cm</strong> <strong>，业务更具有安全性。</strong></li>
+<li><strong>相对于</strong> <strong>RFID</strong> <strong>来说</strong> <strong>NFC</strong> <strong>具有距离近、带宽高、能耗低等特点。</strong></li>
+<li><strong>RFID</strong> <strong>具有不同的频率，其工作距离在几厘米到几十米不等。</strong></li>
+</ul>
+</li>
+<li><strong>工作模式</strong><ul>
+<li><strong>NFC</strong> <strong>同时支持读写模式和卡模式；支持点对点</strong> <strong>P2P</strong> <strong>模式。</strong></li>
+<li><strong>RFID</strong> <strong>的读卡器和非接触卡是独立的两个实体，模式不能切换&#x2F;并存，不支持</strong> <strong>P2P。</strong></li>
+</ul>
+</li>
+<li><strong>兼容性</strong><ul>
+<li><strong>NFC设备都工作于13.56MHz，并与现有非接触智能卡技术兼容，NFC兼容性更好 。</strong></li>
+<li><strong>RFID</strong> <strong>标准较多，统一较为复杂。</strong></li>
+</ul>
+</li>
+<li><strong>应用领域</strong><ul>
+<li><strong>RFID</strong> <strong>更多的应用在生产，物流，跟踪和资产管理上，更擅长在长距离识别、批量识别</strong></li>
+<li><strong>NFC</strong> <strong>工作在门禁，公交卡，手机支付等领域，更多应用于消费类电子设备相互通讯。</strong></li>
+</ul>
+</li>
+<li><strong>标准协议</strong><ul>
+<li><strong>NFC</strong> <strong>的底层通讯协议兼容高频</strong> <strong>RFID</strong> <strong>的底层通信标准，即兼容</strong> <strong>ISO14443&#x2F;ISO15693</strong> <strong>。</strong></li>
+<li><strong>NFC</strong> <strong>技术还定义了比较完整的上层协议，如</strong> <strong>LLCP，NDEF</strong> <strong>和</strong> <strong>RTD</strong> <strong>等。</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="RFID、NFC-相关标准"><a href="#RFID、NFC-相关标准" class="headerlink" title="RFID、NFC 相关标准"></a><strong>RFID、NFC</strong> <strong>相关标准</strong></h4><p>1.<strong>ISO&#x2F;IEC</strong></p>
+<p><strong>RFID</strong> <strong>技术符合</strong> <strong>ISO14443、ISO15693</strong> <strong>标准</strong></p>
+<ul>
+<li><strong>ISO14443</strong> <strong>和</strong> <strong>ISO 15693</strong> <strong>二者皆以</strong> <strong>13.56MHz</strong> <strong>交变信号为载波频率；</strong></li>
+<li><strong>ISO15693</strong> <strong>读写距离较远，与应用系统的天线形状和发射功率有关；</strong></li>
+<li><strong>ISO14443</strong> <strong>读写距离稍近，应用较广泛，第二代电子身份证采用</strong> <strong>ISO14443 TYPE B</strong> <strong>；</strong></li>
+<li><strong>传输速率为</strong> <strong>106kbits&#x2F;s，它们的不同主要在于载波的调制深度及位的编码方式。</strong></li>
+</ul>
+<p><strong>NFC</strong> <strong>技术符合</strong> <strong>ISO18092、ISO21481</strong> <strong>标准，兼容</strong> <strong>ISO14443、ISO15693</strong> <strong>等射频标准</strong></p>
+<ul>
+<li><strong>ISO18092</strong> <strong>标准定义了13.56MHz</strong> <strong>的</strong> <strong>NFC</strong> <strong>相关协议内容；</strong></li>
+<li><strong>ISO18092</strong> <strong>后来增加了对</strong> <strong>ISO15693</strong> <strong>的兼容，形成新的</strong> <strong>NFC</strong> <strong>标准 即</strong> <strong>ISO21481；</strong></li>
+<li><strong>NFC</strong> <strong>的传输速率有</strong> <strong>106kbps、212kbps、424kbps。</strong></li>
+</ul>
+<p><strong>ISO7816</strong> <strong>是接触式智能卡的标准。</strong></p>
+<p>2.<strong>ECMA340、ECMA352</strong></p>
+<ul>
+<li><strong>ECMA（European Computer Manufacturers Association）是欧洲的标准组织</strong></li>
+<li><strong>ECMA340</strong> <strong>是</strong> <strong>ISO18092</strong> <strong>的前身，它被</strong> <strong>ISO</strong> <strong>接收后成为了</strong> <strong>ISO18092；</strong></li>
+<li><strong>ECMA352</strong> <strong>是</strong> <strong>ISO21481</strong> <strong>的前身。</strong></li>
+</ul>
+<p>3.<strong>NFC Forum</strong></p>
+<ul>
+<li><strong>行业标准，将</strong> <strong>ISO14443、ISO18092</strong> <strong>及</strong> <strong>JIS X6319-4（Felica）融合用于支持</strong> <strong>NFC-A&#x2F;B&#x2F;F</strong> <strong>。</strong></li>
+<li><strong>其中</strong> <strong>NFC</strong> <strong>的模式有读写模式、卡模拟模式以及点对点模式</strong></li>
+</ul>
+<h4 id="NFC-技术架构"><a href="#NFC-技术架构" class="headerlink" title="NFC 技术架构"></a><strong>NFC</strong> <strong>技术架构</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204451446.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="架构"></p>
+<h4 id="NFC-各种标签类型的属性"><a href="#NFC-各种标签类型的属性" class="headerlink" title="NFC 各种标签类型的属性"></a><strong>NFC</strong> <strong>各种标签类型的属性</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/image-20230924204507055.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="属性"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+      
+        <a href="/tags/IoT/">#IoT</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>IoT__第2章__感知识别__2.2_RFID</div>
+      <div>https://www.emokable.top/IoT-第2章-感知识别-2-2-RFID/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月24日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E7%AC%AC1-1%E7%AB%A0-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80/" title="第1.1章-机器学习基础">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">第1.1章-机器学习基础</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/" title="IoT__第2章__感知识别__2.1_自动识别技术">
+                        <span class="hidden-mobile">IoT__第2章__感知识别__2.1_自动识别技术</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,1190 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="第二章 物联网感知识别2.1  自动识别 2.1.1 自动识别技术概述识别：对有关事务进行归类和定性 自动识别技术是一种机器自动数据采集技术  应用一定的识别装置，自动地获取被识别物品的相关信息，并传递给后台进行数据处理 自动识别是用机器来实现类似人对各种事物或现象的检测与分析，并做出辨识的过程 需要：经验、标准、规则  自动识别技术标准组织  国际自动识别制造商协会 Association fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoT__第2章__感知识别__2.1_自动识别技术">
+<meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="第二章 物联网感知识别2.1  自动识别 2.1.1 自动识别技术概述识别：对有关事务进行归类和定性 自动识别技术是一种机器自动数据采集技术  应用一定的识别装置，自动地获取被识别物品的相关信息，并传递给后台进行数据处理 自动识别是用机器来实现类似人对各种事物或现象的检测与分析，并做出辨识的过程 需要：经验、标准、规则  自动识别技术标准组织  国际自动识别制造商协会 Association fo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924003613516.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924003806842.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005709203.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005830237.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005959213.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011055121.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011119214.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011149094.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011221938.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011233551.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011259843.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011313444.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011347429.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012525848.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012644704.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012653021.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012706785.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012815063.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012845779.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013022584.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013203695.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013211603.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013219950.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013228419.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013235410.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013350837.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013703762.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013421175.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013738095.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924124831416.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192715046.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192853645.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192956842.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193024754.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193044564.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193052570.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193120160.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193147038.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193259076.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193340804.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193403444.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193526268.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193557136.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193612708.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193637586.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193718196.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193856486.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193923197.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193956563.png">
+<meta property="article:published_time" content="2023-09-23T15:55:45.000Z">
+<meta property="article:modified_time" content="2023-09-24T11:46:53.156Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="物联网技术与应用">
+<meta property="article:tag" content="IoT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924003613516.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>IoT__第2章__感知识别__2.1_自动识别技术 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="IoT__第2章__感知识别__2.1_自动识别技术"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-23 23:55" pubdate>
+          2023年9月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IoT__第2章__感知识别__2.1_自动识别技术</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：3 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第二章-物联网感知识别"><a href="#第二章-物联网感知识别" class="headerlink" title="第二章 物联网感知识别"></a><strong>第二章 物联网感知识别</strong></h1><h2 id="2-1-自动识别"><a href="#2-1-自动识别" class="headerlink" title="2.1  自动识别"></a><strong>2.1</strong>  <strong>自动识别</strong></h2><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924003613516.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="auto"></p>
+<h3 id="2-1-1-自动识别技术概述"><a href="#2-1-1-自动识别技术概述" class="headerlink" title="2.1.1 自动识别技术概述"></a><strong>2.1.1</strong> <strong>自动识别技术概述</strong></h3><p><strong>识别：对有关事务进行归类和定性</strong></p>
+<p><strong>自动识别技术是一种机器自动数据采集技术</strong></p>
+<ul>
+<li><strong>应用一定的识别装置，自动地获取被识别物品的相关信息，并传递给后台进行数据处理</strong></li>
+<li><strong>自动识别是用机器来实现类似人对各种事物或现象的检测与分析，并做出辨识的过程</strong></li>
+<li><strong>需要：经验、标准、规则</strong></li>
+</ul>
+<p><strong>自动识别技术标准组织</strong></p>
+<ul>
+<li><strong>国际自动识别制造商协会</strong> <strong>Association for Automatic Identification and Mobility,  AIM Global</strong></li>
+<li><strong>中国自动识别技术协会</strong>  <strong>AIM China</strong></li>
+</ul>
+<h4 id="自动识别技术的分类"><a href="#自动识别技术的分类" class="headerlink" title="自动识别技术的分类"></a>自动识别技术的分类</h4><p>•<strong>数据采集技术</strong></p>
+<ul>
+<li><strong>特点：需要特定的载体存放信息</strong></li>
+<li><strong>光存储识别 （条码识别、二维码识别、答题卡识别）</strong></li>
+<li><strong>磁存储识别（磁条、非接触磁卡、磁光存储识别）</strong></li>
+<li><strong>电存储识别（射频识别、IC卡识别）</strong></li>
+</ul>
+<p>•<strong>特征提取技术</strong></p>
+<ul>
+<li><strong>特点：根据事物本身的行为特征来判决信息</strong></li>
+<li><strong>静态特征 （指纹、虹膜、面部、光学字符识别</strong> <strong>OCR</strong> <strong>）</strong></li>
+<li><strong>动态特征 （语音、步态、表情）</strong></li>
+<li><strong>属性特征 （化学、物理、生物、联合感觉）</strong></li>
+</ul>
+<h4 id="自动识别系统的构成"><a href="#自动识别系统的构成" class="headerlink" title="自动识别系统的构成"></a>自动识别系统的构成</h4><p>一般自动识别系统模型:</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924003806842.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="normal"></p>
+<p>基于特征提取的自动识别系统模型</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005709203.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="特征"></p>
+<h3 id="2-1-2-条形码识别"><a href="#2-1-2-条形码识别" class="headerlink" title="2.1.2 条形码识别"></a><strong>2.1.2</strong> <strong>条形码识别</strong></h3><p><strong>最“古老”的自动识别技术</strong></p>
+<p><strong>条形码是由一组规则排列的条、空以及对应的字符组成的标记。普通的条形码在使用过程中仅作为识别信息。</strong></p>
+<p><strong>一个完整的条码的组成次序依次为：</strong></p>
+<p><strong>左侧空白区（静区）、起始符、数据符、（中间分割符，主要用于EAN码）、（校验符）、终止符、右侧空白区（静区）</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005830237.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="条形码"></p>
+<h4 id="条形码的分类"><a href="#条形码的分类" class="headerlink" title="条形码的分类"></a><strong>条形码的分类</strong></h4><p>按照长度： 定长、非定长条形码</p>
+<p>依据排列方式： 连续型、非连续型条形码</p>
+<p>按照扫描方式： 双向、单向条形码</p>
+<p>按照单元模块方式： 宽窄调节码、模块组合码</p>
+<p>一维条形码（条形码）、二维条形码（二维码）</p>
+<h4 id="条形码：基本概念"><a href="#条形码：基本概念" class="headerlink" title="条形码：基本概念"></a><strong>条形码：基本概念</strong></h4><ul>
+<li><strong>模块：构成条码的基本单位是模块，模块是指条码中最窄的条或空，模块的宽度通常以</strong> <strong>mm</strong> <strong>或</strong> <strong>mil（千分之一英寸）为单位。</strong></li>
+<li><strong>单元：构成条码的一个条或空称为一个单元，一个单元包含的模块数是由编码方式决定的，有些码制中，如</strong> <strong>EAN</strong> <strong>码，所有单元由一个或多个模块组成（模块组合法）；而另一些码制，如</strong> <strong>39</strong> <strong>码中，所有单元只有两种宽度，即宽单元和窄单元，其中的窄单元即为一个模块（宽度调节法）。</strong> </li>
+<li><strong>密度：单位长度的条码所表示的字符个数。模块尺寸越小，密度越大，所以密度值通常以模块尺寸的值来表示（如</strong> <strong>5 mil）。通常</strong> <strong>7.5 mil</strong> <strong>以下的条码称为高密度条码，15 mil</strong> <strong>以上的条码称为低密度条码。</strong></li>
+<li><strong>宽窄比：对于只有两种宽度单元的码制，宽单元与窄单元的比值称为宽窄比，一般为2-3左右（常用的有2：1，3：1）。宽窄比较大时，阅读设备更容易分辨宽单元和窄单元，因此比较容易阅读。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924005959213.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="例子"></p>
+<ul>
+<li><strong>对比度（PCS）：条码符号的光学指标，PCS值越大则条码的光学特性越好。</strong><ul>
+<li><strong>PCS＝(RL - RD) &#x2F; RL</strong> <strong>× 100%</strong> <strong>（RL:条形码反射率，RD:空气反射率）</strong></li>
+</ul>
+</li>
+<li><strong>条码长度：从条码起始符前缘到终止符后缘的长度。</strong></li>
+<li><strong>条码密度：单位长度的条码所表示的字符个数。</strong></li>
+<li><strong>双向条码：条码的两端都可以作为扫描起点的。</strong></li>
+<li><strong>中间分隔符：在条码符号中，位于两个相邻的条码符号之间且不代表任何信息的空。</strong></li>
+<li><strong>连续性条码：在条码字符中，两个相邻的条码字符之间没有中间分隔符的条码。</strong></li>
+<li><strong>非连续性条码：在条码字符中，两个相邻的条码字符之间存在中间分隔符的条码。</strong></li>
+</ul>
+<h4 id="条形码的编码方法"><a href="#条形码的编码方法" class="headerlink" title="条形码的编码方法"></a><strong>条形码的编码方法</strong></h4><p><strong>宽度调节法</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011055121.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="width"></p>
+<p>条形码中条与空的宽窄设置不同，用宽单元表示二进制的“1”，而用窄单元表示二进制的“0”，宽窄单元之比控制在2～3之间。印刷精度要求低。</p>
+<p><strong>模块组合法 &#x2F; 色度调节法</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011119214.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="c"></p>
+<p>条形码符号中，条与空是由标准宽度的模块组成的。一个标准宽度的条模块表示二进制的“1”，而一个标准宽度的空模块表示二进制的“0”。印刷精度要求高。</p>
+<h5 id="EAN-13-条形码-（模块组合法、非连续）"><a href="#EAN-13-条形码-（模块组合法、非连续）" class="headerlink" title="EAN-13 条形码  （模块组合法、非连续）"></a><strong>EAN-13</strong> <strong>条形码</strong>  <strong>（模块组合法、非连续）</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011149094.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="example"></p>
+<p>起始部分: 由11条线组成，从左到右依次为8条白线、1条黑线、1条白线、1条黑线</p>
+<p>第一数据部分: 由42条线组成，按照一定算法形成，包含了左侧数据符（d1～d6）的信息</p>
+<p>中间部分: 由5条线组成，从左到右依次为1条白线、1条黑线、1条白线、1条黑线、1条白线</p>
+<p>第二数据部分: 由42条线组成，和第一数据部分一样由一定算法形成，包含右侧数据符（d7～d12）数字的信息</p>
+<p>结尾部分: 由11条线组成，从左至右分别是1条黑线、1条白线、1条黑线、8条白线</p>
+<h5 id="25码-（宽度调节法、连续）"><a href="#25码-（宽度调节法、连续）" class="headerlink" title="25码 （宽度调节法、连续）"></a>25码 （宽度调节法、连续）</h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011221938.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="25"></p>
+<h5 id="39码-（宽度调节法、连续）"><a href="#39码-（宽度调节法、连续）" class="headerlink" title="39码 （宽度调节法、连续）"></a>39码 （宽度调节法、连续）</h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011233551.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="39"></p>
+<h5 id="UPC-条形码"><a href="#UPC-条形码" class="headerlink" title="UPC 条形码"></a><strong>UPC</strong> <strong>条形码</strong></h5><p>Universal Product Code</p>
+<p>UPC-A 码 </p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011259843.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="UPC-A"></p>
+<p>UPC-E 码</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011313444.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="UPC-E"></p>
+<h5 id="ISBN-x2F-ISSN"><a href="#ISBN-x2F-ISSN" class="headerlink" title="ISBN &#x2F; ISSN"></a><strong>ISBN &#x2F; ISSN</strong></h5><p>国际标准书号  International Standard Book Number</p>
+<p>国际标准连续出版物号 International Standard Serial Number</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924011347429.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<p><strong>ISBN</strong> <strong>号包含的信息</strong>:</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012525848.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="实例"></p>
+<p>978 表示用于 ISBN 	国家 &#x2F; 语言  	出版商 	  图书编号	   检查码</p>
+<h5 id="EAN（欧洲商品编号）条形码"><a href="#EAN（欧洲商品编号）条形码" class="headerlink" title="EAN（欧洲商品编号）条形码"></a><strong>EAN（欧洲商品编号）条形码</strong></h5><p>UPC超集</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012644704.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="EAN-13 码"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012653021.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="EAN-8 码"></p>
+<p>UCC&#x2F;EAN-128码（连续型、非定长）</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012706785.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="long"></p>
+<h4 id="条形码阅读器工作原理：-扫描-译码"><a href="#条形码阅读器工作原理：-扫描-译码" class="headerlink" title="条形码阅读器工作原理： 扫描 + 译码"></a><strong>条形码阅读器工作原理：</strong> <strong>扫描</strong> <strong>+</strong> <strong>译码</strong></h4><p><strong>激光扫描仪通过一个激光二极管发出一束光线，照射到一个旋转的棱镜或来回摆动的镜子上，反射后的光线穿过阅读窗照射到条码表面，光线经过条或空的反射后返回阅读器，由一个镜子进行采集、聚焦，通过光电转换器转换成电信号，该信号将通过扫描期或终端上的译码软件进行译码。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012815063.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="过程"></p>
+<h5 id="条形码阅读器产品和应用"><a href="#条形码阅读器产品和应用" class="headerlink" title="条形码阅读器产品和应用"></a><strong>条形码阅读器产品和应用</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924012845779.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="应用"></p>
+<h4 id="典型条形码制比较"><a href="#典型条形码制比较" class="headerlink" title="典型条形码制比较"></a><strong>典型条形码制比较</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013022584.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="table"></p>
+<h3 id="2-1-3-二维码"><a href="#2-1-3-二维码" class="headerlink" title="2.1.3 二维码"></a><strong>2.1.3</strong> <strong>二维码</strong></h3><ul>
+<li><strong>二维码利用某种特定的几何图形按一定规律在平面（二维方向上）分布的黑白相间的图形记录数据符号信息；</strong></li>
+<li><strong>在代码编制上，使用若干个与</strong> <strong>0、1</strong> <strong>二进制相对应的几何形体来表示文字数值信息，通过图象输入设备或光电扫描设备自动识读以实现信息自动处理。</strong></li>
+<li><strong>二维码具有条码技术的一些共性：</strong><ul>
+<li><strong>每种码制有其特定的字符集</strong></li>
+<li><strong>每个字符占有一定的宽度</strong></li>
+<li><strong>具有一定的校验功能等</strong></li>
+</ul>
+</li>
+<li><strong>同时还具有对不同行的信息自动识别功能、以及处理图形旋转变化等特点。</strong></li>
+</ul>
+<h4 id="二维码符号"><a href="#二维码符号" class="headerlink" title="二维码符号"></a><strong>二维码符号</strong></h4><p>•<strong>目前，世界上应用最多的二维码符号有Aztec Code、PDF147、Data Matrix、QR Code、Code16K</strong> <strong>等。</strong></p>
+<p><strong>国际自动识别制造商协会（AIM）</strong></p>
+<p><strong>美国标准化协会（ANSI）</strong></p>
+<p><strong>ISO&#x2F;IEC</strong></p>
+<p><strong>中国物品编码中心</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013203695.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="aztec"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013211603.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="pdf147"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013219950.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="data matrix"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013228419.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="code16k"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013235410.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="qrcode"></p>
+<h4 id="二维码的分类"><a href="#二维码的分类" class="headerlink" title="二维码的分类"></a><strong>二维码的分类</strong></h4><p>§<strong>行排式</strong></p>
+<ul>
+<li><strong>又称堆积式或层叠式二维码，是在一维条形码的基础上按需要将其堆积成多行而成</strong></li>
+<li><strong>PDF417、49码、Code 16K</strong> <strong>条码</strong></li>
+</ul>
+<p>§<strong>矩阵式</strong></p>
+<ul>
+<li><strong>用点阵表示二进制</strong> <strong>0&#x2F;1</strong> <strong>的序列</strong></li>
+<li><strong>Code One、QR码、Data Matrix、Vericode、田字码、汉信码、龙贝码</strong></li>
+</ul>
+<p>§<strong>邮政码</strong></p>
+<ul>
+<li><strong>通过不同高度的条进行编码，主要用于邮政编码</strong></li>
+<li><strong>Postnet、BPO 4-State</strong></li>
+</ul>
+<p>§<strong>彩码</strong></p>
+<ul>
+<li><strong>在传统二维码的基础上添加色彩元素而形成，也称为三维码</strong></li>
+</ul>
+<p>§<strong>复合码</strong></p>
+<ul>
+<li><strong>各种条码类型的组合</strong></li>
+<li><strong>EAN.UCC：一维码对主要标识、二维码对附加数据如批号、有效期等编码</strong></li>
+</ul>
+<h5 id="PDF417码：行排式二维码-Portable-Data-File"><a href="#PDF417码：行排式二维码-Portable-Data-File" class="headerlink" title="PDF417码：行排式二维码 Portable Data File"></a><strong>PDF417码：行排式二维码</strong> <strong>Portable Data</strong> <strong>File</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013350837.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="pdf417"></p>
+<p>PDF417条形码中每个数据字符包括4个条和4个空，每个条或空由1～6个模块组成，一个数据字符中，4个条和4个空的总模块数为17，故名PDF417</p>
+<h5 id="QR-码：矩阵式二维码"><a href="#QR-码：矩阵式二维码" class="headerlink" title="QR 码：矩阵式二维码"></a><strong>QR</strong> <strong>码：矩阵式二维码</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013703762.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<ul>
+<li><strong>快速响应矩阵（Quick Response Code, QR）</strong></li>
+<li><strong>国标：GB&#x2F;T 18284 - 2000</strong></li>
+<li><strong>使用最为广泛的二维码</strong></li>
+<li><strong>超高速识读、全方位识读、高效表示汉字</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013421175.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<h5 id="QR-码符号版本"><a href="#QR-码符号版本" class="headerlink" title="QR 码符号版本"></a><strong>QR</strong> <strong>码符号版本</strong></h5><p><strong>QR</strong> <strong>码符号共有40种版本</strong></p>
+<ul>
+<li><strong>版本1：21 x 21</strong></li>
+<li><strong>版本2：25 x 25</strong></li>
+<li><strong>每个版本增加4个模块</strong></li>
+<li><strong>版本40：177 x</strong> <strong>177</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924013738095.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="QR"></p>
+<h5 id="汉信码：矩阵式二维码"><a href="#汉信码：矩阵式二维码" class="headerlink" title="汉信码：矩阵式二维码"></a><strong>汉信码：矩阵式二维码</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924124831416.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="汉信"></p>
+<h5 id="彩码"><a href="#彩码" class="headerlink" title="彩码"></a><strong>彩码</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192715046.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="color"></p>
+<h4 id="二维码的生成过程"><a href="#二维码的生成过程" class="headerlink" title="二维码的生成过程"></a><strong>二维码的生成过程</strong></h4><ul>
+<li><strong>数据分析</strong></li>
+<li><strong>数据编码</strong></li>
+<li><strong>纠错</strong></li>
+<li><strong>构造最终信息</strong></li>
+<li><strong>在矩阵中布置模块</strong></li>
+<li><strong>掩模</strong></li>
+<li><strong>添加格式信息和版本信息</strong></li>
+</ul>
+<h4 id="一维条形码与二维码的比较"><a href="#一维条形码与二维码的比较" class="headerlink" title="一维条形码与二维码的比较"></a><strong>一维条形码与二维码的比较</strong></h4><ul>
+<li><strong>一维条形码特点：</strong><ul>
+<li><strong>可直接显示内容为英文、数字、简单符号；</strong></li>
+<li><strong>贮存数据不多，主要依靠计算机中的关联数据库；</strong></li>
+<li><strong>保密性能不高；</strong></li>
+<li><strong>损污后可读性差。</strong></li>
+</ul>
+</li>
+<li><strong>二维码特点：</strong><ul>
+<li><strong>可直接显示英文、中文、数字、符号、图形；</strong></li>
+<li><strong>贮存数据量大，可存放1K字符，可用扫描仪直接读取内容，无需另接数据库；</strong></li>
+<li><strong>保密性高（可加密）；</strong></li>
+<li><strong>安全级别最高时，损污50%仍可读取完整信息。</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="QR-码结构图"><a href="#QR-码结构图" class="headerlink" title="QR 码结构图"></a><strong>QR 码结构图</strong></h4><p><strong>QR 码由编码区域和包括寻像图形、分隔符、定位图形和校正图形在内的功能图形组成。</strong></p>
+<p><strong>QR 码结构图如下图所示：</strong> </p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192853645.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="st"></p>
+<blockquote>
+<p><strong>二维码的特点：</strong></p>
+<ul>
+<li><strong>存储大容量信息</strong></li>
+<li><strong>在小空间内打印</strong></li>
+<li><strong>有效表现各种字母</strong></li>
+<li><strong>对变脏和破损的纠错能力强</strong></li>
+<li><strong>从任意方向读取</strong></li>
+<li><strong>可以数据分割与合并</strong></li>
+</ul>
+</blockquote>
+<h4 id="二维码识别原理"><a href="#二维码识别原理" class="headerlink" title="二维码识别原理"></a><strong>二维码识别原理</strong></h4><p><strong>定位校正图形：</strong></p>
+<p><strong>根据 3 个位置探测图像估计右下角校正符，共同定位该图形。</strong></p>
+<p><strong>透视变换：</strong></p>
+<p><strong>根据 3 个定位中心点和校正符中心点，和理想 4 个点的坐标，获取单应性矩阵，再通过透视变换获取标准正方形图像。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924192956842.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="定位"></p>
+<p><strong>译码和纠错</strong>：<strong>译码是对二维码版本信息、格式信息、数据和纠错码进行解码和对比。将数据区转为0和1的比特流，并用Reed-Solomon纠错算法对比特流校验和纠错。判断QR码编码格式后译码，这样得到了二维码包含的数据。</strong></p>
+<p><strong>常规的QR码识别过程容易受到环境影响而难以识别，往往需要一些预处理改善图像质量和识别环境。</strong></p>
+<p><strong>图像灰度化</strong></p>
+<p><strong>去噪</strong></p>
+<p><strong>畸变矫正</strong></p>
+<p><strong>二值化</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193024754.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="工业"></p>
+<h4 id="常见的工业领域应用问题"><a href="#常见的工业领域应用问题" class="headerlink" title="常见的工业领域应用问题"></a><strong>常见的工业领域应用问题</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193044564.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="平衡"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193052570.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="问题"></p>
+<h4 id="二维码检测定位技术（例）"><a href="#二维码检测定位技术（例）" class="headerlink" title="二维码检测定位技术（例）"></a><strong>二维码检测定位技术（例）</strong></h4><p><strong>更高的检测精度、复杂环境应用、防止图像失真、具有鲁棒性</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193120160.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="photo"></p>
+<h3 id="2-1-3-IC卡识别"><a href="#2-1-3-IC卡识别" class="headerlink" title="2.1.3  IC卡识别"></a><strong>2.1.3  IC卡识别</strong></h3><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193147038.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="IC"></p>
+<h4 id="CPU卡：-按与外界数据交换界面"><a href="#CPU卡：-按与外界数据交换界面" class="headerlink" title="CPU卡： 按与外界数据交换界面"></a><strong>CPU卡： 按与外界数据交换界面</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193259076.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分类"></p>
+<p>接触式IC卡的多个金属触点为卡芯片与外界的信息传输媒介，成本低，实施相对简便；非接触式IC卡则不用触点，而是借助无线收发传送信息，因此在前者难以胜任的交通运输等诸多场合有较多应用。</p>
+<h3 id="2-1-4-光学字符识别"><a href="#2-1-4-光学字符识别" class="headerlink" title="2.1.4  光学字符识别"></a><strong>2.1.4</strong>  <strong>光学字符识别</strong></h3><p>光学字符识别（optical character recognition，OCR）： 采用电子设备（如扫描仪或数码相机）检查纸上打印的字符，通过检测暗亮的模式确定其形状，然后用字符识别方法将形状翻译成计算机文字的过程，即对文本资料进行扫描，然后对图像文件进行分析处理，获取文字及版面信息的过程。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193340804.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="光学字符识别流程图"></p>
+<h3 id="2-1-5-语音识别"><a href="#2-1-5-语音识别" class="headerlink" title="2.1.5 语音识别"></a><strong>2.1.5</strong> <strong>语音识别</strong></h3><p>语音识别：采用数字信号处理技术自动提取及决定语言信号中最基本有意义的信息，同时也包括利用音律特征等个人特征识别说话人。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193403444.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="voice"></p>
+<h3 id="2-1-6-生物特征识别"><a href="#2-1-6-生物特征识别" class="headerlink" title="2.1.6 生物特征识别"></a><strong>2.1.6</strong> <strong>生物特征识别</strong></h3><p>概念：</p>
+<p> 通过计算机与光学、声学、生物传感器和生物统计学原理等高科技手段密切结合，利用人体固有的生理特性（如指纹、指静脉、人脸、虹膜等）和行为特征（如笔迹、声音、步态等）来进行个人身份的鉴定</p>
+<p>分类：</p>
+<ul>
+<li>指纹识别</li>
+<li>掌纹识别</li>
+<li>静脉识别</li>
+<li>虹膜识别</li>
+<li>人脸识别</li>
+<li>声音识别</li>
+</ul>
+<h4 id="指纹识别"><a href="#指纹识别" class="headerlink" title="指纹识别"></a><strong>指纹识别</strong></h4><p>从实用角度看，指纹识别是优于其他生物识别技术的身份鉴别方法。因为指纹具有各不相同、终生基本不变的特点，且目前的指纹识别系统已达到操作方便、准确可靠、价格适中的阶段，正逐步应用于民用市场。</p>
+<p>指纹识别的处理流程：</p>
+<p>–通过特殊的光电转换设备和计算机图像处理技术，对活体指纹进行采集、分析和比对，可以迅速、准确地鉴别出个人身份。系统一般主要包括对指纹图像采集、指纹图像处理、特征提取、特征值的比对与匹配等过程。</p>
+<h5 id="指纹的总体特征"><a href="#指纹的总体特征" class="headerlink" title="指纹的总体特征"></a><strong>指纹的总体特征</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193526268.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="特征"></p>
+<h4 id="静脉识别"><a href="#静脉识别" class="headerlink" title="静脉识别"></a><strong>静脉识别</strong></h4><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193557136.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="静脉"></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193612708.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="静脉"></p>
+<h4 id="虹膜识别"><a href="#虹膜识别" class="headerlink" title="虹膜识别"></a><strong>虹膜识别</strong></h4><p>•<strong>虹膜识别是当前应用最方便精确的生物识别技术，虹膜的高度独特性和稳定性是其用于身份鉴别的基础。</strong></p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193637586.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="虹膜"></p>
+<h5 id="虹膜识别的高识别率"><a href="#虹膜识别的高识别率" class="headerlink" title="虹膜识别的高识别率"></a><strong>虹膜识别的高识别率</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193718196.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="识别率对比"></p>
+<p><strong>虹膜识别的特点：</strong></p>
+<ul>
+<li><strong>生物活性:</strong> <strong>虹膜处在巩膜的保护下，生物活性强。</strong></li>
+<li><strong>非接触性:</strong> <strong>无需用户接触设备，对人身没有侵犯。</strong></li>
+<li><strong>唯一性:</strong>  <strong>形态完全相同虹膜的可能性低于其他组织。</strong></li>
+<li><strong>稳定性:</strong>  <strong>虹膜定型后终身不变，一般疾病不会对虹膜组织造成损伤。</strong></li>
+<li><strong>防伪性:</strong> <strong>不可能在对视觉无严重影响的情况下用外科手术改变虹膜特征。</strong></li>
+<li><strong>识别率极高，仅次于DNA识别。</strong></li>
+</ul>
+<h4 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a><strong>人脸识别</strong></h4><p>人脸识别（human face recognition）是基于人的面部特征信息进行身份识别。其准确性要低于虹膜、指纹识别，但它具有非强制性、非接触性、操作简单、隐蔽性好等特点，因此成为最容易被接受的生物特征识别方式。</p>
+<p>人脸识别过程：</p>
+<ul>
+<li>建立人脸的面像档案：制作面像文件，并生成面纹编码进行存储</li>
+<li>获取当前的人体面像，并以此生成面纹编码</li>
+<li>用当前的面纹编码与档案库存中的面纹编码进行检索对比</li>
+</ul>
+<h5 id="人脸识别涉及到的技术模块"><a href="#人脸识别涉及到的技术模块" class="headerlink" title="人脸识别涉及到的技术模块"></a><strong>人脸识别涉及到的技术模块</strong></h5><p><strong>人脸检测</strong></p>
+<p>在动态场景、复杂背景中判断是否存在面像，并分离出面像。</p>
+<ul>
+<li>参考模板法、人脸规则法、样品学习法、肤色模型法、特征脸法</li>
+</ul>
+<p><strong>人脸跟踪</strong></p>
+<p>在检测之后，在后续帧中继续捕获人脸的运动轨迹及大小变化。</p>
+<ul>
+<li>基于模型跟踪、运动信息跟踪、人脸局部特征跟踪、神经网络跟踪</li>
+</ul>
+<p><strong>人脸比对</strong> </p>
+<p>对被检测到的面像进行身份确认，即在面像库中进行目标检索，找出最佳匹配。面像的描述决定了面像识别的具体方法与性能。</p>
+<ul>
+<li>特征向量、面纹模板</li>
+</ul>
+<h5 id="人脸识别的特征提取"><a href="#人脸识别的特征提取" class="headerlink" title="人脸识别的特征提取"></a><strong>人脸识别的特征提取</strong></h5><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193856486.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="难点"></p>
+<h4 id="声音识别"><a href="#声音识别" class="headerlink" title="声音识别"></a><strong>声音识别</strong></h4><p>通过对采集到的语音信号进行分析和处理，提取相应的特征以识别说话人的身份。</p>
+<p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193923197.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<h3 id="2-1-7-图像识别、机器视觉"><a href="#2-1-7-图像识别、机器视觉" class="headerlink" title="2.1.7 图像识别、机器视觉"></a><strong>2.1.7</strong> <strong>图像识别、机器视觉</strong></h3><p><img src="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/image-20230924193956563.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="无其它内容"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+      
+        <a href="/tags/IoT/">#IoT</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>IoT__第2章__感知识别__2.1_自动识别技术</div>
+      <div>https://www.emokable.top/IoT-第2章-感知识别-2-1-自动识别技术/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-2-RFID/" title="IoT__第2章__感知识别__2.2_RFID">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IoT__第2章__感知识别__2.2_RFID</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/" title="IoT__第1章__物联网概述">
+                        <span class="hidden-mobile">IoT__第1章__物联网概述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

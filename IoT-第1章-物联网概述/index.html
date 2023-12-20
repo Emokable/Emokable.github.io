@@ -1,0 +1,970 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="物联网技术与应用物物互联•物联网概念在2005年国际电信联盟（ITU）发布的《ITU互联网报告2005：物联网》中被正式提出： ”它通过泛在网络，借助物体识别技术（如射频识别）、传感技术、嵌入式智能技术、小型化技术（如纳米结构），将世界万物连接在一起，通过感知世界、认识世界、改造世界，进而推动整个世界发展。  物联网是一项技术吗 …… 来源多样，主线复杂 物联网不是某项具体的技术，而是很多推动万物">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoT__第1章__物联网概述">
+<meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="物联网技术与应用物物互联•物联网概念在2005年国际电信联盟（ITU）发布的《ITU互联网报告2005：物联网》中被正式提出： ”它通过泛在网络，借助物体识别技术（如射频识别）、传感技术、嵌入式智能技术、小型化技术（如纳米结构），将世界万物连接在一起，通过感知世界、认识世界、改造世界，进而推动整个世界发展。  物联网是一项技术吗 …… 来源多样，主线复杂 物联网不是某项具体的技术，而是很多推动万物">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223303067.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223334523.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223401700.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223447346.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223637490.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223804215.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223809626.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223837109.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923224405341.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225159018.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225428059.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225735601.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225749817.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225943098.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923230007346.png">
+<meta property="article:published_time" content="2023-09-23T14:10:48.000Z">
+<meta property="article:modified_time" content="2023-09-24T11:47:17.306Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="物联网技术与应用">
+<meta property="article:tag" content="IoT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223303067.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>IoT__第1章__物联网概述 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="IoT__第1章__物联网概述"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-23 22:10" pubdate>
+          2023年9月23日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IoT__第1章__物联网概述</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：3 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="物联网技术与应用"><a href="#物联网技术与应用" class="headerlink" title="物联网技术与应用"></a>物联网技术与应用</h1><h3 id="物物互联"><a href="#物物互联" class="headerlink" title="物物互联"></a><strong>物物互联</strong></h3><p>•物联网概念在2005年国际电信联盟（ITU）发布的《ITU互联网报告2005：物联网》中被正式提出：</p>
+<p>”它通过泛在网络，借助物体识别技术（如射频识别）、传感技术、嵌入式智能技术、小型化技术（如纳米结构），将世界万物连接在一起，通过感知世界、认识世界、改造世界，进而推动整个世界发展。</p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223303067.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="物物互联：连接物理世界与虚拟世界"></p>
+<h3 id="物联网是一项技术吗-……"><a href="#物联网是一项技术吗-……" class="headerlink" title="物联网是一项技术吗 ……"></a>物联网是一项技术吗 ……</h3><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223334523.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230923223334523"></p>
+<p><strong>来源多样，主线复杂</strong></p>
+<p>物联网不是某项具体的技术，而是很多推动万物互联趋势的支撑技术的有机集合。</p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223401700.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="本科专业"></p>
+<blockquote>
+<p>虽然这里是软工。。。</p>
+</blockquote>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223447346.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="应避免“盲人摸象”现象"></p>
+<h1 id="物联网-IoT-Internet-of-Things"><a href="#物联网-IoT-Internet-of-Things" class="headerlink" title="物联网  IoT (Internet of Things)"></a>物联网  IoT (Internet of Things)</h1><ul>
+<li>概述</li>
+<li>感知识别</li>
+<li>传感网络</li>
+<li>支撑管理</li>
+<li>广域连接</li>
+<li>综合应用</li>
+</ul>
+<h2 id="第一章-物联网概述"><a href="#第一章-物联网概述" class="headerlink" title="第一章 物联网概述"></a><strong>第一章 物联网概述</strong></h2><h3 id="1-1发展起源和背景"><a href="#1-1发展起源和背景" class="headerlink" title="1.1发展起源和背景"></a>1.1<strong>发展起源和背景</strong></h3><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223637490.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="直接截取的课件。。。"></p>
+<h4 id="IoT-起源：-普适计算"><a href="#IoT-起源：-普适计算" class="headerlink" title="IoT 起源： 普适计算"></a><strong>IoT</strong> <strong>起源： 普适计算</strong></h4><p>•1988年，Xerox PARC 研究中心的 Mark Weiser 提出普适计算的概念。</p>
+<p>–1991年，在  <em>Scientific American</em> 上发表 “The Computer for the 21st Century” ，正式提出了普适计算 Ubiquitous Computing</p>
+<p>–”The most profound technologies are those that disappear. They weave themselves into the fabric of everyday life until they are indistinguishable from it.”</p>
+<p>•1999年，IBM也提出 Pervasive Computing的概念，即为无所不在的、随时随地可以进行计算的一种方式。强调计算资源普存于环境当中，人们可以随时随地获得需要的信息和服务。</p>
+<p>•1999年，欧洲 ISTAG 提出了环境智能（Ambient Intelligence）的概念。提法不同，但是含义一致。</p>
+<h5 id="普适计算的特点："><a href="#普适计算的特点：" class="headerlink" title="普适计算的特点："></a><strong>普适计算的特点</strong>：</h5><ul>
+<li>当时的计算领域新浪潮，是多技术的融合，突破桌面计算的模式，将计算和互联技术普及到日常生活中</li>
+<li>倡导发展可以广泛部署的微小计算设备，并与已有的互联网技术结合，实现移动、无缝、透明、泛在的计算服务，又称为不可见计算（Invisible Computing）</li>
+<li>强调和环境融为一体的计算概念，计算机本身从人们的视线里消失。 能够在任何时间、任何地点、以任何方式进行信息的获取与处理</li>
+<li>模式转变：（互联网）让人围绕着网络运行 à 让微小系统形成的网络围绕着人运转</li>
+<li>然而，普适设备大多是已有计算系统的延伸和拓展，集聚化、智能化程度较低，而且服务对象主要是个体，缺乏突破性应用场景，未能大规模推广</li>
+<li>将互联网推广到物理世界的一种初步尝试</li>
+</ul>
+<h4 id="IoT-起源：无线传感网（WSN-Wireless-Sensor-Network）"><a href="#IoT-起源：无线传感网（WSN-Wireless-Sensor-Network）" class="headerlink" title="IoT 起源：无线传感网（WSN: Wireless Sensor Network）"></a><strong>IoT</strong> <strong>起源：无线传感网（WSN: Wireless Sensor Network）</strong></h4><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223804215.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="智能化"></p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223809626.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="点到网"></p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923223837109.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="sys"></p>
+<h4 id="物联网的起源和发展"><a href="#物联网的起源和发展" class="headerlink" title="物联网的起源和发展"></a><strong>物联网的起源和发展</strong></h4><ul>
+<li>本世纪初，泛在网络 Ubiquitous Networks: 互联网和移动通信的融合与拓展</li>
+<li>2006年，Cyber-Physical Systems (CPS) ：相比传感网系统，注重实现开放、可控、闭环的计算支持</li>
+<li>2009年，美国工商业领袖“圆桌会议”，IBM提出“智慧地球”概念</li>
+<li>2009年，“感知中国”战略启动<ul>
+<li>–前期：中科院、科工委、高校、中电等预研攻关</li>
+<li>–传感器网络被列入国家重大科技计划三“新一代移动通信网络”</li>
+<li>–初期行业应用，与运营商合作探讨三步走</li>
+<li>–2019年被视为中国物联网元年，收到全社会关注</li>
+<li>–物联网被正式列入国家五大新兴战略性产业之一</li>
+</ul>
+</li>
+<li>2016年，十三五规划建议提出实施“互联网+”行动计划</li>
+<li>…… ……</li>
+</ul>
+<h5 id="物联网发展并提升至战略高度"><a href="#物联网发展并提升至战略高度" class="headerlink" title="物联网发展并提升至战略高度"></a><strong>物联网发展并提升至战略高度</strong></h5><p>•《中华人民共和国国民经济和社会发展第十四个五年规划和2035年远景目标纲要》（2021年）要求，在信息领域重点发展云计算、大数据、物联网、工业互联网、区块链、人工智能（AI）、虚拟现实（VR） &#x2F; 增强现实（AR）等七大产业。</p>
+<p>•《物联网新型基础设施建设三年行动计划（2021—2023）》（2021年）提出，到2023年国内主要城市初步建成物联网新型基础设施。</p>
+<p>物联网是一个<strong>动态的全球网络化基础设施</strong>，它具有基于标准和互操作通信协议的自组织能力，其中物理的和虚拟的“物”具有身份标识、物理属性、虚拟的特性和智能的接口，并与信息网络无缝整合。物联网将与媒体互联网、服务互联网和企业互联网一起，构成未来互联网。</p>
+<h4 id="物联网过去、现在与发展"><a href="#物联网过去、现在与发展" class="headerlink" title="物联网过去、现在与发展"></a><strong>物联网过去、现在与发展</strong></h4><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923224405341.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="历史"></p>
+<h3 id="1-2概念和特点"><a href="#1-2概念和特点" class="headerlink" title="1.2概念和特点"></a>1.2<strong>概念和特点</strong></h3><h4 id="物联网概念"><a href="#物联网概念" class="headerlink" title="物联网概念"></a><strong>物联网概念</strong></h4><ul>
+<li>1998，MIT的Kevin Ashton首次提及 Internet of Things<ul>
+<li>将RFID技术与传感器技术应用于日常物品中将会创建一个“物联网”，这项技术将带来人们对机器理解的新纪</li>
+</ul>
+</li>
+<li>2003年，美国&lt;技术评论&gt;：传感网技术将是未来改变人们生活的十大技术之首。</li>
+<li>2005,ITU发布《ITU互联网报告2005：物联网》<ul>
+<li>物联网是通过RFID和智能计算等技术实现全世界设备互连的</li>
+</ul>
+</li>
+<li>2008，欧委会的CERP-IOT工程给出新的物联网定<ul>
+<li>物联网是物理和数字世界融合的网络，每个物理实体都有一个数字的身份；物体具有上下文感知能力―他们可以感知、沟通与互动。他们对待物理事件进行即时反映，对物理实体的信息进行即时传送；使得实时作出决定成为可能</li>
+</ul>
+</li>
+<li>早期的维基百科<ul>
+<li>所谓“物联网”（Internet of Things），指的是将各种信息传感设备，如射频识别（RFID）装置、红外感应器、全球定位系统、激光扫描器等种种装置与互联网结合起来而形成的一个巨大网络。</li>
+</ul>
+</li>
+</ul>
+<h5 id="物联网的其他定义"><a href="#物联网的其他定义" class="headerlink" title="物联网的其他定义"></a>物联网的其他定义</h5><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225159018.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="p"></p>
+<h4 id="物联网的系统化概念"><a href="#物联网的系统化概念" class="headerlink" title="物联网的系统化概念"></a><strong>物联网的系统化概念</strong></h4><p>物联网的系统化概念由中国提出，整合了美国CPS (Cyber-Physical Systems)、欧盟 IoT（Internet of Things) 和 日本 U-Japan 等概念。是一个基于互联网、传统电信网等信息载体，让所有（能被独立寻址的）普通物理对象实现被感知和互联互通的网络。物理环境感知化、普通对象设备化、自治终端互联化和普适服务智能化是其重要特征。</p>
+<h4 id="IoT-Internet-of-Things-物联网"><a href="#IoT-Internet-of-Things-物联网" class="headerlink" title="IoT (Internet-of-Things)  物联网"></a>IoT (Internet-of-Things)  物联网</h4><p><strong>全面感知：利用传感器、RFID、卫星、微波，及其它各种感知设备随时随地采集各种动态对象，全面感知世界。</strong></p>
+<p><strong>可靠传送：利用无线网、移动网、工控网等网络将感知的信息进行实时传送。</strong></p>
+<p><strong>协同处理：对多维、多源信息进行融合处理，协同决策。</strong></p>
+<p><strong>智能控制：对物体实现智能化的控制和管理，达到人与物的沟通。</strong></p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225428059.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="IoT"></p>
+<h4 id="物联网应用-vs-互联网应用"><a href="#物联网应用-vs-互联网应用" class="headerlink" title="物联网应用 vs. 互联网应用"></a>物联网应用 vs. 互联网应用</h4><p><strong>互联网应用：</strong>人们想要在互联网上了解某种信息，需要有人去收集、发布这个信息到互联网上，才可供人们浏览。人需要在环路中做大量工作，并难以动态了解其变化。</p>
+<p><strong>物联网应用</strong>：物联网通过各种感知设备，如射频识别、传感器、红外等，将信息传送到接收器，再通过互联网传送，通过高层应用进行信息处理，以实现远程监视、自动报警、控制、诊断和维护，进而实现“管理、控制、营运”的一体化。</p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225735601.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="HOME"></p>
+<h4 id="几种网络概念之间的关系"><a href="#几种网络概念之间的关系" class="headerlink" title="几种网络概念之间的关系"></a><strong>几种网络概念之间的关系</strong></h4><p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225749817.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="包含和侧重"></p>
+<h3 id="1-3体系结构"><a href="#1-3体系结构" class="headerlink" title="1.3体系结构"></a>1.3<strong>体系结构</strong></h3><p>传感网（物联网）三层体系架构 （2007-2009）</p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923225943098.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="3F"></p>
+<p><strong>物联网四层模型（例）</strong></p>
+<p><img src="/IoT-%E7%AC%AC1%E7%AB%A0-%E7%89%A9%E8%81%94%E7%BD%91%E6%A6%82%E8%BF%B0/image-20230923230007346.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4F"></p>
+<p>• <strong>To be continued …</strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+      
+        <a href="/tags/IoT/">#IoT</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>IoT__第1章__物联网概述</div>
+      <div>https://www.emokable.top/IoT-第1章-物联网概述/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC2%E7%AB%A0-%E6%84%9F%E7%9F%A5%E8%AF%86%E5%88%AB-2-1-%E8%87%AA%E5%8A%A8%E8%AF%86%E5%88%AB%E6%8A%80%E6%9C%AF/" title="IoT__第2章__感知识别__2.1_自动识别技术">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">IoT__第2章__感知识别__2.1_自动识别技术</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E5%A4%A7%E4%B8%89%E5%BC%80%E5%AD%A6%EF%BC%8C%E6%84%9F%E8%A7%89%E6%97%B6%E9%97%B4%E5%A5%BD%E5%BF%ABe/" title="大三开学，感觉时间好快e">
+                        <span class="hidden-mobile">大三开学，感觉时间好快e</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

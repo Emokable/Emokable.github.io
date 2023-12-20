@@ -1,0 +1,1530 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="嵌入式系统设计-程序设计与分析一.嵌入式程序设计自然语言描述 直接使用语言文字描述设计过程 一般会结合其他方法使用   形式化描述通过严谨的数学语言、逻辑和公式描述 对开发工程师的知识背景要求严格  伪代码 伪代码是一种常用的描述程序设计方法 能够较为清晰地描述思路 通常使用伪代码设计核心部分   结构图 结构图 结构图( structure chart)是一种自顶向下的模块化设计工具 系统由不同">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嵌入式系统设计ch6-程序设计与分析">
+<meta property="og:url" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="嵌入式系统设计-程序设计与分析一.嵌入式程序设计自然语言描述 直接使用语言文字描述设计过程 一般会结合其他方法使用   形式化描述通过严谨的数学语言、逻辑和公式描述 对开发工程师的知识背景要求严格  伪代码 伪代码是一种常用的描述程序设计方法 能够较为清晰地描述思路 通常使用伪代码设计核心部分   结构图 结构图 结构图( structure chart)是一种自顶向下的模块化设计工具 系统由不同">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214238378.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214332855.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214407610.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214501986.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214535525.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214946481.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528215818235.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528215839235.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220529867.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220704006.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220731093.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220757073.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220842074.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528221226990.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222011572.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222134158.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222254919.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222312124.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222441589.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222925991.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223106699.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223601644.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223827928.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223927611.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224537160.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224644879.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224700914.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224853537.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224910289.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225716536.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225909363.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225938957.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528230843421.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528230943058.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231121940.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231140898.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231158598.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231219388.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231240119.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231538412.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231632770.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231710076.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231856410.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528232037019.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528232118191.png">
+<meta property="og:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528233207025.png">
+<meta property="article:published_time" content="2023-05-28T13:38:24.000Z">
+<meta property="article:modified_time" content="2023-05-29T16:52:35.791Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="嵌入式程序设计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214238378.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>嵌入式系统设计ch6-程序设计与分析 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="嵌入式系统设计ch6-程序设计与分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-28 21:38" pubdate>
+          2023年5月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          9.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          79 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">嵌入式系统设计ch6-程序设计与分析</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：7 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="嵌入式系统设计-程序设计与分析"><a href="#嵌入式系统设计-程序设计与分析" class="headerlink" title="嵌入式系统设计-程序设计与分析"></a>嵌入式系统设计-程序设计与分析</h1><h2 id="一-嵌入式程序设计"><a href="#一-嵌入式程序设计" class="headerlink" title="一.嵌入式程序设计"></a>一.嵌入式程序设计</h2><h3 id="自然语言描述"><a href="#自然语言描述" class="headerlink" title="自然语言描述"></a>自然语言描述</h3><ul>
+<li>直接使用语言文字描述设计过程</li>
+<li>一般会结合其他方法使用</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214238378.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tu"></p>
+<h3 id="形式化描述"><a href="#形式化描述" class="headerlink" title="形式化描述"></a>形式化描述</h3><p>通过严谨的数学语言、逻辑和公式描述</p>
+<p>对开发工程师的知识背景要求严格</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214332855.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="形式化描述"></p>
+<h3 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h3><ul>
+<li>伪代码是一种常用的描述程序设计方法</li>
+<li>能够较为清晰地描述思路</li>
+<li>通常使用伪代码设计核心部分</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214407610.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="伪代码"></p>
+<h3 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h3><ul>
+<li>结构图<ul>
+<li>结构图( structure chart)是一种自顶向下的模块化设计工具</li>
+<li>系统由不同模块和线组成，用小方块表示模块，线表示模块之间的关系。</li>
+<li>结构图用于高层设计或体系结构设计</li>
+<li>帮助程序员划分大型软件，递归地将问题分解成可以理解的小问题</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214501986.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="树状"></p>
+<p>结构图</p>
+<ul>
+<li>树状结构图</li>
+<li>非树状结构图</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214535525.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="非树状"></p>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p>流程图( flow chart)</p>
+<ul>
+<li>流程图是描述一个程序的工作流程或过程</li>
+<li>使用方框表示步骤、菱形表示判断、带箭头的线表示执行流程</li>
+<li>流程图表示对给定问题的解决方案</li>
+<li>常用于分析、设计、记录或者管理的流程中</li>
+</ul>
+<p>例：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">for</span><span class="hljs-params">( A ; B ; C)</span></span><br><br>	D<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528214946481.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程图"></p>
+<h3 id="状态图-States-diagram"><a href="#状态图-States-diagram" class="headerlink" title="状态图( States diagram)"></a>状态图( States diagram)</h3><ul>
+<li>状态图关注系统某一对象在生命周期内的特性和特性的变化，以及引起特性变化的时间和动作等</li>
+<li>状态（state）是指在生命周期中某个特性，具有一定的时间稳定性，即会在一段时间内保持相对稳定。</li>
+<li>转移( transition) 两个状态之间的变迁，表示在指定事件发生后，在特定的条件下，对象执行特定的动作从源状态转移到目标状态</li>
+<li>转移由源状态、目标状态、触发事件、警戒条件和转移动作组成</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528215818235.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="状态图"></p>
+<p>例：给定一个电话座机，打电话包含哪几种状态？并画出状态图</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528215839235.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="是状态自动机吗？"></p>
+<h4 id="控制-x2F-数据流图（CDFG）"><a href="#控制-x2F-数据流图（CDFG）" class="headerlink" title="控制&#x2F;数据流图（CDFG）"></a>控制&#x2F;数据流图（CDFG）</h4><p>数据流图（Data flow graph, DFG）</p>
+<p>无条件程序模型，不能表示控制</p>
+<p>基本语句块：</p>
+<ul>
+<li>无条件代码段</li>
+<li>只有一个入口和出口</li>
+<li>可操作的最大顺序语句序列</li>
+</ul>
+<p>单赋值形式：一个变量只能在赋值运算符左边出现一次</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">x</span> = a + b<span class="hljs-comment">;</span><br><span class="hljs-attr">y</span> = c - d<span class="hljs-comment">;</span><br><span class="hljs-attr">z</span> = x * y<span class="hljs-comment">;</span><br><span class="hljs-attr">y</span> = b + d<span class="hljs-comment">;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>两类结点</p>
+<p>◼圆形结点：表示操作</p>
+<p>◼方形结点：表示值</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220529867.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DFG"></p>
+<p>部分序：</p>
+<p>▪<strong>a+b, c-d; b+d, x*y</strong></p>
+<p>▪操作<strong>a+b</strong>和 <strong>c-d</strong>可以用任何顺序执行</p>
+<p>▪操作<strong>b+d</strong>和<strong>x*y</strong>可以用任何顺序执行</p>
+<h4 id="CDFG"><a href="#CDFG" class="headerlink" title="CDFG"></a>CDFG</h4><p>CDFG: 表示控制与数据的图</p>
+<p>用数据流图表示组件，添加控制部分</p>
+<p>CDFG有两种类型的节点</p>
+<p>判断节点：描述的全部控制类型</p>
+<p>数据流节点：一个完整的表示基本语句块的数据流图</p>
+<p><strong>数据流节点</strong></p>
+<ul>
+<li>封装一个数据流图</li>
+<li>在节点中完成写操作</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220704006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DATA"></p>
+<p><strong>判断节点</strong></p>
+<p>◼ 描述控制类型</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220731093.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="CONTROL"></p>
+<p>EX:</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs scss">if (cond1) <span class="hljs-built_in">bb1</span>();<br>else <span class="hljs-built_in">bb2</span>();<br><span class="hljs-built_in">bb3</span>();<br>switch (test1) &#123;<br>case c1: <span class="hljs-built_in">bb4</span>(); break;<br>case c2: <span class="hljs-built_in">bb5</span>(); break;<br>case c3: <span class="hljs-built_in">bb6</span>(); break;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220757073.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="SWITCH"></p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs gcode">for <span class="hljs-comment">(i=0; i&lt;N; i++)</span><br>loop_body<span class="hljs-comment">()</span>;<br>等价=&gt;<br>i=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">while</span> <span class="hljs-comment">(i&lt;N)</span> &#123;<br>loop_body<span class="hljs-comment">()</span>; <br>i++; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528220842074.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="for"></p>
+<h3 id="嵌入式程序模型"><a href="#嵌入式程序模型" class="headerlink" title="嵌入式程序模型"></a>嵌入式程序模型</h3><p>有限状态机：响应系统</p>
+<p>循环缓冲区：数字信号处理</p>
+<p>队列：数字信号处理</p>
+<h4 id="有限状态机（FSM）"><a href="#有限状态机（FSM）" class="headerlink" title="有限状态机（FSM）"></a>有限状态机（FSM）</h4><p>状态机具有离散动态的系统模型</p>
+<ul>
+<li>一种常用的状态机叫做有限状态机，表示状态数目是有限的</li>
+<li>状态机建模适用于对时间驱动的系统，给定不同输入信号，系统根据这些输入信号做出不同响应</li>
+<li>状态来表示系统的内部特性，状态的变化是基于输入的变化</li>
+</ul>
+<p>状态图是对状态机的一种图形表示</p>
+<p>MOORE机、MEALY机 ???</p>
+<p>应用:</p>
+<ul>
+<li>面向控制的代码</li>
+<li>响应式系统</li>
+<li>非周期性采样作为输入</li>
+</ul>
+<h5 id="EX-座位安全带控制器"><a href="#EX-座位安全带控制器" class="headerlink" title="EX:座位安全带控制器"></a>EX:座位安全带控制器</h5><blockquote>
+<p>需求：</p>
+<p>有人坐到座椅上，在规定时间内若没有系好安全带，就启动蜂鸣器</p>
+<p>输入：</p>
+<p>◼ seat: 是否有人坐；</p>
+<p>◼ belt: 是否系安全带；</p>
+<p>◼ timer: 定长计时器；</p>
+<p>输出：</p>
+<p>◼ 蜂鸣器</p>
+<p>◼ 定时器</p>
+<p>状态：</p>
+<p>◼ state: 机器当前状态 </p>
+</blockquote>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528221226990.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="座位"></p>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs pf"><span class="hljs-comment">#define IDLE 0</span><br><span class="hljs-comment">#define SEATED 1</span><br><span class="hljs-comment">#define BELTED 2</span><br><span class="hljs-comment">#define BUZZER 3</span><br>switch (<span class="hljs-keyword">state</span>) &#123;<br>	case IDLE: <br>		if (seat) &#123; <span class="hljs-keyword">state</span> = SEATED; <br>	timer_on = TRUE; &#125;<br>	break;<br>	case SEATED: <br>		if (belt) <span class="hljs-keyword">state</span> = BELTED;<br>	else if (timer) <span class="hljs-keyword">state</span> = BUZZER;<br>	break;<br>…<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="循环缓冲区"><a href="#循环缓冲区" class="headerlink" title="循环缓冲区"></a>循环缓冲区</h4><p>面向流的程序设计</p>
+<p>数据流：按规律到达并需要在限定时间内处理</p>
+<ul>
+<li>FIR滤波器：面向流处理</li>
+<li>有限脉冲响应（FIR）滤波器</li>
+<li>乘积求和</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222011572.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="累乘"></p>
+<p>循环缓冲区</p>
+<ul>
+<li>固定数目</li>
+<li>处理流数据的一种数据结构</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222134158.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="什么滑动窗口"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222254919.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="循环"></p>
+<p>▪pos:当前采样的位置；</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222312124.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="移动"></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-meta">#<span class="hljs-keyword">define</span> CMAX 6 <span class="hljs-comment">/* filter order */</span> </span><br><span class="hljs-type">int</span> circ[<span class="hljs-built_in">CMAX</span>]; <span class="hljs-comment">/* circular buffer */</span> <br><span class="hljs-type">int</span> pos; <span class="hljs-comment">/* position of current sample */</span> <br><br><span class="hljs-type">void</span> circ_init() &#123; <br>	<span class="hljs-type">int</span> i; <br>	<span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-built_in">CMAX</span>; i++) <span class="hljs-comment">/* set values to 0 */</span> <br>	circ[i] = <span class="hljs-number">0</span>; <br>	pos=<span class="hljs-built_in">CMAX</span><span class="hljs-number">-1</span>; <span class="hljs-comment">/* start at tail so first element at 0 */</span> <br>&#125;<br><span class="hljs-type">void</span> circ_update(<span class="hljs-type">int</span> xnew) &#123; <br><span class="hljs-comment">/* compute the new head value with wrap around; the pos </span><br><span class="hljs-comment">pointer moves from 0 to CMAX-1 */</span> <br>pos = ((pos == <span class="hljs-built_in">CMAX</span><span class="hljs-number">-1</span>) ? <span class="hljs-number">0</span> : (pos+<span class="hljs-number">1</span>)); <br><span class="hljs-comment">/* insert the new value at the new head */</span> <br>circ[pos] = xnew; <br>&#125;<br><span class="hljs-type">int</span> circ_get(<span class="hljs-type">int</span> i) &#123; <br><span class="hljs-type">int</span> ii; <br><span class="hljs-comment">/* compute the buffer position */</span> <br>ii = ((pos+<span class="hljs-number">1</span>)% <span class="hljs-built_in">CMAX</span> + (i<span class="hljs-number">-1</span>)) % <span class="hljs-built_in">CMAX</span>; <br><span class="hljs-keyword">return</span> circ[ii]; <span class="hljs-comment">/* return the value */</span> <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h4><ul>
+<li>生产者&#x2F;消费者</li>
+<li>弹性缓冲区<ul>
+<li>数据无法预料到达或离开的时间</li>
+<li>构建队列的方法：<ul>
+<li>链表</li>
+<li>数组</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>生产者-消费者系统</strong></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222441589.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="队列法"></p>
+<p>p1,p2是两个算法处理块</p>
+<p>数据从单行缓存区的队列中发送到处理块中</p>
+<p>数据q12是p1产生的数据，p2消费的数据</p>
+<h2 id="二-嵌入式C语言编程"><a href="#二-嵌入式C语言编程" class="headerlink" title="二.嵌入式C语言编程"></a>二.嵌入式C语言编程</h2><p>C语言开发的嵌入式程序，其有如下优点：</p>
+<p>◼表现能力和处理能力极强。它具有丰富的运算符和数据类型，便于实现各类复杂的数据结构</p>
+<p>◼可读性强，易于调试和维护。采用自顶向下的设计方法，层次清晰，便于按模块方式组织程序</p>
+<p>◼可移植性强。具有非处理器特定代码的特点</p>
+<p>◼运算速度快，编译效率高。具有功能丰富的库函数，而且可以直接实现对系统硬件的控制</p>
+<h3 id="嵌入式C语言编程方法"><a href="#嵌入式C语言编程方法" class="headerlink" title="嵌入式C语言编程方法"></a>嵌入式C语言编程方法</h3><p>嵌入式程序开发是硬件实现与软件编程相结合的开发过程。其开发的过程包括</p>
+<p>◼了解开发板上的硬件属性</p>
+<p>◼考察I&#x2F;O等外设的连线</p>
+<p>◼采用模块化编程的思想。将整个系统分解成许多小模块，针对每个小模块进行编程</p>
+<p>◼设计程序流程框架，根据流程框架整合各个模块形成完整系统</p>
+<p>◼整合模块进行编译，若无问题，编译后生成的hex文件，下载到开发板中调试，排查其软硬件的问题</p>
+<h3 id="嵌入式C语言元素"><a href="#嵌入式C语言元素" class="headerlink" title="嵌入式C语言元素"></a>嵌入式C语言元素</h3><p>嵌入式C语言编程通常具有三个方面的结构化元素</p>
+<ul>
+<li>预处理声明、定义和 include语句</li>
+<li>主函数</li>
+</ul>
+<p><strong>While(TURE)</strong></p>
+<p><strong>{</strong></p>
+<p><strong>……</strong></p>
+<p><strong>}</strong></p>
+<ul>
+<li>函数、异常和中断服务函数<ul>
+<li>外设的访问通常基于忙等、中断、DMA的访问</li>
+</ul>
+</li>
+</ul>
+<h4 id="预处理声明、定义和-include语句"><a href="#预处理声明、定义和-include语句" class="headerlink" title="预处理声明、定义和 include语句"></a>预处理声明、定义和 include语句</h4><ol>
+<li>用于包含文件的 include语句：include是一个用于包含某个文件内容的预处理语句，将给定文件的代码导</li>
+</ol>
+<p>入（粘贴）到当前文件中</p>
+<ul>
+<li>系统定义：#include <em>&lt;*filename*&gt;</em></li>
+<li>用户定义：#include “filename”</li>
+<li>以头文件(.h文件)的形式</li>
+<li>可为后期的调试带来便利</li>
+</ul>
+<ol start="2">
+<li>预处理语句</li>
+</ol>
+<p>◼给编译器传达指示，提高程序的可读性</p>
+<p>◼预处理语句 #define</p>
+<p>​	◼ 预处理全局变量</p>
+<p><strong>#define GPLOH-MODER *(unsigned int*(GPIOH_BASE+0x00)</strong></p>
+<p>​	◼ 预处理常量</p>
+<p><strong>#define TRUE</strong></p>
+<ol start="3">
+<li>条件编译语句：</li>
+</ol>
+<p>◼#ifdef 说明当满足某条件时对一组语句编译，条件不满足时编译另一组语句的功能</p>
+<p>◼采用条件编译指令，可以减少被编译的语句，从而减少目标代码的长度</p>
+<p>◼在一个文件中，给出芯片不同系列的代码，使用不同编译器，…</p>
+<p><strong>#ifdef</strong> <strong>标识符</strong></p>
+<p>​	<strong>程序段1</strong> </p>
+<p><strong>#else</strong> </p>
+<p>​	<strong>程序段2</strong> </p>
+<p><strong>#endif</strong></p>
+<p>◼ 它的作用是当“标识符”已经被定义(一般是用#define定义)，则对#ifdef 下的程序段进行编译，否则编译#else下的程序段</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528222925991.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="条件编译"></p>
+<ol start="4">
+<li>import, extern, export声明</li>
+</ol>
+<p>◼C语言混合编程中</p>
+<p>◼ extern，import表明变量或者函数是定义在其他文件中</p>
+<p>◼ 表示本程序用到变量提供给其他模块调用</p>
+<p>◼常用在多个源文件编译的程序中</p>
+<p>◼在一个文件中定义全局变量，而在另一文件中用 extern对全局变量引用。编译器知道是在别处定义的外部变量</p>
+<p>◼通过extern定义外部函数，其中extern可以省略，若函数不能被其他文件引用，在函数定义前加static</p>
+<p>◼在程序连接时从其他文件中找此外部变量</p>
+<p><strong>extern int value1;</strong></p>
+<p><strong>extern int p(void);</strong> </p>
+<ol start="5">
+<li>typedef 类型别名</li>
+</ol>
+<p>◼ 定义一种类型的别名，用 typedef 来定义与平台无关的类型</p>
+<p>◼ 提高可移植性。当跨平台时，只要改 typedef 本身就行，不用对其他源码做任何修改</p>
+<p>◼例，定义一个叫REAL 的浮点类型，表示最高精度的类型</p>
+<p>◼在支持双精度的目标平台一上</p>
+<p><strong>typedef long double REAL;</strong></p>
+<p>◼在不支持 long double 的目标平台二上，改为：</p>
+<p><strong>typedef double REAL;</strong></p>
+<p>◼在连 double 都不支持的目标平台三上，改为：</p>
+<p><strong>typedef float REAL;</strong></p>
+<p>◼typedef 定义一种类型的新别名，在结构体、枚举类型中非常常见</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223106699.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="typedef"></p>
+<ol start="6">
+<li>结构体：</li>
+</ol>
+<p>◼结构体是由具有相同或不同类型的数据项构成的数据集合</p>
+<p>◼结构体可以被声明为变量、指针或数组等，以实现较复杂的数据结构</p>
+<p>◼结构体指针作为函数的参数，可提高程序的可扩展性。</p>
+<p>​	◼例，串口，它的初始化由几个属性決定，若不使用结构体，一般的方法如下：</p>
+<p><strong>void USART_Init(u16 usart, u32 Baudrate, u16 wordlengh,</strong> </p>
+<p><strong>u16 stopbites, u16 parity, u8 mode)</strong></p>
+<p>​	◼将串口有关的参数组合到一个结构体里面</p>
+<p><strong>void USART_Init(u16 usart,USART_InitTypeDef uart_initdef)</strong></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223601644.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="struct"></p>
+<ol start="7">
+<li>位运算操作</li>
+</ol>
+<p>◼在嵌入式系统编程中，位运算比其他运算更常用</p>
+<p>◼嵌入式系统涉及到很多有关硬件寄存器的操作</p>
+<p>◼硬件寄存器由若干位组成，对配置、读写等属性控制</p>
+<p>◼C语言没有专门对指定位操作的语法，在进行位操作的时候，需要对指令进行简单的组合来完成此功能</p>
+<p>◼C语言位运算操作符有6个：&amp;, |, ~, ^, &lt;&lt;, &gt;&gt;</p>
+<p>◼例：</p>
+<p>​	◼判断 x 第 n 位是否为1；</p>
+<p><strong>if x &amp; (1 &lt;&lt; n)</strong></p>
+<p>​	◼对于单个或多个位置 0 或置 1 的操作</p>
+<p><strong>GPIOH_MODER&amp; &#x3D;~(0x03 &lt;&lt; (2*10));</strong> </p>
+<p><strong>GPIOH_MODER |&#x3D; (01 &lt;&lt; 2*10);</strong></p>
+<p>​	◼获取寄存器 x 的第 3∼7 位的值</p>
+<p><strong>x &#x3D; (x &amp; (0x1f &lt;&lt; 3)) &gt;&gt; 3;</strong></p>
+<p>​	◼给寄存器 a 的 bit3∼bit7 赋值 0xc</p>
+<p><strong>a &#x3D; (a &amp; (~(0x1f &lt;&lt; 3)))| (0xc &lt;&lt; 3);</strong></p>
+<p>​	◼给寄存器 a 的 bit3 ∼ bit7 加上 0xd</p>
+<p><strong>tmp &#x3D; (a &amp; (0x1f &lt;&lt; 3)) &gt;&gt; 3;</strong></p>
+<p><strong>tmp +&#x3D; 0xd;</strong></p>
+<p><strong>a &#x3D; a &amp; (~(0x1f &lt;&lt; 3));</strong></p>
+<p><strong>a |&#x3D; tmp &lt;&lt; 3;</strong></p>
+<p>◼给寄存器 a 的 bit3 ∼ bit7 赋值 4 和 bit8 ∼ bit12 赋值 7</p>
+<p><strong>a &#x3D; (a &amp; (~0x1f &lt;&lt; 3)) | (4 &lt;&lt; 3);</strong></p>
+<p><strong>a &#x3D; (a &amp; (~0x1f &lt;&lt; 8)) | (7 &lt;&lt; 8)；</strong></p>
+<h2 id="三-编译及优化技术"><a href="#三-编译及优化技术" class="headerlink" title="三.编译及优化技术"></a>三.编译及优化技术</h2><ul>
+<li>编译是将一种语言转换成另一种语言的过程</li>
+<li>翻译和优化两个阶段<ul>
+<li>翻译即将高级语言解释为机器识别的语言</li>
+<li>优化是指将机器识别的语言进行修改以提升其执行性能的过程</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223827928.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="编译优化"></p>
+<h3 id="代码翻译："><a href="#代码翻译：" class="headerlink" title="代码翻译："></a>代码翻译：</h3><ul>
+<li>词法分析：将字符流分组为一个词（token）</li>
+<li>语法分析：根据语法规则形成语法树</li>
+<li>语义分析：确保组成部分有意义</li>
+<li>中间代码：显式中间抽象表示</li>
+<li>符号表的生成：记录使用的标识符及其各种属性信息的一个数据结构</li>
+<li>代码生成：生成目标代码</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528223927611.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="translate"></p>
+<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><ul>
+<li>代码优化过程改进中间代码，产生执行速度更快的机器代码</li>
+<li>优化阶段包括机器无关的优化和与具体机器特征相关的指令集优化<ul>
+<li>机器无关的优化涉及程序的逻辑结构、数据表示以及变量计算等方面</li>
+<li>指令集优化是和CPU的流水线以及高速缓存相关的优化</li>
+</ul>
+</li>
+</ul>
+<p>代码翻译</p>
+<ul>
+<li>源程序翻译过程包括词法分析、语法分析和语义分析。</li>
+<li>在典型应用中，大量代码都是由算术表达式和逻辑表达式构成。</li>
+<li>在词法分析中，表达式扫描后的空格被删除。经过词法分析，几组分类的记号被生成，这些分组的字符将被存储到一个字符表中。</li>
+<li>语法分析也叫层次分析，各个记号被进一步分组，根据语法规则产生记号之间的依赖，形成语法树，相当于代码生成的层次结构。</li>
+<li>表达式x&#x3D;4 *a+5 *(b-c)的语法树如图所示。</li>
+</ul>
+<blockquote>
+<p>例：表达式x&#x3D;4 *a+5 *(b-c)经过词法分析，得到的单词和记号有：</p>
+<p>◼ 标识符：x </p>
+<p>◼ 赋值符号：&#x3D; </p>
+<p>◼ 数字：4 </p>
+<p>◼ 乘号操作符：* </p>
+<p>◼ 标识符：a </p>
+<p>◼ 加法操作符：+ </p>
+<p>◼ 数字：5 </p>
+<p>◼ 乘法操作符：* </p>
+<p>◼ 标识符：（</p>
+<p>◼ 标识符：b </p>
+<p>◼ 减法操作符：− </p>
+<p>◼ 标识符：c </p>
+<p>◼ 标识符：）</p>
+</blockquote>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224537160.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="语法树"></p>
+<p>▪表达式x&#x3D;4* a+5*(b-c)代码生成，采用的数据流模型</p>
+<p>若是ARM</p>
+<ul>
+<li>寄存器选择</li>
+<li>变量放入寄存器</li>
+<li>存放中间结果的寄存器</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224644879.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据流"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224700914.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="汇编"></p>
+<h4 id="控制结构的翻译"><a href="#控制结构的翻译" class="headerlink" title="控制结构的翻译"></a>控制结构的翻译</h4><ul>
+<li>控制语句除了有表达式，还存在大量的控制流程<ul>
+<li>如if语句中包含布尔表达式。</li>
+</ul>
+</li>
+<li>控制流本身翻译成中间代码也是必不可缺的。</li>
+<li>通过CDFG图表示控制结构并进行翻译<ul>
+<li>遍历条件表达式。根据数据流图方式生成该表达式中变量加载等信息的代码</li>
+<li>测试判定表达式。编译器会为判定表达式创建能够在分支中测试的条件代码和标记</li>
+<li>在各个分支指令中运用表达式翻译方法生成相应代码</li>
+<li>通过遍历，得到汇编代码</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs abnf">if (a &gt; b)<br>	x <span class="hljs-operator">=</span> a<span class="hljs-comment">;</span><br>else<br>	x <span class="hljs-operator">=</span> b<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224853537.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="控制代码"></p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528224910289.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<h4 id="过程的翻译"><a href="#过程的翻译" class="headerlink" title="过程的翻译"></a>过程的翻译</h4><ul>
+<li><p>每次过程调用，将建立过程参数并执行调用，之后还要返回到原来代码位置。</p>
+</li>
+<li><p>过程调用包括保存现场、运行过程及恢复现场，使用过程栈</p>
+<ul>
+<li>过程栈从高位地址到低位地址建立。</li>
+<li>栈指针(sp)定义了当前栈帧在内存中的结束地址，</li>
+<li>帧指针(fp)定义了当前栈帧在内存中的起始地址。</li>
+<li>过程通过栈指针将相关数据保存在栈中，运行过程结束后，从栈中取出数据恢复原代码的环境</li>
+</ul>
+</li>
+<li><p>需要代码做</p>
+<ul>
+<li>调用和返回</li>
+<li>传递参数和返回结果</li>
+</ul>
+</li>
+<li><p>参数和结果被返回到堆栈中</p>
+</li>
+<li><p>对ARM</p>
+<ul>
+<li>R0-R3用来传递程序的前4个参数</li>
+<li>R0 用来保存返回值</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>APCS（ARM过程调用标准）</p>
+<p>▪ r0-r3传递参数给过程，额外的参数放到栈中；</p>
+<p>▪ r0 保持返回的值</p>
+<p>▪ r4-r7保留寄存器的值</p>
+<p>▪ r11是帧指针fp，指向栈底；r13是栈指针sp</p>
+<p>▪ r10是指示栈界限的寄存器，以判断栈是否溢出</p>
+</blockquote>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs kotlin">int <span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-params">(int i)</span></span> <br>&#123; int a = <span class="hljs-number">2</span>; <br><span class="hljs-keyword">return</span> a * i;&#125;<br>int main (void) <br>&#123;int i = <span class="hljs-number">25</span>; <br><span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(i)</span></span>; <br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs armasm">; fun <span class="hljs-meta">function</span> &lt; fun &gt; <br><span class="hljs-keyword">PUSH</span> &#123; <span class="hljs-built_in">fp</span> &#125; <br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">FP</span>, <span class="hljs-built_in">SP</span>, # <span class="hljs-number">0</span> <br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">R0</span>, [ <span class="hljs-built_in">FP</span>, #− <span class="hljs-number">16</span> ] <br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R3</span>, # <span class="hljs-number">2</span> <br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">R3</span>, [ <span class="hljs-built_in">FP</span>, #−<span class="hljs-number">8</span> ] <br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R3</span>, [ <span class="hljs-built_in">FP</span>, #−<span class="hljs-number">8</span> ] <br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R2</span>, [ <span class="hljs-built_in">FP</span>, #− <span class="hljs-number">16</span> ] <br><span class="hljs-keyword">MUL</span> R <span class="hljs-number">3</span>,R <span class="hljs-number">2</span>, <span class="hljs-built_in">R3</span> <br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R3</span> <br><span class="hljs-keyword">SUB</span> <span class="hljs-built_in">SP</span>, <span class="hljs-built_in">FP</span>, # <span class="hljs-number">0</span> <br><span class="hljs-keyword">POP</span> &#123;<span class="hljs-built_in">FP</span>&#125; <br><span class="hljs-keyword">BX</span> <span class="hljs-built_in">LR</span> <br>; main <span class="hljs-meta">function</span> &lt;main &gt; <br><span class="hljs-keyword">PUSH</span> &#123; <span class="hljs-built_in">FP</span>, <span class="hljs-built_in">LR</span>&#125; <br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">FP</span>, <span class="hljs-built_in">SP</span>, <span class="hljs-number">#4</span> <br><span class="hljs-keyword">SUB</span> <span class="hljs-built_in">SP</span>, <span class="hljs-built_in">SP</span>, <span class="hljs-number">#8</span> <br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R3</span>, # <span class="hljs-number">25</span> <br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">R3</span>, [ <span class="hljs-built_in">FP</span>, #−<span class="hljs-number">8</span> ]<br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [ <span class="hljs-built_in">FP</span>, #−<span class="hljs-number">8</span> ]<br><span class="hljs-keyword">BL</span> <span class="hljs-number">822</span>c &lt; fun &gt;<br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R3</span>, # <span class="hljs-number">0</span><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">R0</span>, <span class="hljs-built_in">R3</span><br><span class="hljs-keyword">SUB</span> <span class="hljs-built_in">SP</span>, <span class="hljs-built_in">FP</span>, <span class="hljs-number">#4</span><br><span class="hljs-keyword">POP</span> &#123;<span class="hljs-built_in">FP</span>, <span class="hljs-built_in">PC</span>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="编译过程的代码优化"><a href="#编译过程的代码优化" class="headerlink" title="编译过程的代码优化"></a>编译过程的代码优化</h4><p>机器无关的优化，主要是软件方面的优化，修改源程序从而提高代码的性能</p>
+<p>机器相关的优化，如指令集的选择，寄存器的分配，高速缓存优化，流水线的优化等</p>
+<h5 id="指令选择与调度"><a href="#指令选择与调度" class="headerlink" title="指令选择与调度"></a>指令选择与调度</h5><ul>
+<li>对语法树生成的指令代码进行优化<ul>
+<li>效率更高的指令替换中间代码生成指令</li>
+<li>指令重排来改变流水线的性能。</li>
+</ul>
+</li>
+<li>指令集的丰富程度决定了可选指令的范围，要求指令集的一</li>
+<li>致性和完整性</li>
+<li>指令调度就是选择指令的过程<ul>
+<li>本地调度是不能跨基本块边界移动</li>
+<li>全局调度则可跨越基本块的指令调度</li>
+<li>模调度对内循环不同迭代次数来消除流水线气泡的一种技术</li>
+<li>跟踪调度跟踪最常执行的控制流路径实现优化<ul>
+<li>超级块调度则是跟踪调度的一种简化版本。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="寄存器分配"><a href="#寄存器分配" class="headerlink" title="寄存器分配"></a>寄存器分配</h5><ul>
+<li>CPU的寄存器是有限的<ul>
+<li>若无可用寄存器，续借助内存完成计算</li>
+</ul>
+</li>
+<li>最优的寄存器分配方案是一个NP完全问题<ul>
+<li>某些寄存器有特殊用途或者其使用必须遵循一定约束</li>
+<li>寄存器数目是有限的，这又增加了问题的复杂度</li>
+</ul>
+</li>
+</ul>
+<h5 id="计算次序的选择"><a href="#计算次序的选择" class="headerlink" title="计算次序的选择"></a>计算次序的选择</h5><p>计算执行的次序也会影响目标代码的效率</p>
+<ul>
+<li>计算次序的选择所影响的是寄存器分配问题</li>
+<li>计算次序是更上层的改进</li>
+</ul>
+<p><strong>a&#x3D;b+c ;</strong> </p>
+<p><strong>y&#x3D;d + 2;</strong> </p>
+<p><strong>z&#x3D;c + 3;</strong> </p>
+<p><strong>x&#x3D;a+b ;</strong></p>
+<p>◼ <strong>需要5个寄存器</strong></p>
+<p><strong>a&#x3D;b+c ;</strong> </p>
+<p><strong>x&#x3D;a+b ;</strong> </p>
+<p><strong>y&#x3D;d + 2;</strong> </p>
+<p><strong>z&#x3D;c + 3;</strong></p>
+<p>◼ <strong>需要4个寄存器</strong></p>
+<h5 id="窥孔优化"><a href="#窥孔优化" class="headerlink" title="窥孔优化"></a>窥孔优化</h5><ul>
+<li>窥孔优化是一种局部优化方法，通过检査目标指令的短序列（称为窥孔），用更小更短的指令序列代替这些指令以提高目标程序的性能</li>
+<li>窥孔优化的特征是每次改进可能又为进一步的改进带来机会，且由于占用内存较小而执行速度很快</li>
+<li>窥孔优化常用方法包括冗余加载和保存、删除死代码、控制流优化、强度削弱以及机器语言的使用</li>
+</ul>
+<p>冗余加载和保存</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">ADR</span> <span class="hljs-built_in">r4</span> , a <br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r0</span> , [<span class="hljs-built_in">r4</span>] <br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">r0</span> , [<span class="hljs-built_in">r4</span>]<br></code></pre></td></tr></table></figure>
+
+<p>▪删除死代码</p>
+<p>删除死代码</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-meta"># <span class="hljs-keyword">define</span> DEBUG 0</span><br><br><span class="hljs-keyword">if</span> (<span class="hljs-keyword">DEBUG</span>)<br><br><span class="hljs-built_in">dbg</span>(p1) ;<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225716536.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="窥孔优化-删除"></p>
+<p>控制流优化</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225909363.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="控制流"></p>
+<p>强度削弱：目标机器上用时间开销小的等价操作代替时间开销大的操作</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528225938957.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="左移"></p>
+<p>机器语言的使用</p>
+<ul>
+<li>内嵌的汇编代码，是很典型机器语言的使用<ul>
+<li>有些场合纯 C 语言无法实现<ul>
+<li>例如，协处理器指令、软中断指令、特殊定制指令</li>
+</ul>
+</li>
+<li>提高效率</li>
+</ul>
+</li>
+</ul>
+<h2 id="四-程序性能分析与优化"><a href="#四-程序性能分析与优化" class="headerlink" title="四.程序性能分析与优化"></a>四.程序性能分析与优化</h2><ul>
+<li>程序执行时间<ul>
+<li>程序的执行时间是最重要的嵌入式系统性能评价指标，尤其是对时间关键的实时嵌入式系统。</li>
+</ul>
+</li>
+<li>软件分析方法<ul>
+<li>软件分析的方法通常采用插桩技术，在程序关键代码处插入一段能采集当前程序执行性能的代码。</li>
+<li>当程序执行时，可实际测量出程序的性能信息</li>
+<li>问题：在源程序中插入一段代码尽管不影响源程序的执行结果，但这使得测试环境不够真实，同时在数据导入和导出时会产生额外的开销</li>
+</ul>
+</li>
+<li>硬件分析方式</li>
+<li>在总线上的计时器监控程序运行时的总线信息，采样或者实时检测的方式，测量程序的真实执行时间采用硬件测量的方式在速度上是有优势的</li>
+<li>问题：<ul>
+<li>通用性差，程序在不同的硬件环境中执行可能得到差别较大的执行时间</li>
+<li>数据完备性和准确性无法得到保证</li>
+<li>会造成系统长时间的负载，导致资源的浪费</li>
+</ul>
+</li>
+</ul>
+<h3 id="程序执行时间–静态动态分析"><a href="#程序执行时间–静态动态分析" class="headerlink" title="程序执行时间–静态动态分析"></a>程序执行时间–静态动态分析</h3><ul>
+<li><p>静态分析方法指在不通过程序执行的情况下，静态分析程序的结构和语句，获得程序执行时间的方法</p>
+</li>
+<li><p>平均执行时间( Average Case Execution Time,ACET)</p>
+<ul>
+<li>典型数据期望的典型执行时间</li>
+</ul>
+</li>
+<li><p>最坏执行时间( Best Case Execution Time,BCET)</p>
+<ul>
+<li>程序花费在任何输入序列中的最长运行时间</li>
+<li>对有时限要求的系统是非常重要的</li>
+</ul>
+</li>
+<li><p>最好执行时间( Worst Case Execution Time,WCET)</p>
+<ul>
+<li>程序花费在任何输入序列中的最短运行时间</li>
+<li>测量多速率实时系统时非常重要</li>
+</ul>
+</li>
+<li><p>动态分析方法是收集程序运行时的性能信息，以找到具有性能优化潜力的热点代码</p>
+</li>
+<li><p>动态分析需要大量运行时的信息以确保数据的准确性</p>
+</li>
+<li><p>在一定的阈值内，同时需要额外的测量开销，最常用的动态分析方法是软件测试</p>
+</li>
+</ul>
+<h4 id="代码级分析方法"><a href="#代码级分析方法" class="headerlink" title="代码级分析方法"></a>代码级分析方法</h4><ul>
+<li>代码级分析方法就是针对源程序结构本身的性能分析方法，是编译器最常用的优化技术</li>
+<li>通过对程序本身的控制结构、数据流等关系进行分析，分析程序本身的执行路径，通过程序路径的指令周期来共同计算程序的执行时间</li>
+<li>程序路径分析使用整数线性规划(ILP)的方法来隐式的解决路径问题，使用一个约束条件集合描述程序的结构及其行为的某些方面</li>
+</ul>
+<p>枚举法用于简单具有有限确定执行路径的方法</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528230843421.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="枚举"></p>
+<p>控制&#x2F;数据流图(CDFG)：</p>
+<p>循环结构程序路径的确定</p>
+<ul>
+<li>循环初始模块执行一次</li>
+<li>判断执行了N+1次</li>
+<li>循环体和循环变量各执行了N次</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">for (i<span class="hljs-operator">=</span><span class="hljs-number">0</span><span class="hljs-comment">; i&lt;N; i++) </span><br>&#123;a[i]<span class="hljs-operator">=</span> b[i]*c[i]<span class="hljs-comment">; &#125;</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528230943058.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="代码级"></p>
+<h3 id="程序执行时间"><a href="#程序执行时间" class="headerlink" title="程序执行时间"></a>程序执行时间</h3><ul>
+<li>指令的执行时间<ul>
+<li>CPU厂商通常提供了某些操作指令的CPU周期数表</li>
+</ul>
+</li>
+<li>高速缓存的影响</li>
+<li>流水线技术对执行时间的影响</li>
+<li>执行时间的分析有很多方法，关键是分析程序的哪个部分比较耗时，优化就从这里开始</li>
+</ul>
+<h3 id="性能优化–与机器无关的性能优化"><a href="#性能优化–与机器无关的性能优化" class="headerlink" title="性能优化–与机器无关的性能优化"></a>性能优化–与机器无关的性能优化</h3><h4 id="循环优化"><a href="#循环优化" class="headerlink" title="循环优化"></a>循环优化</h4><p>代码移出</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231121940.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="移出"></p>
+<p>归纳变量共享和强度削减</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231140898.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="归纳"></p>
+<p>循环展开</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231158598.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="一次当两次"></p>
+<p>循环合并</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231219388.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="二合一"></p>
+<h4 id="算法与数据结构的优化"><a href="#算法与数据结构的优化" class="headerlink" title="算法与数据结构的优化"></a>算法与数据结构的优化</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231240119.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="直接换成数组可还行"></p>
+<h4 id="过程调用的优化"><a href="#过程调用的优化" class="headerlink" title="过程调用的优化"></a>过程调用的优化</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231538412.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="过程"></p>
+<h3 id="性能优化–与机器相关的性能优化"><a href="#性能优化–与机器相关的性能优化" class="headerlink" title="性能优化–与机器相关的性能优化"></a>性能优化–与机器相关的性能优化</h3><h4 id="寄存器调度"><a href="#寄存器调度" class="headerlink" title="寄存器调度"></a>寄存器调度</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">w=a*b; <span class="hljs-regexp">/*阶 段1*/</span> <br>x=c+d; <span class="hljs-regexp">/*阶 段2*/</span> <br>y=w+e ; <span class="hljs-regexp">/*阶 段3*/</span> <br>z=a<span class="hljs-regexp">/b ; /</span>* 阶 段<span class="hljs-number">4</span>*/<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231632770.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="周期"></p>
+<p>生命周期图↑</p>
+<p>每个变量的生命周期为</p>
+<p>a 持续第 1<em>∼</em>4 阶段； d 持续第 2 阶段； x 持续第 2 阶段；</p>
+<p>b 持续第 1<em>∼</em>4 阶段； e 持续第 3 阶段； y 持续第 3 阶段；</p>
+<p>c 持续第 2 阶段； w 持续第 1<em>∼</em>3 阶段； z 持续第 4 阶段。</p>
+<p> 需要6个寄存器</p>
+<p>优化后： </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">w=a*b; <span class="hljs-regexp">/*阶 段1*/</span> <br>x=a<span class="hljs-regexp">/b; /</span>*阶 段<span class="hljs-number">2</span>*/ <br>y=w+e; <span class="hljs-regexp">/*阶 段3*/</span> <br>z=c+d; <span class="hljs-regexp">/*阶 段4*/</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231710076.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="优化后"></p>
+<p>需要4个寄存器</p>
+<h4 id="高速缓存优化"><a href="#高速缓存优化" class="headerlink" title="高速缓存优化"></a>高速缓存优化</h4><p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528231856410.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h3 id="程序功耗分析与优化"><a href="#程序功耗分析与优化" class="headerlink" title="程序功耗分析与优化"></a>程序功耗分析与优化</h3><ul>
+<li>功耗是嵌入式系统性能的另一个重要指标，是基于电池供电的最重要性能指标之一。</li>
+<li>功耗的优化<ul>
+<li>时钟控制、使用功耗敏感的处理器、低电压以及无用电路子部件的关闭</li>
+</ul>
+</li>
+<li>软件控制功耗<ul>
+<li>对系统设置不同的模式，如空闲时的休眠状态、运行时的运行状态等。</li>
+<li>改变处理器的时钟频率（降频）</li>
+<li>采用动态功耗管理的策略降低非关键任务的功耗</li>
+</ul>
+</li>
+</ul>
+<h4 id="功耗的测量评估"><a href="#功耗的测量评估" class="headerlink" title="功耗的测量评估"></a>功耗的测量评估</h4><p>通过循环体测量</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528232037019.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="循环"></p>
+<p>从指令级的角度对程序的功耗进行评估</p>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528232118191.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="指令集"></p>
+<h4 id="程序功耗分析与优化-1"><a href="#程序功耗分析与优化-1" class="headerlink" title="程序功耗分析与优化"></a>程序功耗分析与优化</h4><ul>
+<li>硬件相关的功耗优化<ul>
+<li>有效使用寄存器</li>
+<li>分析高速缓存的行为来避免或减少缓存冲突</li>
+<li>存储模式中采用页模式访问</li>
+</ul>
+</li>
+<li>轮询机制优化<ul>
+<li>程序在等待访问外设时可能会采用轮询的方法，轮询会让处理器重复地执行几条指令，会带来大量的能量浪费。通常的做法是使用一些替代的方法，如对外设的访问使用中断的方式替代</li>
+<li>客户服务器协作模型中，将客户端不停地査询服务，改为服务器主动推服务给客户端，这是一种很有用的机制，能大大降低功耗</li>
+</ul>
+</li>
+</ul>
+<h4 id="程序尺寸分析与优化"><a href="#程序尺寸分析与优化" class="headerlink" title="程序尺寸分析与优化"></a>程序尺寸分析与优化</h4><ul>
+<li>程序尺寸是指编译后生成的二进制代码的大小</li>
+<li>优化程序尺寸通常从两方面来考虑：指令和数据<ul>
+<li>指令正确高效的调度，是缩小代码尺寸的基本措施。</li>
+</ul>
+</li>
+<li>方法–模板匹配<ul>
+<li>模板匹配是指令集映射的核心</li>
+<li>对于一个给定的指令序列，通过模板匹配将该序列进行最优的覆盖</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/image-20230528233207025.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="模板匹配"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>嵌入式程序的设计方法</li>
+<li>程序模型</li>
+<li>汇编语言和C语言编程技术</li>
+<li>编译及优化技术</li>
+<li>嵌入式软件的性能分析</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">#嵌入式程序设计</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>嵌入式系统设计ch6-程序设计与分析</div>
+      <div>https://www.emokable.top/嵌入式系统设计ch6-程序设计与分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月28日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L011-vm/" title="计算机组成原理-L011-vm">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理-L011-vm</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/" title="计算机组成原理-L010-cache">
+                        <span class="hidden-mobile">计算机组成原理-L010-cache</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

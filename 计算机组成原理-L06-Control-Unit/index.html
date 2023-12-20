@@ -1,0 +1,1356 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -控制单元（Control Unit）一.控制概述数据通路中的控制 ALU需要实现正确的运算 多个单元的信号来源有多种选择（寄存器、ALU、加法器、多选器、符号扩展、存储器等） 状态单元的写入需要写控制信号与时钟共同决定（寄存器、数据存储器） ALU控制单元让各个单元实现正确的功能（运算、读、写） 控制数据流的来源（多选器） 上述控制信息来自于指令   总结：  op字段在31~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L06-Control_Unit">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -控制单元（Control Unit）一.控制概述数据通路中的控制 ALU需要实现正确的运算 多个单元的信号来源有多种选择（寄存器、ALU、加法器、多选器、符号扩展、存储器等） 状态单元的写入需要写控制信号与时钟共同决定（寄存器、数据存储器） ALU控制单元让各个单元实现正确的功能（运算、读、写） 控制数据流的来源（多选器） 上述控制信息来自于指令   总结：  op字段在31~">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005441946.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005544125.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005558374.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005633561.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010159515.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010253871.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010317085.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010448308.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010659278.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010746946.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010921530.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010907940.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010936992.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011017842.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011133607.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011526078.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011616025.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011642921.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011722940.png">
+<meta property="article:published_time" content="2023-04-06T16:52:39.000Z">
+<meta property="article:modified_time" content="2023-04-07T08:15:50.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005441946.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L06-Control_Unit - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L06-Control_Unit"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-07 00:52" pubdate>
+          2023年4月7日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          13 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L06-Control_Unit</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-控制单元（Control-Unit）"><a href="#计算机组成与实践-控制单元（Control-Unit）" class="headerlink" title="计算机组成与实践 -控制单元（Control Unit）"></a><strong>计算机组成与实践</strong> -<strong>控制单元（</strong>Control Unit）</h1><h2 id="一-控制概述"><a href="#一-控制概述" class="headerlink" title="一.控制概述"></a>一.控制概述</h2><h4 id="数据通路中的控制"><a href="#数据通路中的控制" class="headerlink" title="数据通路中的控制"></a><strong>数据通路中的控制</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005441946.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据通路"></p>
+<p>ALU需要实现正确的运算</p>
+<p>多个单元的信号来源有多种选择（寄存器、ALU、加法器、多选器、符号扩展、存储器等）</p>
+<p>状态单元的写入需要写控制信号与时钟共同决定（寄存器、数据存储器）</p>
+<h4 id="ALU控制单元"><a href="#ALU控制单元" class="headerlink" title="ALU控制单元"></a><strong>ALU控制单元</strong></h4><p>让各个单元实现正确的功能（运算、读、写）</p>
+<p>控制数据流的来源（多选器）</p>
+<p>上述控制信息来自于<strong>指令</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005544125.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="R型"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005558374.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="I型"></p>
+<p>总结：</p>
+<ul>
+<li><strong>op</strong>字段在31~ 26位</li>
+<li>源操作数寄存器<strong>rs</strong>和<strong>rt</strong>字段分别在25 - 21位和20 - 16位</li>
+<li>lw和sw指令中的基址寄存器是<strong>rs</strong>（25~21位）</li>
+<li>保存写回数据的寄存器有两个：<ul>
+<li>lw指令：rt（20~16位）</li>
+<li>R型指令：rd（15~11位）</li>
+</ul>
+</li>
+<li>立即数字段（15~0位）</li>
+</ul>
+<h4 id="加入ALU控制单元"><a href="#加入ALU控制单元" class="headerlink" title="加入ALU控制单元"></a><strong>加入ALU控制单元</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407005633561.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="aluop"></p>
+<p>主控制器产生ALUOp信号（2 bits）</p>
+<p>ALU控制单元产生ALUcontrol信号（4 bits）</p>
+<h2 id="二-ALU控制设计"><a href="#二-ALU控制设计" class="headerlink" title="二.ALU控制设计"></a>二.<strong>ALU控制设计</strong></h2><h4 id="ALU控制信号"><a href="#ALU控制信号" class="headerlink" title="ALU控制信号"></a><strong>ALU控制信号</strong></h4><p>由ALU控制单元生成的4位控制信号及其定义的操作</p>
+<table>
+<thead>
+<tr>
+<th align="center">ALU  control输入</th>
+<th align="left"><strong>操作</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0000</td>
+<td align="left">与</td>
+</tr>
+<tr>
+<td align="center">0001</td>
+<td align="left">或</td>
+</tr>
+<tr>
+<td align="center">0010</td>
+<td align="left">加</td>
+</tr>
+<tr>
+<td align="center">0110</td>
+<td align="left">减</td>
+</tr>
+<tr>
+<td align="center">0111</td>
+<td align="left">小于则置位</td>
+</tr>
+<tr>
+<td align="center">1100</td>
+<td align="left">或非</td>
+</tr>
+</tbody></table>
+<h4 id="生成ALU控制信号"><a href="#生成ALU控制信号" class="headerlink" title="生成ALU控制信号"></a><strong>生成ALU控制信号</strong></h4><ul>
+<li>由2 bits ALUOp和6 bits funct功能字段生成ALU控制信号</li>
+<li>采用多级译码的方法<ul>
+<li>主控制单元生成ALUOp信号（不使用11）</li>
+<li>ALU控制单元生成ALUcontrol信号</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>指令操作码</strong></th>
+<th><strong>ALUOp</strong></th>
+<th><strong>指令操作</strong></th>
+<th>funct字段</th>
+<th>ALU操作</th>
+<th><strong>ALUcontrol</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lw</td>
+<td>00</td>
+<td>lw</td>
+<td>XXXXXX</td>
+<td>add</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>sw</td>
+<td>00</td>
+<td>sw</td>
+<td>XXXXXX</td>
+<td>add</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>01</td>
+<td>beq</td>
+<td>XXXXXX</td>
+<td>subtract</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>R类型</td>
+<td>10</td>
+<td>add</td>
+<td>100000</td>
+<td>add</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>R类型</td>
+<td>10</td>
+<td>sub</td>
+<td>100010</td>
+<td>subtract</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>R类型</td>
+<td>10</td>
+<td>and</td>
+<td>100100</td>
+<td>and</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>R类型</td>
+<td>10</td>
+<td>or</td>
+<td>100101</td>
+<td>or</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>R类型</td>
+<td>10</td>
+<td>slt</td>
+<td>101010</td>
+<td>slt</td>
+<td>0111</td>
+</tr>
+</tbody></table>
+<h4 id="ALU控制单元真值表"><a href="#ALU控制单元真值表" class="headerlink" title="ALU控制单元真值表"></a><strong>ALU控制单元真值表</strong></h4><table>
+<thead>
+<tr>
+<th><strong>ALUOp</strong></th>
+<th></th>
+<th><strong>Funt字段</strong></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th><strong>操作</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ALUOp1</td>
+<td>ALUOp0</td>
+<td>F5</td>
+<td>F4</td>
+<td>F3</td>
+<td>F2</td>
+<td>F1</td>
+<td>F0</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>X</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0110</td>
+</tr>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0111</td>
+</tr>
+</tbody></table>
+<p>X:表示与结果无关</p>
+<h4 id="ALU控制逻辑实现"><a href="#ALU控制逻辑实现" class="headerlink" title="ALU控制逻辑实现"></a><strong>ALU控制逻辑实现</strong></h4><p>根据真值表实现的ALU控制单元逻辑</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010159515.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="真值表操作码"></p>
+<h2 id="三-主控制单元的设计"><a href="#三-主控制单元的设计" class="headerlink" title="三.主控制单元的设计"></a>三.<strong>主控制单元的设计</strong></h2><p><strong>主控制信号</strong></p>
+<p>控制信号源于指令</p>
+<p>9位控制信号：7个1位控制信号和2位ALUOp信号</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010253871.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="9个信号"></p>
+<h4 id="带主控制单元的数据通路"><a href="#带主控制单元的数据通路" class="headerlink" title="带主控制单元的数据通路"></a><strong>带主控制单元的数据通路</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010317085.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="在寄存器前有一个控制单元发送这9信号"></p>
+<h4 id="控制信号：执行R型指令"><a href="#控制信号：执行R型指令" class="headerlink" title="控制信号：执行R型指令"></a><strong>控制信号：执行R型指令</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010448308.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="R-type"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010659278.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="截图算了，做表格不方便看"></p>
+<h4 id="控制信号：执行lw指令"><a href="#控制信号：执行lw指令" class="headerlink" title="控制信号：执行lw指令"></a><strong>控制信号：执行lw指令</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010746946.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="load写回寄存器"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010921530.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="注意比较不同"></p>
+<h4 id="控制信号：执行sw指令"><a href="#控制信号：执行sw指令" class="headerlink" title="控制信号：执行sw指令"></a><strong>控制信号：执行sw指令</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010907940.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="store"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407010936992.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="写入内存"></p>
+<h4 id="控制信号：执行beq指令"><a href="#控制信号：执行beq指令" class="headerlink" title="控制信号：执行beq指令"></a><strong>控制信号：执行beq指令</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011017842.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="相等则分支"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011133607.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="branch项用于分支"></p>
+<h4 id="主控制单元真值表"><a href="#主控制单元真值表" class="headerlink" title="主控制单元真值表"></a><strong>主控制单元真值表</strong></h4><table>
+<thead>
+<tr>
+<th><strong>输入或输出</strong></th>
+<th><strong>信号名</strong></th>
+<th><strong>R型</strong></th>
+<th><strong>lw</strong></th>
+<th><strong>sw</strong></th>
+<th><strong>beq</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>输入</strong></td>
+<td>Op5</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>Op4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>Op3</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>Op2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>Op1</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>Op0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>RegDst</td>
+<td>1</td>
+<td>0</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td></td>
+<td>ALUSrc</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MemtoReg</td>
+<td>0</td>
+<td>1</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td></td>
+<td>RegWrite</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MemRead</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>MemWrite</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>Branch</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>ALUOp1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td></td>
+<td>ALUOp0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="主控制单元逻辑实现"><a href="#主控制单元逻辑实现" class="headerlink" title="主控制单元逻辑实现"></a><strong>主控制单元逻辑实现</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011526078.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="梦回数电的图形"></p>
+<h2 id="四-跳转的实现"><a href="#四-跳转的实现" class="headerlink" title="四.跳转的实现"></a>四.<strong>跳转的实现</strong></h2><blockquote>
+<p><strong>回顾：跳转实现</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011616025.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="j-type"></p>
+<p>26 bits常数符号扩展成28 bits</p>
+<p>用28 bits将PC+4的低28位替换</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011642921.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="偏移量换算地址"></p>
+</blockquote>
+<h4 id="课堂练习：带跳转的实现"><a href="#课堂练习：带跳转的实现" class="headerlink" title="课堂练习：带跳转的实现"></a><strong>课堂练习：带跳转的实现</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L06-Control-Unit/image-20230407011722940.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="练习，画出类似的表格"></p>
+<h2 id="五-单时钟周期实现"><a href="#五-单时钟周期实现" class="headerlink" title="五.单时钟周期实现"></a>五.<strong>单时钟周期实现</strong></h2><ul>
+<li>单时钟周期实现简单，适合小指令集</li>
+<li>对于不同指令，不能使用不同时钟周期</li>
+<li>最长延迟决定时钟周期</li>
+<li>那种类型的指令执行最慢？</li>
+</ul>
+<h4 id="最慢的指令决定时钟周期"><a href="#最慢的指令决定时钟周期" class="headerlink" title="最慢的指令决定时钟周期"></a><strong>最慢的指令决定时钟周期</strong></h4><p>假设我们只关注指令运行中的：取指令、读寄存器、ALU运算、访问数据存储器、写回寄存器：</p>
+<p>访问指令和数据存储器：4ns</p>
+<p>ALU和加法器：2ns</p>
+<p>访问寄存器：1ns</p>
+<table>
+<thead>
+<tr>
+<th>指令类型</th>
+<th>取指令</th>
+<th>读寄存器</th>
+<th>ALU运算</th>
+<th>访问数据存储器</th>
+<th>写回寄存器</th>
+<th>时间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R型</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>lw</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td>sw</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>11</td>
+</tr>
+<tr>
+<td>beq</td>
+<td>4</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>7</td>
+</tr>
+<tr>
+<td>j</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<h2 id="六-小结"><a href="#六-小结" class="headerlink" title="六.小结"></a>六.<strong>小结</strong></h2><ol>
+<li>状态单元的写入需要写控制信号与时钟共同决定</li>
+<li>ALU控制器采用多级译码的方法</li>
+<li>主控制单元与数据通路共同实现指令的正确执行</li>
+<li>单时钟周期实现效率低</li>
+</ol>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L06-Control_Unit</div>
+      <div>https://www.emokable.top/计算机组成原理-L06-Control-Unit/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月7日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F2-%E7%AE%97%E6%9C%AF%E6%8C%87%E4%BB%A4/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统2-算术指令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统2-算术指令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E6%98%BE%E5%8D%A1%E7%AA%81%E5%8F%91%E9%94%99%E8%AF%AF-%E4%BB%A3%E7%A0%8112%E7%9A%84%E7%A0%B4%E9%99%A4/" title="显卡突发错误-代码12的破除">
+                        <span class="hidden-mobile">显卡突发错误-代码12的破除</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

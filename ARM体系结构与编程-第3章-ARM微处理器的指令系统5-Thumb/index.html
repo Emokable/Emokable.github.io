@@ -1,0 +1,1228 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ARM体系结构与编程3.6.1 Thumb 指令的特点 Thumb指令的代码密度高； Thumb指令集是ARM指令集的一个子集，不是一个完整的体系结构； 不能用Thumb指令编制一个完整的程序。   ARM和Thumb指令的功能是相近的； ARM状态和Thumb状态的区别也表现在程序状态寄存器中，CPSR[5]位T就是标志位； Thumb指令16位编码所包含的信息较ARM指令少； Thumb指令与">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb">
+<meta property="og:url" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="ARM体系结构与编程3.6.1 Thumb 指令的特点 Thumb指令的代码密度高； Thumb指令集是ARM指令集的一个子集，不是一个完整的体系结构； 不能用Thumb指令编制一个完整的程序。   ARM和Thumb指令的功能是相近的； ARM状态和Thumb状态的区别也表现在程序状态寄存器中，CPSR[5]位T就是标志位； Thumb指令16位编码所包含的信息较ARM指令少； Thumb指令与">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508204142594.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508204218350.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508205005485.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508205124916.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508210114196.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212107915.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212423679.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212728045.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212741020.png">
+<meta property="article:published_time" content="2023-05-08T12:37:42.000Z">
+<meta property="article:modified_time" content="2023-05-08T13:27:45.108Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="ARM体系结构与编程">
+<meta property="article:tag" content="课件笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508204142594.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-08 20:37" pubdate>
+          2023年5月8日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          58 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：7 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ARM体系结构与编程"><a href="#ARM体系结构与编程" class="headerlink" title="ARM体系结构与编程"></a><strong>ARM体系结构与编程</strong></h1><h1 id="3-6-1-Thumb-指令的特点"><a href="#3-6-1-Thumb-指令的特点" class="headerlink" title="3.6.1 Thumb 指令的特点"></a>3.6.1 Thumb 指令的特点</h1><ul>
+<li>Thumb指令的代码密度高；</li>
+<li>Thumb指令集是ARM指令集的一个子集，不是一个完整的体系结构；<ul>
+<li>不能用Thumb指令编制一个完整的程序。</li>
+</ul>
+</li>
+<li>ARM和Thumb指令的功能是相近的；</li>
+<li>ARM状态和Thumb状态的区别也表现在程序状态寄存器中，CPSR[5]位T就是标志位；</li>
+<li>Thumb指令16位编码所包含的信息较ARM指令少；</li>
+<li>Thumb指令与ARM指令一样，是32位的数据操作。</li>
+</ul>
+<h1 id="3-6-2Thumb指令-vs-ARM指令"><a href="#3-6-2Thumb指令-vs-ARM指令" class="headerlink" title="3.6.2Thumb指令 vs. ARM指令"></a>3.6.2Thumb指令 vs. ARM指令</h1><ul>
+<li>Thumb指令集没有：<ul>
+<li>和协处理器相关的指令；</li>
+<li>数据交换指令；</li>
+<li>乘加指令和长乘法指令；</li>
+<li>CPSR和SPSR访问指令。</li>
+</ul>
+</li>
+<li>Thumb指令增加：<ul>
+<li>逻辑移位指令；</li>
+<li>堆栈指令PUSH和出栈指令POP。</li>
+</ul>
+</li>
+<li>Thumb指令除分支指令外，都是无条件指令。</li>
+<li>Thumb指令通常只使用两个操作数。</li>
+<li>Thumb没有可选的S后缀，每条指令都可以刷新条件标志位</li>
+</ul>
+<h1 id="3-6-3-Thumb指令集中的数据传送指令"><a href="#3-6-3-Thumb指令集中的数据传送指令" class="headerlink" title="3.6.3 Thumb指令集中的数据传送指令"></a>3.6.3 Thumb指令集中的数据传送指令</h1><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508204142594.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据传输"></p>
+<p>The various assembler formats are:</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508204218350.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="格式"></p>
+<h2 id="3-6-3-1立即数偏移的无符号字-x2F-字节传送指令"><a href="#3-6-3-1立即数偏移的无符号字-x2F-字节传送指令" class="headerlink" title="3.6.3.1立即数偏移的无符号字&#x2F;字节传送指令"></a>3.6.3.1立即数偏移的无符号字&#x2F;字节传送指令</h2><p>指令：LDR, STR, LDRB, STRB</p>
+<ul>
+<li>用于在寄存器和存储器之间进行无符号的字和字节传送，其地址的表达式是基址寄存器和一个立即数的偏移。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight hsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs hsp">LDR/<span class="hljs-keyword">STR</span>  Rd, [Rb, <span class="hljs-meta">#立即数]</span><br><br>LDRB/STRB  Rd, [Rb, <span class="hljs-meta">#立即数]</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rd是源&#x2F;目标寄存器，使用范围为R0~R7；</li>
+<li>Rb是地址基址寄存器，使用范围为R0~R7；</li>
+<li>立即数是字传送使用7位，字节传送使用5位；</li>
+<li>立即数偏移只能是正数或0，不能是负数；</li>
+<li>使用事先寻址方式，不能更新；</li>
+<li>字传送要求字对齐。</li>
+</ul>
+<h2 id="3-6-3-2寄存器偏移的无符号字-x2F-字节传送指令"><a href="#3-6-3-2寄存器偏移的无符号字-x2F-字节传送指令" class="headerlink" title="3.6.3.2寄存器偏移的无符号字&#x2F;字节传送指令"></a>3.6.3.2寄存器偏移的无符号字&#x2F;字节传送指令</h2><p>指令：LDR, STR, LDRB, STRB</p>
+<ul>
+<li>用于在寄存器和存储器之间进行无符号的字和字节传送，其地址的表达式是基址寄存器和一个寄存器的偏移。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">LDR</span>/STR  Rd,<span class="hljs-meta"> [Rb, Ri]</span><br><br><span class="hljs-attribute">LDRB</span>/STRB  Rd,<span class="hljs-meta"> [Rb, Ri]</span><br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Rd是源&#x2F;目标寄存器，使用范围为R0~R7；</li>
+<li>Rb是地址基址寄存器，使用范围为R0~R7；</li>
+<li>Ri是偏移寄存器，使用范围为R0~R7；</li>
+<li>使用事先寻址方式，不能更新；</li>
+<li>字传送要求字对齐。</li>
+</ul>
+<h2 id="3-6-3-3立即数偏移的无符号半字传送指令"><a href="#3-6-3-3立即数偏移的无符号半字传送指令" class="headerlink" title="3.6.3.3立即数偏移的无符号半字传送指令"></a>3.6.3.3立即数偏移的无符号半字传送指令</h2><p>指令：LDRH, STRH</p>
+<ul>
+<li>用于在寄存器和存储器之间进行无符号的半字传送，其地址的表达式是基址寄存器和一个立即数的偏移。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">LDRH/STRH  <span class="hljs-built_in">Rd</span>, [<span class="hljs-type">Rb</span>, <span class="hljs-comment">#立即数]</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rd是源&#x2F;目标寄存器，使用范围为R0~R7；</li>
+<li>Rb是地址基址寄存器，使用范围为R0~R7；</li>
+<li>立即数是6位无符号数，不得大于64；</li>
+<li>只能加载或存储低16位；</li>
+<li>使用事先寻址方式，不能更新；</li>
+<li>半字传送要求半字对齐。</li>
+</ul>
+<h2 id="3-6-3-4寄存器偏移的无符号半字传送指令和寄存器偏移的带符号字节-x2F-半字加载指令"><a href="#3-6-3-4寄存器偏移的无符号半字传送指令和寄存器偏移的带符号字节-x2F-半字加载指令" class="headerlink" title="3.6.3.4寄存器偏移的无符号半字传送指令和寄存器偏移的带符号字节&#x2F;半字加载指令"></a>3.6.3.4寄存器偏移的无符号半字传送指令和寄存器偏移的带符号字节&#x2F;半字加载指令</h2><p>指令：LDRH, STRG, LDSB, LDSH</p>
+<ul>
+<li>用于在寄存器和存储器之间进行无符号的半字传送以及带符号的字节&#x2F;半字加载，其地址的表达式是基址寄存器和一个寄存器的偏移。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">LDRH</span>/STRH Rd,<span class="hljs-meta"> [Rb, Ri]</span><br><br><span class="hljs-attribute">LDSB</span>/LDSH Rd,<span class="hljs-meta"> [Rb, Ri]</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rd是源&#x2F;目标寄存器，使用范围为R0~R7；</li>
+<li>Rb是地址基址寄存器，使用范围为R0~R7；</li>
+<li>Ri是偏移寄存器，使用范围为R0~R7；</li>
+<li>半字加载时，加载低16位，高位进行符号&#x2F;无符号扩展；</li>
+<li>使用事先寻址方式，不能更新；</li>
+<li>半字传送要求半字对齐。</li>
+</ul>
+<h2 id="3-6-3-5用PC和SP做基址的数据传送指令"><a href="#3-6-3-5用PC和SP做基址的数据传送指令" class="headerlink" title="3.6.3.5用PC和SP做基址的数据传送指令"></a>3.6.3.5用PC和SP做基址的数据传送指令</h2><p>指令：LDR, STR</p>
+<ul>
+<li>用于在寄存器和存储器之间进行无符号的数据传送，其地址表达式的基址是PC或SP。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span>  Rd, [<span class="hljs-built_in">PC</span>, #立即数]<br><br><span class="hljs-symbol">LDR</span>/<span class="hljs-keyword">STR</span>  Rd, [<span class="hljs-built_in">SP</span>, #立即数]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rd是源&#x2F;目标寄存器，使用范围为R0~R7；</li>
+<li>SP是堆栈指针做地址基址；</li>
+<li>PC是程序计数器做地址基址；</li>
+<li>立即数是无符号10位的地址偏移值，小于1024；</li>
+<li>使用事先寻址方式，不能更新；</li>
+<li>字传送要求字对齐。</li>
+</ul>
+<h2 id="3-6-3-6多寄存器的数据传送指令"><a href="#3-6-3-6多寄存器的数据传送指令" class="headerlink" title="3.6.3.6多寄存器的数据传送指令"></a>3.6.3.6多寄存器的数据传送指令</h2><p>指令：LDMIA, STMIA</p>
+<ul>
+<li>用于在寄存器和存储器之间进行成组的数据传送，其地址表达式只用一个无偏移的基址寄存器。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">LDMIA</span>/<span class="hljs-keyword">STMIA</span> Rb！, &#123;寄存器列表&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rb是地址基址寄存器，使用范围为R0~R7；</li>
+<li>！后缀是写回标志，必须使用；</li>
+<li>寄存器列表是从R0~R7的任意组合，寄存器分隔使用逗号；</li>
+<li>无论加载还是存储，每传送一个数据，基址地址就自动增4，属于事后更新寻址方式；</li>
+<li>寄存器在列表中是从小到大排列，无论加载还是存储，最小寄存器总是指向最初的基址地址；</li>
+<li>Rb可以在列表中，但Rb必须是寄存器列表中最小的，否则结果不可预测；</li>
+<li>后缀IA是表明每传送一次数据地址自动增4。</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508205005485.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多寄存器"></p>
+<h2 id="3-6-3-7栈操作指令"><a href="#3-6-3-7栈操作指令" class="headerlink" title="3.6.3.7栈操作指令"></a>3.6.3.7栈操作指令</h2><p>指令：PUSH, POP</p>
+<ul>
+<li>用于在寄存器和存储器之间进行成组的数据传送，其地址表达式是隐含的堆栈指针。</li>
+<li>指令格式：</li>
+</ul>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">PUSH</span>/<span class="hljs-keyword">POP</span>  &#123;寄存器列表&#125;<br><br><span class="hljs-keyword">PUSH</span>  &#123;寄存器列表，<span class="hljs-built_in">LR</span>&#125;<br><br><span class="hljs-keyword">POP</span>  &#123;寄存器列表，<span class="hljs-built_in">PC</span>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>LR是链接寄存器；</li>
+<li>PC是程序计数器；</li>
+<li>寄存器列表是从R0~R7的任意组合，寄存器分隔使用逗号；</li>
+<li>堆栈指针是隐含的地址基址，Thumb指令中的堆栈是满栈递减的，堆栈向下增长，堆栈指针总是指向最后入栈的数据；</li>
+<li>寄存器在列表中是从小到大排列，无论加载还是存储，最小寄存器总是指向最初的基址地址；</li>
+<li>但使用POP指令且PC出现在列表中时，从栈区赋给PC的数据将引起程序的跳转，这只能用在子程序的返回。</li>
+</ul>
+<h1 id="3-6-4-Thumb指令集的分支指令"><a href="#3-6-4-Thumb指令集的分支指令" class="headerlink" title="3.6.4 Thumb指令集的分支指令"></a>3.6.4 Thumb指令集的分支指令</h1><p>Thumb指令集包含4条分支指令：</p>
+<ul>
+<li>无条件分支指令；</li>
+<li>条件分支指令；</li>
+<li>带链接分支指令；</li>
+<li>状态切换指令</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508205124916.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分支指令"></p>
+<h2 id="3-6-4-1-无条件分支指令"><a href="#3-6-4-1-无条件分支指令" class="headerlink" title="3.6.4.1 无条件分支指令"></a>3.6.4.1 无条件分支指令</h2><p>无条件分支指令B能够使程序产生一次无条件跳转。</p>
+<p>指令格式：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">B</span> 语句标号<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>语句标号通常在同一程序段内，地址范围不超过±2048字节；</li>
+<li>以PC为基址的相对偏移跳转，跳转方向可以向前，也可以向后；</li>
+<li>语句标号处的地址必须是半字对齐的。</li>
+</ul>
+<h2 id="3-6-4-2-条件分支指令"><a href="#3-6-4-2-条件分支指令" class="headerlink" title="3.6.4.2 条件分支指令"></a>3.6.4.2 条件分支指令</h2><p>条件分支指令B能够使程序产生一次有条件跳转。</p>
+<p>指令格式：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">B</span>&#123;cond&#125; 语句标号<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>语句标号通常在同一程序段内，地址范围不超过±254字节；</li>
+<li>cond是条件后缀，共14种；</li>
+<li>指令满足条件时分支跳转，否则不分支；</li>
+<li>以PC为基址的相对偏移跳转，跳转方向可以向前，也可以向后；</li>
+<li>语句标号处的地址必须是半字对齐的</li>
+</ul>
+<h2 id="3-6-4-3-带链接的长分支指令"><a href="#3-6-4-3-带链接的长分支指令" class="headerlink" title="3.6.4.3 带链接的长分支指令"></a>3.6.4.3 带链接的长分支指令</h2><p>带链接的长分支指令BL能够使程序产生长跳转，同时把分支处地址保存在LR中。</p>
+<p>指令格式：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">BL</span> 语句标号<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>语句标号是一条长跳转，地址范围可以用一个23位的带符号数值表达；</li>
+<li>Thumb指令编码是16位，一条指令是不能实现23位的地址编码的，该语句实际分解乘两条指令来实现；</li>
+<li>以PC为基址的相对偏移跳转，跳转方向可以向前，也可以向后；</li>
+<li>语句标号处的地址必须是半字对齐的。</li>
+</ul>
+<h2 id="3-6-4-4-状态切换的分支指令"><a href="#3-6-4-4-状态切换的分支指令" class="headerlink" title="3.6.4.4 状态切换的分支指令"></a>3.6.4.4 状态切换的分支指令</h2><p>状态切换的分支指令BX能够使程序产生分支，同时使程序从一个指令状态跳转到另一个指令状态。</p>
+<p>指令格式：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">BX</span> Rs<br><span class="hljs-keyword">BX</span> Hs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rs是Thumb指令集的通用寄存器R0~R7，其中数据作为分支目标地址；</li>
+<li>Hs是高位寄存器R8<del>R15，在Thumb指令集中用H8</del>H15表达，其中数据作为分支目标地址；</li>
+<li>以寄存器数据作为绝对地址的分支指令，跳转方向可以向前，也可以向后；</li>
+<li>寄存器中的地址是目标地址，其中的最低位[0]不是地址信息。当[0]为1时，表明目标地址处是Thumb指令；当[0]为0时，表明目标地址处是ARM指令，要求字对齐。</li>
+</ul>
+<h1 id="3-6-5-Thumb指令集的数据处理指令"><a href="#3-6-5-Thumb指令集的数据处理指令" class="headerlink" title="3.6.5 Thumb指令集的数据处理指令"></a>3.6.5 Thumb指令集的数据处理指令</h1><p>Thumb指令集中的数据处理指令包括</p>
+<ul>
+<li>算术运算指令</li>
+<li>逻辑运算指令</li>
+<li>寄存器之间的数据传送指令</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508210114196.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="thumb"></p>
+<h2 id="3-6-5-1-使用3个寄存器（或两个寄存器、一个立即数）的加减算术运算指令"><a href="#3-6-5-1-使用3个寄存器（或两个寄存器、一个立即数）的加减算术运算指令" class="headerlink" title="3.6.5.1 使用3个寄存器（或两个寄存器、一个立即数）的加减算术运算指令"></a>3.6.5.1 使用3个寄存器（或两个寄存器、一个立即数）的加减算术运算指令</h2><p>指令格式：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-keyword">ADD</span>/<span class="hljs-keyword">SUB</span> Rd, Rs, Rn<br><br><span class="hljs-keyword">ADD</span>/<span class="hljs-keyword">SUB</span> Rd, Rs, <span class="hljs-meta">#立即数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rs是Thumb指令集的通用寄存器R0~R7；</li>
+<li>Rn是Thumb指令集的通用寄存器R0~R7；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>立即数是3位无符号数值，不能大于7；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h2 id="3-6-5-2-使用1个寄存器和1个立即数的数据处理指令"><a href="#3-6-5-2-使用1个寄存器和1个立即数的数据处理指令" class="headerlink" title="3.6.5.2 使用1个寄存器和1个立即数的数据处理指令"></a>3.6.5.2 使用1个寄存器和1个立即数的数据处理指令</h2><p>n共有4条指令： ADD, SUB, MOV, CMP</p>
+<p>指令格式：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Opcode</span> Rd, <span class="hljs-comment">#立即数</span><br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>Opcode是操作指令，指ADD, SUB, MOV, CMP等4条指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>立即数是8位无符号数值，不能大于255；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h2 id="3-6-5-3-使用2个寄存器的数据处理指令"><a href="#3-6-5-3-使用2个寄存器的数据处理指令" class="headerlink" title="3.6.5.3 使用2个寄存器的数据处理指令"></a>3.6.5.3 使用2个寄存器的数据处理指令</h2><p>共有16条指令：</p>
+<ul>
+<li>AND, EOR, ORR, BIC;</li>
+<li>ADC, SBC, MUL;</li>
+<li>CMP, CMN;</li>
+<li>LSL, LSR, ASR, ROR;</li>
+<li>NEG, MVN;</li>
+<li>TST</li>
+</ul>
+<h3 id="3-6-5-3-1-逻辑操作指令"><a href="#3-6-5-3-1-逻辑操作指令" class="headerlink" title="3.6.5.3.1 逻辑操作指令"></a>3.6.5.3.1 逻辑操作指令</h3><p>共有4条指令： AND, EOR, ORR, BIC</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>Rs是源寄存器R0~R7 ；</li>
+<li>AND, EOR, ORR指令与寄存器的顺序无关，而BIC指令是有关的；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h3 id="3-6-5-3-2-算术运算指令"><a href="#3-6-5-3-2-算术运算指令" class="headerlink" title="3.6.5.3.2 算术运算指令"></a>3.6.5.3.2 算术运算指令</h3><p>共有3条指令： ADC, SBC, MUL</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>Rs是源寄存器R0~R7 ；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h3 id="3-6-5-3-3-逻辑操作指令"><a href="#3-6-5-3-3-逻辑操作指令" class="headerlink" title="3.6.5.3.3 逻辑操作指令"></a>3.6.5.3.3 逻辑操作指令</h3><p>共有2条指令： CMP, CMN</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7；</li>
+<li>Rs是源寄存器R0~R7 ；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h3 id="3-6-5-3-4-逻辑移位操作指令"><a href="#3-6-5-3-4-逻辑移位操作指令" class="headerlink" title="3.6.5.3.4 逻辑移位操作指令"></a>3.6.5.3.4 逻辑移位操作指令</h3><p>共有4条指令： LSL, LSR, ASR, ROR</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>Rs是源寄存器R0~R7，其中的数值是Rd移位的位数；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h3 id="3-6-5-3-5-寄存器传送指令"><a href="#3-6-5-3-5-寄存器传送指令" class="headerlink" title="3.6.5.3.5 寄存器传送指令"></a>3.6.5.3.5 寄存器传送指令</h3><p>共有2条指令： NEG, MVN</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>Rs是源寄存器R0~R7 ；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h3 id="3-6-5-3-6-测试指令"><a href="#3-6-5-3-6-测试指令" class="headerlink" title="3.6.5.3.6 测试指令"></a>3.6.5.3.6 测试指令</h3><p>共有1条指令： TST</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7；</li>
+<li>Rs是源寄存器R0~R7 ；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h2 id="3-6-5-4-对寄存器进行移位并传送的操作指令"><a href="#3-6-5-4-对寄存器进行移位并传送的操作指令" class="headerlink" title="3.6.5.4 对寄存器进行移位并传送的操作指令"></a>3.6.5.4 对寄存器进行移位并传送的操作指令</h2><p>共有3条指令： LSL, LSR, ASR</p>
+<p>指令格式：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">Opcode</span> Rd, Rs, <span class="hljs-comment">#立即数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R7，保存操作结果；</li>
+<li>Rs是源寄存器R0~R7，对其中的内容进行移位；</li>
+<li>移位位数不能大于31；</li>
+<li>会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h2 id="3-6-5-5-与高位寄存器有关的数据处理指令"><a href="#3-6-5-5-与高位寄存器有关的数据处理指令" class="headerlink" title="3.6.5.5 与高位寄存器有关的数据处理指令"></a>3.6.5.5 与高位寄存器有关的数据处理指令</h2><p>共有3条指令： ADD, CMP, MOV</p>
+<p>指令格式：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dos">Opcode <span class="hljs-built_in">Rd</span>, Rs<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Opcode是操作指令；</li>
+<li>Rd是Thumb指令集的通用寄存器R0~R15，保存操作结果；</li>
+<li>Rs是源寄存器R0~R15，对其中的内容进行移位；</li>
+<li>CMP指令会刷新程序状态寄存器的条件标志。</li>
+</ul>
+<h2 id="3-6-5-6-使用PC和SP的加法指令"><a href="#3-6-5-6-使用PC和SP的加法指令" class="headerlink" title="3.6.5.6 使用PC和SP的加法指令"></a>3.6.5.6 使用PC和SP的加法指令</h2><p>Thumb指令中有一条对堆栈指针SP的加法指令和一条对PC的加法指令。</p>
+<p>指令格式：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">ADD </span>Rd, PC, <span class="hljs-comment">#立即数</span><br><br><span class="hljs-keyword">ADD </span>Rd, <span class="hljs-built_in">SP</span>, <span class="hljs-comment">#立即数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Rd是Thumb指令集的通用寄存器R0~R7；</li>
+<li>PC是程序计数器，做源寄存器；</li>
+<li>SP是堆栈指针，做源寄存器；</li>
+<li>立即数是一个10位的无符号数；</li>
+<li>立即数必须字对齐；</li>
+<li>当把PC作为源寄存器时，PC中的值是指令处的地址加4；</li>
+<li>不影响程序条件标志位。</li>
+</ul>
+<h2 id="3-6-5-7-堆栈指针加偏移的加法指令"><a href="#3-6-5-7-堆栈指针加偏移的加法指令" class="headerlink" title="3.6.5.7 堆栈指针加偏移的加法指令"></a>3.6.5.7 堆栈指针加偏移的加法指令</h2><p>Thumb指令中有一条对堆栈指针SP加偏移的加法指令。</p>
+<p>指令格式：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">ADD </span><span class="hljs-built_in">SP</span>, <span class="hljs-comment">#立即数</span><br><br><span class="hljs-keyword">ADD </span><span class="hljs-built_in">SP</span>, <span class="hljs-comment">#-立即数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>SP是堆栈指针，做目标寄存器；</li>
+<li>立即数是一个9位的无符号数；</li>
+<li>立即数必须字对齐；</li>
+<li>表达式中可以使用负号，堆栈指针可以向前偏移，也可以向后偏移。</li>
+</ul>
+<p>The various instruction formats are:</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212107915.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="指令格式"></p>
+<p>Equivalent ARM instruction</p>
+<figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs clean">ARM instruction 		Thumb instruction<br><br>MOVS Rd, #&lt;#imm8&gt; 	; MOV Rd, #&lt;#imm8&gt;<br>MVNS Rd, Rm 		; MVN Rd, Rm<br>CMP Rn, #&lt;#imm8&gt; 		; CMP Rn, #&lt;#imm8&gt;<br>CMP Rn, Rm 			; CMP Rn, Rm<br>CMN Rn, Rm 		; CMN Rn, Rm<br>TST Rn, Rm 			; TST Rn, Rm<br>ADDS Rd, Rn, #&lt;#imm3&gt; 	; ADD Rd, Rn, #&lt;#imm3&gt;<br>ADDS Rd, Rd, #&lt;#imm8&gt; 	; ADD Rd, #&lt;#imm8&gt;<br>ADDS Rd, Rn, Rm 		; ADD Rd, Rn, Rm<br>ADCS Rd, Rd, Rm 		; ADC Rd, Rm<br>SUBS Rd, Rn, #&lt;#imm3&gt; 	; SUB Rd, Rn, #&lt;#imm3&gt;<br>SUBS Rd, Rd, #&lt;#imm8&gt; 	; SUB Rd, #&lt;#imm8&gt;<br>SUBS Rd, Rn, Rm 		; SUB Rd, Rn, Rm<br>SBCS Rd, Rd, Rm 		; SBC Rd, Rm<br>RSBS Rd, Rn, #<span class="hljs-number">0</span> 		; NEC Rd, Rn<br>MOVS Rd, Rm, LSL #&lt;#sh&gt; 	; LSL Rd, Rm, #&lt;#sh&gt;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-comment">; ARM instruction 			Thumb instruction</span><br><br><span class="hljs-keyword">MOVS</span> Rd, Rd, <span class="hljs-keyword">LSL</span> Rs 			<span class="hljs-comment">; LSL Rd, Rs</span><br><span class="hljs-keyword">MOVS</span> Rd, Rm, <span class="hljs-keyword">LSR</span> #&lt;<span class="hljs-symbol">#sh</span>&gt; 		<span class="hljs-comment">; LSR Rd, Rm, #&lt;#sh&gt;</span><br><span class="hljs-keyword">MOVS</span> Rd, Rd, <span class="hljs-keyword">LSR</span> Rs 		<span class="hljs-comment">; LSR Rd, Rs</span><br><span class="hljs-keyword">MOVS</span> Rd, Rm, <span class="hljs-keyword">ASR</span> #&lt;<span class="hljs-symbol">#sh</span>&gt; 		<span class="hljs-comment">; ASR Rd, Rm, #&lt;#sh&gt;</span><br><span class="hljs-keyword">MOVS</span> Rd, Rd, <span class="hljs-keyword">ASR</span> Rs 		<span class="hljs-comment">; ASR Rd, Rs</span><br><span class="hljs-keyword">MOVS</span> Rd, Rd, <span class="hljs-keyword">ROR</span> Rs 		<span class="hljs-comment">; ROR Rd, Rs</span><br><span class="hljs-keyword">ANDS</span> Rd, Rd, Rm 			<span class="hljs-comment">; AND Rd, Rm</span><br><span class="hljs-keyword">EORS</span> Rd, Rd, Rm 			<span class="hljs-comment">; EOR Rd, Rm</span><br><span class="hljs-keyword">ORRS</span> Rd, Rd, Rm 			<span class="hljs-comment">; ORR Rd, Rm</span><br><span class="hljs-keyword">BICS</span> Rd, Rd, Rm 			<span class="hljs-comment">; BIG Rd, Rm</span><br><span class="hljs-keyword">MULS</span> Rd, Rm, Rd 			<span class="hljs-comment">; MUL Rd, Rm</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs powershell">Instructions that operate with or on the <span class="hljs-string">&#x27;Hi&#x27;</span> registers (r8 to r15), <span class="hljs-keyword">in</span> some cases <span class="hljs-keyword">in</span><br>combination with a <span class="hljs-string">&#x27;Lo&#x27;</span> register:<br><br>; ARM instruction 		Thumb instruction<br><br>ADD <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">Rm</span> 		; ADD <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">Rm</span> (<span class="hljs-number">1</span>/<span class="hljs-number">2</span> Hi regs)<br>CMP Rn, <span class="hljs-built_in">Rm</span> 			; CMP Rn, <span class="hljs-built_in">Rm</span> (<span class="hljs-number">1</span>/<span class="hljs-number">2</span> Hi regs)<br>MOV <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">Rm</span> 		; MOV <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">Rm</span> (<span class="hljs-number">1</span>/<span class="hljs-number">2</span> Hi regs)<br>ADD <span class="hljs-built_in">Rd</span>, PC, <span class="hljs-comment">#&lt;#imm8&gt; 	; ADD Rd, PC, #&lt;#imm8&gt;</span><br>ADD <span class="hljs-built_in">Rd</span>, <span class="hljs-built_in">SP</span>, <span class="hljs-comment">#&lt;#imm8&gt; 	; ADD Rd, SP, #&lt;#imm8&gt;</span><br>ADD <span class="hljs-built_in">SP</span>, <span class="hljs-built_in">SP</span>, <span class="hljs-comment">#&lt;#imm7&gt; 	; ADD SP, SP, #&lt;#imm7&gt;</span><br>SUB <span class="hljs-built_in">SP</span>, <span class="hljs-built_in">SP</span>, <span class="hljs-comment">#&lt;#imm7&gt; 	; SUB SP, SP, #&lt;#imm7&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<h1 id="3-6-6-Thumb指令集的软件中断指令"><a href="#3-6-6-Thumb指令集的软件中断指令" class="headerlink" title="3.6.6 Thumb指令集的软件中断指令"></a>3.6.6 Thumb指令集的软件中断指令</h1><p>Thumb指令集中只有一条软件中断指令SWI，与ARM指令集是一样的。</p>
+<p>指令格式：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">SWI </span><span class="hljs-comment">#中断参数</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>中断参数是一个8位的无符号数，可以是0；</li>
+<li>执行此指令后，处理器由Thumb状态切换到ARM状态；</li>
+<li>处理器由用户模式转换到管理模式；中断处下一条指令的地址被拷贝到链接寄存器R14，CPSR被拷贝到SPSR中，处理器把中断向量0x00000008装入PC;</li>
+<li>中断参数不可以省略（可以为0），这个参数对指令无影响，是中断过程传递的一个参数，如中断功能号；</li>
+<li>指令不影响条件标志位。</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212423679.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="thumb"></p>
+<h1 id="3-6-7-Thumb-implementation"><a href="#3-6-7-Thumb-implementation" class="headerlink" title="3.6.7 Thumb implementation"></a>3.6.7 Thumb implementation</h1><p>The biggest addition is the Thumb instruction decompressor in the instruction pipeline; this logic translates a Thumb instruction into its equivalent ARM instruction.</p>
+<p>The Thumb decompressor performs a static translation from the 16-bit Thumb instruction into the equivalent 32-bit ARM instruction.</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212728045.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F5-Thumb/image-20230508212741020.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B/">#ARM体系结构与编程</a>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb</div>
+      <div>https://www.emokable.top/ARM体系结构与编程-第3章-ARM微处理器的指令系统5-Thumb/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月8日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A41/" title="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ARM体系结构与编程-第4章-ARM程序设计基础-伪指令1</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1ch4-%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F/" title="嵌入式程序设计ch4-存储器系统">
+                        <span class="hidden-mobile">嵌入式程序设计ch4-存储器系统</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

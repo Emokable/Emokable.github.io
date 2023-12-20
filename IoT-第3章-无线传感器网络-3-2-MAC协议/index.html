@@ -1,0 +1,1317 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="**第三章 **无线传感器网络3.2 MAC协议竞争型MAC协议—局部同步local synchronization  IEEE 802.11 MAC层 S-MAC协议 T-MAC协议  竞争型MAC协议—异步no synchronization  B-MAC协议 RI-MAC协议  调度型（分配型）MAC协议—全局同步global synchronization  TRAMA协议 DMAC协议">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IoT__第3章__无线传感器网络__3.2_MAC协议">
+<meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="**第三章 **无线传感器网络3.2 MAC协议竞争型MAC协议—局部同步local synchronization  IEEE 802.11 MAC层 S-MAC协议 T-MAC协议  竞争型MAC协议—异步no synchronization  B-MAC协议 RI-MAC协议  调度型（分配型）MAC协议—全局同步global synchronization  TRAMA协议 DMAC协议">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190414294.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190430564.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190740601.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190856217.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190943960.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191007273.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191137670.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191216747.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191228424.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191253819.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191900110.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191948525.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192111001.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192158212.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192235893.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192319593.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192513886.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192616013.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192658751.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192713811.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192913972.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192939088.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193013975.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193043844.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193054291.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193729431.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193800904.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194239824.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194418968.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194655014.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194837972.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194908799.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220195038590.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220195207150.png">
+<meta property="article:published_time" content="2023-10-30T12:50:42.000Z">
+<meta property="article:modified_time" content="2023-12-20T11:53:29.045Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="物联网技术与应用">
+<meta property="article:tag" content="IoT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190414294.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>IoT__第3章__无线传感器网络__3.2_MAC协议 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="IoT__第3章__无线传感器网络__3.2_MAC协议"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-30 20:50" pubdate>
+          2023年10月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          86 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">IoT__第3章__无线传感器网络__3.2_MAC协议</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：11 分钟前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="第三章-无线传感器网络"><a href="#第三章-无线传感器网络" class="headerlink" title="**第三章 **无线传感器网络"></a>**第三章 **无线传感器网络</h1><h2 id="3-2-MAC协议"><a href="#3-2-MAC协议" class="headerlink" title="3.2 MAC协议"></a>3.2 <strong>MAC协议</strong></h2><p><strong>竞争型MAC协议—局部同步local synchronization</strong></p>
+<ul>
+<li><strong>IEEE 802.11 MAC层</strong></li>
+<li><strong>S-MAC协议</strong></li>
+<li><strong>T-MAC协议</strong></li>
+</ul>
+<p><strong>竞争型MAC协议—异步no synchronization</strong></p>
+<ul>
+<li><strong>B-MAC协议</strong></li>
+<li><strong>RI-MAC协议</strong></li>
+</ul>
+<p><strong>调度型（分配型）MAC协议—全局同步global synchronization</strong></p>
+<ul>
+<li><strong>TRAMA协议</strong></li>
+<li><strong>DMAC协议</strong></li>
+</ul>
+<p><strong>混合型MAC协议</strong></p>
+<ul>
+<li><strong>Z-MAC</strong></li>
+<li><strong>Funneling-MAC</strong></li>
+</ul>
+<h2 id="3-2-1-1-IEEE-802-11-MAC层"><a href="#3-2-1-1-IEEE-802-11-MAC层" class="headerlink" title="3.2.1.1    IEEE 802.11 MAC层"></a>3.2.1.1    <strong>IEEE 802.11 MAC层</strong></h2><h3 id="ALOHA协议"><a href="#ALOHA协议" class="headerlink" title="ALOHA协议"></a><strong>ALOHA协议</strong></h3><p><strong>Pure ALOHA协议</strong>  </p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190414294.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="pure"></p>
+<p>Ø<strong>当站点有数据需要发送时，直接向信道发送数据帧。</strong></p>
+<p>Ø<strong>如果发生数据冲突，发送站点等待随机时间，再进行重发，直到发送成功，或最后放弃。</strong></p>
+<p><strong>Slotted ALOHA协议</strong>  </p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190430564.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="slotted"></p>
+<p>Ø<strong>信道上的时间被划分成离散的时隙，其大小相当于帧的传输时间。所有站点的时钟保持同步。站点只有在时隙开始时才能传输数据。</strong></p>
+<p>Ø<strong>只有那些都在同一个时槽进行传输的帧才有可能冲突，冲突危险区比Pure ALOHA降低了一半 。</strong></p>
+<h3 id="CSMA（载波侦听多路访问协议）"><a href="#CSMA（载波侦听多路访问协议）" class="headerlink" title="CSMA（载波侦听多路访问协议）"></a><strong>CSMA（载波侦听多路访问协议）</strong></h3><p><strong>Pure ALOHA和SlottedALOHA都没有利用到以太网和无线分组网的一个主要特性，那就是与帧的传输时间相比，传播时间是很短的：当一个站点发送帧后，具有载波侦听的其它站点很快就会知道。</strong></p>
+<p><strong>CSMA</strong></p>
+<p>Ø<strong>非坚持CSMA协议（NonpersistentCSMA）</strong></p>
+<p>Ø<strong>1-坚持CSMA协议 （1-persistent CSMA）</strong></p>
+<p>Ø<strong>P-坚持CSMA协议（P-persistent CSMA）</strong></p>
+<h4 id="几种CSMA-协议"><a href="#几种CSMA-协议" class="headerlink" title="几种CSMA 协议"></a><strong>几种CSMA 协议</strong></h4><p><strong>与ALOHA的区别：提供载波侦听功能</strong></p>
+<p><strong>节点在发送数据之前，对信道进行侦听，根据信道的忙闲程度再决定是否发送。（更“礼貌”，性能更好）</strong></p>
+<ul>
+<li><p><strong>非坚持CSMA协议</strong></p>
+<ul>
+<li><strong>侦听信道，</strong><ul>
+<li><strong>1) 若信道空闲：发送数据帧。</strong></li>
+<li><strong>2) 若信道忙：等待一段随机时间，重新再侦听。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>1-坚持CSMA</strong>  <strong>协议</strong> </p>
+<ul>
+<li><strong>侦听信道，</strong><ul>
+<li><strong>1) 若信道空闲：发送数据帧。</strong></li>
+<li><strong>2) 若信道忙：仍坚持侦听，一直侦听到信道空闲。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>p -坚持CSMA 协议</strong> (<strong>IEEE 802.11无线局域网使用p-坚持CSMA协议的改进版</strong>)</p>
+<ul>
+<li><strong>侦听信道，</strong><ul>
+<li><strong>1) 若信道空闲：以概率</strong>  <strong>p发送数据帧；以概率</strong>  <strong>1-p</strong>  <strong>延迟一段时间τ，重新侦听。</strong></li>
+<li><strong>2) 若信道忙：仍坚持侦听，一直侦听到信道空闲。</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190740601.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="各种协议的性能对比"></p>
+<h3 id="CSMA-x2F-CD-带冲突检测的载波侦听多路访问"><a href="#CSMA-x2F-CD-带冲突检测的载波侦听多路访问" class="headerlink" title="CSMA&#x2F;CD 带冲突检测的载波侦听多路访问"></a><strong>CSMA&#x2F;CD 带冲突检测的载波侦听多路访问</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190856217.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="cd"></p>
+<p><strong>虽然 CSMA 协议能够通过载波侦听减少数据冲突发生的机会，但由于传播时延的存在，仍然不可避免会发生数据冲突。</strong></p>
+<p><strong>CSMA&#x2F;CD：在 CSMA 的基础上，增加冲突检测的功能，即站点在传输时能够侦听到是否发生冲突。</strong></p>
+<p><strong>CSMA&#x2F;CD 协议思路</strong></p>
+<ul>
+<li><strong>当站点侦听到信道空闲时就发送数据，同时继续侦听下去。</strong></li>
+<li><strong>冲突检测：站点在传输的同时侦听信道，一旦检测到本站传输帧与别的站点传输帧发生冲突时，立即放弃当前帧的发送（而不是继续完成传输），这样可以使信道很快地空闲下来。</strong></li>
+<li><strong>是经典以太网的基础</strong></li>
+</ul>
+<h3 id="无线局域网协议"><a href="#无线局域网协议" class="headerlink" title="无线局域网协议"></a><strong>无线局域网协议</strong></h3><p><strong>隐藏终端问题（hidden station problem）</strong></p>
+<p><strong>暴露终端问题（exposedstation problem）</strong></p>
+<p><strong>冲突避免多路访问（MACA, Multiple Access with CollisionAviodance）</strong></p>
+<ul>
+<li><strong>RTS（Request To Send）帧</strong></li>
+<li><strong>CTS（Clear To Send）帧</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220190943960.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191007273.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="冲突避免多路访问协议MACA：RTS / CTS"></p>
+<h4 id="802-11-MAC子层协议"><a href="#802-11-MAC子层协议" class="headerlink" title="802.11 MAC子层协议"></a><strong>802.11 MAC子层协议</strong></h4><ul>
+<li><strong>操作模式：分布式协调功能DCF、点协调功能PCF（较少用到）</strong></li>
+<li><strong>使用CSMA&#x2F;CA的虚拟信道侦听，借助于</strong></li>
+<li><strong>网络分配向量NAV：记录信道的忙碌时段</strong></li>
+<li><strong>图例：</strong><ul>
+<li><strong>A发送给B，C在A范围内，D在B范围内、但不在A范围内</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191137670.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<h4 id="CSMA-x2F-CA的基本过程"><a href="#CSMA-x2F-CA的基本过程" class="headerlink" title="CSMA&#x2F;CA的基本过程"></a><strong>CSMA&#x2F;CA的基本过程</strong></h4><ul>
+<li><strong>CSMA&#x2F;CA（带冲突避免的CSMA）协议</strong><ul>
+<li><strong>当一个节点要传输一个无线帧时，它首先侦听信道状态。</strong></li>
+<li><strong>如果信道空闲，而且经过一个帧间间隔时间DIFS，信道仍为空闲，则站点立即开始发送信息。</strong></li>
+<li><strong>如果信道忙，则站点一直侦听信道，直到信道的空闲时间超过DIFS。当信道空闲下来时，节点使用二进制退避算法来避免发生碰撞。</strong></li>
+</ul>
+</li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191216747.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ca"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191228424.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="CSMA/CA协议下的收发（例）"></p>
+<p><strong>802.11提供了几种基本帧间间隔，对应于访问无线信道的优先级。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191253819.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="CSMA/CA的帧间间隔"></p>
+<h4 id="无线传感器网络MAC协议概述"><a href="#无线传感器网络MAC协议概述" class="headerlink" title="无线传感器网络MAC协议概述"></a><strong>无线传感器网络MAC协议概述</strong></h4><p><strong>在设计无线传感器网络的MAC协议时，需要着重考虑以下几个方面：</strong></p>
+<p><strong>（1）节省能量</strong></p>
+<p>•<strong>满足应用要求下，尽量节省使用节点能量。</strong></p>
+<p><strong>（2）可扩展性</strong></p>
+<p>•<strong>适应动态变化的网络拓扑。</strong></p>
+<p><strong>（3）网络效率</strong></p>
+<p>•<strong>包括网络的公平性、实时性、网络吞吐容量以及带宽利用率。</strong></p>
+<h4 id="WSN-MAC技术需求"><a href="#WSN-MAC技术需求" class="headerlink" title="WSN MAC技术需求"></a><strong>WSN MAC技术需求</strong></h4><p>What is a good MAC protocol for WSNs?</p>
+<ul>
+<li>energy efficiency</li>
+<li>scalability (to the change in network size,nide density and topology)</li>
+<li>fairness</li>
+<li>latency</li>
+<li>throughput</li>
+<li>bandwidth utilization</li>
+</ul>
+<p>Major sources of energy waste</p>
+<ul>
+<li><strong>collision</strong>: increasing latency as well</li>
+<li><strong>idle listening</strong>: listening to receive possible traffic that is not sent</li>
+<li><strong>overhearing</strong>: a node picks up packets that are destined to other nodes</li>
+<li><strong>overhead</strong>：control packet overhead</li>
+</ul>
+<h4 id="WSN-MAC协议的研究关注点"><a href="#WSN-MAC协议的研究关注点" class="headerlink" title="WSN MAC协议的研究关注点"></a><strong>WSN MAC协议的研究关注点</strong></h4><ul>
+<li><strong>能量效率</strong><ul>
+<li><strong>冲突重传</strong>  <strong>collision and retransmission</strong></li>
+<li><strong>空闲侦听</strong>  <strong>idle listening</strong></li>
+<li><strong>串听</strong>      <strong>overhearing</strong></li>
+<li><strong>控制开销</strong>  <strong>control overhead</strong></li>
+</ul>
+</li>
+<li><strong>可扩展性</strong> </li>
+<li><strong>网络效率</strong> <ul>
+<li><strong>延迟、吞吐量、公平性…</strong></li>
+</ul>
+</li>
+<li><strong>算法复杂度</strong> </li>
+<li><strong>与其它层协议的协同</strong></li>
+</ul>
+<p><strong>重要性依次递减！</strong></p>
+<h4 id="WSN-MAC协议概述"><a href="#WSN-MAC协议概述" class="headerlink" title="WSN MAC协议概述"></a><strong>WSN MAC协议概述</strong></h4><p><strong>传感器节点无线通信模块的状态包括发送状态、接收状态、侦听状态、休眠状态等。</strong></p>
+<ul>
+<li><strong>无线通信模块在发送状态的消耗能量最多，</strong></li>
+<li><strong>在休眠状态的消耗能量最少，</strong></li>
+<li><strong>接收状态和侦听状态下的能量消耗略小于发送状态。</strong></li>
+</ul>
+<p><strong>基于上述原因，传感器网络MAC协议为了减少能量的消耗，通常采用“侦听&#x2F;休眠”交替的无线信道使用策略。</strong></p>
+<p><strong>为使节点休眠时不错过发给它的数据，或减少节点的过度侦听，邻居节点间需要协调侦听和休眠的周期。</strong></p>
+<h2 id="3-2-1-2-S-MAC协议"><a href="#3-2-1-2-S-MAC协议" class="headerlink" title="3.2.1.2   S-MAC协议"></a>3.2.1.2   <strong>S-MAC协议</strong></h2><p><strong>S-MAC协议：</strong></p>
+<p><strong>在802.11 MAC协议基础上，针对传感器网络的节省能量需求而提出的传感器网络MAC协议。</strong></p>
+<p><strong>S-MAC协议假设：通常情况下</strong></p>
+<ul>
+<li><strong>传感器网络的数据传输量少,速率较低，</strong></li>
+<li><strong>节点协作完成共同的任务，</strong></li>
+<li><strong>网络内部能够进行数据的处理和融合以减少数据通信量，</strong></li>
+<li><strong>数据传输经常具有方向性，</strong></li>
+<li><strong>网络能够容忍一定程度的通信延迟。</strong></li>
+</ul>
+<p><strong>主要设计目标：提供良好的扩展性，减少节点能量的消耗。</strong></p>
+<p><strong>针对碰撞重传、串音、空闲侦听和控制消息等可能造成传感器网络消耗更多能量的主要因素，S-MAC协议采用以下机制：</strong></p>
+<p>​	–<strong>周期性侦听&#x2F;休眠的低占空比工作方式，控制节点尽可能处于睡眠状态来降低节点能量的消耗；</strong></p>
+<p>​	–<strong>邻居节点之间通过协商同步的一致性睡眠调度机制形成虚拟簇，减少节点的空闲侦听时间；</strong></p>
+<p>​	–<strong>通过流量自适应侦听机制，减少消息在网络中的传输延迟；</strong></p>
+<p>​	–<strong>通过“消息传递”（消息分割和突发传递）机制，减少节点的串听和控制消息的开销。</strong></p>
+<p>​	–<strong>尽管每一跳(per-hop)的公平性、延时性能有所降低，但全局(end-to-end)性能不受影响</strong></p>
+<h3 id="S-MAC协议──（1）周期性侦听-x2F-休眠"><a href="#S-MAC协议──（1）周期性侦听-x2F-休眠" class="headerlink" title="S-MAC协议──（1）周期性侦听&#x2F;休眠"></a><strong>S-MAC协议──（1）周期性侦听&#x2F;休眠</strong></h3><h4 id="节点按照周期性的侦听-x2F-休眠时序工作"><a href="#节点按照周期性的侦听-x2F-休眠时序工作" class="headerlink" title="节点按照周期性的侦听&#x2F;休眠时序工作"></a><strong>节点按照周期性的侦听&#x2F;休眠时序工作</strong></h4><ul>
+<li><strong>节点独立调度（schedule）其工作状态，周期性转入休眠，醒来后侦听信道状态，判断是否需要发送或接收数据。</strong></li>
+<li><strong>调度周期：节点的“侦听-休眠”的时序。</strong></li>
+<li><strong>占空比：侦听时段&#x2F; (侦听+休眠)时段</strong></li>
+<li><strong>为了减少能量消耗，节点尽量处于低功耗的休眠状态–&gt;低占空比</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191900110.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="周期"></p>
+<h4 id="节点周期的同步"><a href="#节点周期的同步" class="headerlink" title="节点周期的同步"></a><strong>节点周期的同步</strong></h4><ul>
+<li><strong>调度周期的同步：在相同时间侦听，在相同时间休眠。</strong></li>
+<li><strong>希望在相邻节点之间建立同步，以保证可能的收发节点之间具有共同的调度周期。</strong></li>
+<li><strong>所以，节点间需要交换各自的调度信息（广播给邻居节点）。</strong></li>
+<li><strong>通常只能保持局部的同步，很难做到全网同步。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220191948525.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="同步"></p>
+<h4 id="相邻节点之间的通信"><a href="#相邻节点之间的通信" class="headerlink" title="相邻节点之间的通信"></a><strong>相邻节点之间的通信</strong></h4><ul>
+<li><strong>假设A、C的周期为schedule1，B、D的周期为schedule2</strong></li>
+<li><strong>周期相同：A、C按照schedule1交互，B、D按照schedule2交互</strong></li>
+<li><strong>周期不同：如果A要和B交互时，则A需要等候B的侦听时间</strong></li>
+<li><strong>如果多个A1… Ak要和B交互，则它们需要竞争信道（RTS&#x2F;CTS）</strong></li>
+<li><strong>当节点开始传输数据时，就不用遵守休眠周期了，待传输结束再休眠</strong></li>
+</ul>
+<h4 id="节点的调度信息的创建和维护"><a href="#节点的调度信息的创建和维护" class="headerlink" title="节点的调度信息的创建和维护"></a><strong>节点的调度信息的创建和维护</strong></h4><p><strong>节点维护一张调度表，用以保存它所有邻居的调度信息</strong></p>
+<p>​	1.<strong>节点监听一段时间，如果没有收到其它节点的调度信息，则随机选择一个将来的休眠时间，并立即使用SYNC报文来广播此调度信息（t 秒后本人将休眠等）。称这类节点为synchronizer。</strong></p>
+<p>​	2.<strong>如果节点在监听时段内收到了其它节点的调度信息，则将自己的调度周期设为此调度信息，然后等待一个随机时间 td之后广播自己的调度信息。称这类节点为follower。</strong></p>
+<p>​	3.<strong>如果节点在已经选择并广播了自己的调度信息后，收到了其它节点的调度信息，则采用所有的调度信息（在所有侦听时间醒来）。</strong></p>
+<p><strong>有可能两（多）个节点各自独立地创建了调度周期，则位于它们之间的边界节点将会同时采用这两（多）个调度周期</strong></p>
+<h4 id="同步保持"><a href="#同步保持" class="headerlink" title="同步保持"></a><strong>同步保持</strong></h4><ul>
+<li><strong>由于时钟漂移的存在，需要在节点之间周期性地重发调度信息，以达到精确同步。</strong></li>
+<li><strong>相邻节点之间通过SYNC消息保持同步</strong></li>
+<li><strong>SYNC 消息是一个很短的控制分组，它包含有发送节点的地址、及其下一次休眠时间（相对于开始发送SYNC消息的时间）等</strong></li>
+<li><strong>当节点接收到SYNC 消息后，将会更新它调度表内的相应条目。</strong></li>
+<li><strong>每个节点通过SYNC 消息来定期广播自己的调度信息，可以使新加入的节点与已有节点保持同步。</strong></li>
+<li><strong>侦听时间分成两部分，用于 SYNC 分组、DATA 分组的收发</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192111001.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="同步保持"></p>
+<h4 id="虚拟簇"><a href="#虚拟簇" class="headerlink" title="虚拟簇"></a><strong>虚拟簇</strong></h4><p>​	–<strong>在一个分布式多跳网络中，实现所有相邻节点休眠时间的同步通常是比较困难的。因此，S-MAC允许一个节点采用多个休眠调度，以使采用不同调度周期的节点可以通过这类节点进行数据转发。</strong></p>
+<p>​	–<strong>通过相邻节点之间的同步，使得周期具有相同调度周期的节点形成一个虚拟簇，簇内节点间可以正常通信。</strong></p>
+<p>​	–<strong>对于具有多个调度周期的节点，成为虚拟簇的边界节点，可以同时与多个虚拟簇的节点通信。</strong></p>
+<p>​	–<strong>S-MAC协议可以形成众多不同的虚拟簇，对大规模部署的传感器网络具有良好的扩展性。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192158212.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="簇"></p>
+<h3 id="S-MAC协议──（2）消息冲突和串音避免"><a href="#S-MAC协议──（2）消息冲突和串音避免" class="headerlink" title="S-MAC协议──（2）消息冲突和串音避免"></a><strong>S-MAC协议──（2）消息冲突和串音避免</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192235893.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><strong>冲突避免</strong></p>
+<ul>
+<li><strong>采用 802.11 CSMA&#x2F;CA，即 RTS&#x2F;CTS&#x2F;DATA&#x2F;ACK 过程</strong></li>
+<li><strong>802.11MAC 层的 NAV 虚拟载波侦听 + 物理层的物理载波侦听</strong></li>
+</ul>
+<p><strong>串音避免</strong></p>
+<ul>
+<li><strong>802.11 MAC 由于虚拟载波侦听的需要，要求长期保持对所有邻居流量的侦听，因此串听了大量并非发给它的消息，造成能量浪费，尤其在节点密度大、流量负载重的场合。</strong></li>
+<li><strong>S-MAC的串音避免： 当节点收到RTS&#x2F;CTS ，如果目标不是自己，则进入休眠。</strong></li>
+<li><strong>节点的NAV数据可以作为它休眠时间长度的依据之一。</strong></li>
+<li><strong>例：A传输数据给B，哪些节点应该休眠以避免串听？</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192319593.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<h3 id="S-MAC协议──（3）自适应侦听"><a href="#S-MAC协议──（3）自适应侦听" class="headerlink" title="S-MAC协议──（3）自适应侦听"></a><strong>S-MAC协议──（3）自适应侦听</strong></h3><p><strong>流量自适应侦听</strong> </p>
+<p>​	<strong>–传感器网络采用多跳通信,节点的周期性休眠导致通信延迟增加，延迟会随着跳数的增多而累加。利用WSN数据传送的方向性特点，采用流量自适应侦听可以减少通信延迟的累加效应。</strong></p>
+<p>​	<strong>–基本原理： 在一次侦听周期中，当节点邻居节点传输结束后：</strong></p>
+<p><strong>如果节点（例如C）在这段侦听时间内收到CTS分组，并发现自己正好是通信的下一跳，它就休眠一段时间（此时邻居在接收数据）、并及时醒来，在本调度周期内接收数据，而无需等到下一次调度周期，从而减少了数据的传输延迟。</strong></p>
+<p><strong>如果节点在这段侦听时间内没有收到给自己的CTS分组，则按时返回休眠状态，直至下一次侦听周期。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192513886.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tu"></p>
+<h3 id="S-MAC协议──（4）消息传递"><a href="#S-MAC协议──（4）消息传递" class="headerlink" title="S-MAC协议──（4）消息传递"></a><strong>S-MAC协议──（4）消息传递</strong></h3><p><strong>消息传递机制</strong></p>
+<p>​	<strong>802.11 MAC 支持将长消息分割成几个短消息进行传送，每次传送都使用 RTS&#x2F;CTS 以预约一个短消息时间；</strong></p>
+<p>​	<strong>S-MAC 对于长消息采用了专门的消息传递机制：将长消息分割成几个短消息，让它们在预约时间内突发传送，只使用一次RTS&#x2F;CTS 来预约整个长消息时间。</strong></p>
+<p>​	<strong>接收节点对每个短消息都要发一个 ACK 应答，未收到ACK的发送节点将会重传该短消息。这里的多次ACK具有防止隐藏终端的作用（例：节点醒来或新节点加入、并且它是接收节点的邻居而非发送节点的邻居）。</strong></p>
+<p><strong>S-MAC 消息传递 vs. 802.11 MAC</strong></p>
+<ul>
+<li><strong>802.11 MAC协议的RTS&#x2F;CTS只预约下一个短消息的时间（公平性），邻居节点必须多次侦听每个短消息的时间。</strong></li>
+<li><strong>S-MAC协议的RTS&#x2F;CTS控制消息和数据消息携带的时间是整个长消息传输的剩余时间（全部预约、分段传输，达到传递长消息时的能量高效），邻居节点仅需一次侦听整个长消息的时间。</strong></li>
+<li><strong>因此，S-MAC通过消息传递机制，减少了邻居的串听。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192616013.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="vs"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192658751.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192713811.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex2"></p>
+<h3 id="S-MAC协议──小结"><a href="#S-MAC协议──小结" class="headerlink" title="S-MAC协议──小结"></a><strong>S-MAC协议──小结</strong></h3><p><strong>优缺点</strong></p>
+<ul>
+<li><strong>S-MAC协议比IEEE 802.11协议具有更高的能量效率（节省超过90%）、更强的可扩展性，能够更好地适应网络拓扑结构的变化。</strong></li>
+<li><strong>但由于采用固定的休眠占空比，信道的带宽利用率受到一定影响；虚拟簇节点使用大量SYNC广播分组，当网络业务负载较大时，控制开销带来的能耗代价将成为负担。</strong></li>
+<li><strong>S-MAC协议最主要的缺点是较大的传输迟延，因为它是以牺牲迟延换取能量节省的。</strong></li>
+</ul>
+<h2 id="3-2-1-3-T-MAC协议"><a href="#3-2-1-3-T-MAC协议" class="headerlink" title="3.2.1.3  T-MAC协议"></a>3.2.1.3  <strong>T-MAC协议</strong></h2><p>•<strong>T-MAC协议：在S-MAC协议的基础上提出。</strong></p>
+<p>•<strong>传感器网络MAC协议最重要的设计目标是减少能量消耗，而空闲侦听的能量消耗占绝对大的比例，特别是在消息传输频率较低的情况下。</strong></p>
+<p>•<strong>S-MAC协议通过采用周期性侦听&#x2F;睡眠工作方式来减少空闲侦听，周期长度固定不变，节点的侦听活动时间也是固定。</strong></p>
+<p>•<strong>T-MAC协议中，发送数据时仍为RTS&#x2F;CTS&#x2F;DATA&#x2F;ACK的通信过程，节点周期性唤醒进行侦听，如果在一个给定时间TA(time active)内没有发生下面任何一个激活事件，则活动结束。</strong></p>
+<p>​	-<strong>周期时间定时器溢出</strong></p>
+<p>​	-<strong>在无线信道上收到数据</strong></p>
+<p>​	-<strong>通过接收信号强度指示RSSI感知存在无线通信</strong></p>
+<p>​	-<strong>节点数据包或确认消息发送完毕</strong></p>
+<p>​	-<strong>通过侦听RTS&#x2F;CTS分组，确认邻居的数据交换已经结束。</strong></p>
+<h3 id="S-MAC与T-MAC协议的对比"><a href="#S-MAC与T-MAC协议的对比" class="headerlink" title="S-MAC与T-MAC协议的对比"></a><strong>S-MAC与T-MAC协议的对比</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192913972.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="vs"></p>
+<h3 id="T-MAC协议的基本数据交换"><a href="#T-MAC协议的基本数据交换" class="headerlink" title="T-MAC协议的基本数据交换"></a><strong>T-MAC协议的基本数据交换</strong></h3><p>•<strong>TA取值</strong></p>
+<p>  <strong>在每个活动期间开始，T-MAC协议按照突发方式发送所有数据。TA决定每个周期最小的空闲侦听时间，它的取值对于T-MAC协议性能至关重要,</strong></p>
+<pre><code class="hljs">                                                                   **TA&gt; C+ R + T**
+</code></pre>
+<p>  <strong>其中，C为竞争信道时间，R、T为发送RTS、CTS分组的时间。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220192939088.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="交换"></p>
+<h3 id="T-MAC协议：早睡问题"><a href="#T-MAC协议：早睡问题" class="headerlink" title="T-MAC协议：早睡问题"></a><strong>T-MAC协议：早睡问题</strong></h3><p><strong>假设传输方向A→B →C →D。</strong></p>
+<p><strong>如果节点A通过竞争首先获得发送，A向B发送RTS消息，B应答CTS。</strong></p>
+<p><strong>C收到B发出的CTS消息而转入睡眠状态，当B接收完数据，节点C醒来以便接收节点B发送给它的数据。</strong></p>
+<p><strong>D可能不知道A与B的通信存在，在A→B时的通信状态结束后就已经处于睡眠状态，这样，节点C只能等到下一个周期才能传输数据到D。</strong></p>
+<p><strong>这种通信延迟称为早睡问题（加剧于T-MAC的提前结束活动）。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193013975.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="early sleep"></p>
+<h4 id="1）未来请求发送-future-request-to-send-FRTS"><a href="#1）未来请求发送-future-request-to-send-FRTS" class="headerlink" title="1）未来请求发送(future request-to-send, FRTS)"></a><strong>1）未来请求发送(future request-to-send, FRTS)</strong></h4><p><strong>当节点C收到B发送给A的CTS分组后，立刻向下一跳D发出FRTS分组。</strong></p>
+<p><strong>FRTS分组包含节点D接收数据前需要等待的时间长度，节点D要在休眠相应长度时间后醒来接收数据。</strong></p>
+<p><strong>由于节点C发送的FRTS分组可能干扰节点A发送的数据，所以节点A需要推迟发送数据的时间。节点A通过在接收到CTS分组后发送一个与FRTS分组长度相同的DS (data-send)分组实现对信道的占用。DS分组不包含有用信息。</strong></p>
+<p><strong>节点A在DS分组之后开始发送正常的数据信息。FRTS方法可以提高吞吐率，但DS分组和FRTS分组带来了额外的通信开销。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193043844.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="FRTS"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193054291.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="FRTS"></p>
+<h4 id="2）满缓冲区优先-full-buffer-priority"><a href="#2）满缓冲区优先-full-buffer-priority" class="headerlink" title="2）满缓冲区优先(full buffer priority)"></a><strong>2）满缓冲区优先(full buffer priority)</strong></h4><p><strong>当节点的缓冲区接近占满时，对收到的RTS不作应答，而是立即向目标接收者发送RTS消息，并传输数据给目标节点。</strong></p>
+<p>​	–<strong>节点B向节点C发送RTS分组，节点C因缓冲区快满不发送CTS，而是向节点D发送RTS，将它的（缓冲区内）数据发送给节点D。</strong></p>
+<p>​	–<strong>该方法的优点是减少了早睡问题发生的可能，并起到了一定的网络流量的控制作用，带来的问题是增加了冲突的可能性。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193729431.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="fbp"></p>
+<h4 id="T-MAC协议：小结"><a href="#T-MAC协议：小结" class="headerlink" title="T-MAC协议：小结"></a><strong>T-MAC协议：小结</strong></h4><p>•<strong>T-MAC协议根据当前的网络通信情况，通过提前结束活动周期来减少空闲侦听，但带来了早睡问题，需要FRTS等方案。</strong></p>
+<p>•<strong>性能对比</strong></p>
+<p>​	–<strong>在负载恒定不变的情况下，T-MAC协议与采用固定占空比的S-MAC协议相比，节能效率相仿；</strong></p>
+<p>​	–<strong>在负载恒定不变的情况下，T-MAC协议与未采用占空比模式的CSMA协议相比，能够节省多达98%的能量；</strong></p>
+<p>​	–<strong>在负载动态可变的情况下，T-MAC协议与S-MAC协议相比，更加节省能量。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220193800904.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<h2 id="3-2-2-竞争型MAC协议—异步no-synchronization"><a href="#3-2-2-竞争型MAC协议—异步no-synchronization" class="headerlink" title="3.2.2 竞争型MAC协议—异步no synchronization"></a>3.2.2 <strong>竞争型MAC协议—异步no synchronization</strong></h2><p><strong>上述基于竞争的MAC协议具有良好的扩展性，并且不要求严格的时钟同步，但它们往往只是从发送数据的节点考虑问题，对接收节点的考虑相对较少。</strong></p>
+<p><strong>在基于竞争的MAC协议中，节点发送数据时竞争使用无线信道，并通知接收节点及时处于接收状态。节点处于休眠状态可能造成通信暂时中断，增大消息的传播延迟，所以在节省节点能量和增大消息延迟之间需要权衡。</strong></p>
+<h3 id="竞争型MAC协议：局部同步-gt-异步"><a href="#竞争型MAC协议：局部同步-gt-异步" class="headerlink" title="竞争型MAC协议：局部同步-&gt;异步"></a><strong>竞争型MAC协议：局部同步-&gt;异步</strong></h3><p><strong>基于周期性侦听&#x2F;休眠的方式：减少因空闲侦听造成的能量消耗</strong></p>
+<p><strong>固定占空比方式（局部同步，S-MAC为例）的缺点</strong></p>
+<ul>
+<li><strong>需要依靠大量的控制开销来建立和维护节点间的周期性同步</strong></li>
+<li><strong>节点在没有数据收发时，仍然需要在整个侦听周期内保持侦听状态，对网络业务负载变化的适应性较差。</strong></li>
+</ul>
+<p><strong>异步占空比方式</strong></p>
+<ul>
+<li><strong>基于异步周期性侦听&#x2F;休眠调度机制的协议（B-MAC、RI-MAC 等）</strong></li>
+<li><strong>由各个节点独自决定自己的休眠和唤醒时间，不需要在所有节点之间建立和保持同步，只在发送者&#x2F;接受者有数据需要传送时直接和目标节点建立同步</strong></li>
+<li><strong>分类：发送方发起（B-MAC）、接收方发起（RI-MAC）</strong></li>
+</ul>
+<h3 id="B-MAC协议"><a href="#B-MAC协议" class="headerlink" title="B-MAC协议"></a><strong>B-MAC协议</strong></h3><p><strong>采用前导采样（preamble sampling）来实现收&#x2F;发节点之间的同步，也称为低功耗侦听（LPL）</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194239824.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="b-mac"></p>
+<p><strong>侦听周期Tp是一个重要参数，它直接影响节点的能耗</strong></p>
+<ul>
+<li><strong>如果Tp很小，接收节点会因频繁的唤醒侦听而浪费能量</strong></li>
+<li><strong>如果Tp很大，发送节点会因传输很长的前导分组而增加能量消耗</strong></li>
+</ul>
+<p><strong>Preamble长度</strong></p>
+<ul>
+<li><strong>为避免分组空传，前导序列长度需要大于接收方的休眠时间</strong></li>
+</ul>
+<h4 id="B-MAC：低功耗侦听LPL的工作原理"><a href="#B-MAC：低功耗侦听LPL的工作原理" class="headerlink" title="B-MAC：低功耗侦听LPL的工作原理"></a><strong>B-MAC：低功耗侦听LPL的工作原理</strong></h4><p><strong>LPL机制的成功执行依赖于节点对信道状态的准确感知</strong></p>
+<p><strong>采用空闲信道评估机制（clear channel assessment, CCA）</strong></p>
+<p><strong>CCA主要考虑无线信道的两个特征：</strong></p>
+<ul>
+<li><strong>噪声信号易受环境影响而动态变化</strong></li>
+<li><strong>数据包在信道上传输时表现在相对稳定的信道能量</strong></li>
+</ul>
+<p><strong>因此，不能仅仅依靠单独采样，而是需要一定时间内的多次采样。</strong></p>
+<p><strong>CCA机制的工作流程</strong></p>
+<ul>
+<li><strong>噪声基准估计阶段：发送节点首先进行空闲信道采样，计算和更新噪声基准值。</strong></li>
+<li><strong>传输信号检测阶段：发送数据之前，节点需要再次对当前信道信息采样，检测多个连续采样值中是否存在孤立点（低值点）</strong><ul>
+<li><strong>如果存在，则认为信道空闲，节点开始发送数据；</strong></li>
+<li><strong>如果不存在，则认为信道忙，节点退避一段时间后再重复上述。</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="RI-MAC协议"><a href="#RI-MAC协议" class="headerlink" title="RI-MAC协议"></a><strong>RI-MAC协议</strong></h3><p><strong>任何数据帧的传输都由接收节点发起，即由接收节点发送一个信标分组（beacon）来主动通知发送节点开始数据分组传输。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194418968.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="rimac"></p>
+<h2 id="3-2-3-调度型（分配型）MAC协议—全局同步global-synchronization"><a href="#3-2-3-调度型（分配型）MAC协议—全局同步global-synchronization" class="headerlink" title="3.2.3  调度型（分配型）MAC协议—全局同步global synchronization"></a>3.2.3  <strong>调度型（分配型）MAC协议—全局同步global synchronization</strong></h2><h3 id="竞争型-gt-分配型"><a href="#竞争型-gt-分配型" class="headerlink" title="竞争型-&gt; 分配型"></a><strong>竞争型-&gt; 分配型</strong></h3><p><strong>随着网络流量的增大，竞争型的MAC协议中节点发生冲突的概率增大，这样不仅降低了网络带宽利用率，而且浪费大量能量。</strong></p>
+<p><strong>分配型的MAC协议通常采用TDMA、CDMA、FDMA或者SDMA等技术，将一条物理信道划分为许多子信道，然后将这些子信道根据节点的需求动态或固定（静态）地分配给节点，避免不必要的冲突发生。</strong></p>
+<p><strong>经常采用TDMA，具有较高的时间同步要求。</strong></p>
+<p><strong>分配型MAC需要理想的介质和环境，不存在其他竞争网络或行为异常的节点。</strong></p>
+<h3 id="TRAMA协议"><a href="#TRAMA协议" class="headerlink" title="TRAMA协议"></a><strong>TRAMA协议</strong></h3><p><strong>流量自适应介质访问(Traffic adaptive medium access, TRAMA)协议</strong></p>
+<ul>
+<li><strong>将信道按时间划分为连续的时隙</strong></li>
+<li><strong>每个节点掌握其两跳范围内的邻居节点信息</strong></li>
+<li><strong>采用分布式选举机制确定每个时隙的无冲突发送者：</strong></li>
+<li><strong>根据节点的ID号及当前时隙号，各节点利用哈希函数分布式地计算出所有节点在每个时隙上的优先级，并将当前时隙分配给优先级最高的节点。</strong></li>
+<li><strong>同时，通过避免将时隙分配给没有业务流量的节点，让没有通信任务的节点转入休眠状态。</strong></li>
+</ul>
+<h4 id="TRAMA协议的三部分"><a href="#TRAMA协议的三部分" class="headerlink" title="TRAMA协议的三部分"></a><strong>TRAMA协议的三部分</strong></h4><p><strong>（1）邻居协议NP（neighbor protocol)</strong> </p>
+<p><strong>NP协议在随机访问周期内执行，节点间通过NP协议需要获得一致的两跳邻居拓扑结构及各节点的业务流量信息。</strong></p>
+<p><strong>协议要求节点周期性通告自己的编号ID，是否有数据需要发送以及能够直接通信的邻居节点的相关信息，并实现节点间的时间同步。</strong></p>
+<p><strong>（2）调度交换协议SEP（schedule exchange protocol)</strong> </p>
+<p><strong>SEP协议用来建立和维护发送者和接收者的调度信息。在调度访问周期内，节点周期性地通过调度分组向邻居广播它的调度信息。</strong></p>
+<p><strong>（3）自适应选举算法AEA（adaptive election algorithm)</strong> </p>
+<p><strong>AEA用来通过计算两跳范围内所有节点的优先级，分布式地决定各个节点在当前时隙内的活动策略（发送、接收、休眠）。</strong></p>
+<p><strong>节点s在时隙t的优先级通过伪随机的哈希函数计算：</strong></p>
+<p> <strong>priority(s, t) &#x3D; hash(s∙t)</strong></p>
+<p><strong>各节点最终确定的在每个时隙上优先级最高的优胜节点是一致的。</strong></p>
+<h4 id="TRAMA协议的时隙组织"><a href="#TRAMA协议的时隙组织" class="headerlink" title="TRAMA协议的时隙组织"></a><strong>TRAMA协议的时隙组织</strong></h4><p><strong>连续时隙组成的信道被划分为周期性交替的随机访问阶段（包含通告时隙）、调度访问阶段（包含传输时隙）</strong></p>
+<p><strong>随机访问阶段主要用于网络维护，如节点失效、新节点加入引起的网络拓扑结构变化</strong></p>
+<p><strong>调度访问阶段用于确定每个时隙的发送者和接收者，实现无冲突的数据传输</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194655014.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="TRAMA"></p>
+<h3 id="DMAC协议"><a href="#DMAC协议" class="headerlink" title="DMAC协议"></a><strong>DMAC协议</strong></h3><p><strong>DMAC协议的基本思想</strong></p>
+<pre><code class="hljs"> **传感器网络中一种重要的通信模式是多个传感器节点向一个汇聚节点发送数据。所有传感器节点转发收到的数据，形成一个以汇聚节点为根节点的树型网络结构，称为采集树(data gathering tree)。**
+
+  **在基于竞争方式的MAC协议中,节点采用周期性的活动/休眠策略来减少能量消耗，但会出现数据在转发过程中“走走–停停”的通信停顿问题。在数据采集树结构中，这种传输延迟会随着路径上的跳数比例增加。**
+
+  **DMAC协议就是针对这种数据采集树结构提出的，目标是减少数据的传输延迟和网络的能量消耗。**
+</code></pre>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194837972.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="针对数据采集树的DMAC协议"></p>
+<h4 id="DMAC协议的工作原理"><a href="#DMAC协议的工作原理" class="headerlink" title="DMAC协议的工作原理"></a><strong>DMAC协议的工作原理</strong></h4><p><strong>DMAC的核心思想是采用交错调度机制。</strong></p>
+<p><strong>将节点划分为接收时间，发送时间和睡眠时间。其中接收时间和发送时间相等，均为发送一个数据的分组时间。</strong></p>
+<p><strong>每个节点的调度具有不同的偏移，下层节点的发送时间对应上层节点的接收时间。这样，数据能够连续地从数据源节点传送到汇聚节点，减少在网络中的传输延迟。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220194908799.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="原理"></p>
+<h2 id="3-2-4-混合型MAC协议"><a href="#3-2-4-混合型MAC协议" class="headerlink" title="3.2.4  混合型MAC协议"></a>3.2.4  <strong>混合型MAC协议</strong></h2><p><strong>同时包含了竞争型协议和分配型协议设计要素</strong></p>
+<ul>
+<li><strong>通过周期性分配型的MAC协议的优点减少空闲侦听、碰撞重传；</strong></li>
+<li><strong>发挥竞争型协议的灵活性和低复杂性。</strong></li>
+</ul>
+<p><strong>但是，设计难度大，实现困难。</strong></p>
+<p><strong>典型的协议主要有 Z-MAC、Funneling-MAC，二者均为 CSMA 与 TDMA 的混合型 MAC 协议</strong></p>
+<h3 id="Z-MAC协议"><a href="#Z-MAC协议" class="headerlink" title="Z-MAC协议"></a><strong>Z-MAC协议</strong></h3><p><strong>协议运行包含两个阶段</strong></p>
+<ul>
+<li><strong>启动阶段：发现邻居，获得两跳网络拓扑，时隙分配</strong></li>
+<li><strong>运行阶段：对节点进行传输控制</strong></li>
+</ul>
+<p><strong>在低流量条件下使用CSMA信道访问方式，可提高信道利用率并降低延时；</strong></p>
+<p><strong>在高流量条件下使用TDMA信道方式，可减少冲突和串听。</strong></p>
+<p><strong>特点：</strong></p>
+<ul>
+<li><strong>适合于中、高网络流量的传感器网络应用，具有比传统TDMA协议更好的可靠性和容错能力</strong></li>
+<li><strong>在最坏情况下，性能接近于CSMA。</strong></li>
+<li><strong>缺点：启动阶段的初始化操作复杂，局部范围通信量大，并且需要全局时间同步，节点有时存在隐藏终端问题。</strong></li>
+</ul>
+<h3 id="Funneling-MAC协议"><a href="#Funneling-MAC协议" class="headerlink" title="Funneling-MAC协议"></a><strong>Funneling-MAC协议</strong></h3><p><strong>传感器网络常见的单跳传输、多跳聚合的通信方式，造成sink附近的数据传输量大，容易发生冲突、拥塞和丢包，这种现象被称为漏斗效应（funneling effect）。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220195038590.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="漏斗"></p>
+<h4 id="Funneling-MAC协议的工作原理"><a href="#Funneling-MAC协议的工作原理" class="headerlink" title="Funneling-MAC协议的工作原理"></a><strong>Funneling-MAC协议的工作原理</strong></h4><p><strong>协议基本思想：全网采用CSMA，漏斗区域采用TDMA</strong></p>
+<p><strong>工作过程</strong></p>
+<ul>
+<li><strong>节点默认采用CSMA，局部TDMA由sink节点发起。</strong></li>
+<li><strong>当网络中的流量达到一定程度时，sink广播信标分组（beacon）触发TDMA。</strong></li>
+<li><strong>收到信标分组的节点称为F-节点，采用CSMA和TDMA结合通信。</strong></li>
+<li><strong>F-节点所在的区域称为强度区域，其范围由sink节点根据网络的实时流量情况，通过控制信标分组的发送功率动态调节。</strong></li>
+<li><strong>为实现同步，所有的F-节点在收到信标分组时统一初始化时钟。</strong></li>
+<li><strong>Sink节点负责F-节点的时隙调度。</strong></li>
+<li><strong>协议采用超帧结构。</strong></li>
+</ul>
+<h4 id="Funneling-MAC协议的超帧结构"><a href="#Funneling-MAC协议的超帧结构" class="headerlink" title="Funneling-MAC协议的超帧结构"></a><strong>Funneling-MAC协议的超帧结构</strong></h4><p><strong>一个超帧由一个CSMA帧和一个TDMA帧构成，两个信标分组之间包含多个超帧。</strong></p>
+<p><strong>F-节点依靠sink节点广播的信标分组将自己的时钟与超帧同步，使用CSMA帧和TDMA帧交替访问信道。</strong></p>
+<ul>
+<li><strong>CSMA帧</strong><ul>
+<li><strong>通信过程中临时产生的新数据，还没有被分配通信时隙</strong></li>
+<li><strong>网络中突发性的事件信息、实时性要求高的控制信息</strong></li>
+</ul>
+</li>
+<li><strong>TDMA帧</strong><ul>
+<li><strong>各个F-节点在分配的时隙内转发数据</strong></li>
+</ul>
+</li>
+<li><strong>Sink节点的时隙分配表紧随信标分组发送</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/image-20231220195207150.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+      
+        <a href="/tags/IoT/">#IoT</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>IoT__第3章__无线传感器网络__3.2_MAC协议</div>
+      <div>https://www.emokable.top/IoT-第3章-无线传感器网络-3-2-MAC协议/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/" title="旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-1-%E7%AE%80%E8%BF%B0/" title="IoT__第3章__无线传感器网络__3.1_简述">
+                        <span class="hidden-mobile">IoT__第3章__无线传感器网络__3.1_简述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

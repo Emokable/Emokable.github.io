@@ -1,0 +1,1356 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -存储体系结构一.简介计算机主要组成部件 存储“墙”问题 存储器发展 存储系统存储器容量由寻址策略决定    例如：    采用16位地址，寻址空间大小为2^16&#x3D;65536存储单元   大多数存储器是字节可寻址（byte-addressable） 每个存储单元的大小为1字节 大多数计算机以字为单位（word）检索或存储数据 常用缩写：  1K ≈ 2^10（Kilo）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L09-memory">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -存储体系结构一.简介计算机主要组成部件 存储“墙”问题 存储器发展 存储系统存储器容量由寻址策略决定    例如：    采用16位地址，寻址空间大小为2^16&#x3D;65536存储单元   大多数存储器是字节可寻址（byte-addressable） 每个存储单元的大小为1字节 大多数计算机以字为单位（word）检索或存储数据 常用缩写：  1K ≈ 2^10（Kilo）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224246838.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224627637.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224648379.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509225449676.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509225512428.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230258739.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230312003.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230512552.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230537433.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230624503.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231108004.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231211938.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231230264.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231254101.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231428108.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231506116.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231623323.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231818691.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231851657.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509232024945.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233656913.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233830558.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233907811.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233923890.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233958395.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234019380.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234104125.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234129094.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509235235024.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509235345912.png">
+<meta property="article:published_time" content="2023-05-08T16:30:43.000Z">
+<meta property="article:modified_time" content="2023-05-20T15:10:18.138Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224246838.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L09-memory - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L09-memory"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-09 00:30" pubdate>
+          2023年5月9日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          34 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L09-memory</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：7 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-存储体系结构"><a href="#计算机组成与实践-存储体系结构" class="headerlink" title="计算机组成与实践 -存储体系结构"></a><strong>计算机组成与实践</strong> -<strong>存储体系结构</strong></h1><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.<strong>简介</strong></h2><h3 id="计算机主要组成部件"><a href="#计算机主要组成部件" class="headerlink" title="计算机主要组成部件"></a><strong>计算机主要组成部件</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224246838.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="组件"></p>
+<h3 id="存储“墙”问题"><a href="#存储“墙”问题" class="headerlink" title="存储“墙”问题"></a><strong>存储“墙”问题</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224627637.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="发展限制"></p>
+<h4 id="存储器发展"><a href="#存储器发展" class="headerlink" title="存储器发展"></a><strong>存储器发展</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509224648379.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="发展"></p>
+<h4 id="存储系统"><a href="#存储系统" class="headerlink" title="存储系统"></a><strong>存储系统</strong></h4><p>存储器容量由寻址策略决定</p>
+<table>
+<thead>
+<tr>
+<th><strong>例如：</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>采用16位地址，寻址空间大小为2^16&#x3D;65536存储单元</td>
+</tr>
+</tbody></table>
+<p>大多数存储器是字节可寻址（byte-addressable）</p>
+<p>每个存储单元的大小为1字节</p>
+<p>大多数计算机以字为单位（word）检索或存储数据</p>
+<p>常用缩写：</p>
+<blockquote>
+<p>1K ≈ 2^10（Kilo）</p>
+<p>1M ≈ 2^20（Mega）</p>
+<p>1G ≈ 2^30（Giga）</p>
+<p>1T ≈ 2^40（Tera）</p>
+</blockquote>
+<h4 id="主存访问模式"><a href="#主存访问模式" class="headerlink" title="主存访问模式"></a><strong>主存访问模式</strong></h4><p>数据传输通过</p>
+<ul>
+<li>MAR：地址寄存器</li>
+<li>MDR：数据寄存器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509225449676.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="交互"></p>
+<h4 id="主存的基本结构"><a href="#主存的基本结构" class="headerlink" title="主存的基本结构"></a><strong>主存的基本结构</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509225512428.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="贮存结构"></p>
+<h4 id="存储系统设计"><a href="#存储系统设计" class="headerlink" title="存储系统设计"></a><strong>存储系统设计</strong></h4><p>处理器的运行速度远快于存储访问速度</p>
+<ul>
+<li>小容量访问速度快，大容量访问速度慢</li>
+<li>设计缓存存储常用数据加速存储访问速度</li>
+</ul>
+<p>内存容量有限：</p>
+<ul>
+<li>使用虚拟存储器增加内存容量</li>
+<li>内存管理单元（memory management unit，MMU）进行虚拟地址与物理地址之间的转换</li>
+</ul>
+<h4 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a><strong>局部性原理</strong></h4><p>程序局部性的访问地址空间</p>
+<table>
+<thead>
+<tr>
+<th><strong>时间局部性（Temporal locality）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>如果某个数据项被访问，那么在不久的将来它可能再次被访问</td>
+</tr>
+</tbody></table>
+<p>例如，loop循环中的指令</p>
+<table>
+<thead>
+<tr>
+<th><strong>空间局部性（Spatial locality）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>如果某个数据项被询问，与它地址相邻的数据项可能很快也将被访问</td>
+</tr>
+</tbody></table>
+<p>例如，顺序的指令执行，数组数据等</p>
+<h5 id="利用局部性原理"><a href="#利用局部性原理" class="headerlink" title="利用局部性原理"></a><strong>利用局部性原理</strong></h5><ul>
+<li>存储层次结构（Memory hierarchy）</li>
+<li>所有数据存储在磁盘</li>
+<li>最近访问的数据（相邻数据）从磁盘拷贝到较小的DRAM存储器<ul>
+<li>主存（Main memory）</li>
+</ul>
+</li>
+<li>最近经常访问的数据（相邻数据）从DRAM拷贝到更小的SRAM存储器<ul>
+<li>缓存（Cache）</li>
+</ul>
+</li>
+</ul>
+<h4 id="存储体系结构"><a href="#存储体系结构" class="headerlink" title="存储体系结构"></a><strong>存储体系结构</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230258739.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tu"></p>
+<h4 id="计算机的存储器是如何运作的"><a href="#计算机的存储器是如何运作的" class="headerlink" title="计算机的存储器是如何运作的"></a><strong>计算机的存储器是如何运作的</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230312003.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tt"></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av19939336/">https://www.bilibili.com/video/av19939336/</a></p>
+<h4 id="相关术语"><a href="#相关术语" class="headerlink" title="相关术语"></a><strong>相关术语</strong></h4><table>
+<thead>
+<tr>
+<th><strong>随机访问存储器（Random Access Memory, RAM）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>根据地址访问存储空间中的单元  Ø存储空间中的任意地址的访问时间相同</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>块（Block）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>缓存中数据交换的最小单元</td>
+</tr>
+</tbody></table>
+<p>命中率（Hit Rate）：在高层存储器中找到目标数据的存储访问比例</p>
+<p>缺失率（Miss Rate）：在高层存储器中不能找到目标数据的存储访问比例，Miss Rate &#x3D; 1 - Hit Rate</p>
+<table>
+<thead>
+<tr>
+<th><strong>命中时间（Hit Time）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>访问某存储器层次结构所需的时间，包括了判断当前访问是命中还是缺失所需的时间</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>缺失代价（Miss Penalty）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>将相应的块从低层存储器器替换到高层存储器所需的时间，包括访问块、将数据逐层传输、将数据插入缺失的层和将目标块传递给请求者的时间</td>
+</tr>
+</tbody></table>
+<p>命中时间 &lt;&lt; 缺失代价</p>
+<h4 id="带宽和延迟"><a href="#带宽和延迟" class="headerlink" title="带宽和延迟"></a><strong>带宽和延迟</strong></h4><ul>
+<li>带宽（Bandwidth）<ul>
+<li>描述数据传输时每秒传输的数据量（bits or bytes）</li>
+</ul>
+</li>
+<li>延迟（Latency）<ul>
+<li>发出访问信号到开始传输第一个字的时间</li>
+<li>以时钟周期为单位</li>
+</ul>
+</li>
+</ul>
+<h2 id="二-寄存器"><a href="#二-寄存器" class="headerlink" title="二.寄存器"></a>二.<strong>寄存器</strong></h2><h3 id="基于反馈的存储"><a href="#基于反馈的存储" class="headerlink" title="基于反馈的存储"></a><strong>基于反馈的存储</strong></h3><p>给两个反相器加上反馈信号</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230512552.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="中间可以稳定输出1信号"></p>
+<p>通常称为交叉耦合反相器（Cross-coupled Inverter）</p>
+<p>稳定存储1 bit数据的方式</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230537433.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="0/1"></p>
+<h3 id="S-R锁存器（latch）"><a href="#S-R锁存器（latch）" class="headerlink" title="S-R锁存器（latch）"></a><strong>S-R锁存器（latch）</strong></h3><ul>
+<li><p>用或非门替换反相器</p>
+</li>
+<li><p><strong>S-R锁存器（set-reset Latch）</strong></p>
+<blockquote>
+<p>这个是数电讲过的东西吧</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>锁存器（latch）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一种存储元件，它的输出与内部存储的状态一致，并且当时钟有效时，只要输入发生变化，存储状态就会随之发生变化。</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509230624503.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="锁存器"></p>
+<table>
+<thead>
+<tr>
+<th>input</th>
+<th></th>
+<th>output</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>A</td>
+<td>B</td>
+<td>(A+B) ̅</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>根据不同的R，S输入，Q的值</p>
+<ul>
+<li>R&#x3D;S&#x3D;0：Q&#x3D;1(其实是保持上次信号，Q不一定是1)</li>
+<li>S&#x3D;0，R&#x3D;1：Q&#x3D;0</li>
+<li>S&#x3D;1，R&#x3D;0：Q&#x3D;1</li>
+<li>R&#x3D;S&#x3D;1：亚稳定状态</li>
+</ul>
+<blockquote>
+<p>S是set，置位1</p>
+<p>R是reset，复位0</p>
+</blockquote>
+<h3 id="D锁存器"><a href="#D锁存器" class="headerlink" title="D锁存器"></a>D锁存器</h3><p>D锁存器：</p>
+<ul>
+<li>两个输入：要存储的数据D，时钟信号C</li>
+<li>两个输出：输出信号Q，其反向信号Q ̅</li>
+<li>当输入时钟C有效时，锁存器称为打开状态，此时输出信号Q 的值为输入信号D 的值。</li>
+<li>当输入时钟无效时，锁存器处于关闭状态，输出信号Q 等于锁存器最后一次打开时所存储的数据。</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231108004.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="D锁存器"></p>
+<h3 id="D触发器（flip-flop）"><a href="#D触发器（flip-flop）" class="headerlink" title="D触发器（flip-flop）"></a><strong>D触发器（flip-flop）</strong></h3><table>
+<thead>
+<tr>
+<th><strong>触发器（flip-flop）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一种存储元件，它的输出与内部存储的状态一致，并且内部状态只在时钟的边沿发生变化。</td>
+</tr>
+</tbody></table>
+<ul>
+<li>下降沿触发的D触发器<ul>
+<li>第一个锁存器称为主锁存器，第二个锁存器称为从锁存器</li>
+<li>当输入时钟C有效时，主锁存器打开，输入数据D。</li>
+<li>当输入时钟C被拉低时，主锁存器关闭，但第二个锁存器打开，并且主锁存器的输出作为第二个锁存器的输入信号。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231211938.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="D"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231230264.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Q"></p>
+<h3 id="寄存器"><a href="#寄存器" class="headerlink" title="寄存器"></a><strong>寄存器</strong></h3><p>D触发器构造寄存器</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231254101.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="寄存器构造"></p>
+<h2 id="三-随机访问存储器（RAM）"><a href="#三-随机访问存储器（RAM）" class="headerlink" title="三.随机访问存储器（RAM）"></a>三.<strong>随机访问存储器（RAM）</strong></h2><h3 id="静态随机存储器（SRAM）"><a href="#静态随机存储器（SRAM）" class="headerlink" title="静态随机存储器（SRAM）"></a><strong>静态随机存储器（SRAM）</strong></h3><ul>
+<li>存储1 bit数据需要6个晶体管</li>
+<li>大多数芯片使用SRAM</li>
+<li>一对弱交叉耦合反相器</li>
+<li>数据存储在交叉耦合反相器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231428108.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="SRAM"></p>
+<blockquote>
+<p>X地址译码线（行选通）</p>
+<p>Y地址译码线（列选通）</p>
+<p>T1、T2保存数据；<br>T3、T4补充电荷；</p>
+<p>T5、T6、T7、T8开关作用</p>
+</blockquote>
+<h4 id="静态存储器结构"><a href="#静态存储器结构" class="headerlink" title="静态存储器结构"></a><strong>静态存储器结构</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231506116.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<ul>
+<li>N位地址，寻址2n个存储单元，2n&#x2F;2+1根译码线</li>
+<li>一行存储1 block数据（word line），列地址（bit line）选择请求访问的字节或字</li>
+</ul>
+<blockquote>
+<p>按块存取，而非字节（具体取字节在内存中）</p>
+</blockquote>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231623323.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="配套"></p>
+<h3 id="动态随机存储器（DRAM）"><a href="#动态随机存储器（DRAM）" class="headerlink" title="动态随机存储器（DRAM）"></a><strong>动态随机存储器（DRAM）</strong></h3><h4 id="1-T-DRAM存储单元"><a href="#1-T-DRAM存储单元" class="headerlink" title="1-T DRAM存储单元"></a><strong>1-T DRAM存储单元</strong></h4><ul>
+<li>1个晶体管</li>
+<li>需要一个存储电容（Capacitor）</li>
+<li>提高存储密度</li>
+<li>电容存储数据，有电荷为1，否则是0</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231818691.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1-T"></p>
+<h4 id="动态存储器结构"><a href="#动态存储器结构" class="headerlink" title="动态存储器结构"></a><strong>动态存储器结构</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509231851657.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="block"></p>
+<h4 id="DRAM技术"><a href="#DRAM技术" class="headerlink" title="DRAM技术"></a><strong>DRAM技术</strong></h4><ul>
+<li>存储单元使用电容保存电荷的方式来存储数据<ul>
+<li>使用一个晶体管对电容进行访问</li>
+<li>必须周期性的刷新才能保持数据<ul>
+<li>读出内容再写回</li>
+<li>对一整行数据进行刷新</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509232024945.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="dram"></p>
+<h4 id="DRAM的优化"><a href="#DRAM的优化" class="headerlink" title="DRAM的优化"></a><strong>DRAM的优化</strong></h4><ul>
+<li>DRAM中的bit以矩形数组的结构组织排列<ul>
+<li>DRAM访问一整行数据</li>
+<li>突发模式（burst mode）：减少从行中连续访问字的开销</li>
+</ul>
+</li>
+<li>双倍数据速率（Double data rate, DDR）DRAM<ul>
+<li>在时钟的上升沿和下降沿传输数据，以获得双倍的数据带宽</li>
+</ul>
+</li>
+<li>四倍数据速率（Quad data rate, QDR）DRAM<ul>
+<li>将DDR的传输数据线路分为输入和输出，以获得四倍的数据带宽</li>
+</ul>
+</li>
+</ul>
+<h4 id="影响DRAM性能的因素"><a href="#影响DRAM性能的因素" class="headerlink" title="影响DRAM性能的因素"></a><strong>影响DRAM性能的因素</strong></h4><ul>
+<li>行缓冲器（Row buffer）<ul>
+<li>允许同时访问和刷新多个字的数据</li>
+</ul>
+</li>
+<li>同步DRAM（Synchronous DRAM）<ul>
+<li>以突发方式连续访问数据时，不需要发送所有字的地址</li>
+<li>增加带宽</li>
+</ul>
+</li>
+<li>DRAM划分存储块（banking）<ul>
+<li>支持多个存储块的并发访问</li>
+<li>增加带宽</li>
+</ul>
+</li>
+</ul>
+<h3 id="1到4代内存规格变化"><a href="#1到4代内存规格变化" class="headerlink" title="1到4代内存规格变化"></a><strong>1到4代内存规格变化</strong></h3><table>
+<thead>
+<tr>
+<th><strong>内存规格</strong></th>
+<th><strong>时钟频率</strong></th>
+<th><strong>数据传输率</strong></th>
+<th><strong>数据传输带宽</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SDRAM-133</td>
+<td>133MHz</td>
+<td>133MT&#x2F;s</td>
+<td>1.06GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR-266</td>
+<td>133MHz</td>
+<td>266MT&#x2F;s</td>
+<td>2.1GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR2-533</td>
+<td>133MHz</td>
+<td>533MT&#x2F;s</td>
+<td>4.2GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR3-1066</td>
+<td>133MHz</td>
+<td>1066MT&#x2F;s</td>
+<td>8.5GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR3-1600</td>
+<td>200MHz</td>
+<td>1600MT&#x2F;s</td>
+<td>12.8GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR4-2133</td>
+<td>133MHz</td>
+<td>2133MT&#x2F;s</td>
+<td>21.3GB&#x2F;s</td>
+</tr>
+<tr>
+<td>DDR4-3200</td>
+<td>200MHz</td>
+<td>3200MT&#x2F;s</td>
+<td>25.6GB&#x2F;s</td>
+</tr>
+</tbody></table>
+<h2 id="四-交叉存取（Interleaving）"><a href="#四-交叉存取（Interleaving）" class="headerlink" title="四.交叉存取（Interleaving）"></a>四.<strong>交叉存取（Interleaving）</strong></h2><h3 id="存储控制器（Memory-Controller）"><a href="#存储控制器（Memory-Controller）" class="headerlink" title="存储控制器（Memory Controller）"></a><strong>存储控制器（Memory Controller）</strong></h3><ul>
+<li>控制处理器与存储器间交互</li>
+<li>DRAM需要频繁刷新， 并且使用时分复用信号减少引脚数</li>
+<li>SRAM管理简单，通常不需要存储控制器</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233656913.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="控制器"></p>
+<p>RAS（CAS）：行（列）地址选通，CS：片选信号</p>
+<h3 id="存储控制器"><a href="#存储控制器" class="headerlink" title="存储控制器"></a><strong>存储控制器</strong></h3><ul>
+<li>存储控制器接收处理器发送的访问地址和R&#x2F;W信号</li>
+<li>生成RAS和CAS信号</li>
+<li>在RAS信号的控制下，部分高位地址作为行地址，选通存储结构中的某一行</li>
+<li>在CAS信号的控制下，部分低位地址作为列地址，在选通的某一行存储结构中的选通某一列</li>
+<li>根据地址选中相应的存储模块后，建立处理器与存储器间的数据线路</li>
+<li>DRAM需要频繁刷新，但是刷新开销少于总存储访问时间的1%</li>
+</ul>
+<h3 id="存储模块交叉"><a href="#存储模块交叉" class="headerlink" title="存储模块交叉"></a><strong>存储模块交叉</strong></h3><ul>
+<li>处理器和缓存访问速度快，内存访问慢</li>
+<li>可以通过交叉访问几个存储模块来隐藏访问延迟</li>
+<li>每个存储模块都有自己的地址缓冲寄存器（Address Buffer Register，ABR）和数据缓冲寄存器（Data Buffer Register，DBR）</li>
+</ul>
+<h4 id="存储模块交叉存取"><a href="#存储模块交叉存取" class="headerlink" title="存储模块交叉存取"></a><strong>存储模块交叉存取</strong></h4><p>处理器和缓存访问速度快，内存访问慢</p>
+<p>可以通过交叉访问几个存储模块来隐藏访问延迟</p>
+<p>每个存储模块都有自己的地址缓冲寄存器（Address Buffer Register，ABR）和数据缓冲寄存器（Data Buffer Register，DBR）</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233830558.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<p><strong>哪种策略更好？</strong></p>
+<p>两个或多个兼容的存储模块</p>
+<p>在一个存储模块中，采用多个并行访问的片</p>
+<table>
+<thead>
+<tr>
+<th><strong>例如：</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8个存储模块，每个模块有8个片，实现8×8&#x3D;64 bit的存储器总线</td>
+</tr>
+</tbody></table>
+<p>交叉存储可以在类似双通道内存架构中实现</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233907811.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h3 id="非交叉存储V-S-交叉存储"><a href="#非交叉存储V-S-交叉存储" class="headerlink" title="非交叉存储V.S.交叉存储"></a><strong>非交叉存储V.S.交叉存储</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233923890.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="vs"></p>
+<h4 id="交叉存取例子"><a href="#交叉存取例子" class="headerlink" title="交叉存取例子"></a><strong>交叉存取例子</strong></h4><p>假设指令访问数据缓存发生read miss，需要从内存将数据读入缓存</p>
+<p>缓存块大小为8 bytes</p>
+<p>假设发送地址到内存花费1 个时钟周期，从内存发送数据花费1个时钟周期</p>
+<p>此外，内存的访问延迟为6个时钟周期，即从接收到地址到发送第一个字节需要6个时钟周期</p>
+<p>访问相同行的字节的延迟为4个时钟周期</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509233958395.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="读取"></p>
+<h4 id="非交叉存取"><a href="#非交叉存取" class="headerlink" title="非交叉存取"></a><strong>非交叉存取</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234019380.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="非"></p>
+<p>访问第一个字节需要6 cycles</p>
+<p>假设所有随后的字节都在同一行，每个需要4 cycles</p>
+<table>
+<thead>
+<tr>
+<th><strong>非交叉存取</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1+6+7×4+1&#x3D;  36 cycles</td>
+</tr>
+</tbody></table>
+<h4 id="4个模块交叉存取"><a href="#4个模块交叉存取" class="headerlink" title="4个模块交叉存取"></a><strong>4个模块交叉存取</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234104125.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4"></p>
+<table>
+<thead>
+<tr>
+<th><strong>交叉存取</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1+6+1×8&#x3D;  15 cycles</td>
+</tr>
+</tbody></table>
+<h4 id="课题练习"><a href="#课题练习" class="headerlink" title="课题练习"></a><strong>课题练习</strong></h4><p>如果只有2个模块交叉存取，传输8 bytes数据，需要多少个时钟周期？</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509234129094.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4-8"></p>
+<table>
+<thead>
+<tr>
+<th><strong>交叉存取</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1+6+2×3+1×8&#x3D;  21 cycles</td>
+</tr>
+</tbody></table>
+<h2 id="五-二级存取器"><a href="#五-二级存取器" class="headerlink" title="五.二级存取器"></a>五.<strong>二级存取器</strong></h2><ul>
+<li>长期的非易失性存储</li>
+<li>存储体系结构的底层：访问速度慢、容量大、便宜</li>
+<li>带有磁性图层的可旋转的圆盘</li>
+<li>通过可移动的读&#x2F;写头来访问数据</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509235235024.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="磁盘"></p>
+<h3 id="闪存（Flash-Storage）"><a href="#闪存（Flash-Storage）" class="headerlink" title="闪存（Flash Storage）"></a><strong>闪存（Flash Storage）</strong></h3><p>磁盘替代者</p>
+<p>固态硬盘（SSD）：基于闪存</p>
+<p>非易失性，比磁盘快100~1000倍</p>
+<p>磨损问题：采用磨损均衡技术</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L09-memory/image-20230509235345912.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="flash"></p>
+<h2 id="六-小结"><a href="#六-小结" class="headerlink" title="六.小结"></a>六.<strong>小结</strong></h2><ul>
+<li>处理器速度与存储器的访问速度间不匹配问题——存储墙</li>
+<li>通用RAM类型：<ul>
+<li>SRAM、DRAM、SDRAM、DDR SDRAM</li>
+</ul>
+</li>
+<li>局部性原理：时间局部性和空间局部性</li>
+<li>存储体系结构：<ul>
+<li>寄存器-&gt;缓存-&gt;内存-&gt;磁盘-&gt;磁带</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L09-memory</div>
+      <div>https://www.emokable.top/计算机组成原理-L09-memory/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/" title="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A41/" title="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令1">
+                        <span class="hidden-mobile">ARM体系结构与编程-第4章-ARM程序设计基础-伪指令1</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

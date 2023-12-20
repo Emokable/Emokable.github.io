@@ -1,0 +1,1344 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ARM体系结构与编程本章的主要内容有：  ARM指令集、Thumb指令集概述 ARM指令的寻址方式 ARM指令集的分类与具体应用 Thumb指令集简介及应用场合  3.1 ARM微处理器的指令集概述3.1.1 ARM微处理器的指令的分类与格式ARM微处理器的指令集是加载&#x2F;存储型的，也即指令集仅能处理寄存器中的数据，而且处理结果都要放回寄存器中，而对系统存储器的访问则需要通过专门的加载&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式">
+<meta property="og:url" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="ARM体系结构与编程本章的主要内容有：  ARM指令集、Thumb指令集概述 ARM指令的寻址方式 ARM指令集的分类与具体应用 Thumb指令集简介及应用场合  3.1 ARM微处理器的指令集概述3.1.1 ARM微处理器的指令的分类与格式ARM微处理器的指令集是加载&#x2F;存储型的，也即指令集仅能处理寄存器中的数据，而且处理结果都要放回寄存器中，而对系统存储器的访问则需要通过专门的加载&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125031434.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125331854.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125501422.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125531379.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125714613.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125915297.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132342992.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132450905.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132516712.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132544198.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132611007.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331133652648.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331133740763.png">
+<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230422215603754.png">
+<meta property="article:published_time" content="2023-03-30T15:42:01.000Z">
+<meta property="article:modified_time" content="2023-04-22T13:59:24.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="ARM体系结构与编程">
+<meta property="article:tag" content="课件笔记">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125031434.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-30 23:42" pubdate>
+          2023年3月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="ARM体系结构与编程"><a href="#ARM体系结构与编程" class="headerlink" title="ARM体系结构与编程"></a><strong>ARM体系结构与编程</strong></h1><p>本章的主要内容有：</p>
+<ul>
+<li>ARM指令集、Thumb指令集概述</li>
+<li>ARM指令的寻址方式</li>
+<li>ARM指令集的分类与具体应用</li>
+<li>Thumb指令集简介及应用场合</li>
+</ul>
+<h2 id="3-1-ARM微处理器的指令集概述"><a href="#3-1-ARM微处理器的指令集概述" class="headerlink" title="3.1 ARM微处理器的指令集概述"></a>3.1 ARM微处理器的指令集概述</h2><h3 id="3-1-1-ARM微处理器的指令的分类与格式"><a href="#3-1-1-ARM微处理器的指令的分类与格式" class="headerlink" title="3.1.1 ARM微处理器的指令的分类与格式"></a>3.1.1 ARM微处理器的指令的分类与格式</h3><p>ARM微处理器的指令集是加载&#x2F;存储型的，也即指令集仅能处理寄存器中的数据，而且处理结果都要放回寄存器中，而对系统存储器的访问则需要通过专门的加载&#x2F;存储指令来完成。</p>
+<p>ARM微处理器的指令集可以分为：</p>
+<ul>
+<li>跳转指令</li>
+<li>数据处理指令</li>
+<li>加载&#x2F;存储指令</li>
+<li>程序状态寄存器（PSR）处理指令</li>
+<li>协处理器指令</li>
+<li>异常产生指令</li>
+</ul>
+<p>六大类，具体的指令及功能如下表所示（表中指令为基本ARM指令，不包括派生的ARM指令）。</p>
+<p><strong>ARM指令及功能描述</strong> </p>
+<table>
+<thead>
+<tr>
+<th>助记符</th>
+<th>指令功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ADC</td>
+<td>带进位加法指令</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>加法指令</td>
+</tr>
+<tr>
+<td>AND</td>
+<td>逻辑与指</td>
+</tr>
+<tr>
+<td>B</td>
+<td>跳转指令</td>
+</tr>
+<tr>
+<td>BIC</td>
+<td>位清零指令</td>
+</tr>
+<tr>
+<td>BL</td>
+<td>带返回的跳转指</td>
+</tr>
+<tr>
+<td>BLX</td>
+<td>带返回和状态切换的跳转指令</td>
+</tr>
+<tr>
+<td>BX</td>
+<td>带状态切换的跳转指令</td>
+</tr>
+<tr>
+<td>CDP</td>
+<td>协处理器数据操作指令</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>助记符</th>
+<th>指令功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CMN</td>
+<td>比较反值指令</td>
+</tr>
+<tr>
+<td>CMP</td>
+<td>比较指令</td>
+</tr>
+<tr>
+<td>EOR</td>
+<td>异或指令</td>
+</tr>
+<tr>
+<td>LDC</td>
+<td>存储器到协处理器的数据传输指令</td>
+</tr>
+<tr>
+<td>LDM</td>
+<td>加载多个寄存器指令</td>
+</tr>
+<tr>
+<td>LDR</td>
+<td>存储器到寄存器的数据传输指令</td>
+</tr>
+<tr>
+<td>MCR</td>
+<td>从ARM寄存器到协处理器寄存器的数据传输指令</td>
+</tr>
+<tr>
+<td>MOV</td>
+<td>数据传送指令</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>助记符</th>
+<th>指令功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>MRC</td>
+<td>从协处理器寄存器到ARM寄存器的数据传输指令</td>
+</tr>
+<tr>
+<td>MRS</td>
+<td>传送CPSR或SPSR的内容到通用寄存器指令</td>
+</tr>
+<tr>
+<td>MSR</td>
+<td>传送通用寄存器到CPSR或SPSR的指</td>
+</tr>
+<tr>
+<td>MUL</td>
+<td>32位乘法指</td>
+</tr>
+<tr>
+<td>MLA</td>
+<td>32位乘加指令</td>
+</tr>
+<tr>
+<td>MVN</td>
+<td>数据取反传送指令</td>
+</tr>
+<tr>
+<td>ORR</td>
+<td>逻辑或指令</td>
+</tr>
+<tr>
+<td>RSB</td>
+<td>逆向减法指令</td>
+</tr>
+<tr>
+<td>RSC</td>
+<td>带借位的逆向减法指令</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>助记符</th>
+<th>指令功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SBC</td>
+<td>带借位减法指令</td>
+</tr>
+<tr>
+<td>STC</td>
+<td>协处理器寄存器写入存储器指</td>
+</tr>
+<tr>
+<td>STM</td>
+<td>批量内存字写入指令</td>
+</tr>
+<tr>
+<td>STR</td>
+<td>寄存器到存储器的数据传输指</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>减法指令</td>
+</tr>
+<tr>
+<td>SWI</td>
+<td>软件中断指令</td>
+</tr>
+<tr>
+<td>SWP</td>
+<td>交换指令</td>
+</tr>
+<tr>
+<td>TEQ</td>
+<td>相等测试指</td>
+</tr>
+<tr>
+<td>TST</td>
+<td>位测试指</td>
+</tr>
+</tbody></table>
+<h4 id="ARM指令编码格式"><a href="#ARM指令编码格式" class="headerlink" title="ARM指令编码格式"></a>ARM指令编码格式</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125031434.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="arm"></p>
+<p><strong>说明</strong></p>
+<ul>
+<li>Cond<ul>
+<li>指令执行的条件编码</li>
+</ul>
+</li>
+<li>Opcode<ul>
+<li>指令操作符编码</li>
+</ul>
+</li>
+<li>S<ul>
+<li>决定指令的操作是否影响CPSR的值</li>
+</ul>
+</li>
+<li>Rd<ul>
+<li>操作目标寄存器编码</li>
+</ul>
+</li>
+<li>Rn<ul>
+<li>包含第一操作数的寄存器编码</li>
+</ul>
+</li>
+<li><strong>Shifter_operand</strong><ul>
+<li>表示第二操作数</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-1-2-指令的条件域"><a href="#3-1-2-指令的条件域" class="headerlink" title="3.1.2 指令的条件域"></a>3.1.2 指令的条件域</h3><ul>
+<li>当处理器工作在ARM状态时，几乎所有的指令均根据CPSR中条件码的状态和指令的条件域有条件的执行。当指令的执行条件满足时，指令被执行，否则指令被忽略。</li>
+<li>每一条ARM指令包含4位的条件码，位于指令的最高4位[31:28]。条件码共有16种，每种条件码可用两个字符表示，这两个字符可以添加在指令助记符的后面和指令同时使用。<ul>
+<li>例如，跳转指令B可以加上后缀EQ变为BEQ表示“相等则跳转”，即当CPSR中的Z标志置位时发生跳转。</li>
+</ul>
+</li>
+<li>n在16种条件标志码中，只有15种可以使用，如表3-2所示，第16种（1111）为系统保留，暂时不能使用。</li>
+</ul>
+<h4 id="指令的条件码"><a href="#指令的条件码" class="headerlink" title="指令的条件码"></a><strong>指令的条件码</strong></h4><table>
+<thead>
+<tr>
+<th>条件码</th>
+<th>助记符后缀</th>
+<th>标 志</th>
+<th>含 义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000</td>
+<td>EQ</td>
+<td>Z置位</td>
+<td>相等</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>NE</td>
+<td>Z清零</td>
+<td>不相等</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>CS</td>
+<td>C置位</td>
+<td>无符号数大于或等于</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>CC</td>
+<td>C清零</td>
+<td>无符号数小于</td>
+</tr>
+<tr>
+<td>0100</td>
+<td>MI</td>
+<td>N置位</td>
+<td>负数</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>PL</td>
+<td>N清零</td>
+<td>正数或零</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>VS</td>
+<td>V置位</td>
+<td>溢出</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>VC</td>
+<td>V清零</td>
+<td>未溢出</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>条件码</th>
+<th>助记符后缀</th>
+<th>标 志</th>
+<th>含 义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1000</td>
+<td>HI</td>
+<td>C置位Z清零</td>
+<td>无符号数大于</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>LS</td>
+<td>C清零Z置位</td>
+<td>无符号数小于或等于</td>
+</tr>
+<tr>
+<td>1010</td>
+<td>GE</td>
+<td>N等于V</td>
+<td>带符号数大于或等于</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>LT</td>
+<td>N不等于V</td>
+<td>带符号数小于</td>
+</tr>
+<tr>
+<td>1100</td>
+<td>GT</td>
+<td>Z清零且（N等于V）</td>
+<td>带符号数大于</td>
+</tr>
+<tr>
+<td>1101</td>
+<td>LE</td>
+<td>Z置位或（N不等于V）</td>
+<td>带符号数小于或等于</td>
+</tr>
+<tr>
+<td>1110</td>
+<td>AL</td>
+<td>忽略</td>
+<td>无条件执行</td>
+</tr>
+<tr>
+<td>1111</td>
+<td>NV</td>
+<td></td>
+<td>该指令从不执行</td>
+</tr>
+</tbody></table>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125331854.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="explain"></p>
+<h4 id="条件执行及标志位"><a href="#条件执行及标志位" class="headerlink" title="条件执行及标志位"></a>条件执行及标志位</h4><p>ARM指令可以通过添加适当的条件码后缀来达到条件执行的目的。</p>
+<p>这样可以提高代码密度，减少分支跳转指令数目，提高性能。</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125501422.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="汇编"></p>
+<p>默认情况下，数据处理指令不影响条件码标志位，但可以选择通过添加“S”来影响标志位。 CMP不需要增加 “S”就可改变相应的标志位。</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125531379.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h2 id="3-2-ARM指令的寻址方式"><a href="#3-2-ARM指令的寻址方式" class="headerlink" title="3.2 ARM指令的寻址方式"></a>3.2 ARM指令的寻址方式</h2><p>所谓<strong>寻址方式</strong>就是处理器根据指令中给出的地址信息来寻找物理地址的方式。目前ARM指令系统支持如下几种常见的寻址方式。</p>
+<h3 id="3-2-1-立即寻址"><a href="#3-2-1-立即寻址" class="headerlink" title="3.2.1 立即寻址"></a>3.2.1 立即寻址</h3><p>立即寻址也叫立即数寻址，这是一种特殊的寻址方式，操作数本身就在指令中给出，只要取出指令也就取到了操作数。这个操作数被称为立即数，对应的寻址方式也就叫做立即寻址。例如以下指令：</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R0</span>，<span class="hljs-built_in">R0</span>，＃<span class="hljs-number">1</span>          	；<span class="hljs-built_in">R0</span>←<span class="hljs-built_in">R0</span>＋<span class="hljs-number">1</span><br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R0</span>，<span class="hljs-built_in">R0</span>，＃<span class="hljs-number">0x3f</span>       	；<span class="hljs-built_in">R0</span>←<span class="hljs-built_in">R0</span>＋<span class="hljs-number">0x3f</span><br></code></pre></td></tr></table></figure>
+
+<p>在以上两条指令中，第二个源操作数即为立即数，要求以“＃”为前缀，对于以十六进制表示的立即数，还要求在“＃”后加上“0x”或“&amp;” ，另外％表示二进制数。</p>
+<h4 id="立即数-1"><a href="#立即数-1" class="headerlink" title="立即数 (1)"></a>立即数 (1)</h4><p>没有任何一条ARM 指令可包括一个32 bit的立即数</p>
+<p>所有的ARM指令都是32 bits固定长度</p>
+<p>数据处理指令格式中，第二个操作数有12位</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125714613.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="移位"></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Immed_8</span>=<span class="hljs-number">0</span>x3F,rotate_imm=<span class="hljs-number">0</span>xE<br><span class="hljs-attribute">or</span><br><span class="hljs-attribute">Immed_8</span>=<span class="hljs-number">0</span>xFC,rotate_imm=<span class="hljs-number">0</span>xF<br></code></pre></td></tr></table></figure>
+
+<p>4 bit 移位值 (0-15)乘于2，得到一个范围在0-30，步长为 2的移位值。</p>
+<p>记住一条准则： “<strong>最后8位一定要移动偶数位</strong>”.</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">Quick Quiz:<br><span class="hljs-number">0x3F0</span>   <span class="hljs-meta">#???</span><br><span class="hljs-number">0xe3a004ff</span><br><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">r0</span>, <span class="hljs-meta">#???</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="立即数-2"><a href="#立即数-2" class="headerlink" title="立即数 (2)"></a>立即数 (2)</h4><p>Examples:</p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331125915297.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="立即数"></p>
+<p>下列命令中，汇编器把立即数转换为移位操作：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">r0</span>,<span class="hljs-meta">#4096		 ; uses 0x40 ROR 26</span><br><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">r1</span>,<span class="hljs-built_in">r2</span>,<span class="hljs-meta">#0xFF0000 ; uses 0xFF ROR 16</span><br></code></pre></td></tr></table></figure>
+
+<p>也可使用 MVN来进行位反转:</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">MOV</span> <span class="hljs-built_in">r0</span>, #<span class="hljs-number">0xFFFFFFFF</span> <span class="hljs-comment">; assembles to MVN r0,#0</span><br></code></pre></td></tr></table></figure>
+
+<p>使用无法用上述方法生成的数据，将产生错误。</p>
+<h3 id="3-2-2-寄存器寻址"><a href="#3-2-2-寄存器寻址" class="headerlink" title="3.2.2 寄存器寻址"></a>3.2.2 寄存器寻址</h3><p>寄存器寻址就是利用寄存器中的数值作为操作数，这种寻址方式是各类微处理器经常采用的一种方式，也是一种执行效率较高的寻址方式。如下指令：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R0</span>，<span class="hljs-built_in">R1</span>，<span class="hljs-built_in">R2</span>   ；<span class="hljs-built_in">R0</span>←<span class="hljs-built_in">R1</span>＋<span class="hljs-built_in">R2</span><br></code></pre></td></tr></table></figure>
+
+<p>  该指令的执行效果是将寄存器R1和R2的内容相加，其结果存放在寄存器R0中。</p>
+<h3 id="3-2-3-寄存器间接寻址"><a href="#3-2-3-寄存器间接寻址" class="headerlink" title="3.2.3 寄存器间接寻址"></a>3.2.3 寄存器间接寻址</h3><p>  寄存器间接寻址就是以寄存器中的值作为操作数的地址，而操作数本身存放在存储器中。例如以下指令：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span>  <span class="hljs-built_in">R0</span>，[<span class="hljs-built_in">R1</span>]                 ；<span class="hljs-built_in">R0</span>←[<span class="hljs-built_in">R1</span>]<br><span class="hljs-keyword">STR</span>  <span class="hljs-built_in">R0</span>，[<span class="hljs-built_in">R1</span>]                 ；[<span class="hljs-built_in">R1</span>]←<span class="hljs-built_in">R0</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>第一条指令将以R1的值为地址的存储器中的数据传送到R0中。</li>
+<li>第二条指令将R0的值传送到以R1的值为地址的存储器中</li>
+</ul>
+<h3 id="3-2-4-基址变址寻址"><a href="#3-2-4-基址变址寻址" class="headerlink" title="3.2.4 基址变址寻址"></a>3.2.4 基址变址寻址</h3><p>  基址变址寻址就是将寄存器（该寄存器一般称作<strong>基址寄存器</strong>）的内容与指令中给出的地址偏移量相加，从而得到一个操作数的有效地址。变址寻址方式常用于访问某基地址附近的地址单元。</p>
+<p> 地址偏移量通常有以下三种表示方式</p>
+<ul>
+<li>常量</li>
+<li>寄存器</li>
+<li>比例（scaled）</li>
+</ul>
+<p>偏移寻址（offset addressing）</p>
+<ul>
+<li>LDR R0, [R1]</li>
+<li>LDR R0, [R1, #4]</li>
+<li>LDR R0, [R1, R2]</li>
+<li>LDR R0, [R1, R2, LSL #2]</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132342992.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意图"></p>
+<h4 id="地址的偏移（offset）"><a href="#地址的偏移（offset）" class="headerlink" title="地址的偏移（offset）"></a>地址的偏移（offset）</h4><p>使用一个绝对值不大于4095的数值，可使用带符号数，即在-4095~+4095之间； 如：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R2</span>, [Rn, #-<span class="hljs-number">0x8</span>]<br></code></pre></td></tr></table></figure>
+
+<p>使用对寄存器移位的方法计算偏移量；如：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R2</span>, [Rn, <span class="hljs-built_in">R3</span>,<span class="hljs-keyword">LSL</span> <span class="hljs-number">#2</span>]<br></code></pre></td></tr></table></figure>
+
+<p>使用寄存器偏移的方法计算偏移量；如：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R2</span>, [Rn, -<span class="hljs-built_in">R3</span>]<br></code></pre></td></tr></table></figure>
+
+<p>使用语句标号。如：</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs tp">LDR <span class="hljs-keyword">R</span><span class="hljs-number">2</span>, <span class="hljs-literal">START</span>;<span class="hljs-keyword">R</span><span class="hljs-number">2</span>&lt;-[<span class="hljs-literal">START</span>]<br></code></pre></td></tr></table></figure>
+
+<p>在这种寻址方式中，程序计算器PC是隐含的基址寄存器，偏移量是语句标号所在的地址和PC（当前正在执行的指令）之间的差值。</p>
+<h4 id="事先更新寻址（pre-index-addressing）"><a href="#事先更新寻址（pre-index-addressing）" class="headerlink" title="事先更新寻址（pre-index addressing）"></a>事先更新寻址（pre-index addressing）</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>, <span class="hljs-number">#4</span>]!<br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span>]!<br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-number">#2</span>]!<br></code></pre></td></tr></table></figure>
+
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132450905.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意图"></p>
+<h4 id="事后更新寻址（Post-index-addressing）"><a href="#事后更新寻址（Post-index-addressing）" class="headerlink" title="事后更新寻址（Post-index addressing）"></a>事后更新寻址（Post-index addressing）</h4><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>], <span class="hljs-number">#4</span><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>], <span class="hljs-built_in">R2</span><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">R0</span>, [<span class="hljs-built_in">R1</span>], <span class="hljs-built_in">R2</span>, <span class="hljs-keyword">LSL</span> <span class="hljs-number">#2</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132516712.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="事后"></p>
+<blockquote>
+<p>Pre or Post Indexed 寻址?</p>
+<p> Pre-indexed: <strong>STR r0,[r1,#12]!</strong></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132544198.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="pre"></p>
+<p> Post-indexed: <strong>STR r0,[r1],#12</strong></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331132611007.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="post"></p>
+</blockquote>
+<h4 id="数据移动寻址方式（data-movement-addressing-modes）"><a href="#数据移动寻址方式（data-movement-addressing-modes）" class="headerlink" title="数据移动寻址方式（data movement addressing modes）"></a>数据移动寻址方式（data movement addressing modes）</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331133652648.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="data movement"></p>
+<h4 id="内存寻址方式（memory-addressing-modes）"><a href="#内存寻址方式（memory-addressing-modes）" class="headerlink" title="内存寻址方式（memory addressing modes）"></a>内存寻址方式（memory addressing modes）</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230331133740763.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="内存寻址"></p>
+<h3 id="3-2-5-多寄存器寻址"><a href="#3-2-5-多寄存器寻址" class="headerlink" title="3.2.5 多寄存器寻址"></a>3.2.5 多寄存器寻址</h3><p>采用多寄存器寻址方式，一条指令可以完成多个寄存器值的传送。这种寻址方式可以用一条指令完成传送最多16个通用寄存器的值。以下指令：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDMIA</span> <span class="hljs-built_in">R13</span>，&#123;<span class="hljs-built_in">R1</span>，<span class="hljs-built_in">R2</span>，<span class="hljs-built_in">R3</span>，<span class="hljs-built_in">R4</span>&#125;  <br>或写成：<span class="hljs-keyword">LDMIA</span> <span class="hljs-built_in">R13</span>，&#123;<span class="hljs-built_in">R1</span>-<span class="hljs-built_in">R4</span>&#125; 							 ；<span class="hljs-built_in">R1</span>←[<span class="hljs-built_in">R13</span>]<br>                                					；<span class="hljs-built_in">R2</span>←[<span class="hljs-built_in">R13</span>＋<span class="hljs-number">4</span>]<br>                                     				；<span class="hljs-built_in">R3</span>←[<span class="hljs-built_in">R13</span>＋<span class="hljs-number">8</span>]<br>                                    				；<span class="hljs-built_in">R4</span>←[<span class="hljs-built_in">R13</span>＋<span class="hljs-number">12</span>]<br></code></pre></td></tr></table></figure>
+
+<p>该指令的后缀<strong>IA</strong>表示在每次执行完加载&#x2F;存储操作后，Rn按字长度增加，因此，指令可将连续存储单元的值传送到R1～R4。</p>
+<p>指令中寄存器和内存单元的对应关系：<strong>编号低的寄存器对应于内存中低地址单元，编号高的寄存器对应于内存中高地址单元。</strong></p>
+<h3 id="3-2-6-堆栈寻址"><a href="#3-2-6-堆栈寻址" class="headerlink" title="3.2.6 堆栈寻址"></a>3.2.6 堆栈寻址</h3><ul>
+<li>堆栈是一种数据结构，按先进后出（First In Last Out，FILO）的方式工作，使用一个称作堆栈指针的专用寄存器指示当前的操作位置，堆栈指针总是指向栈顶。</li>
+<li>当堆栈指针指向最后压入堆栈的数据时，称为<strong>满堆栈</strong>（Full Stack），而当堆栈指针指向下一个将要放入数据的空位置时，称为<strong>空堆栈</strong>（Empty Stack）</li>
+</ul>
+<p>同时，根据堆栈的生成方式，又可以分为<strong>递增堆栈</strong>（Ascending Stack）和<strong>递减堆栈</strong>（Decending Stack），当堆栈由低地址向高地址生成时，称为递增堆栈，当堆栈由高地址向低地址生成时，称为递减堆栈。这样就有四种类型的堆栈工作方式，ARM微处理器支持这四种类型的堆栈工作方式，即：</p>
+<ul>
+<li>满递增堆栈 (<strong>FA</strong>)：堆栈指针指向最后压入的数据，且由低地址向高地址生成。</li>
+<li>满递减堆栈(<strong>FD</strong>) ：堆栈指针指向最后压入的数据，且由高地址向低地址生成。</li>
+<li>空递增堆栈(<strong>EA</strong>) ：堆栈指针指向下一个将要放入数据的空位置，且由低地址向高地址生成。</li>
+<li>空递减堆栈(<strong>ED</strong>) ：堆栈指针指向下一个将要放入数据的空位置，且由高地址向低地址生成</li>
+</ul>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F1-%E5%AF%BB%E5%9D%80%E6%96%B9%E5%BC%8F/image-20230422215603754.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="A/D只是栈的方向不同，和放数据关系不大"></p>
+<blockquote>
+<p>此处我个人易混，放一个别人的<a target="_blank" rel="noopener" href="https://www.cnblogs.com/fanzhidongyzby/p/5250116.html">链接</a></p>
+</blockquote>
+<h3 id="3-2-7-块拷贝寻址"><a href="#3-2-7-块拷贝寻址" class="headerlink" title="3.2.7 块拷贝寻址"></a>3.2.7 块拷贝寻址</h3><ul>
+<li>多寄存器传送指令用于将一块数据从存储器的某一位置拷贝到另一位置。 如：STMIA R0!,{R1-R7} ; 将R1～R7的数据保存到存储器中。</li>
+<li>IA (increment after)  事后递增方式</li>
+<li>IB (increment before)  事先递增方式</li>
+<li>DA (decrement after)  事后递减方式</li>
+<li>DB (decrement before)  事先递减方式</li>
+</ul>
+<p>批量load&#x2F;store指令可以实现在一组寄存器和一块连续的内存单元之间传输数据。例如：</p>
+<p>LDMIA R13,{R5-R8} ;将内存单元（R13）到（R13+12）4个数据读取到R5-R8的4个寄存器中。</p>
+<h3 id="3-2-8-相对寻址"><a href="#3-2-8-相对寻址" class="headerlink" title="3.2.8 相对寻址"></a>3.2.8 相对寻址</h3><p>与基址变址寻址方式相类似，相对寻址是基址寻址的一种变通。</p>
+<p>相对寻址以程序计数器PC的当前值为基地址，指令中的地址标号作为偏移量，将两者相加之后得到操作数的有效地址。以下程序段完成子程序的调用和返回，跳转指令BL采用了相对寻址方式：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">BL</span>  NEXT      ；跳转到子程序NEXT处执行<br>		……                         <br><span class="hljs-symbol">NEXT</span>			；跳转地址：<span class="hljs-built_in">PC</span>+NEXT<br>		……                             <br>		<span class="hljs-keyword">MOV</span>  <span class="hljs-built_in">PC</span>，<span class="hljs-built_in">LR</span>        ；从子程序返回<br></code></pre></td></tr></table></figure>
+
+<h2 id="课后练习"><a href="#课后练习" class="headerlink" title="课后练习"></a>课后练习</h2><p>下面哪些立即数是数据处理指令中有效的数据? 并分别写出指令编码中的立即数和循环移位的位数。</p>
+<p> <strong>a) 0x0000ef00    b) 0x00011113</strong>    </p>
+<p> <strong>c) 0xf0000009   d) 0x08000012</strong>   </p>
+<p> <strong>e) 0x00001280    f) 0xffffffff</strong></p>
+<p> <strong>g) 0x00ab0000    h) 0x0001ffff</strong>    </p>
+<p> <strong>i) 0xf000001a   j) 0x08000012</strong>   </p>
+<p> <strong>k) 0x00001f80    l) 0xf0f0f0f0</strong></p>
+<p> STMFD sp!, {R0-R5,LR}是一条批量存储指令，画出该指令执行前后内存中数据存放及栈指针变化情况，并简述该指令的操作过程。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B/">#ARM体系结构与编程</a>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式</div>
+      <div>https://www.emokable.top/ARM体系结构与编程-第3章-ARM微处理器的指令系统1-寻址方式/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L05-datapath/" title="计算机组成原理-L05-datapath">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理-L05-datapath</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L04-performance/" title="计算机组成原理-L04-performance">
+                        <span class="hidden-mobile">计算机组成原理-L04-performance</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

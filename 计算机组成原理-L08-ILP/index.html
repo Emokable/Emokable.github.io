@@ -1,0 +1,1341 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -指令级并行（ILP） ILP简介 依赖 静态多发射 动态多发射 小结  一.ILP简介指令级并行（Instruction Level Parallel） 流水线：并行执行多条指令 提高指令级并行 超级流水线（Super pipelining）：增加流水级 每级任务变少Þ 时钟周期缩短     多发射（multiple issue） 复制流水线的各级Þ 多条流水线 每个时钟周期提">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L08-ILP">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -指令级并行（ILP） ILP简介 依赖 静态多发射 动态多发射 小结  一.ILP简介指令级并行（Instruction Level Parallel） 流水线：并行执行多条指令 提高指令级并行 超级流水线（Super pipelining）：增加流水级 每级任务变少Þ 时钟周期缩短     多发射（multiple issue） 复制流水线的各级Þ 多条流水线 每个时钟周期提">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164130460.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164318794.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164752063.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426165254398.png">
+<meta property="article:published_time" content="2023-04-26T08:34:33.000Z">
+<meta property="article:modified_time" content="2023-04-26T08:54:40.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164130460.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L08-ILP - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L08-ILP"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-26 16:34" pubdate>
+          2023年4月26日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L08-ILP</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：8 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-指令级并行（ILP）"><a href="#计算机组成与实践-指令级并行（ILP）" class="headerlink" title="计算机组成与实践 -指令级并行（ILP）"></a><strong>计算机组成与实践</strong> -<strong>指令级并行（ILP）</strong></h1><ul>
+<li><strong>ILP简介</strong></li>
+<li><strong>依赖</strong></li>
+<li><strong>静态多发射</strong></li>
+<li><strong>动态多发射</strong></li>
+<li><strong>小结</strong></li>
+</ul>
+<h2 id="一-ILP简介"><a href="#一-ILP简介" class="headerlink" title="一.ILP简介"></a>一.<strong>ILP简介</strong></h2><h3 id="指令级并行（Instruction-Level-Parallel）"><a href="#指令级并行（Instruction-Level-Parallel）" class="headerlink" title="指令级并行（Instruction Level Parallel）"></a><strong>指令级并行（Instruction Level Parallel）</strong></h3><ul>
+<li>流水线：并行执行多条指令</li>
+<li>提高指令级并行<ul>
+<li>超级流水线（Super pipelining）：增加流水级<ul>
+<li>每级任务变少Þ 时钟周期缩短</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多发射（multiple issue）<ul>
+<li>复制流水线的各级Þ 多条流水线</li>
+<li>每个时钟周期提取多条指令</li>
+<li>CPI&lt;1，采用IPC</li>
+<li>例如，4GHz 4路多发射：160 BIPS，峰值CPI&#x3D;0.25，峰值IPC&#x3D;4</li>
+<li>实际上，依赖关系减少了IPC</li>
+</ul>
+</li>
+</ul>
+<h3 id="多发射（Multiple-Issue）"><a href="#多发射（Multiple-Issue）" class="headerlink" title="多发射（Multiple Issue）"></a><strong>多发射（Multiple Issue）</strong></h3><ul>
+<li>静态多发射（VLIW）<ul>
+<li>编译器阶段选择哪些指令为一组进行多发射</li>
+<li>将这组指令放入发射槽（issue slots）</li>
+<li>编译器检测并避免冒险</li>
+</ul>
+</li>
+<li>动态多发射（Superscalar）<ul>
+<li>CPU执行指令并选择哪些指令可以进行多发射</li>
+<li>编译器可以帮助调整指令执行顺序</li>
+<li>CPU在运行时解决冒险</li>
+</ul>
+</li>
+</ul>
+<h2 id="二-依赖"><a href="#二-依赖" class="headerlink" title="二.依赖"></a><strong>二.依赖</strong></h2><table>
+<thead>
+<tr>
+<th><strong>结构冒险——资源冲突</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>多发射处理器会出现很多资源冲突</td>
+</tr>
+<tr>
+<td>资源冲突可以通过加入更多硬件资源或流水线执行来消除</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>数据冒险——数据（存储）依赖</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在多发射处理器中极大的限制了其指令级并行</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>控制冒险——过程依赖</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>在多发射处理器中更严峻</td>
+</tr>
+<tr>
+<td>采用动态分支预测可以缓解</td>
+</tr>
+</tbody></table>
+<p>通过软硬件结合的方式来缓解依赖带来的影响</p>
+<h3 id="数据冒险"><a href="#数据冒险" class="headerlink" title="数据冒险"></a><strong>数据冒险</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164130460.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据冒险"></p>
+<table>
+<thead>
+<tr>
+<th><strong>RAW（真相关）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前指令使用的数据是前面指令更新的数据，必须保持指令执行的顺序</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>WAR（反相关）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>当前指令需要更新数据，而前面的指令使用的是原来的数据，必须保持指令执行的顺序</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>WAW（输出相关）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>两条指令会相继更新数据，必须保持指令执行的顺序</td>
+</tr>
+</tbody></table>
+<h3 id="课堂练习："><a href="#课堂练习：" class="headerlink" title="课堂练习："></a><strong>课堂练习：</strong></h3><p>找到下面指令的所有数据依赖，并给出其属于哪种依赖</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">I1：<span class="hljs-keyword">ADD</span> <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span>, <span class="hljs-built_in">R1</span><br><span class="hljs-symbol">I2:</span>  LW  <span class="hljs-built_in">R2</span>, <span class="hljs-number">0</span>(<span class="hljs-built_in">R1</span>)<br><span class="hljs-symbol">I3:</span>  LW  <span class="hljs-built_in">R1</span>, <span class="hljs-number">4</span>(<span class="hljs-built_in">R1</span>)<br><span class="hljs-symbol">I4:</span>  <span class="hljs-keyword">OR</span>  <span class="hljs-built_in">R3</span>, <span class="hljs-built_in">R1</span>, <span class="hljs-built_in">R2</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>RAW表示程序中数据流，即数据处理的顺序</li>
+<li>WAR和WAW两种依赖因为寄存器数量有限（存储冲突）而产生的，即不得不重复使用同一个寄存器</li>
+<li>存储冲突可以减少：<ul>
+<li>增加存储资源</li>
+<li>提供额外的寄存器，重新建立寄存器与数值之间的对应关系</li>
+<li>超标量处理器使用硬件动态分配寄存器</li>
+</ul>
+</li>
+</ul>
+<h4 id="解决存储冲突"><a href="#解决存储冲突" class="headerlink" title="解决存储冲突"></a><strong>解决存储冲突</strong></h4><table>
+<thead>
+<tr>
+<th><strong>寄存器重命名（Register Renaming）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>处理器重新命名指令中的寄存器标识符</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164318794.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="解决存储冲突"></p>
+<p>硬件通过从空闲寄存器池中分配一个寄存器进行重命名</p>
+<p>数据使用之后将寄存器释放回空闲寄存器池</p>
+<h4 id="解决过程依赖"><a href="#解决过程依赖" class="headerlink" title="解决过程依赖"></a><strong>解决过程依赖</strong></h4><table>
+<thead>
+<tr>
+<th><strong>推测（Speculation）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>为了使依赖于该指令的其他指令尽快运行，推测一条指令的结果：</td>
+</tr>
+<tr>
+<td>推测分支结果：如果错误则返回去执行正确指令</td>
+</tr>
+<tr>
+<td>推测load指令不依赖与store指令：如果错误，返回重新load数据</td>
+</tr>
+</tbody></table>
+<ul>
+<li>必须有以下机制支持推测技术：<ul>
+<li>检测推测是否正确<ul>
+<li>如果正确，完成操作</li>
+<li>如果错误，返回到该指令并执行正确的结果</li>
+</ul>
+</li>
+<li>如果推测错误，必须能够恢复</li>
+</ul>
+</li>
+<li>推测可以由编译器或硬件来完成</li>
+<li>通常在静态和动态多发射中使用</li>
+</ul>
+<h4 id="编译器推测和硬件推测"><a href="#编译器推测和硬件推测" class="headerlink" title="编译器推测和硬件推测"></a><strong>编译器推测和硬件推测</strong></h4><ul>
+<li>编译器推测可以调整指令执行顺序<ul>
+<li>例如，将load放到分支之前执行</li>
+<li>插入额外指令检测正确性，并为推测错误提供修复程序</li>
+</ul>
+</li>
+<li>硬件推测可以提前执行指令<ul>
+<li>缓存推测的结果直至推测的结果得到确认</li>
+<li>如果推测正确，将缓存的结果写回到寄存器和存储器</li>
+<li>如果推测错误，硬件清除缓存并重新执行正确指令</li>
+</ul>
+</li>
+</ul>
+<h2 id="三-静态多发射"><a href="#三-静态多发射" class="headerlink" title="三.静态多发射"></a><strong>三.静态多发射</strong></h2><ul>
+<li>编译器封装多条指令并处理冒险<ul>
+<li>将可以在同一时钟周期执行的指令封装成发射包（issue packet）</li>
+<li>由流水线的资源数量所决定</li>
+</ul>
+</li>
+<li>一条执行多个操作的长指令<ul>
+<li>指定多个并发操作</li>
+<li>超长指令字（ very long instruction word，VLIW）</li>
+</ul>
+</li>
+</ul>
+<h4 id="调度静态多发射"><a href="#调度静态多发射" class="headerlink" title="调度静态多发射"></a><strong>调度静态多发射</strong></h4><p>编译器处理数据冒险和控制冒险</p>
+<ul>
+<li>调度代码，封装发射包</li>
+<li>发射包内指令间不能存在依赖</li>
+<li>发射包间可以存在指令间依赖</li>
+<li>如果需要可以封装nop操作</li>
+</ul>
+<h4 id="静态双发射例子"><a href="#静态双发射例子" class="headerlink" title="静态双发射例子"></a><strong>静态双发射例子</strong></h4><p>双发射包</p>
+<ul>
+<li>一条ALU 指令或分支指令</li>
+<li>一条load或store指令</li>
+<li>两条指令成对存放在64位对齐的存储区域</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Address</th>
+<th>Instruction  type</th>
+<th>Pipeline  Stages</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n</td>
+<td>ALU&#x2F;branch</td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>n +  4</td>
+<td>Load&#x2F;store</td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>n +  8</td>
+<td>ALU&#x2F;branch</td>
+<td></td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+<td></td>
+</tr>
+<tr>
+<td>n +  12</td>
+<td>Load&#x2F;store</td>
+<td></td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+<td></td>
+</tr>
+<tr>
+<td>n +  16</td>
+<td>ALU&#x2F;branch</td>
+<td></td>
+<td></td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+</tr>
+<tr>
+<td>n +  20</td>
+<td>Load&#x2F;store</td>
+<td></td>
+<td></td>
+<td>IF</td>
+<td>ID</td>
+<td>EX</td>
+<td>MEM</td>
+<td>WB</td>
+</tr>
+</tbody></table>
+<h4 id="静态双发射数据通路"><a href="#静态双发射数据通路" class="headerlink" title="静态双发射数据通路"></a><strong>静态双发射数据通路</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426164752063.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="双发射"></p>
+<h4 id="双发射中的冒险"><a href="#双发射中的冒险" class="headerlink" title="双发射中的冒险"></a><strong>双发射中的冒险</strong></h4><ul>
+<li>EX级发射数据冒险<ul>
+<li>单个发射通路中出现数据冒险，采用旁路</li>
+<li>发射包中指令间存在的数据冒险<ul>
+<li>add $0,$0,$1</li>
+<li>lw   $2,0($0)</li>
+<li>将这两条指令封装进不同的发射包中</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>取数使用型数据冒险<ul>
+<li>阻塞一个时钟周期</li>
+</ul>
+</li>
+<li>需要编译器技术<ul>
+<li>指令调度（instruction Scheduling）</li>
+<li>循环展开（Loop Unrolling）</li>
+</ul>
+</li>
+</ul>
+<h4 id="指令调度示例"><a href="#指令调度示例" class="headerlink" title="指令调度示例"></a><strong>指令调度示例</strong></h4><p>面向双发射调度下列代码</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk">Loop: lw    <span class="hljs-variable">$t0</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$s1</span>)     <span class="hljs-regexp">//</span> <span class="hljs-variable">$t0</span>=array element<br>addu  <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$t0</span>,<span class="hljs-variable">$s2</span> 		   <span class="hljs-regexp">//</span> add scalar <span class="hljs-keyword">in</span> <span class="hljs-variable">$s2</span><br>sw    <span class="hljs-variable">$t0</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$s1</span>)    	  <span class="hljs-regexp">//</span> store result<br>addi  <span class="hljs-variable">$s1</span>, <span class="hljs-variable">$s1</span>, -<span class="hljs-number">4</span>    	 <span class="hljs-regexp">//</span> decrement pointer<br>bne   <span class="hljs-variable">$s1</span>, <span class="hljs-variable">$zero</span>, Loop  <span class="hljs-regexp">//</span> branch <span class="hljs-variable">$s1</span>!=<span class="hljs-number">0</span><br><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ALU&#x2F;branch</th>
+<th>Load&#x2F;store</th>
+<th>cycle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Loop:</td>
+<td>nop</td>
+<td>lw   $t0, 0($s1)</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>addi   $s1, $s1, -4</td>
+<td>nop</td>
+<td>2</td>
+</tr>
+<tr>
+<td></td>
+<td>addu   $t0, $t0,$s2</td>
+<td>nop</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>bne   $s1, $zero, Loop</td>
+<td>sw    $t0, 0($s1)</td>
+<td>4</td>
+</tr>
+</tbody></table>
+<p>IPC &#x3D; 7&#x2F;6 &#x3D; 1.17 (c.f. peak IPC &#x3D; 2)</p>
+<h4 id="循环展开"><a href="#循环展开" class="headerlink" title="循环展开"></a><strong>循环展开</strong></h4><ul>
+<li>复制多个循环体获得更高的并行度<ul>
+<li>减少循环控制开销</li>
+</ul>
+</li>
+<li>在多个循环中使用不同寄存器<ul>
+<li>也称为寄存器重命名（register renaming）</li>
+<li>保持循环间的依赖关系</li>
+</ul>
+</li>
+</ul>
+<h4 id="循环展开示例"><a href="#循环展开示例" class="headerlink" title="循环展开示例"></a><strong>循环展开示例</strong></h4><table>
+<thead>
+<tr>
+<th></th>
+<th>ALU&#x2F;branch</th>
+<th>Load&#x2F;store</th>
+<th>cycle</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Loop:</td>
+<td>addi   $s1, $s1, -16</td>
+<td>lw   $t0, 0($s1)</td>
+<td>1</td>
+</tr>
+<tr>
+<td></td>
+<td>nop</td>
+<td>lw   $t1, 12($s1)</td>
+<td>2</td>
+</tr>
+<tr>
+<td></td>
+<td>addu   $t0, $t0,$s2</td>
+<td>lw   $t2, 8($s1)</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>addu   $t1, $t1,$s2</td>
+<td>lw   $t3, 4($s1)</td>
+<td>4</td>
+</tr>
+<tr>
+<td></td>
+<td>addu   $t2, $t2,$s2</td>
+<td>sw    $t0, 16($s1)</td>
+<td>5</td>
+</tr>
+<tr>
+<td></td>
+<td>addu   $t3, $t3,$s2</td>
+<td>sw    $t1, 12($s1)</td>
+<td>6</td>
+</tr>
+<tr>
+<td></td>
+<td>nop</td>
+<td>sw    $t2, 8($s1)</td>
+<td>7</td>
+</tr>
+<tr>
+<td></td>
+<td>bne   $s1, $zero, Loop</td>
+<td>sw    $t3,  4($s1)</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<p>IPC &#x3D; 15&#x2F;8 &#x3D; 1.875</p>
+<h2 id="四-动态多发射"><a href="#四-动态多发射" class="headerlink" title="四.动态多发射"></a>四.<strong>动态多发射</strong></h2><table>
+<thead>
+<tr>
+<th><strong>超标量（Superscalar）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>硬件在运行时动态决定哪些指令同时发射和执行</td>
+</tr>
+</tbody></table>
+<ul>
+<li>超标量处理器运行机制<ul>
+<li>取指令与发射：取指令、译码并发射到功能单元，等待执行（顺序取指令）</li>
+<li>指令执行：一旦所需的功能单元、源操作数准备就绪，就可以执行指令</li>
+<li>提交：当可以写回数据时，就将结果写回到寄存器或存储器</li>
+</ul>
+</li>
+<li>每个周期CPU决定是发射0 条、1 条，还是多条指令</li>
+<li>硬件保证执行的正确性</li>
+</ul>
+<h4 id="按序（In-Order）"><a href="#按序（In-Order）" class="headerlink" title="按序（In-Order）"></a><strong>按序（In-Order）</strong></h4><table>
+<thead>
+<tr>
+<th><strong>指令提取与译码单元</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需要按指令顺序取指令并译码，如此才能保持依赖</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>提交单元</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>需要按照取指令的顺序进行指令结果的写回（写回寄存器或存储器）</td>
+</tr>
+</tbody></table>
+<p>一旦发生异常，只有引发异常的指令之前的指令可以更新寄存器</p>
+<p>如果分支预测错误，分支指令之后的指令不会改变存器状态，</p>
+<p>使用认证单元实现错误推测的恢复</p>
+<h4 id="乱序（Out-of-Order）"><a href="#乱序（Out-of-Order）" class="headerlink" title="乱序（Out-of-Order）"></a><strong>乱序（Out-of-Order）</strong></h4><ul>
+<li>流水线的前端（取指令、译码、发射）和后端（认证）按序运行</li>
+<li>在指令执行时，一旦某条指令所需的源数据和功能单元准备就绪，就可以执行该指令——指令执行时乱序的</li>
+<li>乱序执行的机制增加了指令级并行</li>
+</ul>
+<h4 id="按序v-s-乱序"><a href="#按序v-s-乱序" class="headerlink" title="按序v.s. 乱序"></a><strong>按序v.s. 乱序</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP/image-20230426165254398.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="vs"></p>
+<h4 id="动态流水线调度"><a href="#动态流水线调度" class="headerlink" title="动态流水线调度"></a><strong>动态流水线调度</strong></h4><ul>
+<li>允许CPU乱序执行指令来避免阻塞<ul>
+<li>但是按照指令顺序写回寄存器</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">例:<br><span class="hljs-keyword">lw </span>  $<span class="hljs-built_in">t0</span>,<span class="hljs-number">20</span>($<span class="hljs-built_in">s2</span>)<br><span class="hljs-keyword">addu </span>$<span class="hljs-built_in">t1</span>, $<span class="hljs-built_in">t0</span>, $<span class="hljs-built_in">t2</span><br><span class="hljs-keyword">sub </span> $<span class="hljs-built_in">s4</span>, $<span class="hljs-built_in">s4</span>, $<span class="hljs-built_in">t3</span><br><span class="hljs-keyword">slti </span>$<span class="hljs-built_in">t5</span>, $<span class="hljs-built_in">s4</span>, <span class="hljs-number">20</span><br><br></code></pre></td></tr></table></figure>
+
+<p>在addu等待lw的时候，可以开始执行sub</p>
+<h2 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a>五.<strong>小结</strong></h2><ul>
+<li>采用机器并行和指令级并行提高处理器性能</li>
+<li>超流水线</li>
+<li>静态多发射</li>
+<li>动态多发射</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L08-ILP</div>
+      <div>https://www.emokable.top/计算机组成原理-L08-ILP/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年4月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L08-ILP-ARM%E5%92%8Cx86%E6%B5%81%E6%B0%B4%E7%BA%BF/" title="计算机组成原理-L08-ILP-ARM和x86流水线">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机组成原理-L08-ILP-ARM和x86流水线</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC3%E7%AB%A0-ARM%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E6%8C%87%E4%BB%A4%E7%B3%BB%E7%BB%9F4-%E5%9F%BA%E6%9C%ACARM%E6%8C%87%E4%BB%A4%E7%9A%84%E5%BA%94%E7%94%A8/" title="ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用">
+                        <span class="hidden-mobile">ARM体系结构与编程-第3章-ARM微处理器的指令系统4-基本ARM指令的应用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

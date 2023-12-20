@@ -1,0 +1,1229 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -缓存（Cache）一.简介 缓存是基于局部性原理设计的存储器体系层次，能够有效的提升数据访问速度 麒麟990 5G芯片8核：2个Cortex-A76（2.86GHz），2个Cortex-A76（2.36GHz），4个Cortex-A55（1.95GHz）   缓存-内存映射  内存单元到缓存行间的对于关系 缓存行（Cache line）&#x3D;缓存块（Cache block">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L010-cache">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -缓存（Cache）一.简介 缓存是基于局部性原理设计的存储器体系层次，能够有效的提升数据访问速度 麒麟990 5G芯片8核：2个Cortex-A76（2.86GHz），2个Cortex-A76（2.36GHz），4个Cortex-A55（1.95GHz）   缓存-内存映射  内存单元到缓存行间的对于关系 缓存行（Cache line）&#x3D;缓存块（Cache block">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100509867.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523095910296.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523095921416.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100554128.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100729681.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100856419.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100927956.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101414345.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101436520.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101654410.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103331651.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103431604.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103515048.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103613077.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103657398.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103738074.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104254506.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104314788.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104605859.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104644075.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104721334.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104817036.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104855835.png">
+<meta property="article:published_time" content="2023-05-23T01:55:14.000Z">
+<meta property="article:modified_time" content="2023-05-24T17:55:46.000Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100509867.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L010-cache - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L010-cache"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-23 09:55" pubdate>
+          2023年5月23日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          33 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L010-cache</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：7 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-缓存（Cache）"><a href="#计算机组成与实践-缓存（Cache）" class="headerlink" title="计算机组成与实践 -缓存（Cache）"></a><strong>计算机组成与实践</strong> -<strong>缓存（Cache）</strong></h1><h2 id="一-简介"><a href="#一-简介" class="headerlink" title="一.简介"></a>一.<strong>简介</strong></h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100509867.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="示意图"></p>
+<p>缓存是基于局部性原理设计的存储器体系层次，能够有效的提升数据访问速度</p>
+<h4 id="麒麟990-5G芯片"><a href="#麒麟990-5G芯片" class="headerlink" title="麒麟990 5G芯片"></a>麒麟990 5G芯片</h4><p>8核：2个Cortex-A76（2.86GHz），2个Cortex-A76（2.36GHz），4个Cortex-A55（1.95GHz）</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523095910296.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="huawei"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523095921416.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="990"></p>
+<h3 id="缓存-内存映射"><a href="#缓存-内存映射" class="headerlink" title="缓存-内存映射"></a>缓存-内存映射</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100554128.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="映射"></p>
+<ul>
+<li>内存单元到缓存行间的对于关系</li>
+<li>缓存行（Cache line）&#x3D;缓存块（Cache block）</li>
+<li>设计点：<ul>
+<li>可以快速判断缓存命中或缺失</li>
+<li>充分利用容量有限的缓存，提高命中率</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>硬件设计需要解决的问题</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1、如何判断数据是否在缓存中</td>
+</tr>
+<tr>
+<td align="left">2、如果在缓存中，如何找到该数据</td>
+</tr>
+</tbody></table>
+<h3 id="缓存行"><a href="#缓存行" class="headerlink" title="缓存行"></a><strong>缓存行</strong></h3><p>缓存容量远小于内存容量</p>
+<p>多对一映射</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100729681.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多对一"></p>
+<h2 id="二-直接映射（Direct-Mapping）"><a href="#二-直接映射（Direct-Mapping）" class="headerlink" title="二.直接映射（Direct Mapping）"></a>二.<strong>直接映射（Direct Mapping）</strong></h2><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100856419.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="存储形式"></p>
+<ul>
+<li>每个缓存块中有2^4&#x3D;16 bytes</li>
+<li>2^7&#x3D;128个缓存块</li>
+<li>2^(7+5）&#x3D;4096个内存块</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523100927956.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="memory to cache"></p>
+<ul>
+<li>缓存块号&#x3D;（内存块地址）mod（缓存中块总数）<ul>
+<li>内存块j映射到 （j mod 128）缓存块</li>
+</ul>
+</li>
+<li>如果标签相同，则缓存命中</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>地址分为3个字段</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>块号字段决定存储在内存的哪个块</td>
+</tr>
+<tr>
+<td>标签字段用于区分不同的内存块（内存块到缓存块是多对一的关系）</td>
+</tr>
+<tr>
+<td>字节偏移字段用于选择需要访问的数据（字或字节等）</td>
+</tr>
+</tbody></table>
+<p><strong>例如：给出地址（t,b,w）(16-bit)</strong></p>
+<p>1、用t与缓存块b中的tag作比较，确定该数据是否在缓存中</p>
+<p>2、如果不相同，缓存缺失（Cache miss），用内存块（t,b）(12-bit)替换缓存块b</p>
+<p><strong>CPU需要访问数据，其地址为[A7B4]&#x3D;1010011110110100</strong></p>
+<p>1、检索缓存块1111011，查看其tag是否为10100</p>
+<p>2、如果是，命中</p>
+<p>3、如果不是，从内存读取该块到缓存块1111011中，并更新tag为10100</p>
+<h4 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h4><p>假设缓存有4个块，每个缓存块大小为1 word，初始时为空，给出以下内存块地址：0,1,2,3,4,3,4,15，计算缓存命中率</p>
+<table>
+<thead>
+<tr>
+<th>INDEX</th>
+<th>TAG</th>
+<th>DATA</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>00</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>01</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>块地址有16个，需要4bit，index占2bit，那么tag位也占4-2&#x3D;2bit，index&#x3D;n%4, tag&#x3D;n&#x2F;4</p>
+<p>0-index00-tag00      4-index00-tag01	4hit</p>
+<p>1-index01-tag00	</p>
+<p>2-index10-tag00</p>
+<p>3-index11-tag00  	3hit	15-index11-tag11   总共hit 2次命中率25%</p>
+<h3 id="MIP中的直接映射缓存"><a href="#MIP中的直接映射缓存" class="headerlink" title="MIP中的直接映射缓存"></a><strong>MIP中的直接映射缓存</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101414345.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DIR"></p>
+<p>缓存块大小为1 word（4 bytes）</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101436520.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DIR2"></p>
+<p>缓存块大小为4 word（16 bytes）</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a><strong>例子</strong></h4><p>假设缓存有2个块，每个缓存块大小为2-word，初始时为空，给出以下内存块地址：0,1,2,3,4,3,4,15，计算缓存命中率</p>
+<table>
+<thead>
+<tr>
+<th>INDEX</th>
+<th>TAG</th>
+<th>DATA(1)</th>
+<th>DATA(2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>00</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>01</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523101654410.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ANS"></p>
+<p>16&#x3D;2^4,index占了2bit，tag也是2bit，不过是一次取2word比如0-1，2-3，4-5,index就是（n&#x2F;2）%2，tag就是(n&#x2F;2)&#x2F;2</p>
+<p> 8次访问，4次命中，命中率为50%</p>
+<h3 id="MIPS缓存设计"><a href="#MIPS缓存设计" class="headerlink" title="MIPS缓存设计"></a><strong>MIPS缓存设计</strong></h3><p>缓存需要存储数据以及与其对应的标签</p>
+<ul>
+<li>2^n个块的直接映射缓存，n个bit用于索引</li>
+<li>大小为2^m个字（ 2^(m+2) 个字节）的缓存块，m个bit用于寻址块中的字</li>
+<li>2 bit用于寻址一个字中的字节</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>标签字段的大小</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32  -（n  + m + 2）</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>直接映射缓存中存储的总的bit</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2^n ×（块大小 + 标签字段大小 + 有效位大小）</td>
+</tr>
+</tbody></table>
+<h4 id="练习-1"><a href="#练习-1" class="headerlink" title="练习"></a>练习</h4><blockquote>
+<p>假设一个直接映射的cache，有16 KB的数据，块大小为4 words，地址为32 bits，那么该cache总共需要多少位？</p>
+<p>4word&#x3D;16Bytes ，字节寻址块偏移位4bits，块数目16KB&#x2F;16Bytes&#x3D;1024&#x3D;2^10 ,直接用10bit来索引,tag&#x3D;32-10-4&#x3D;18bits</p>
+<p>CacheSize&#x3D;Number*(1 valid bit +tag + Blocksize)&#x3D;2^10 *（1bits+18bits +32bits * 4）&#x3D; 147Kb</p>
+<p>思考了一下：这里的16KB都是缓存块存的数据部分大小，因此求出的块数目2^10，就是index&#x3D;10，通过32bits地址和2bits块内偏移可以直接得出tag&#x3D;18，那么顺势也能得到总共有2^(18+10)个内存块，对这2^28个内存块求tag和index也是÷和%得到（这样就和前面的串起来了）</p>
+</blockquote>
+<p>老师的版本：16KB&#x3D;4096words，根据块大小有4096&#x2F;4&#x3D;1024个块</p>
+<p>每个块存有是4*32&#x3D;128bits数据</p>
+<p>标签字大小：32-（10+2+2）&#x3D;18bits</p>
+<p>每个块有1bit有效位，总cache大小2^10(128+18+1)&#x3D;147Kb</p>
+<h2 id="三-组相联映射（Associative-Mappin）"><a href="#三-组相联映射（Associative-Mappin）" class="headerlink" title="三.组相联映射（Associative Mappin）"></a>三.<strong>组相联映射（Associative Mappin）</strong></h2><h3 id="全相联映射"><a href="#全相联映射" class="headerlink" title="全相联映射"></a><strong>全相联映射</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103331651.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="全相连"></p>
+<ul>
+<li>每个缓存块中有2^4&#x3D;16 bytes</li>
+<li>128个缓存块</li>
+<li>2^12&#x3D;4096个内存块</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103431604.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="全"></p>
+<p><strong>内存块可以映射到任意的缓存块</strong>（没有对应吧关系）</p>
+<p>128个缓存块的标签需要与地址的标签位进行并行的比较（硬件实现）</p>
+<p><strong>CPU需要访问数据，其地址为[A7B4]&#x3D;1010011110110100</strong></p>
+<p>1、查看其tag是否为101001111011</p>
+<p>2、如果是，命中</p>
+<p>3、如果不是，从内存读取该块到任意空闲缓存块（如果没有空闲缓存块，就采用缓存替换策略进行替换），并更新tag为101001111011</p>
+<h3 id="组相联映射"><a href="#组相联映射" class="headerlink" title="组相联映射"></a><strong>组相联映射</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103515048.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="组相联"></p>
+<p>每个缓存块中有2^4&#x3D;16 bytes</p>
+<p>128个缓存块分为2^6&#x3D;64个组</p>
+<p>2^12&#x3D;4096个内存块</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103613077.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="组相联"></p>
+<p>结合了直接映射与全相联映射的特点</p>
+<p>缓存组号&#x3D;（内存块地址）mod（缓存中组总数）；内存块j映射到 （j mod 64）缓存组</p>
+<p>每组有K个块称为<strong>K路组相联缓存</strong></p>
+<h4 id="2路相联映射（每组两个块-是两个块而不是每组两个数据，数据是和字节偏移对应的）"><a href="#2路相联映射（每组两个块-是两个块而不是每组两个数据，数据是和字节偏移对应的）" class="headerlink" title="2路相联映射（每组两个块-是两个块而不是每组两个数据，数据是和字节偏移对应的）"></a><strong>2路相联映射</strong>（每组两个块-是两个块而不是每组两个数据，数据是和字节偏移对应的）</h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103657398.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2way"></p>
+<p>2路组相联（2-way set associative）：</p>
+<p>CPU需要访问数据，其地址为[A7B4]&#x3D;1010011110110100</p>
+<p>1、检测缓存组111011</p>
+<ul>
+<li>缓存块1110110</li>
+<li>缓存块1110111</li>
+</ul>
+<p>2、检测缓存组中是否其中一个缓存块的标签为101001</p>
+<p>3、如果是，命中</p>
+<p>4、如果不是，从内存读取该块到缓存组111011中空闲的缓存块（如果没有空闲缓存块，就采用缓存替换策略进行替换），并更新tag为101001</p>
+<h4 id="MIPS中的组相联映射缓存"><a href="#MIPS中的组相联映射缓存" class="headerlink" title="MIPS中的组相联映射缓存"></a><strong>MIPS中的组相联映射缓存</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523103738074.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="组相联"></p>
+<h2 id="四-替换策略"><a href="#四-替换策略" class="headerlink" title="四.替换策略"></a>四.<strong>替换策略</strong></h2><h3 id="处理缓存的读请求"><a href="#处理缓存的读请求" class="headerlink" title="处理缓存的读请求"></a><strong>处理缓存的读请求</strong></h3><ul>
+<li>适用于I cache和D cache</li>
+<li>命中<ul>
+<li>顺利读取数据</li>
+</ul>
+</li>
+<li>缺失<ul>
+<li>阻塞流水线</li>
+<li>从下层存储层级获取请求的数据</li>
+<li>数据保存至缓存，读取请求的字</li>
+<li>恢复流水线运行</li>
+</ul>
+</li>
+</ul>
+<h3 id="处理缓存写命中"><a href="#处理缓存写命中" class="headerlink" title="处理缓存写命中"></a><strong>处理缓存写命中</strong></h3><p>D cache</p>
+<table>
+<thead>
+<tr>
+<th><strong>策略1：写直达（Write-Through）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>保持缓存和内存数据的一致性</td>
+</tr>
+<tr>
+<td>将数据同时写回到缓存和下层存储层级</td>
+</tr>
+<tr>
+<td>加入写缓缓冲（write  buffer），只有写缓冲满时才停止写回缓存</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>策略2：写回(Write-Back）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>只将数据写回到缓存</td>
+</tr>
+<tr>
+<td>只有需要将缓存块驱逐（evicted）时，才写回到下层存储层级</td>
+</tr>
+<tr>
+<td>每个缓存块需要1  bit 脏块（dirty）标记</td>
+</tr>
+</tbody></table>
+<h3 id="处理缓存写缺失"><a href="#处理缓存写缺失" class="headerlink" title="处理缓存写缺失"></a><strong>处理缓存写缺失</strong></h3><table>
+<thead>
+<tr>
+<th><strong>策略1：带写缓冲的写直达缓存</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有写分配（No-write  allocate）：内存块更新后，不重新载入缓存</td>
+</tr>
+<tr>
+<td>跳过缓存更新，但是需要将该缓存块置位无效</td>
+</tr>
+<tr>
+<td>将写回数据写入写缓冲</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th><strong>策略2：写回缓存</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>写分配</td>
+</tr>
+<tr>
+<td>更新缓存中的数据，包括标签和数据</td>
+</tr>
+<tr>
+<td>不需要写命中检测</td>
+</tr>
+</tbody></table>
+<h3 id="没有写分配的写直达缓存"><a href="#没有写分配的写直达缓存" class="headerlink" title="没有写分配的写直达缓存"></a><strong>没有写分配的写直达缓存</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104254506.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="没有写分配"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104314788.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h3 id="替换算法"><a href="#替换算法" class="headerlink" title="替换算法"></a><strong>替换算法</strong></h3><ul>
+<li>直接映射：不需要选择替换的块</li>
+<li>组相联映射：<ul>
+<li>首先映射到有效位为0的项</li>
+<li>如果没有，在该组的项中挑选一个项替换</li>
+</ul>
+</li>
+<li>最近最少使用（Least-recently used，LRU）<ul>
+<li>替换很长时间没有使用的块</li>
+<li>不适用于超过4路的组相联映射</li>
+</ul>
+</li>
+<li>随机替换<ul>
+<li>当相联度较高时，与LRU性能类似</li>
+</ul>
+</li>
+</ul>
+<p><strong>缓存例子</strong></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-built_in">short</span> A[<span class="hljs-number">10</span>][<span class="hljs-number">4</span>];<br><span class="hljs-built_in">int</span>   <span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>;<br><span class="hljs-built_in">int</span>   j,i;<br><span class="hljs-built_in">double</span> mean;<br><br><span class="hljs-comment">//forward loop</span><br><span class="hljs-keyword">for</span> (j=<span class="hljs-number">0</span>;j&lt;=<span class="hljs-number">9</span>;j++)<br>     <span class="hljs-keyword">sum</span> +=A[j][<span class="hljs-number">0</span>];<br><span class="hljs-comment">//backward loop</span><br><span class="hljs-keyword">for</span> (i=<span class="hljs-number">9</span>;i&gt;=<span class="hljs-number">0</span>;i--)<br>     A[i][<span class="hljs-number">0</span>]=A[i][<span class="hljs-number">0</span>]/mean;<br></code></pre></td></tr></table></figure>
+
+<p>数据缓存大小为8 块</p>
+<p>A [ 10 ] [4]存储地址空间为7A00-7A27</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104605859.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="tu"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104644075.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="table"></p>
+<p>假设采用16 bit地址，并且1 字大小为1 byte（也就是说没有字节偏移位）</p>
+<ul>
+<li>直接映射：13 bits 标签，3 bits 块号</li>
+<li>全相联：16 bits标签</li>
+<li>2路组相联：15 bits 标签，1 bit组号</li>
+</ul>
+<h3 id="直接映射"><a href="#直接映射" class="headerlink" title="直接映射"></a><strong>直接映射</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104721334.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="direct"></p>
+<ul>
+<li>只有两个缓存块被使用（注意看，都是A[X] [0],只看上面标红的地址7A00&amp;7A04）,读图以列为状态单位，从左往右读，比如j&#x3D;0时，cache里块0装A00;j&#x3D;1时，块0还是A00，块4新写入A10</li>
+<li>缓存利用率低</li>
+</ul>
+<h3 id="全相联映射-1"><a href="#全相联映射-1" class="headerlink" title="全相联映射"></a><strong>全相联映射</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104817036.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="all"></p>
+<p>使用LRU替换策略</p>
+<h3 id="2路组相联"><a href="#2路组相联" class="headerlink" title="2路组相联"></a><strong>2路组相联</strong></h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L010-cache/image-20230523104855835.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2way"></p>
+<p>只有一半的缓存块被使用</p>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a><strong>分析</strong></h3><ul>
+<li>全相联映射缓存最好，组相联缓存次之，直接映射缓存最差</li>
+<li>通常情况使用组相联映射，并采用LRU替换策略</li>
+<li>较大的cache 块能更好地利用空间局部性以降低缺失率</li>
+<li>在固定块大小的cache中<ul>
+<li>较大块-&gt;块的数量减少</li>
+<li>地址映射的竞争增大-&gt;增加缺失率(用直接映射来思考，块数量少了，一个缓存块需要对应的内存块就更多了，竞争大)</li>
+<li>较大块-&gt;空间局部性降低</li>
+</ul>
+</li>
+</ul>
+<h2 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a><strong>五.小结</strong></h2><ul>
+<li>缓存结构<ul>
+<li>直接映射、全相联映射、组相联映射</li>
+</ul>
+</li>
+<li>替换策略<ul>
+<li>随机替换、LRU</li>
+</ul>
+</li>
+<li>缓存命中与缺失代价</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L010-cache</div>
+      <div>https://www.emokable.top/计算机组成原理-L010-cache/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1ch6-%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/" title="嵌入式系统设计ch6-程序设计与分析">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">嵌入式系统设计ch6-程序设计与分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC4%E7%AB%A0-ARM%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80-%E4%BC%AA%E6%8C%87%E4%BB%A42/" title="ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2">
+                        <span class="hidden-mobile">ARM体系结构与编程-第4章-ARM程序设计基础-伪指令2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

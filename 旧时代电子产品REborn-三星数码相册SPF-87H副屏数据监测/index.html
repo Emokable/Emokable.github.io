@@ -1,0 +1,884 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一.起因前不久发现便携屏挺火的，有点动心，价格在大多百元以上，如果我自己是ITX装机或者又别的便携需求买一个倒是无所谓，可是宿舍已经又有一个2k高刷大屏幕了，但是仔细想想自己也没那啥需求，买一个也就纯纯玩具（浪费钱），所以话都说到这份上了还不如直接捡一个便宜的玩具来玩呢。我的需求也不是拿廉价的副屏幕来看文档，只是纯粹当个性能桌面摆件。恰巧搜到了一个三星数码相册改造成监控副屏的方案这边是张大妈的文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测">
+<meta property="og:url" content="https://www.emokable.top/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="一.起因前不久发现便携屏挺火的，有点动心，价格在大多百元以上，如果我自己是ITX装机或者又别的便携需求买一个倒是无所谓，可是宿舍已经又有一个2k高刷大屏幕了，但是仔细想想自己也没那啥需求，买一个也就纯纯玩具（浪费钱），所以话都说到这份上了还不如直接捡一个便宜的玩具来玩呢。我的需求也不是拿廉价的副屏幕来看文档，只是纯粹当个性能桌面摆件。恰巧搜到了一个三星数码相册改造成监控副屏的方案这边是张大妈的文章">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/img/87H.jpg">
+<meta property="article:published_time" content="2023-10-30T12:56:12.000Z">
+<meta property="article:modified_time" content="2023-11-11T12:30:47.861Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="DIY">
+<meta property="article:tag" content="魔改">
+<meta property="article:tag" content="SUMSUNG">
+<meta property="article:tag" content="副屏幕">
+<meta property="article:tag" content="AIDA64">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/img/87H.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测 - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-30 20:56" pubdate>
+          2023年10月30日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          10 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：1 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="一-起因"><a href="#一-起因" class="headerlink" title="一.起因"></a>一.起因</h1><p>前不久发现便携屏挺火的，有点动心，价格在大多百元以上，如果我自己是ITX装机或者又别的便携需求买一个倒是无所谓，可是宿舍已经又有一个2k高刷大屏幕了，但是仔细想想自己也没那啥需求，买一个也就纯纯玩具（浪费钱），所以话都说到这份上了还不如直接捡一个便宜的玩具来玩呢。我的需求也不是拿廉价的副屏幕来看文档，只是纯粹当个性能桌面摆件。恰巧搜到了一个三星数码相册改造成监控副屏的方案<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/and2q780/">这边是张大妈的文章</a>（可支持大多数三星的数码相册型号），而且是垃圾佬常用的<a target="_blank" rel="noopener" href="https://forums.aida64.com/topic/2424-new-lcd-device-support-samsung-spf-digital-photo-frames/">AIDA64软件官方支持方案</a>，这下也不太需要自己去弄，买来装好驱动，即插即用就即可😊。</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030213208761.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="兼容型号"></p>
+<h1 id="二-简评"><a href="#二-简评" class="headerlink" title="二.简评"></a>二.简评</h1><p>电子相册现在肯定很多人是没有听说过了，毕竟这玩意儿十几年前就得卖几百上千（三星），现在基本也是销声匿迹，当时买得起的肯定也是副歌们了，就拿我买的SPF-87H为例</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030211404660.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="12年报价"></p>
+<p>这是2009年的评测文章<a target="_blank" rel="noopener" href="https://lcd.zol.com.cn/134/1345497.html">https://lcd.zol.com.cn/134/1345497.html</a></p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030211757342.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="距今已经14年了"></p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030211457796.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="09年要卖上1500rmb"></p>
+<blockquote>
+<p> 在三星SPF-87H的外包装上我们就能清晰的看到这款产品的部分卖点，8英寸的屏幕尺寸，内置1GB的内存容量，迷你显示器功能和超薄机身设计。</p>
+</blockquote>
+<p><img src="https://img2.zol.com.cn/product/31_500x2000/584/cedJ1OIiWpUZ.jpg" srcset="/img/mahmoud-habibi.gif" lazyload alt="抢先体验！三星超时尚相框新品(视频) "></p>
+<p><img src="https://img2.zol.com.cn/product/31_500x2000/673/ceARz444653cI.jpg" srcset="/img/mahmoud-habibi.gif" lazyload alt="抢先体验！三星超时尚相框新品(视频) "></p>
+<p><img src="https://img2.zol.com.cn/product/31_500x2000/679/cec1Z4ENmh9z6.jpg" srcset="/img/mahmoud-habibi.gif" lazyload alt="抢先体验！三星超时尚相框新品(视频) "></p>
+<p>当然现在这款电子相册在海鲜市场只需要几十块就能入手了，成色好的可能要60多，像我淘的这个成色略差（两角漏光），且缺少数据线，只花了35大洋就包邮到学校了。</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030212518748.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="万能海鲜市场"></p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215302138.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="盒子"></p>
+<p>到手第一件事就是检查有无问题，还好并无大碍，插上数据线后的第一个难题就是电脑无反应，设备管理器里也没有任何新东西，驱动装上后也没反应。。。。。。折腾半天发现是我买的mini B线材问题，检查后发现里面只有两根供电线，没有数据线。无奈只好重新下单购买，这次我选择了一个这样带辅助供电的线材，这样子可以不用外接12V小砖块电源了，全靠主板供电就行。</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030213615055.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="一边是Type A另一边是mini usb和辅助供电的type A"></p>
+<h1 id="三-操作流程"><a href="#三-操作流程" class="headerlink" title="三.操作流程"></a>三.操作流程</h1><p>1.打开DIY爱好者和垃圾佬必备的图吧工具箱(<a target="_blank" rel="noopener" href="https://www.tbtool.cn/?gozelm=a3oj1">没有的自己下一个</a>)，找到AIDA64，并打开AIDA64</p>
+<p>2.主界面点击 文件-&gt;设置-&gt;LCD，选择Samsung，点击启用SPF LCD支持的选项，如果出现和我一样的绿色SPF Init OK字样，并且屏幕上显示AIDA64字样，则表示接管成功</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030214338831.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="这样的"></p>
+<p>接下来就只需要在LCD项目里导入模板修改就行了</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030214639874.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="我copy了论坛上的一个主题"></p>
+<p>如果绿字处显示错误，那么就点击出现的网址下载驱动安装，安装结束再进行尝试。</p>
+<p>注意我这个东西，需要在USB插入后的5s内点击“启用SPF LCD支持”内才能顺利接管，具体就听USB设备音效判断即可（5s真男人）。</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215015787.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="设备管理器里的样子"></p>
+<p>想要开机自启也很简单，设置开机自启即可</p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215618969.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="设置"></p>
+<p>发现我现在用的ASRock主板关机后USB是可以设置供电的，这样也不需要再对相册进行设定了，不需要关闭相册，正常开关机相册会自动被AIDA64接管</p>
+<h1 id="四-具体效果展示"><a href="#四-具体效果展示" class="headerlink" title="四.具体效果展示"></a>四.具体效果展示</h1><p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215126371.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="效果"></p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215150341.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="桌面摆件"></p>
+<p><img src="/%E6%97%A7%E6%97%B6%E4%BB%A3%E7%94%B5%E5%AD%90%E4%BA%A7%E5%93%81REborn-%E4%B8%89%E6%98%9F%E6%95%B0%E7%A0%81%E7%9B%B8%E5%86%8CSPF-87H%E5%89%AF%E5%B1%8F%E6%95%B0%E6%8D%AE%E7%9B%91%E6%B5%8B/image-20231030215317705.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="接口，单线就行"></p>
+<p>居然不是萌萌二次元，果然数据展示还是要有点战斗感啊:)</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/DIY/">#DIY</a>
+      
+        <a href="/tags/%E9%AD%94%E6%94%B9/">#魔改</a>
+      
+        <a href="/tags/SUMSUNG/">#SUMSUNG</a>
+      
+        <a href="/tags/%E5%89%AF%E5%B1%8F%E5%B9%95/">#副屏幕</a>
+      
+        <a href="/tags/AIDA64/">#AIDA64</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测</div>
+      <div>https://www.emokable.top/旧时代电子产品REborn-三星数码相册SPF-87H副屏数据监测/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月30日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/I%E5%8D%A1%E9%85%8DIU%E4%B9%8B%E6%88%91%E8%B4%AD%E4%B9%B0%E4%BA%86%E4%B8%80%E5%BC%A0Intel%E6%98%BE%E5%8D%A1-DG1/" title="I卡配IU之我购买了一张Intel显卡--DG1">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">I卡配IU之我购买了一张Intel显卡--DG1</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-2-MAC%E5%8D%8F%E8%AE%AE/" title="IoT__第3章__无线传感器网络__3.2_MAC协议">
+                        <span class="hidden-mobile">IoT__第3章__无线传感器网络__3.2_MAC协议</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

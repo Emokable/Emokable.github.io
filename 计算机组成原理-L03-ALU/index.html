@@ -1,0 +1,1493 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="emokable">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="计算机组成与实践 -算术和逻辑单元（ALU）一.概述MIPS指令集：add、sub、and、or…… ALU的实现  设计MIPS的ALU必须支持MIPS指令集中的算术与逻辑操作  加减指令：add、addi、addiu、sub、subu等 乘除指令：mult、multu、div、divu、sqrt 逻辑运算指令：and、andi、nor、or、ori、xor 分支指令：beq、bne、slt、s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机组成原理-L03-ALU">
+<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/index.html">
+<meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="计算机组成与实践 -算术和逻辑单元（ALU）一.概述MIPS指令集：add、sub、and、or…… ALU的实现  设计MIPS的ALU必须支持MIPS指令集中的算术与逻辑操作  加减指令：add、addi、addiu、sub、subu等 乘除指令：mult、multu、div、divu、sqrt 逻辑运算指令：and、andi、nor、or、ori、xor 分支指令：beq、bne、slt、s">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321230943274.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233509253.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233601720.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233634589.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233651180.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233728883.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235423357.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235601014.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235737597.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235903316.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235938705.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235957583.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000102881.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000128162.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000214927.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000241085.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000312927.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000342462.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003030271.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003151001.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003225365.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003620484.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003701153.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003835696.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003935750.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322004847719.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005058639.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005140361.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005222739.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005319369.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005441498.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005521728.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005624475.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005714826.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005801126.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010005895.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010105309.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010150571.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323154734600.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323154930369.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155042299.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155203019.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155251585.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155333437.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155402308.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155745521.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165504602.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165833524.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165847894.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170347882.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170418417.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171026141.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171042330.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170735971.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170837125.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170950881.png">
+<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171006092.png">
+<meta property="article:published_time" content="2023-03-21T14:48:47.000Z">
+<meta property="article:modified_time" content="2023-06-14T16:07:13.067Z">
+<meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="计算机组成原理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321230943274.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>计算机组成原理-L03-ALU - 哈姆詤的箌悝糖</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="哈姆詤的箌悝糖" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>
+        哈姆詤的箌悝糖
+      </strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+    <!-- 和风天气-->>
+    
+<div id="he-plugin-simple"></div>
+<script>
+WIDGET = {
+  "CONFIG": {
+    "modules": "012",
+    "background": "5",
+    "tmpColor": "FFFFFF",
+    "tmpSize": "17",
+    "cityColor": "FFFFFF",
+    "citySize": "17",
+    "aqiColor": "FFFFFF",
+    "aqiSize": "16",
+    "weatherIconSize": "24",
+    "alertIconSize": "18",
+    "padding": "10px 10px 10px 10px",
+    "shadow": "0",
+    "language": "auto",
+    "fixed": "false",
+    "vertical": "top",
+    "horizontal": "left",
+    "key": "19956233bafd404183052586b94d02f8"
+  }
+}
+</script>
+<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-center">
+          
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/">
+                          <i class="iconfont icon-home-fill"></i>
+                            <span>首页</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/categories/">
+                          <i class="iconfont icon-category-fill"></i>
+                            <span>分类</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/tags/">
+                          <i class="iconfont icon-tags-fill"></i>
+                            <span>标签</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/about/">
+                          <i class="iconfont icon-user-fill"></i>
+                            <span>关于</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/links/">
+                          <i class="iconfont icon-link-fill"></i>
+                            <span>友链</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                      <li class="nav-item">
+                        <a class="nav-link" href="/steamgames/">
+                          <i class="iconfont icon-steam"></i>
+                            <span>steam</span>
+                        </a>
+                      </li>
+                      
+                        
+            
+              
+                
+                  
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="iconfont icon-archive-fill"></i>
+                          <span>归档</span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/archives/">
+                                  
+                                    <span>归档</span>
+                                </a>
+                                
+                          
+                            
+                              
+                                <a class="dropdown-item" href="/pdf/">
+                                  
+                                    <span>PDF</span>
+                                </a>
+                                
+                      </div>
+                    </li>
+                    
+                        
+                          
+                            <li class="nav-item" id="search-btn">
+                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
+                                data-target="#modalSearch" aria-label="Search">
+                                <i class="iconfont icon-search"></i>
+                              </a>
+                            </li>
+                            
+                              
+                                
+                                  <li class="nav-item" id="color-toggle-btn">
+                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+                                    </a>
+                                  </li>
+                                  
+        </ul>
+      </div>
+  </div>
+</nav>
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机组成原理-L03-ALU"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-21 22:48" pubdate>
+          2023年3月21日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">计算机组成原理-L03-ALU</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：6 个月前
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="计算机组成与实践-算术和逻辑单元（ALU）"><a href="#计算机组成与实践-算术和逻辑单元（ALU）" class="headerlink" title="计算机组成与实践 -算术和逻辑单元（ALU）"></a><strong>计算机组成与实践</strong> -算术和逻辑单元（ALU）</h1><h2 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h2><p>MIPS指令集：add、sub、and、or……</p>
+<p>ALU的实现</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321230943274.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="alu"></p>
+<h4 id="设计MIPS的ALU"><a href="#设计MIPS的ALU" class="headerlink" title="设计MIPS的ALU"></a><strong>设计MIPS的ALU</strong></h4><p>必须支持MIPS指令集中的算术与逻辑操作</p>
+<ul>
+<li>加减指令：add、addi、addiu、sub、subu等</li>
+<li>乘除指令：mult、multu、div、divu、sqrt</li>
+<li>逻辑运算指令：and、andi、nor、or、ori、xor</li>
+<li>分支指令：beq、bne、slt、slti、sltiu、sltu</li>
+</ul>
+<p>以及一些指令所需的特殊处理：</p>
+<ul>
+<li>符号扩展：addi、addiu、slti、sltiu</li>
+<li>零扩展：andi、ori、xori</li>
+<li>溢出检测：add、addi、sub</li>
+</ul>
+<h4 id="MIPS算术与逻辑指令"><a href="#MIPS算术与逻辑指令" class="headerlink" title="MIPS算术与逻辑指令"></a><strong>MIPS算术与逻辑指令</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233509253.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="R型"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233601720.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="I型"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233634589.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="非立即数"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233651180.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="立即数指令"></p>
+<h2 id="二-加法"><a href="#二-加法" class="headerlink" title="二.加法"></a>二.加法</h2><h4 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h4><p>7+6</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321233728883.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="进位示意图"></p>
+<p>Ø如果结果超过32位将产生溢出</p>
+<ul>
+<li><p>正数和负数相加-&gt;不产生溢出</p>
+</li>
+<li><p>两个正数相加</p>
+<ul>
+<li>如果结果的符号位为1，则产生了溢出</li>
+</ul>
+</li>
+<li><p>两个负数相加</p>
+<ul>
+<li>如果结果的符号位为0，则产生了溢出</li>
+</ul>
+</li>
+</ul>
+<h4 id="1位全加器"><a href="#1位全加器" class="headerlink" title="1位全加器"></a><strong>1位全加器</strong></h4><p>Ø输入端：两个加数、进位输入</p>
+<p>Ø输出端：和、进位输出</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235423357.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="example"></p>
+<blockquote>
+<p>S &#x3D; A xor B xor Cin</p>
+<p>Cout &#x3D; (A and B) or (A and Cin) or (B andCin)</p>
+</blockquote>
+<p><strong>如何用1位全加器构建32-bit全加器？</strong></p>
+<p>：串联32个1位全加器</p>
+<h4 id="32-bit全加器"><a href="#32-bit全加器" class="headerlink" title="32-bit全加器"></a><strong>32-bit全加器</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235601014.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="串行"></p>
+<ul>
+<li>将低位的Cout连接到相邻高位的Cin就可以构建32-bit全加器</li>
+<li>串行加法器或行波进位加法器（Ripple Carry Adder, RCA）<ul>
+<li>​	🙂:逻辑简单，低开销</li>
+<li>​	☹：速度慢</li>
+</ul>
+</li>
+<li>n-bit串行加法器的性能<ul>
+<li>​     <em>n</em> × <em>CP</em></li>
+</ul>
+</li>
+</ul>
+<h4 id="快速加法：超前进位"><a href="#快速加法：超前进位" class="headerlink" title="快速加法：超前进位"></a><strong>快速加法：超前进位</strong></h4><p>关键是提高高阶进位的速度</p>
+<p>Cout &#x3D; (A and B) or (A and Cin) or (B andCin)</p>
+<p>Cout &#x3D; AB+ACin+BCin&#x3D; AB+(A+B)Cin</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235737597.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="代入"></p>
+<ul>
+<li>进位生成因子（gi）： aibi</li>
+<li>进位传递因子（ pi ）： (ai+bi)</li>
+</ul>
+<p>ci+1 &#x3D; aibi+ (ai+bi) ci&#x3D;gi+ pi ci</p>
+<h5 id="超前进位"><a href="#超前进位" class="headerlink" title="超前进位"></a><strong>超前进位</strong></h5><p><strong>超前进位加法器（carry-lookahead adder）</strong></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235903316.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="公式图片"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235938705.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="例"></p>
+<p>如果之前的加法器生成了一个进位，并且所有的中间传递因子传输了这个进位，那么ci+1 &#x3D;1</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230321235957583.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="计算式"></p>
+<h5 id="4位并行加法器"><a href="#4位并行加法器" class="headerlink" title="4位并行加法器"></a>4位并行加法器</h5><p>根据超前进位设计并行加法器</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000102881.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="加法器构造"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000128162.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="单个结点构造"></p>
+<h4 id="多位并行进位加法器"><a href="#多位并行进位加法器" class="headerlink" title="多位并行进位加法器"></a><strong>多位并行进位加法器</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000214927.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多位"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000241085.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="这里是大P"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000312927.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="这里是大G,最后的G0是错误的，应该为G3"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322000342462.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="计算大C"></p>
+<p><strong>Quiz1-进位传输函数和进位产生函数</strong></p>
+<ul>
+<li>确定两个16 位数的gi、pi、Pi以及Gi值：</li>
+</ul>
+<p>​	a: 0001 1010 0011 0011–2</p>
+<p>​	b: 1110 0101 1110 1011–2</p>
+<ul>
+<li>CarryOut15(C4)的值是多少</li>
+</ul>
+<blockquote>
+<p>第一题gi，和pi可以直接对应下来计算得出</p>
+<p>a: 0001 1010 0011 0011</p>
+<p>b: 1110 0101 1110 1011</p>
+<hr>
+<p>g: 0000 0000 0010 0011</p>
+<p>p:1111 1111 1111 1011</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>3</th>
+<th>2</th>
+<th>1</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pi</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Gi</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>第二题，带入</p>
+<p>C4&#x3D;0+0+1+0&#x3D;1</p>
+</blockquote>
+<p><strong>Quiz2-加法器的性能比较</strong></p>
+<p>行波进位加法器和超前进位加法器速度的比较.</p>
+<p>假设通过每个与门&#x2F;或门需要的时间是相同的。比较16 位加法器路径上门延迟的数量，一个用行波进位，另一个用的是两级的超前进位。（1位全加器的每个进位输出信号需要2个门延迟）</p>
+<blockquote>
+<p>行波进位加法器指的将16个1位加法器串联，每个全加器，执行加法的同时执行</p>
+<p>S &#x3D; A xor B xor Cin</p>
+<p>Cout &#x3D; (A and B) or (A and Cin) or (B andCin) 对于这个进位信号，有两种不同的门运算（与和或），门延迟为2，由于串行每一位加法器都需要等待后一个的进位信号，因此从最低进位道最高进位，总门延迟为16*2&#x3D;32个门延迟</p>
+<p>超前进位加法器最高位输出是上一题的C4,由于两级超前进位，每一级内的操作都是并行的，第一步计算小p,小g，都只有一个与或门运算，因此门延迟为1.第二级计算大P,门延迟1，计算大G门延迟2，因此第二级总的门延迟为2(P&#x2F;G的运算也是并行的).最后计算C4时的门延迟为2。整体最坏的门延迟是5（假设每个逻辑运算都是一个门延迟）.</p>
+</blockquote>
+<h3 id="减法"><a href="#减法" class="headerlink" title="减法"></a><strong>减法</strong></h3><p>看作加法的第二个操作数为负数</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003030271.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="计算时不考虑符号"></p>
+<h4 id="减法器设计"><a href="#减法器设计" class="headerlink" title="减法器设计"></a><strong>减法器设计</strong></h4><p>设计思想：X – Y &#x3D; X + (-Y)</p>
+<ul>
+<li>​	每个bit位取反</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003151001.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<ul>
+<li>​	最低位加1</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003225365.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<blockquote>
+<p>感觉是取模得到最高位（符号位）然后再按不同的方法处理</p>
+</blockquote>
+<h4 id="溢出检测"><a href="#溢出检测" class="headerlink" title="溢出检测"></a><strong>溢出检测</strong></h4><p>如果结果超过32位将产生溢出</p>
+<ul>
+<li>两个正数或两个负数相减，不产生溢出</li>
+<li>当正数加正数：结果符号位为1则溢出</li>
+<li>当负数加负数：结果符号位为0则溢出</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003620484.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="二进制算式"></p>
+<ul>
+<li>最高有效位的进位输入与进位输出异或</li>
+</ul>
+<blockquote>
+<p>V&#x3D;Cin ⊕ Cout </p>
+</blockquote>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003701153.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="溢出检测"></p>
+<ul>
+<li>无符号整数的溢出可以忽略</li>
+<li>溢出时产生异常<ul>
+<li>加法add、立即数加法addi 和减法sub</li>
+</ul>
+</li>
+<li>溢出时不产生异常<ul>
+<li>无符号加法addu、立即数无符号加法addiu 和无符号减法subu</li>
+</ul>
+</li>
+<li>C语言忽略溢出，C编译器采用无符号算术指令</li>
+</ul>
+<h3 id="ALU需要支持的其他操作"><a href="#ALU需要支持的其他操作" class="headerlink" title="ALU需要支持的其他操作"></a><strong>ALU需要支持的其他操作</strong></h3><ul>
+<li>逻辑操作（and, or, xor, nor）<ul>
+<li>按位操作，不涉及进位</li>
+<li>每个功能需要一个逻辑门，多选器选择输出结果</li>
+</ul>
+</li>
+<li>小于则置位指令（slt）<ul>
+<li>使用减法判断a-b是否小于0</li>
+</ul>
+</li>
+<li>条件分支指令的相等测试（bne，beq）<ul>
+<li>使用减法判断a-b是否等于0</li>
+</ul>
+</li>
+<li>立即数指令<ul>
+<li>ALU外设置符号扩展</li>
+</ul>
+</li>
+</ul>
+<h4 id="支持逻辑操作的ALU单元设计"><a href="#支持逻辑操作的ALU单元设计" class="headerlink" title="支持逻辑操作的ALU单元设计"></a><strong>支持逻辑操作的ALU单元设计</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003835696.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="逻辑操作"></p>
+<h4 id="实现slt"><a href="#实现slt" class="headerlink" title="实现slt"></a><strong>实现slt</strong></h4><ul>
+<li>首先进行减法<ul>
+<li>如果减法结果为负数（最高有效位结果为1），将result置为1</li>
+<li>如果减法结果为正数（最高有效位结果为0），将result置为0</li>
+</ul>
+</li>
+<li>将最高有效位（set）连接到最低位的less输入</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322003935750.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="slt"></p>
+<h4 id="一个简单完整的ALU"><a href="#一个简单完整的ALU" class="headerlink" title="一个简单完整的ALU"></a><strong>一个简单完整的ALU</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322004847719.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="alu"></p>
+<h2 id="三-乘法和除法"><a href="#三-乘法和除法" class="headerlink" title="三.乘法和除法"></a>三.乘法和除法</h2><h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a><strong>乘法</strong></h3><p>通过移位与加法实现</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005058639.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="乘法"></p>
+<p>积的位数是被乘数与乘数的位数之和</p>
+<h4 id="乘法的硬件实现-第一版"><a href="#乘法的硬件实现-第一版" class="headerlink" title="乘法的硬件实现(第一版)"></a><strong>乘法的硬件实现(第一版)</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005140361.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<p>硬件：</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005222739.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程"></p>
+<h4 id="改进后的乘法器"><a href="#改进后的乘法器" class="headerlink" title="改进后的乘法器"></a><strong>改进后的乘法器</strong></h4><p>同时进行加法和移位</p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005319369.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="乘法器"></p>
+<p>每一步只需要一个时钟周期</p>
+<p>​	乘法运算频率较低时</p>
+<h5 id="例子-1"><a href="#例子-1" class="headerlink" title="例子-1"></a>例子-1</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005441498.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="机器码"></p>
+<h5 id="更快速的乘法"><a href="#更快速的乘法" class="headerlink" title="更快速的乘法"></a><strong>更快速的乘法</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005521728.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="快速乘法"></p>
+<h5 id="更快速的乘法器设计"><a href="#更快速的乘法器设计" class="headerlink" title="更快速的乘法器设计"></a><strong>更快速的乘法器设计</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005624475.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="快速"></p>
+<h5 id="n×n乘法阵列"><a href="#n×n乘法阵列" class="headerlink" title="n×n乘法阵列"></a><strong>n×n乘法阵列</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005714826.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="matrix"></p>
+<h4 id="MIPS中的乘法指令"><a href="#MIPS中的乘法指令" class="headerlink" title="MIPS中的乘法指令"></a><strong>MIPS中的乘法指令</strong></h4><p>乘法mult和无符号乘法multu</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">mult</span> $<span class="hljs-built_in">s0</span>, $<span class="hljs-built_in">s1</span>    # hi<span class="hljs-title">||</span>lo = $<span class="hljs-built_in">s0</span> * $<span class="hljs-built_in">s1</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322005801126.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="代码"></p>
+<p>一对容纳64位乘积的寄存器：$hi和$lo</p>
+<ul>
+<li>高32-bit放入寄存器hi，低32-bit放入寄存器lo</li>
+<li>用于存储乘法与除法的结果</li>
+<li>不可直接寻址访问</li>
+<li>通过mflo（move from lo）和mfhi（move from hi）两个指令将积送入指定的寄存器</li>
+</ul>
+<p>编译器会用移位指令替代乘数为2的幂次的乘法操作</p>
+<h3 id="除法"><a href="#除法" class="headerlink" title="除法"></a><strong>除法</strong></h3><ul>
+<li>除数不能为0</li>
+<li>长除法</li>
+<li>如果除数&lt;&#x3D;被除数<ul>
+<li>该位商为1，被除数减去除数</li>
+</ul>
+</li>
+<li>其他<ul>
+<li>该位商为0，取被除数下一位</li>
+</ul>
+</li>
+<li>可恢复的除法<ul>
+<li>被除数减去除数，直到余数小于0，再将被除数加回来</li>
+</ul>
+</li>
+<li>有符号除法<ul>
+<li>采用绝对值进行除法</li>
+<li>源操作数的符号相反时商为负，同时使非零余数的符号和被除数的相同</li>
+</ul>
+</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010005895.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="除法例"></p>
+<h4 id="除法的硬件"><a href="#除法的硬件" class="headerlink" title="除法的硬件"></a><strong>除法的硬件</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010105309.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="硬件"></p>
+<h4 id="改进后的除法器"><a href="#改进后的除法器" class="headerlink" title="改进后的除法器"></a><strong>改进后的除法器</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230322010150571.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="除法器"></p>
+<p>​	将加法器和寄存器的位长减半</p>
+<p>​	将加法器和寄存器的位长减半</p>
+<p>​	有些部件可以共用</p>
+<h4 id="MIPS中的除法"><a href="#MIPS中的除法" class="headerlink" title="MIPS中的除法"></a><strong>MIPS中的除法</strong></h4><p>除法div和无符号除divu</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-built_in">div</span> <span class="hljs-symbol">$</span>s0, <span class="hljs-symbol">$</span>s1    # <span class="hljs-symbol">$</span>lo = <span class="hljs-symbol">$</span>s0/<span class="hljs-symbol">$</span>s1<br>                # <span class="hljs-symbol">$</span>hi = <span class="hljs-symbol">$</span>s0 <span class="hljs-built_in">mod</span> <span class="hljs-symbol">$</span>s1<br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>R型指令格式</li>
+<li>乘法和除法共用硬件</li>
+<li>商存放在$lo，余数存放在$hi</li>
+<li>采用mflo和mfhi指令将运算结果放入其他寄存器</li>
+</ul>
+<h2 id="四-移位"><a href="#四-移位" class="headerlink" title="四.移位"></a>四.移位</h2><h4 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a><strong>移位操作</strong></h4><p>将所有位向左或者向右移动</p>
+<figure class="highlight cos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cos">sll <span class="hljs-built_in">$t</span>2, <span class="hljs-built_in">$s</span>0, <span class="hljs-number">8</span>  # <span class="hljs-built_in">$t</span>2=<span class="hljs-built_in">$s</span>0 &lt;&lt; <span class="hljs-number">8</span> bits<br>srl <span class="hljs-built_in">$t</span>2, <span class="hljs-built_in">$s</span>0, <span class="hljs-number">8</span>  # <span class="hljs-built_in">$t</span>2=<span class="hljs-built_in">$s</span>0 &gt;&gt; <span class="hljs-number">8</span> bits<br>sra <span class="hljs-built_in">$t</span>2, <span class="hljs-built_in">$s</span>0, <span class="hljs-number">8</span>  # <span class="hljs-built_in">$t</span>2=<span class="hljs-built_in">$s</span>0 &gt;&gt; <span class="hljs-number">8</span> bits<br></code></pre></td></tr></table></figure>
+
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323154734600.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="R"></p>
+<ul>
+<li>5bit移位域足够表示移动31位</li>
+<li>逻辑移位以0填充，算术移位以符号位填充</li>
+<li>移位与ALU分开实现</li>
+<li>空指令（nop）当作特殊的左移指令</li>
+</ul>
+<h4 id="移位单元"><a href="#移位单元" class="headerlink" title="移位单元"></a><strong>移位单元</strong></h4><p>控制：</p>
+<ul>
+<li>移动距离（Sh4Sh3Sh2Sh1Sh0）</li>
+<li>移动方向（left，right）</li>
+<li>移动类型（逻辑logical，算术arithmetic）</li>
+</ul>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323154930369.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="unit"></p>
+<h4 id="移位实现"><a href="#移位实现" class="headerlink" title="移位实现"></a>移位实现</h4><table>
+<thead>
+<tr>
+<th>Sh0</th>
+<th>!Sh0</th>
+<th><strong>r</strong></th>
+<th><strong>l</strong></th>
+<th>Doi</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>Dii+1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td><strong>Dii-1</strong></td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>Dii</td>
+</tr>
+</tbody></table>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155042299.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ph"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155203019.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ex"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155251585.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="next"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155333437.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="then"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155402308.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="移位"></p>
+<h2 id="五-浮点数"><a href="#五-浮点数" class="headerlink" title="五.浮点数"></a>五.浮点数</h2><p>计算机中以浮点数表示实数</p>
+<h3 id="科学计数法"><a href="#科学计数法" class="headerlink" title="科学计数法"></a><strong>科学计数法</strong></h3><p>–2.34 × 10^56</p>
+<p>+0.002× 10^–4</p>
+<p>+987.0210 × 10^9</p>
+<table>
+<thead>
+<tr>
+<th><strong>规格化(Normalized)数</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一个采用科学记数法表示的数，若没有前导零且小数点左边只有一位整数</td>
+</tr>
+</tbody></table>
+<h3 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h3><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323155745521.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<table>
+<thead>
+<tr>
+<th>浮点数(floating point)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>二进制小数点不固定的表达数的计数法</td>
+</tr>
+</tbody></table>
+<ul>
+<li>简化了浮点数的数据交换</li>
+<li>简化了浮点数的算术算法</li>
+<li>提高了用一个字存储的数的精度</li>
+</ul>
+<h4 id="IEEE754浮点数格式"><a href="#IEEE754浮点数格式" class="headerlink" title="IEEE754浮点数格式"></a><strong>IEEE754浮点数格式</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165504602.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="format"></p>
+<ul>
+<li><strong>S</strong>：符号位（0 Þ非负，1 Þ负）</li>
+<li>规格化计数：1.0&lt;&#x3D;|有效位|&lt;&#x3D;2.0<ul>
+<li>二进制数的前导位为1，不需要表示</li>
+<li>有效位由1.与后面的<strong>尾数</strong>部分构成</li>
+</ul>
+</li>
+<li><strong>指数</strong>：实际的指数+偏阶<ul>
+<li>指数为无符号数，为了表示2^-126到2^-127采用了偏阶</li>
+<li>单精度偏阶为127，双精度偏阶为1023</li>
+</ul>
+</li>
+<li>指数代表数值范围，尾数代表数的精度，指数域和尾数域大小需要折中</li>
+</ul>
+<h4 id="单精度浮点数的取值范围"><a href="#单精度浮点数的取值范围" class="headerlink" title="单精度浮点数的取值范围"></a><strong>单精度浮点数的取值范围</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165833524.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="单精度"></p>
+<ul>
+<li>指数00000000和11111111是保留值(1~254)</li>
+<li>最小的值<ul>
+<li>指数为00000001 -&gt; 实际指数&#x3D; 1 – 127 &#x3D; –126</li>
+<li>尾数：000…0 -&gt; 有效位 &#x3D; 1.0</li>
+<li>±1.0 × 2^–126 ≈ ±1.2 × 10^–38</li>
+</ul>
+</li>
+<li>最大的值<ul>
+<li>指数：11111110 -&gt;实际指数&#x3D; 254 – 127 &#x3D; +127</li>
+<li>尾数：111…1-&gt;有效位 ≈ 2.0</li>
+<li>±2.0 × 2^+127 ≈ ±3.4 × 10^+38</li>
+</ul>
+</li>
+</ul>
+<h4 id="双精度浮点数的取值范围"><a href="#双精度浮点数的取值范围" class="headerlink" title="双精度浮点数的取值范围"></a><strong>双精度浮点数的取值范围</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323165847894.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="双精度"></p>
+<ul>
+<li>指数000…0到111…1是保留值(1~2046)</li>
+<li>最小的值<ul>
+<li>指数为00000000001 -&gt; 实际指数&#x3D; 1 – 1023 &#x3D; –1022</li>
+<li>尾数：000…0 -&gt; 有效位 &#x3D; 1.0</li>
+<li>±1.0 × 2^–1022 ≈ ±2.2 × 10^–308</li>
+</ul>
+</li>
+<li>最大的值<ul>
+<li>指数：11111111110 -&gt; 实际指数&#x3D; 2046-1023&#x3D; +1023</li>
+<li>尾数：111…1-&gt; 有效位 ≈ 2.0</li>
+<li>±2.0 × 2+1023 ≈ ±1.8 × 10^+308</li>
+</ul>
+</li>
+</ul>
+<h4 id="溢出"><a href="#溢出" class="headerlink" title="溢出"></a><strong>溢出</strong></h4><p>浮点数表示法可以表示很大的数值范围，但与无穷还是不同</p>
+<p>溢出（上溢）：正的指数太大而超过指数域的表示范围</p>
+<p>下溢：负的指数太小而超过指数域的表示范围</p>
+<p>浮点数&#x3D;&gt;异常</p>
+<h4 id="浮点数的精确度"><a href="#浮点数的精确度" class="headerlink" title="浮点数的精确度"></a><strong>浮点数的精确度</strong></h4><ul>
+<li>相对精确度</li>
+<li>所有尾数位是有效位</li>
+<li>单精度：约2–23<ul>
+<li>23 × log102 ≈ 23 × 0.3 ≈ 6 位十进制的精度</li>
+</ul>
+</li>
+<li>双精度：约2–52<ul>
+<li>52 × log102 ≈ 52 × 0.3 ≈ 16 位十进制的精度</li>
+</ul>
+</li>
+</ul>
+<h5 id="浮点数例子1"><a href="#浮点数例子1" class="headerlink" title="浮点数例子1"></a><strong>浮点数例子1</strong></h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170347882.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h5 id="浮点数例子2"><a href="#浮点数例子2" class="headerlink" title="浮点数例子2"></a>浮点数例子2</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170418417.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h4 id="特殊数"><a href="#特殊数" class="headerlink" title="特殊数"></a><strong>特殊数</strong></h4><table>
+<thead>
+<tr>
+<th><strong>单精度</strong></th>
+<th></th>
+<th>双精度</th>
+<th></th>
+<th>表示对象</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>指数</td>
+<td>尾数</td>
+<td>指数</td>
+<td>尾数</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>非0</td>
+<td>0</td>
+<td>非0</td>
+<td>±非规格化数</td>
+</tr>
+<tr>
+<td>1~254</td>
+<td>任何值</td>
+<td>1~2046</td>
+<td>任何值</td>
+<td>±浮点数</td>
+</tr>
+<tr>
+<td>255</td>
+<td>0</td>
+<td>2047</td>
+<td>0</td>
+<td>±无穷</td>
+</tr>
+<tr>
+<td>255</td>
+<td>非0</td>
+<td>255</td>
+<td>非0</td>
+<td>NaN（非数）</td>
+</tr>
+</tbody></table>
+<ul>
+<li>±无穷<ul>
+<li>避免溢出检测的需要</li>
+</ul>
+</li>
+<li>非数（Not-a-Number，NaN）<ul>
+<li>表示非法数或者无效操作结果</li>
+<li>e.g., 0.0 &#x2F; 0.0</li>
+</ul>
+</li>
+</ul>
+<h4 id="浮点数加法"><a href="#浮点数加法" class="headerlink" title="浮点数加法"></a><strong>浮点数加法</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171026141.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="410"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171042330.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="42"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170735971.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流程图"></p>
+<h4 id="FP加法器"><a href="#FP加法器" class="headerlink" title="FP加法器"></a><strong>FP加法器</strong></h4><ul>
+<li>比整数加法器复杂</li>
+<li>如果采用单周期时间完成，时钟周期很长<ul>
+<li>比整数操作时间长很多</li>
+<li>较慢的时钟周期将会影响所有指令</li>
+</ul>
+</li>
+<li>FP加法器花费几个时钟周期<ul>
+<li>可以并行执行</li>
+</ul>
+</li>
+</ul>
+<h4 id="浮点加的基本结构"><a href="#浮点加的基本结构" class="headerlink" title="浮点加的基本结构"></a><strong>浮点加的基本结构</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170837125.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="浮点加法"></p>
+<h4 id="浮点数乘法"><a href="#浮点数乘法" class="headerlink" title="浮点数乘法"></a><strong>浮点数乘法</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323170950881.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4位10"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L03-ALU/image-20230323171006092.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="4位2"></p>
+<h4 id="FP运算的硬件"><a href="#FP运算的硬件" class="headerlink" title="FP运算的硬件"></a>FP运算的硬件</h4><ul>
+<li>FP乘法器与FP加法器相似<ul>
+<li>对有效数采用乘法，而不是加法</li>
+</ul>
+</li>
+<li>FP运算硬件通常可以实现<ul>
+<li>加法，减法，乘法，除法，倒数，平方根</li>
+</ul>
+</li>
+<li>FP操作花费几个时钟周期<ul>
+<li>并行执行</li>
+</ul>
+</li>
+</ul>
+<h4 id="MIPS中的浮点指令"><a href="#MIPS中的浮点指令" class="headerlink" title="MIPS中的浮点指令"></a><strong>MIPS中的浮点指令</strong></h4><ul>
+<li>浮点寄存器<ul>
+<li>MIPS 设计增加了单独的浮点寄存器——称为$f0，$f1，$f2 ，…，$f31</li>
+<li>双精度寄存器是一组单精度寄存器的偶数－奇数对，并使用偶数寄存器编号作为其名称</li>
+</ul>
+</li>
+<li>针对浮点寄存器的存和取指令： lwcl 和swcl</li>
+<li>单精度指令<ul>
+<li>add.s, sub.s, mul.s, div.s, c.x.s(例如c.eq.s)</li>
+</ul>
+</li>
+<li>双精度指令<ul>
+<li>add.d, sub.d, mul.d, div.d, c.x.d(例如c.eq.d)</li>
+</ul>
+</li>
+<li>浮点比较为真跳转bclt 和浮点比较为假跳转bclf</li>
+</ul>
+<h4 id="浮点数例子-°F转°C"><a href="#浮点数例子-°F转°C" class="headerlink" title="浮点数例子:°F转°C"></a>浮点数例子:°F转°C</h4><p>C 代码:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">float</span> f2c (<span class="hljs-built_in">float</span> fahr) &#123;<br>   <span class="hljs-built_in">return</span> ((<span class="hljs-number">5.0</span>/<span class="hljs-number">9.0</span>)*(fahr - <span class="hljs-number">32.0</span>));<br>   &#125;<br>  //fahr存放在<span class="hljs-variable">$f12</span>, 结果存放在<span class="hljs-variable">$f0</span><br></code></pre></td></tr></table></figure>
+
+<p>MIPS汇编代码：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">f2c</span>:<br>	      <span class="hljs-attribute">lwcl</span>    $f16, const5($gp)    # $f16=<span class="hljs-number">5</span>.<span class="hljs-number">0</span> (<span class="hljs-number">5</span>.<span class="hljs-number">0</span>在存储器中)<br>	      <span class="hljs-attribute">lwcl</span>    $f18, const9($gp)    # $f18=<span class="hljs-number">9</span>.<span class="hljs-number">0</span> (<span class="hljs-number">9</span>.<span class="hljs-number">0</span>在存储器中) <br>	      <span class="hljs-attribute">div</span>.s   $<span class="hljs-number">16</span>, $<span class="hljs-number">16</span>, $<span class="hljs-number">18</span>          # $f16=<span class="hljs-number">5</span>.<span class="hljs-number">0</span> / <span class="hljs-number">9</span>.<span class="hljs-number">0</span><br>	      <span class="hljs-attribute">lwcl</span>    $f18, const32($gp)  # $f18=<span class="hljs-number">32</span>.<span class="hljs-number">0</span> (<span class="hljs-number">32</span>.<span class="hljs-number">0</span>在存储器中) <br>	      <span class="hljs-attribute">sub</span>.s  $f18, $f12, $f18      # $f18=fahr-<span class="hljs-number">32</span>.<span class="hljs-number">0</span> <br>	      <span class="hljs-attribute">mul</span>.s  $f0, $f16, $f18        # $f0=(<span class="hljs-number">5</span>.<span class="hljs-number">0</span>/<span class="hljs-number">9</span>.<span class="hljs-number">0</span>)*(fahr-<span class="hljs-number">32</span>.<span class="hljs-number">0</span>)<br>	      <span class="hljs-attribute">jr</span>  $ra                                 #return<br></code></pre></td></tr></table></figure>
+
+<h4 id="浮点数例子：矩阵乘法"><a href="#浮点数例子：矩阵乘法" class="headerlink" title="浮点数例子：矩阵乘法"></a><strong>浮点数例子：矩阵乘法</strong></h4><p>C &#x3D; C + A × B</p>
+<p>都是32 × 32 的二维矩阵, 每个元素都是双精度</p>
+<p>C 代码:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs inform7">void mm (double c<span class="hljs-comment">[]</span><span class="hljs-comment">[]</span>,<br>    double a<span class="hljs-comment">[]</span><span class="hljs-comment">[]</span>, double b<span class="hljs-comment">[]</span><span class="hljs-comment">[]</span>) &#123;<br> int i, j, k;<br> for (i = 0; i! = 32; i = i + 1)<br>  for (j = 0; j! = 32; j = j + 1)<br>   for (k = 0; k! = 32; k = k + 1)<br>    c<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span> = c<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span><br>         \+ a<span class="hljs-comment">[i]</span><span class="hljs-comment">[k]</span> * b<span class="hljs-comment">[k]</span><span class="hljs-comment">[j]</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>a,b,c的基地址是参数，存在$a0,$a1,$a2中，i, j, k 分别存在$s0,$s1,$s2中。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs stylus">mm：<br>	      <span class="hljs-selector-tag">li</span>	<span class="hljs-variable">$t1</span>, <span class="hljs-number">32</span><br>	      <span class="hljs-selector-tag">li</span>	<span class="hljs-variable">$s0</span>, <span class="hljs-number">0</span><br>   L1:    <span class="hljs-selector-tag">li</span>    <span class="hljs-variable">$s1</span>, <span class="hljs-number">0</span><br>   L2:    <span class="hljs-selector-tag">li</span>    <span class="hljs-variable">$s2</span>, <span class="hljs-number">0</span><br>	     sll   <span class="hljs-variable">$t2</span>, <span class="hljs-variable">$s0</span>, <span class="hljs-number">5</span><br>	     addu    <span class="hljs-variable">$t2</span>, <span class="hljs-variable">$t2</span>, <span class="hljs-variable">$s1</span><br>	     sll    <span class="hljs-variable">$t2</span>, <span class="hljs-variable">$t2</span>, <span class="hljs-number">3</span><br>	     addu    <span class="hljs-variable">$t2</span>, <span class="hljs-variable">$a0</span>, <span class="hljs-variable">$t2</span><br>	     l<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f4</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$t2</span>)<br>  L3:    sll    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$s2</span>, <span class="hljs-number">5</span><br>	    addu    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$s1</span><br>	    sll    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$t0</span>, <span class="hljs-number">3</span><br>	    addu    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$a2</span>, <span class="hljs-variable">$t0</span><br>	    l<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f16</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$t0</span>)<br>	    sll    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$s0</span>, <span class="hljs-number">5</span><br>		addu    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$s2</span><br>		sll    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$t0</span>, <span class="hljs-number">3</span><br>		addu    <span class="hljs-variable">$t0</span>, <span class="hljs-variable">$a1</span>, <span class="hljs-variable">$t0</span><br>		l<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f18</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$t0</span>)<br>		mul<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f16</span>, <span class="hljs-variable">$f18</span>, <span class="hljs-variable">$f16</span><br>		add<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f4</span>, <span class="hljs-variable">$f4</span>, <span class="hljs-variable">$f16</span><br>		addiu    <span class="hljs-variable">$s2</span>, <span class="hljs-variable">$s2</span>, <span class="hljs-number">1</span><br>		bne    <span class="hljs-variable">$s2</span>, <span class="hljs-variable">$t1</span>, L3<br>		s<span class="hljs-selector-class">.d</span>    <span class="hljs-variable">$f4</span>, <span class="hljs-number">0</span>(<span class="hljs-variable">$t2</span>)<br>		addiu    <span class="hljs-variable">$s1</span>, <span class="hljs-variable">$s1</span>, <span class="hljs-number">1</span><br>		bne    <span class="hljs-variable">$s1</span>, <span class="hljs-variable">$t1</span>, L2<br>		addiu    <span class="hljs-variable">$s0</span>, <span class="hljs-variable">$s0</span>, <span class="hljs-number">1</span><br>		bne    <span class="hljs-variable">$s0</span>, <span class="hljs-variable">$t1</span>, L1<br><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="算术精确性"><a href="#算术精确性" class="headerlink" title="算术精确性"></a><strong>算术精确性</strong></h4><ul>
+<li>IEEE 756提供几种舍入模式<ul>
+<li>中间结果总是多保留两位，称为保护位（guard）和舍入位（round）</li>
+<li>四种舍入模式： 总是向上舍入（向＋∞ ），总是向下舍入（向－ ∞ ） ， 截断舍入，向最靠近的偶数舍入。</li>
+</ul>
+</li>
+<li>例子：2.56 × 10^0 与 2.34 × 10^2相加<ul>
+<li>首先右移较小的数以对齐指数，有了保护位和舍入位，可以表示两个最低位:0.0256+2.3400&#x3D;2.3656 (×10^2)，</li>
+<li>舍入后变为2.37 ×10^2</li>
+<li>如果没有保护位和舍入位：0.02+2.34&#x3D;2.36 (×10^2)</li>
+</ul>
+</li>
+</ul>
+<h2 id="六-小结"><a href="#六-小结" class="headerlink" title="六.小结"></a>六.小结</h2><ul>
+<li>位模式没有内在的含义<ul>
+<li>对位模式的操作决定其含义</li>
+</ul>
+</li>
+<li>计算机中的数字<ul>
+<li>有限的数值范围与精度</li>
+<li>程序设计中需要考虑到</li>
+</ul>
+</li>
+<li>体系结构支持的算术运算<ul>
+<li>有符号与无符号整数运算</li>
+<li>以浮点数近似表示的实数的运算</li>
+</ul>
+</li>
+<li>有限的取值范围与精度<ul>
+<li>运算可能出现上溢或者下溢</li>
+</ul>
+</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86/">#计算机组成原理</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机组成原理-L03-ALU</div>
+      <div>https://www.emokable.top/计算机组成原理-L03-ALU/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>emokable</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月21日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/GPT-3%E4%BB%A3%E7%A0%81%E8%BE%85%E5%8A%A9%E5%B7%A5%E5%85%B7%E5%B0%9D%E9%B2%9C-cursor/" title="GPT-3代码辅助工具尝鲜-cursor">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">GPT-3代码辅助工具尝鲜-cursor</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/%E8%AF%95%E7%9D%80%E7%99%BD%E5%AB%96%E5%BE%AE%E8%BD%AFU%E7%9B%98/" title="试着白嫖微软U盘">
+                        <span class="hidden-mobile">试着白嫖微软U盘</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments">
+      
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
+      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        Waline.init(options);
+        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
+          var imgSelector = '#waline .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  <script>
+  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
+    mermaid.initialize({"theme":"default"});
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('mermaid' in window) {
+        mermaid.init();
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+    
+      
+        <div class="statistics">
+  
+    
+
+      
+                    
+                      <span id="busuanzi_container_site_pv" style="display: none">
+                        总访问量 
+                          <span id="busuanzi_value_site_pv"></span>
+                           次
+                      </span>
+                      
+                        
+                          <span id="busuanzi_container_site_uv" style="display: none">
+                            总访客数 
+                              <span id="busuanzi_value_site_uv"></span>
+                               人
+                          </span>
+                          
+                            
+                                                         
+                                  <span>
+                                    博客总字数260k
+                                  </span>
+
+</div>
+          
+            
+              <!-- 备案信息 ICP for China -->
+              <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      
+    </a>
+  </span>
+  
+    
+      <span>
+        <a       
+          href="https://icp.gov.moe/?keyword=20230073"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
+          
+          <span>萌ICP备20230073号</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+
+
+                
+                  
+</div>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+<!--浏览器搞笑标题-->
+<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
