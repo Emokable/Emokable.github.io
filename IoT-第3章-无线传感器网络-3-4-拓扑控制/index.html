@@ -16,15 +16,29 @@
   <meta name="author" content="emokable">
   <meta name="keywords" content="">
   
-    <meta property="og:type" content="article">
+    <meta name="description" content="第三章 无线传感器网络3.4 拓扑控制为什么要做拓扑控制 概述传感器网络拓扑控制主要研究的问题是：在满足网络覆盖度和连通度的前提下，通过功率控制和骨干网节点的选择，剔除节点之间不必要的通信链路，形成一个数据转发的优化网络结构。 传感器网络中的拓扑控制技术主要有：节点功率控制、分簇（层次型拓扑结构）、睡眠控制等。  功率控制机制调节网络中每个节点的发射功率，在满足网络连通度的前提下，均衡节点的单跳可">
+<meta property="og:type" content="article">
 <meta property="og:title" content="IoT-第3章-无线传感器网络-3-4-拓扑控制">
 <meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/index.html">
 <meta property="og:site_name" content="哈姆詤的箌悝糖">
+<meta property="og:description" content="第三章 无线传感器网络3.4 拓扑控制为什么要做拓扑控制 概述传感器网络拓扑控制主要研究的问题是：在满足网络覆盖度和连通度的前提下，通过功率控制和骨干网节点的选择，剔除节点之间不必要的通信链路，形成一个数据转发的优化网络结构。 传感器网络中的拓扑控制技术主要有：节点功率控制、分簇（层次型拓扑结构）、睡眠控制等。  功率控制机制调节网络中每个节点的发射功率，在满足网络连通度的前提下，均衡节点的单跳可">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224131522041.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224131558701.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133203943.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133258214.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133401673.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133457661.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133516875.png">
+<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133550981.png">
 <meta property="article:published_time" content="2023-12-23T14:08:01.000Z">
-<meta property="article:modified_time" content="2023-12-23T14:08:01.973Z">
+<meta property="article:modified_time" content="2023-12-24T05:36:33.741Z">
 <meta property="article:author" content="emokable">
+<meta property="article:tag" content="课件笔记">
+<meta property="article:tag" content="物联网技术与应用">
+<meta property="article:tag" content="IoT">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224131522041.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
@@ -307,7 +321,7 @@ WIDGET = {
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          0 字
+          2.9k 字
         
       </span>
     
@@ -318,7 +332,7 @@ WIDGET = {
         
         
         
-          1 分钟
+          24 分钟
         
       </span>
     
@@ -382,7 +396,7 @@ WIDGET = {
               <p class="note note-info">
                 
                   
-                    本文最后更新于：15 小时前
+                    本文最后更新于：几秒前
                   
                 
               </p>
@@ -390,7 +404,76 @@ WIDGET = {
             
               <div class="markdown-body">
                 
-                
+                <h1 id="第三章-无线传感器网络"><a href="#第三章-无线传感器网络" class="headerlink" title="第三章 无线传感器网络"></a>第三章 无线传感器网络</h1><h2 id="3-4-拓扑控制"><a href="#3-4-拓扑控制" class="headerlink" title="3.4 拓扑控制"></a>3.4 拓扑控制</h2><h3 id="为什么要做拓扑控制"><a href="#为什么要做拓扑控制" class="headerlink" title="为什么要做拓扑控制"></a><strong>为什么要做拓扑控制</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224131522041.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="图"></p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a><strong>概述</strong></h3><p><strong>传感器网络拓扑控制主要研究的问题是：在满足网络覆盖度和连通度的前提下，通过功率控制和骨干网节点的选择，剔除节点之间不必要的通信链路，形成一个数据转发的优化网络结构。</strong></p>
+<p><strong>传感器网络中的拓扑控制技术主要有：节点功率控制、分簇（层次型拓扑结构）、睡眠控制等。</strong></p>
+<ul>
+<li><strong>功率控制机制调节网络中每个节点的发射功率，在满足网络连通度的前提下，均衡节点的单跳可达邻居数目。</strong></li>
+<li><strong>层次型拓扑控制利用分簇机制，让一些节点作为簇头节点，由簇头节点形成一个处理并转发数据的骨干网，其他非骨干网节点可以暂时关闭通信模块，进入休眠状态以节省能量。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224131558701.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="网"></p>
+<p><strong>拓扑控制在WSN&#x2F;IoT中的主要作用：</strong></p>
+<p><strong>（1）影响整个网络的生存时间。拓扑控制的一个重要目标就是在保证网络连通性和覆盖度的情况下，尽量合理高效地使用网络能量，延长整个网络的生存时间。</strong></p>
+<p><strong>（2）减小节点间的通信干扰，提高网络通信效率。</strong></p>
+<p><strong>（3）为路由协议提供基础。传感器网络中，只有活动的节点才能进行数据转发，而拓扑控制可以确定由哪些节点作转发节点，同时确定节点间的邻居关系。</strong></p>
+<p><strong>（4）影响数据融合。传感器网络中的数据融合指传感器节点将采集的数据发送给骨干节点，骨干节点进行数据融合、并把融合结果发送给数据收集节点。而骨干节点的选择是拓扑控制的一项重要内容。</strong></p>
+<p><strong>（5）弥补节点失效的影响。传感器节点可能部署在恶劣环境中，在军事应用中甚至部署在敌方区域中，所以很容易受到破坏而失效。这就要求网络拓扑结构具有鲁棒性以适应这种情况。</strong></p>
+<h3 id="功率控制"><a href="#功率控制" class="headerlink" title="功率控制"></a><strong>功率控制</strong></h3><p><strong>传感器网络中节点发射功率的控制也称为功率分配问题。节点通过设置或动态调整节点的发射功率，在保证网络拓扑结构连通、双向连通或者多连通的基础上，使得网络中节点的能量消耗最小，延长整个网络的生存时间。</strong></p>
+<p> <strong>（1）基于节点度的功率控制：一个节点的度数是指所有距离该节点一跳的邻居节点的数目。基于节点度算法的核心思想是给定节点度的上限和下限需求，动态调整节点的发射功率，使得节点的度数落在上限和下限之间。基于节点度的算法利用局部信息来调整相邻节点间的连通性，从而保证整个网络的连通性，同时保证节点间的链路具有一定的冗余性和可扩展性。</strong></p>
+<p> <strong>（2）基于邻近图的功率控制</strong></p>
+<p> <strong>（3）基于方向的功率控制</strong></p>
+<p> <strong>（4）基于干扰的功率控制</strong></p>
+<h4 id="功率控制–基于节点度的算法"><a href="#功率控制–基于节点度的算法" class="headerlink" title="功率控制–基于节点度的算法"></a><strong>功率控制–基于节点度的算法</strong></h4><p><strong>基于节点度的算法包括：本地平均法和本地邻居平均法</strong></p>
+<h5 id="本地平均法"><a href="#本地平均法" class="headerlink" title="本地平均法"></a><strong>本地平均法</strong></h5><p> <strong>(1)初始阶段，所有节点采用相同的发射功率Pt，每个节点周期性地广播一个包含自己ID的LifeMsg消息</strong></p>
+<p> <strong>(2)当节点接收到LifeMsg消息后,回复一个包含LifeMsg中节点ID的应答消息LifeAckMsg</strong></p>
+<p> <strong>(3)节点在下一次广播 LifeMsg 之前，检查已经收到的 LifeAckMsg 消息，计算出自己的节点度 n0</strong></p>
+<p>  <strong>(4)每个节点根据自己的节点度和设定的上限nmin、下限nmax调整发射功率。</strong></p>
+<p>   <strong>当nmin&lt; n0&lt;nmax:</strong>  <strong>节点保持发射功率不变</strong></p>
+<p>  <strong>当n0&lt;nmin:</strong>   <strong>Ptnew&#x3D; min (BmaxPt,Ainc(nmin– n0) Pt)</strong></p>
+<p>  <strong>当nmax&lt; n0:</strong>   <strong>Ptnew&#x3D; max(BminPt,Adec(1 &#x2F; (n0–nmax)) Pt)</strong></p>
+<h5 id="本地邻居平均法"><a href="#本地邻居平均法" class="headerlink" title="本地邻居平均法"></a><strong>本地邻居平均法</strong></h5><ul>
+<li><strong>本地邻居平均法与本地平均法类似，唯一的区别是在邻居数NodeResp的计算方法上。</strong></li>
+<li><strong>本地邻居平均法中，节点发送LifeAckMsg消息时，将自己的邻居数放入消息中，发送LifeMsg的节点在收集完所有LifeAckMsg消息后，将所有邻居的邻居数求平均值作为自己的邻居数。</strong></li>
+<li><strong>上述两种算法对节点要求不高，不需要严格的时间同步，通过少量的局部信息交互达到一定的优化效果。但存在邻居节点判决条件等问题。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133203943.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="本地邻居平均"></p>
+<h3 id="分簇：层次型拓扑结构控制"><a href="#分簇：层次型拓扑结构控制" class="headerlink" title="分簇：层次型拓扑结构控制"></a><strong>分簇：层次型拓扑结构控制</strong></h3><p><strong>层次型（分簇）vs.平面型路由</strong></p>
+<p><strong>考虑依据一定机制选择某些节点作为骨干网节点，打开其通信模块，并关闭非骨干节点的通信模块，由骨干节点构建一个连通网络来负责数据的路由转发。这样既保证了原有覆盖范围内的数据通信，也在很大程度上节省了节点能量。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133258214.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分簇"></p>
+<p><strong>在这种拓扑管理机制下，网络中的节点可以划分为骨干网节点和普通节点两类。骨干网节点对周围的普通节点进行管辖。</strong></p>
+<p><strong>这类算法将整个网络划分为相连的区域，一般称为分簇算法。骨干网络节点是簇头节点，普通节点是簇内节点。</strong></p>
+<p><strong>由于簇头节点需要协调簇内节点的工作，负责数据的融合和转发，能量消耗相对较大，所以分簇算法通常采用周期性地选择簇头节点的做法以均衡网络中的节点能量消耗。</strong></p>
+<h4 id="LEACH（lowenergyadaptiveclusteringhierarchy）低功耗低时延分簇层次路由协议"><a href="#LEACH（lowenergyadaptiveclusteringhierarchy）低功耗低时延分簇层次路由协议" class="headerlink" title="LEACH（lowenergyadaptiveclusteringhierarchy）低功耗低时延分簇层次路由协议"></a><strong>LEACH（lowenergyadaptiveclusteringhierarchy）低功耗低时延分簇层次路由协议</strong></h4><p><strong>是第一个基于多簇结构的层次路由协议</strong></p>
+<p><strong>LEACH分簇的执行过程是周期性的，每一轮对簇头节点进行轮换，达到分散各节点能量消耗、延长网络生命周期的目的。</strong></p>
+<p><strong>每轮循环分为簇的建立阶段+数据传输阶段</strong></p>
+<ul>
+<li><strong>在簇的建立阶段：随机产生簇头，邻近节点动态地形成簇；</strong></li>
+<li><strong>在数据传输阶段：簇内节点把数据发送给簇头，簇头进行数据融合并把结果发送给汇聚节点。</strong></li>
+</ul>
+<p><strong>LEACH算法能够保证各节点等概率地担任簇头，使得网络中的节点相对均衡地消耗能量。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133401673.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="LEACH"></p>
+<h4 id="LEACH算法：簇的建立阶段"><a href="#LEACH算法：簇的建立阶段" class="headerlink" title="LEACH算法：簇的建立阶段"></a><strong>LEACH算法：簇的建立阶段</strong></h4><p><strong>假设网络中有 N 个节点，期望在每一轮中形成 k 个簇（重新选举 k 个蔟头）。</strong></p>
+<p><strong>每个节点i产生一个 0-1 之间的随机数，如果这个数小于阈值Pi(t)，则该节点当选成为蔟头。（因此，Pi(t)相当于节点成为簇头的概率。）</strong></p>
+<p><strong>新蔟头向邻居节点广播一个自己成为簇头的通告消息(CHA,cluster-head-advertisement) 。</strong></p>
+<p><strong>非蔟头节点根据收到CHA消息信号的强弱来决定加入哪个簇，即选择接收信号强度 (RSSI) 最大的蔟头加入，并且发送一个 Join-Request 消息回复该蔟头。</strong></p>
+<p><strong>蔟头收到 J-R 消息后，回复一个调度消息，告知分配给该节点的TDMA 时隙。</strong></p>
+<p><strong>在所有的簇内节点都接收到 TDMA 调度消息后，簇的建立阶段结束。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133457661.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="LEACH"></p>
+<p><strong>如果某节点已经当选过簇头，则设置Pi(t)为 0，这样该节点不会再次当选。</strong></p>
+<p><strong>对于未当选过簇头的节点，随着选举轮数 r 的增大，当选概率Pi(t)的值也会随之增大；</strong></p>
+<p><strong>最后一轮时，所有未当选过蔟头的节点的Pi(t)值等于 1，一定当选。</strong></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133516875.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="建立"></p>
+<h4 id="LEACH算法：数据传输阶段"><a href="#LEACH算法：数据传输阶段" class="headerlink" title="LEACH算法：数据传输阶段"></a><strong>LEACH算法：数据传输阶段</strong></h4><p><strong>稳定阶段</strong></p>
+<ul>
+<li><strong>簇内节点在各自分配的时隙内向蔟头节点发送数据，其它时间睡眠，以减少能量消耗。</strong></li>
+<li><strong>蔟头节点需要一致保持活跃状态，接收所有簇内节点的发送数据，进行数据融合后，将处理结果发送给汇聚节点。</strong></li>
+</ul>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/image-20231224133550981.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="传输"></p>
+<p><strong>LEACH采用分布式的机制实现分簇，所有节点等概率地担任蔟头，并且结合了高效的MAC协议体系，在网络生存时间、吞吐量和延迟等性能上都有良好的表项。</strong></p>
+<p><strong>但是，LEACH的蔟头选举机制没有考虑节点的具体地理位置，不能保证蔟头均匀分布在网络中，簇的大小也可能差异很大，从而造成节点的负载不均衡。</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>LEACH协议是应用较广泛、较成熟的一种WSN分簇路由协议</strong></p>
+<p><strong>TEEN、PEGASIS、Multihop-LEACH、ILEACH、LEACH-Mobile、CBR等协议都是在LEACH协议的基础上发展起来</strong></p>
+
                 
               </div>
             
@@ -398,6 +481,38 @@ WIDGET = {
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+      
+        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+      
+        <a href="/tags/IoT/">#IoT</a>
+      
+    </div>
   
 </div>
 
@@ -618,7 +733,7 @@ WIDGET = {
                             
                                                          
                                   <span>
-                                    博客总字数270k
+                                    博客总字数273k
                                   </span>
 
 </div>
