@@ -30,7 +30,7 @@
     "hexo-theme-fluid": "^1.9.4",
     "hexo-theme-landscape": "^0.0.3",
     "hexo-wordcount": "^6.0.1",
-    "html-minifier-terser": "^7.1.0",
+    "html-minifier-terser": "^7.2.0",
     "imagemin": "^8.0.1",
     "uglify-js": "^3.17.4",
     "uuid": "^7.0.3"
