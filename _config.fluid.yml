@@ -305,7 +305,7 @@ lazyload:
 
   # 开启后懒加载仅在文章页生效，如果自定义页面需要使用，可以在 Front-matter 里指定 `lazyload: true`
   # If true, only enable lazyload on the post page. For custom pages, you can set 'lazyload: true' in front-matter
-  onlypost: true
+  onlypost: false
 
   # 触发加载的偏移倍数，基数是视窗高度，可根据部署环境的请求速度调节
   # The factor of viewport height that triggers loading
@@ -377,7 +377,7 @@ search:
 
   # 搜索是否扫描正文
   # If true, search will scan the post content
-  content: true
+  content: false
 
 # 首屏图片的相关配置
 # Config of the big image on the first screen
