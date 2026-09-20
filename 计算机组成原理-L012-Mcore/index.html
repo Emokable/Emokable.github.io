@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
+  <link rel="icon" href="/img/emokable.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -84,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"emokable.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"emokable.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -111,7 +111,7 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>Fluid</strong>
+      <strong>哈姆詤的箌悝糖</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
@@ -132,18 +132,6 @@
               <a class="nav-link" href="/">
                 <i class="iconfont icon-home-fill"></i>
                 <span>首页</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>归档</span>
               </a>
             </li>
           
@@ -184,6 +172,62 @@
             </li>
           
         
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/steamgames/">
+                <i class="iconfont icon-steam"></i>
+                <span>steam</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
+                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                
+                <span>更多</span>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/archives/">
+                    
+                    <span>归档</span>
+                  </a>
+                
+                  
+                  
+                  
+                  <a class="dropdown-item" href="/pdf/">
+                    
+                    <span>PDF</span>
+                  </a>
+                
+              </div>
+            </li>
+          
+        
         
           <li class="nav-item" id="search-btn">
             <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
@@ -207,7 +251,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -313,7 +357,7 @@
 <p>a：可并行计算部分的占比</p>
 <p>n：并行处理节点个数</p>
 <p>加速之前的执行时间 To</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png" srcset="/img/loading.gif" lazyload alt="时间占比图"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时间占比图"></p>
 <p>加速之后的执行时间 Tp &#x3D; To  * （1 – a + a&#x2F;n）</p>
 <p><strong>例子1</strong></p>
 <p>如果希望在100个处理器上获得90的加速比，请问在原始计算负载中顺序执行部分最多占多少？</p>
@@ -332,7 +376,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png" srcset="/img/loading.gif" lazyload alt="左标量，计算只能一次处理一个数据"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="左标量，计算只能一次处理一个数据"></p>
 <p><strong>例子2</strong></p>
 <p>执行两个加法：一个加法是10个标量的求和，另一个加法是一对10×10二维矩阵的求和。假设目前只有矩阵求和可以并行，使用10个和40个处理器达到的加速比分别是多少？</p>
 <p>答：</p>
@@ -403,8 +447,8 @@
 <li>☺可同时隐藏由短阻塞和长阻塞引起的吞吐量损失</li>
 <li>☹降低了单个线程的执行速度</li>
 </ul>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png" srcset="/img/loading.gif" lazyload alt="sun"></p>
-<h5 id="Niagara整数流水线"><a href="#Niagara整数流水线" class="headerlink" title="Niagara整数流水线"></a>Niagara整数流水线</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png" srcset="/img/loading.gif" lazyload alt="8细粒"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="sun"></p>
+<h5 id="Niagara整数流水线"><a href="#Niagara整数流水线" class="headerlink" title="Niagara整数流水线"></a>Niagara整数流水线</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="8细粒"></p>
 <table>
 <thead>
 <tr>
@@ -437,8 +481,8 @@
 <li>每个线程需要单独的重命名表（RUUs），或者需要指明一个表项属于哪个线程</li>
 <li>Intel Pentium 4的SMT称为超线程（hyperthreading）：支持两个线程</li>
 </ul>
-<h4 id="4个线程运行在超标量处理器（4路）"><a href="#4个线程运行在超标量处理器（4路）" class="headerlink" title="4个线程运行在超标量处理器（4路）"></a><strong>4个线程运行在超标量处理器（4路）</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png" srcset="/img/loading.gif" lazyload alt="chu"></p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png" srcset="/img/loading.gif" lazyload alt="粗粒度/细粒度/同时多线程"></p>
+<h4 id="4个线程运行在超标量处理器（4路）"><a href="#4个线程运行在超标量处理器（4路）" class="headerlink" title="4个线程运行在超标量处理器（4路）"></a><strong>4个线程运行在超标量处理器（4路）</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="chu"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="粗粒度/细粒度/同时多线程"></p>
 <blockquote>
 <p>粗的就是到高阻塞才调度，细是每条指令，smt是不需要开销的每条指令轮换</p>
 </blockquote>
@@ -452,7 +496,7 @@
 <td>至少两个处理器的计算机系统</td>
 </tr>
 </tbody></table>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png" srcset="/img/loading.gif" lazyload alt="多核"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核"></p>
 <p>通过任务级并行（task-level parallelism）或进程级并行实现高吞吐量（process-level parallelism）</p>
 <p>将单个程序运行在多个处理器上实现性能的提升，并行处理程序（parallel processing program）</p>
 <h3 id="多核处理器"><a href="#多核处理器" class="headerlink" title="多核处理器"></a><strong>多核处理器</strong></h3><ul>
@@ -505,7 +549,7 @@
 </tr>
 </tbody></table>
 <h4 id="简单并行处理程序"><a href="#简单并行处理程序" class="headerlink" title="简单并行处理程序"></a><strong>简单并行处理程序</strong></h4><p>10个处理器求和</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png" srcset="/img/loading.gif" lazyload alt="需要每层同步"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="需要每层同步"></p>
 <h4 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a><strong>进程同步</strong></h4><ul>
 <li>通过多进程合作完成一项任务</li>
 <li>使用锁变量（信号量）实现进程合作与同步，需要架构提供仲裁机制</li>
@@ -514,14 +558,14 @@
 <li>处理器获得总线，共享数据需要加锁，可以通过原子交换实现</li>
 </ul>
 <h4 id="自旋锁同步"><a href="#自旋锁同步" class="headerlink" title="自旋锁同步"></a><strong>自旋锁同步</strong></h4><p>一个处理器成功获得锁变量表示成功将1写入锁变量，其他处理器获得返回值0</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png" srcset="/img/loading.gif" lazyload alt="自旋"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="自旋"></p>
 <p><strong>例子</strong></p>
 <p>假设对100000个数字进行求和，运行在100个处理器上</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs prolog">sum[<span class="hljs-symbol">Pn</span>] = <span class="hljs-number">0</span>;<br>for (i = <span class="hljs-number">1000</span>*<span class="hljs-symbol">Pn</span>; i&lt;<span class="hljs-number">1000</span>*(<span class="hljs-symbol">Pn</span>+<span class="hljs-number">1</span>); i = i + <span class="hljs-number">1</span>)<br>	sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + <span class="hljs-symbol">A</span>[i];<br><span class="hljs-symbol">Repeat</span><br>   synch(); //synchronize first <br>   if (half<span class="hljs-comment">%2 != 0 &amp;&amp; Pn == 0) &#123; </span><br>        sum[<span class="hljs-number">0</span>] = sum[<span class="hljs-number">0</span>] + sum[half<span class="hljs-number">-1</span>]; <br>   &#125; <br>   half = half/<span class="hljs-number">2</span> <br>   if (<span class="hljs-symbol">Pn</span>&lt;half) &#123; <br>        sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + sum[<span class="hljs-symbol">Pn</span>+half] <br>   &#125; <br>until (half == <span class="hljs-number">1</span>); //final sum in sum[<span class="hljs-number">0</span>]<br><br></code></pre></td></tr></table></figure>
 
 <h4 id="Synch-例子"><a href="#Synch-例子" class="headerlink" title="Synch()例子"></a><strong>Synch()例子</strong></h4><p>Synch()：生产者-消费者模型下，消费者处理器在提取数据之前必须先同步</p>
 <p>路障同步（Barrier）：处理器需要在路障处等待，直到满足条件</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png" srcset="/img/loading.gif" lazyload alt="路障捏"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="路障捏"></p>
 <h4 id="自旋锁实现路障"><a href="#自旋锁实现路障" class="headerlink" title="自旋锁实现路障"></a><strong>自旋锁实现路障</strong></h4><p>arrive、depart是自旋锁，arrive初始化未锁定，depart初始化锁定</p>
 <figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">synch</span><span class="hljs-params">()</span> <span class="hljs-comment">&#123; </span></span><br><span class="hljs-comment"><span class="hljs-function">    lock(arrive); </span></span><br><span class="hljs-comment"><span class="hljs-function">    count = count + 1; // count the processors as</span></span><br><span class="hljs-comment"><span class="hljs-function">    if (count &lt; n) &#123; // they arrive at barrier </span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(arrive) </span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> <span class="hljs-title">else</span> <span class="hljs-comment">&#123;</span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(depart);</span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> </span><br><span class="hljs-function">    <span class="hljs-title">lock</span><span class="hljs-params">(depart)</span>;</span> <br>    count = count - <span class="hljs-number">1</span>; <span class="hljs-comment">// count the processors as </span><br>    <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">&#123; // they leave barrier </span><br><span class="hljs-comment">          unlock(depart) </span><br><span class="hljs-comment">    &#125;</span> <span class="hljs-keyword">else</span> <span class="hljs-comment">&#123; </span><br><span class="hljs-comment">          unlock(arrive); </span><br><span class="hljs-comment">    &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -545,19 +589,19 @@
 <td>通过消息传递（send和receive）实现处理器间合作</td>
 </tr>
 </tbody></table>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png" srcset="/img/loading.gif" lazyload alt="多核-不共享内存"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核-不共享内存"></p>
 <p><strong>例子</strong></p>
 <p>给每个处理器分配1000个数据进行求和</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Sum = 0;<br><span class="hljs-keyword">for</span> (i = 0; i&lt;1000; i = i + 1)<br>	<span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + A[i];<br>//将所有处理器计算结果相加 ，send(x,y)将数据y发送给处理器x<br><br>half = 100; l<br>imit = 100; <br>repeat &#123; <br>    half = (half+1)/2; //dividing line <br>    <span class="hljs-keyword">if</span> (Pn&gt;= half &amp;&amp; Pn&lt;<span class="hljs-built_in">limit</span>) send(Pn-half,<span class="hljs-built_in">sum</span>);<br>    <span class="hljs-keyword">if</span> (Pn&lt;(<span class="hljs-built_in">limit</span>/2)) <span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + receive(); <br>    <span class="hljs-built_in">limit</span> = half; <br>&#125; until (half == 1); //final <span class="hljs-built_in">sum</span> <span class="hljs-keyword">in</span> P0’s <span class="hljs-built_in">sum</span><br><br></code></pre></td></tr></table></figure>
 
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png" srcset="/img/loading.gif" lazyload alt="消息传递"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="消息传递"></p>
 <h1 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a><strong>五.小结</strong></h1><p>多核处理器基础</p>
 <ol>
 <li>如何共享数据？</li>
 <li>如何合作处理任务？</li>
 <li>架构的可扩展性如何？</li>
 </ol>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png" srcset="/img/loading.gif" lazyload alt="m"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="m"></p>
 
                 
               </div>
@@ -813,7 +857,9 @@
 
 
   
-    <script  src="/js/img-lazyload.js" ></script>
+    
+      <script  src="/js/img-lazyload.js" ></script>
+    
   
 
 
