@@ -350,7 +350,7 @@ navbar:
     - { key: "tag", link: "/tags/", icon: "iconfont icon-tags-fill" }
     - { key: "about", link: "/about/", icon: "iconfont icon-user-fill" }
     - { key: "links", link: "/links/", icon: "iconfont icon-link-fill" }
-    - { key: "steam", name: "steam", link: "/steamgames/", icon: "iconfont icon-steam" }
+    - { key: "ns", name: "NS", link: "/ns/", icon: "iconfont icon-game" }
     - key: "more"
       name: "更多"
       submenu:
