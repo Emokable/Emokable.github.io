@@ -2,6 +2,7 @@
 title: Nintendo Switch
 date: 2026-09-21 00:40:00
 layout: page
+banner_img: /img/top.jpg
 ---
 
 <div class="ns-page">
