@@ -6,6 +6,7 @@
     "build": "hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",
+    "ns:import": "node tools/import-ns-data.js",
     "server": "hexo server"
   },
   "hexo": {

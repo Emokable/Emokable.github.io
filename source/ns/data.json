@@ -1,0 +1,698 @@
+{
+  "updatedAt": "2026-09-20T17:04:16.166Z",
+  "games": [
+    {
+      "id": "0100d9f01d474000",
+      "name": "Rhythm Paradise Groove",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/72305cd7a0164727b41c8459c4cb7782_512",
+      "minutes": 744,
+      "days": 10,
+      "firstPlayedAt": "2026-07-04T06:57:55Z",
+      "lastPlayedAt": "2026-09-20T13:58:53Z"
+    },
+    {
+      "id": "0100c3500d956000",
+      "name": "神獄塔 メアリスケルター2 for Nintendo Switch",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/9d55b6fb9fd94fe8825e67e37b66e289_512",
+      "minutes": 5596,
+      "days": 36,
+      "firstPlayedAt": "2026-06-18T09:15:41Z",
+      "lastPlayedAt": "2026-09-20T08:13:03Z"
+    },
+    {
+      "id": "0100f8d01a06e000",
+      "name": "ASTLIBRA Revision",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/360554f7dd294c9f94272762419a7b14_512",
+      "minutes": 38,
+      "days": 3,
+      "firstPlayedAt": "2025-11-19T18:03:07Z",
+      "lastPlayedAt": "2026-09-13T13:05:04Z"
+    },
+    {
+      "id": "0100a6301214e000",
+      "name": "Fire Emblem Engage",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/87a074fa931a49558019650d759a8d69_512",
+      "minutes": 290,
+      "days": 9,
+      "firstPlayedAt": "2026-08-08T03:34:10Z",
+      "lastPlayedAt": "2026-09-12T15:04:15Z"
+    },
+    {
+      "id": "01007390285ae000",
+      "name": "BUNNY GARDEN 2",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/258a913ee61847e2a4e830f85392b3d4_512",
+      "minutes": 83,
+      "days": 4,
+      "firstPlayedAt": "2026-08-28T16:15:26Z",
+      "lastPlayedAt": "2026-09-10T15:59:44Z"
+    },
+    {
+      "id": "0400c3f00006e000",
+      "name": "Mario Kart World",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/ef905731495643798a0b3e51ab8f32b6_512",
+      "minutes": 330,
+      "days": 21,
+      "firstPlayedAt": "2025-11-22T06:15:50Z",
+      "lastPlayedAt": "2026-09-10T13:31:00Z"
+    },
+    {
+      "id": "0100e8600c504000",
+      "name": "スーパーファミコン Nintendo Classics",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/4e34972cd625460ca290a0965d99672d_512",
+      "minutes": 48,
+      "days": 5,
+      "firstPlayedAt": "2025-12-30T19:26:21Z",
+      "lastPlayedAt": "2026-09-03T14:22:11Z"
+    },
+    {
+      "id": "0100c140298b6000",
+      "name": "空之轨迹 the 2nd 体验版",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/67df937545d24b67b05bf72724ed88c7_512",
+      "minutes": 495,
+      "days": 10,
+      "firstPlayedAt": "2026-08-20T06:33:12Z",
+      "lastPlayedAt": "2026-08-31T17:24:43Z"
+    },
+    {
+      "id": "0100dae01e4c8000",
+      "name": "STORY OF SEASONS: Grand Bazaar",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/3b3fa5e925534dc69d128a949034d582_512",
+      "minutes": 15,
+      "days": 1,
+      "firstPlayedAt": "2026-08-27T18:22:06Z",
+      "lastPlayedAt": "2026-08-27T18:37:47Z"
+    },
+    {
+      "id": "0100d20027ab6000",
+      "name": "亰都幻都 -樱花幻舞- Nintendo Switch 2 Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/7a4b4ffacfed49d2b3f0094d8590c387_512",
+      "minutes": 1730,
+      "days": 11,
+      "firstPlayedAt": "2026-07-29T05:49:41Z",
+      "lastPlayedAt": "2026-08-07T18:07:41Z"
+    },
+    {
+      "id": "0100b4e00444c000",
+      "name": "ファミリーコンピュータ Nintendo Classics",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/9e3b16b68b0545ddb4ca1df1beb6fcee_512",
+      "minutes": 15,
+      "days": 5,
+      "firstPlayedAt": "2025-12-30T20:04:17Z",
+      "lastPlayedAt": "2026-07-31T05:35:02Z"
+    },
+    {
+      "id": "01006c100ec08000",
+      "name": "Minecraft Dungeons",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/3352b9d834dd408f8af4926ce77895c0_512",
+      "minutes": 28,
+      "days": 1,
+      "firstPlayedAt": "2026-07-27T17:37:25Z",
+      "lastPlayedAt": "2026-07-27T18:06:34Z"
+    },
+    {
+      "id": "01006c5027060000",
+      "name": "魔法少女的魔女审判",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/f4625fcbe1d446e3a41c388cdc29e4f6_512",
+      "minutes": 39,
+      "days": 3,
+      "firstPlayedAt": "2026-07-17T12:15:18Z",
+      "lastPlayedAt": "2026-07-22T18:28:59Z"
+    },
+    {
+      "id": "01001e9023920000",
+      "name": "空之轨迹 the 1st",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/5a7f8f54ab144acf98604f13c4a6773b_512",
+      "minutes": 1240,
+      "days": 4,
+      "firstPlayedAt": "2026-06-20T08:47:18Z",
+      "lastPlayedAt": "2026-07-08T15:47:27Z"
+    },
+    {
+      "id": "010067f024f28000",
+      "name": "空之轨迹 the 1st 体验版",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/4eb398b2547c4c0ca97ac300c6af5159_512",
+      "minutes": 53,
+      "days": 1,
+      "firstPlayedAt": "2026-07-05T17:44:21Z",
+      "lastPlayedAt": "2026-07-05T19:04:33Z"
+    },
+    {
+      "id": "0100107027310000",
+      "name": "Rhythm Paradise Groove: Demo Version",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/0a67383fe1dc47c1b76ddd8af5e86799_512",
+      "minutes": 20,
+      "days": 1,
+      "firstPlayedAt": "2026-06-23T16:19:23Z",
+      "lastPlayedAt": "2026-06-23T16:38:40Z"
+    },
+    {
+      "id": "010020101f804000",
+      "name": "Fitness Boxing 3: Your Personal Trainer",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/cb0ef0e6de03422ba13281b04af47cb2_512",
+      "minutes": 1,
+      "days": 1,
+      "firstPlayedAt": "2026-06-20T09:02:01Z",
+      "lastPlayedAt": "2026-06-20T09:02:34Z"
+    },
+    {
+      "id": "010074f013262000",
+      "name": "Xenoblade Chronicles 3",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/f85099b6f7684575952d72ba0e30753e_512",
+      "minutes": 987,
+      "days": 14,
+      "firstPlayedAt": "2025-12-25T11:43:26Z",
+      "lastPlayedAt": "2026-06-14T16:34:39Z"
+    },
+    {
+      "id": "010054b01ad92000",
+      "name": "圣兽之王",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/941dd910ca2e4b01999aa861e6b099b4_512",
+      "minutes": 543,
+      "days": 11,
+      "firstPlayedAt": "2026-03-28T07:04:42Z",
+      "lastPlayedAt": "2026-06-13T16:44:58Z"
+    },
+    {
+      "id": "010015100b514000",
+      "name": "Super Mario Bros. Wonder – Nintendo Switch 2 Edition + Meetup in Bellabel Park",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/e5ed1a772b2948bb86419abc3a4dd838_512",
+      "minutes": 25,
+      "days": 2,
+      "firstPlayedAt": "2025-11-22T04:54:09Z",
+      "lastPlayedAt": "2026-06-03T17:54:50Z"
+    },
+    {
+      "id": "0100d370219da000",
+      "name": "イース・メモワール -セルセタの樹海-",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/4bbc6b9499794dafb0295989518127f4_512",
+      "minutes": 1760,
+      "days": 8,
+      "firstPlayedAt": "2026-05-20T12:00:42Z",
+      "lastPlayedAt": "2026-05-26T16:04:13Z"
+    },
+    {
+      "id": "01009bf0072d4000",
+      "name": "Captain Toad: Treasure Tracker",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/98b0cb7f0ee645f1880f10ed14f1c001_512",
+      "minutes": 625,
+      "days": 4,
+      "firstPlayedAt": "2026-05-16T09:52:22Z",
+      "lastPlayedAt": "2026-05-19T13:54:35Z"
+    },
+    {
+      "id": "0100e5d00cc0c000",
+      "name": "Unravel TWO",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/5f0d9018c23e4397827088c85fea5cf5_512",
+      "minutes": 2,
+      "days": 1,
+      "firstPlayedAt": "2026-05-19T06:17:10Z",
+      "lastPlayedAt": "2026-05-19T06:18:17Z"
+    },
+    {
+      "id": "040034e02525c000",
+      "name": "真・三國無双 ORIGINS",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/43bbe170453f42978671eed3408a0c6c_512",
+      "minutes": 3250,
+      "days": 19,
+      "firstPlayedAt": "2026-05-01T01:58:45Z",
+      "lastPlayedAt": "2026-05-18T17:21:15Z"
+    },
+    {
+      "id": "0100965017338000",
+      "name": "Super Mario Party Jamboree – Nintendo Switch 2 Edition + Jamboree TV",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/288c4a8bb47c433da9be0587dd87ef3b_512",
+      "minutes": 131,
+      "days": 1,
+      "firstPlayedAt": "2026-05-15T12:39:22Z",
+      "lastPlayedAt": "2026-05-15T14:53:15Z"
+    },
+    {
+      "id": "01000460162dc000",
+      "name": "伊蘇IX -怪人之夜-",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/fb9d65a23f874571b4b7bc699f669b8a_512",
+      "minutes": 1967,
+      "days": 13,
+      "firstPlayedAt": "2026-04-11T04:12:29Z",
+      "lastPlayedAt": "2026-05-09T11:28:37Z"
+    },
+    {
+      "id": "01008cf01baac000",
+      "name": "The Legend of Zelda: Echoes of Wisdom",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/c174400f034e4ba3a846be439c72bd36_512",
+      "minutes": 1549,
+      "days": 9,
+      "firstPlayedAt": "2026-04-11T10:24:15Z",
+      "lastPlayedAt": "2026-04-23T10:03:51Z"
+    },
+    {
+      "id": "01007f200b0c0000",
+      "name": "Ys VIII: Lacrimosa of DANA",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/10745582be3548aea0fa043ea9840e22_512",
+      "minutes": 2590,
+      "days": 16,
+      "firstPlayedAt": "2026-03-29T03:41:28Z",
+      "lastPlayedAt": "2026-04-18T06:24:17Z"
+    },
+    {
+      "id": "04001b802579e000",
+      "name": "PRAGMATA SKETCHBOOK",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/5587efcab91a4b228133c0df34adb36a_512",
+      "minutes": 31,
+      "days": 1,
+      "firstPlayedAt": "2026-04-16T11:51:55Z",
+      "lastPlayedAt": "2026-04-16T12:22:31Z"
+    },
+    {
+      "id": "0100ca502552a000",
+      "name": "Tomodachi Life: Living the Dream – Welcome Version",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/38f78e2e273249a19047779df48ba99f_512",
+      "minutes": 36,
+      "days": 4,
+      "firstPlayedAt": "2026-03-26T13:32:41Z",
+      "lastPlayedAt": "2026-04-15T11:22:20Z"
+    },
+    {
+      "id": "0400ddb020648000",
+      "name": "Cyberpunk 2077: Ultimate Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/6055241cafe94cd3957b97198308805c_512",
+      "minutes": 13,
+      "days": 1,
+      "firstPlayedAt": "2026-04-13T12:21:36Z",
+      "lastPlayedAt": "2026-04-13T12:37:53Z"
+    },
+    {
+      "id": "0100f43008c44000",
+      "name": "Pokémon Legends: Z-A – Nintendo Switch 2 Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/52f0ec71ff1f4999932003c18685024c_512",
+      "minutes": 21471,
+      "days": 64,
+      "firstPlayedAt": "2025-10-17T05:45:39Z",
+      "lastPlayedAt": "2026-04-11T17:30:16Z"
+    },
+    {
+      "id": "010015f008c54000",
+      "name": "Pokémon HOME",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/02a7c3a754354231865b51151e3726d5_512",
+      "minutes": 1135,
+      "days": 45,
+      "firstPlayedAt": "2025-09-13T17:16:44Z",
+      "lastPlayedAt": "2026-04-11T17:28:53Z"
+    },
+    {
+      "id": "0400d1e0237cc000",
+      "name": "MONSTER HUNTER STORIES 3: TWISTED REFLECTION",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/f0ff250b9efa4eb78f0a3acab0641a8f_512",
+      "minutes": 2767,
+      "days": 8,
+      "firstPlayedAt": "2026-04-02T06:01:56Z",
+      "lastPlayedAt": "2026-04-09T08:45:52Z"
+    },
+    {
+      "id": "01005b7008c52000",
+      "name": "Pokémon Champions",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/9c7b0a5dbd5c4159ae2963530be1156c_512",
+      "minutes": 15,
+      "days": 1,
+      "firstPlayedAt": "2026-04-08T18:46:01Z",
+      "lastPlayedAt": "2026-04-08T19:01:07Z"
+    },
+    {
+      "id": "0400da6023824000",
+      "name": "MONSTER HUNTER STORIES 3: TWISTED REFLECTION Trial Version",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/82e03a48da4e46cfb8c74b728187f698_512",
+      "minutes": 131,
+      "days": 5,
+      "firstPlayedAt": "2026-03-13T06:03:19Z",
+      "lastPlayedAt": "2026-04-01T17:06:06Z"
+    },
+    {
+      "id": "0100395011044000",
+      "name": "ゲームボーイ Nintendo Classics",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/65a89535890048a09295add8f09c68fd_512",
+      "minutes": 29,
+      "days": 3,
+      "firstPlayedAt": "2025-12-30T05:13:54Z",
+      "lastPlayedAt": "2026-03-31T04:27:35Z"
+    },
+    {
+      "id": "010054a020574000",
+      "name": "ユミアのアトリエ ～追憶の錬金術士と幻創の地～",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/1a9954c41d2949409efcf9858ef089b0_512",
+      "minutes": 1458,
+      "days": 9,
+      "firstPlayedAt": "2026-03-13T05:48:08Z",
+      "lastPlayedAt": "2026-03-29T14:15:31Z"
+    },
+    {
+      "id": "01001c700873e000",
+      "name": "GOD EATER™ 3",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/89a20a983ee941bc8aad07e25c49422d_512",
+      "minutes": 45,
+      "days": 3,
+      "firstPlayedAt": "2026-02-12T05:25:25Z",
+      "lastPlayedAt": "2026-03-26T16:43:48Z"
+    },
+    {
+      "id": "01007e30176e6000",
+      "name": "Samurai Bringer",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/2e4e58ae37ff4ed5b6e42a48244f568c_512",
+      "minutes": 106,
+      "days": 5,
+      "firstPlayedAt": "2025-11-22T18:26:14Z",
+      "lastPlayedAt": "2026-03-26T16:38:09Z"
+    },
+    {
+      "id": "0100e6b01bd3a000",
+      "name": "Card-en-Ciel Nintendo Switch 2 Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/1827a4e49459418fbcc2da3b08e02dde_512",
+      "minutes": 404,
+      "days": 6,
+      "firstPlayedAt": "2026-03-05T13:58:49Z",
+      "lastPlayedAt": "2026-03-26T15:12:52Z"
+    },
+    {
+      "id": "0100c9f009f7a000",
+      "name": "Xenoblade Chronicles 2: Torna - The Golden Country",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/9a11157c12e84832b8b61451c6a20e95_512",
+      "minutes": 502,
+      "days": 7,
+      "firstPlayedAt": "2026-01-09T07:21:53Z",
+      "lastPlayedAt": "2026-03-26T13:32:37Z"
+    },
+    {
+      "id": "0100c3800049c000",
+      "name": "MONSTER HUNTER XX Nintendo Switch Ver.",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/8b487bdefb804a51adc4eb9bc96a2420_512",
+      "minutes": 1074,
+      "days": 12,
+      "firstPlayedAt": "2025-09-14T08:39:13Z",
+      "lastPlayedAt": "2026-03-25T11:24:04Z"
+    },
+    {
+      "id": "040088a023cdc000",
+      "name": "伊苏X -诺曼荣光-",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/addbaf1c5fef4c60ae9d55d0037f85ae_512",
+      "minutes": 2254,
+      "days": 7,
+      "firstPlayedAt": "2026-03-19T06:21:59Z",
+      "lastPlayedAt": "2026-03-25T09:04:53Z"
+    },
+    {
+      "id": "0400a3a01ee4c000",
+      "name": "Pokémon Pokopia",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/f80a9c040b7048a7a45bfd2a11fa407c_512",
+      "minutes": 461,
+      "days": 7,
+      "firstPlayedAt": "2026-03-18T09:43:21Z",
+      "lastPlayedAt": "2026-03-25T05:26:47Z"
+    },
+    {
+      "id": "010079600bf22000",
+      "name": "KUUKIYOMI: Consider It",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/54e8d6a27cda4d618c248294eac0d294_512",
+      "minutes": 18,
+      "days": 1,
+      "firstPlayedAt": "2026-03-23T15:10:20Z",
+      "lastPlayedAt": "2026-03-23T15:30:26Z"
+    },
+    {
+      "id": "010012c01643e000",
+      "name": "十三机兵防卫圈 Digital Artworks",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/344fcb32b6a34b068d82ef2957a7f880_512",
+      "minutes": 25,
+      "days": 3,
+      "firstPlayedAt": "2026-02-12T15:27:38Z",
+      "lastPlayedAt": "2026-03-18T18:57:17Z"
+    },
+    {
+      "id": "0100ce001643c000",
+      "name": "十三机兵防卫圈 Digital Secret File",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/e1dd99459aaa434dbf4ce61f8a611ab4_512",
+      "minutes": 23,
+      "days": 4,
+      "firstPlayedAt": "2026-02-12T15:34:07Z",
+      "lastPlayedAt": "2026-03-18T18:55:53Z"
+    },
+    {
+      "id": "01008d7016438000",
+      "name": "十三机兵防卫圈",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/230b6c8343124363b9ab5251d18ec628_512",
+      "minutes": 2156,
+      "days": 15,
+      "firstPlayedAt": "2026-02-12T04:40:46Z",
+      "lastPlayedAt": "2026-03-17T18:24:35Z"
+    },
+    {
+      "id": "0100f3400332c000",
+      "name": "ゼノブレイド２",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/74ab0cad02da4940821589a1d4b6da5b_512",
+      "minutes": 3249,
+      "days": 34,
+      "firstPlayedAt": "2025-12-14T11:23:49Z",
+      "lastPlayedAt": "2026-03-17T10:28:42Z"
+    },
+    {
+      "id": "0100a00019de0000",
+      "name": "Hades II – Nintendo Switch 2 Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/8bbddc164b6544f8860e90014cd5dc7e_512",
+      "minutes": 2184,
+      "days": 27,
+      "firstPlayedAt": "2026-02-04T19:07:26Z",
+      "lastPlayedAt": "2026-03-14T18:45:28Z"
+    },
+    {
+      "id": "010099c022b96000",
+      "name": "Super Mario Galaxy",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/3b7ed736f9af4565a0871f2aaf4485ea_512",
+      "minutes": 38,
+      "days": 2,
+      "firstPlayedAt": "2026-01-13T17:53:56Z",
+      "lastPlayedAt": "2026-03-13T14:25:21Z"
+    },
+    {
+      "id": "0100fd8022daa000",
+      "name": "Super Mario Galaxy 2",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/7082afc7ec15498dbacc99417f6f5830_512",
+      "minutes": 972,
+      "days": 7,
+      "firstPlayedAt": "2026-01-13T18:18:11Z",
+      "lastPlayedAt": "2026-03-13T14:10:43Z"
+    },
+    {
+      "id": "0100f2c0115b6000",
+      "name": "The Legend of Zelda: Tears of the Kingdom – Nintendo Switch 2 Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/6ea2bbe641134135a5f77e419b5178b1_512",
+      "minutes": 1487,
+      "days": 18,
+      "firstPlayedAt": "2025-12-04T13:20:47Z",
+      "lastPlayedAt": "2026-03-12T07:59:05Z"
+    },
+    {
+      "id": "0400b16026ebe000",
+      "name": "零 ～紅い蝶～ REMAKE 体験版",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/d7a82a4ceef54991b8872dd4ce6a96f4_512",
+      "minutes": 8,
+      "days": 1,
+      "firstPlayedAt": "2026-03-06T01:58:11Z",
+      "lastPlayedAt": "2026-03-06T02:06:01Z"
+    },
+    {
+      "id": "0100ff500e34a000",
+      "name": "Xenoblade Chronicles: Definitive Edition",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/629822a14b684dd7bc77dcba3d4fe3d5_512",
+      "minutes": 2490,
+      "days": 23,
+      "firstPlayedAt": "2026-01-06T12:58:51Z",
+      "lastPlayedAt": "2026-02-28T07:09:09Z"
+    },
+    {
+      "id": "01009d600ca88000",
+      "name": "真・三國無双７ with 猛将伝 DX",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/73b61325be9841769c0c78b4e2316c8b_512",
+      "minutes": 52,
+      "days": 2,
+      "firstPlayedAt": "2026-02-14T15:44:47Z",
+      "lastPlayedAt": "2026-02-14T16:36:09Z"
+    },
+    {
+      "id": "01008f6008c5e000",
+      "name": "Pokémon Violet",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/4f30c9597d834efdb4d62050d9e0cf1c_512",
+      "minutes": 6679,
+      "days": 41,
+      "firstPlayedAt": "2025-09-13T12:10:52Z",
+      "lastPlayedAt": "2026-02-14T15:30:14Z"
+    },
+    {
+      "id": "010018e011d92000",
+      "name": "Pokémon Shining Pearl",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/c8855f6b6e5c42f7850e13bef3ecc405_512",
+      "minutes": 8002,
+      "days": 23,
+      "firstPlayedAt": "2025-12-17T12:52:50Z",
+      "lastPlayedAt": "2026-01-19T15:13:01Z"
+    },
+    {
+      "id": "0100000000010000",
+      "name": "SUPER MARIO ODYSSEY",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/18cb70d5f222477dad42381284178786_512",
+      "minutes": 672,
+      "days": 14,
+      "firstPlayedAt": "2025-12-22T05:30:04Z",
+      "lastPlayedAt": "2026-01-19T12:30:32Z"
+    },
+    {
+      "id": "0100c2601a33e000",
+      "name": "Rose & Camellia",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/1b1406821b564a2b8e961448b57b0dcc_512",
+      "minutes": 14,
+      "days": 2,
+      "firstPlayedAt": "2026-01-12T15:50:13Z",
+      "lastPlayedAt": "2026-01-12T16:04:29Z"
+    },
+    {
+      "id": "010040600c5ce000",
+      "name": "TETRIS 99",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/cde92b3b1abd4477b3f5c6638060ee1c_512",
+      "minutes": 9,
+      "days": 1,
+      "firstPlayedAt": "2025-12-30T13:51:33Z",
+      "lastPlayedAt": "2025-12-30T14:00:03Z"
+    },
+    {
+      "id": "0100ccf019c8c000",
+      "name": "F-ZERO 99",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/e09f61ee3a9a4b8b8769b8258b082ee8_512",
+      "minutes": 41,
+      "days": 1,
+      "firstPlayedAt": "2025-12-30T06:12:18Z",
+      "lastPlayedAt": "2025-12-30T07:02:53Z"
+    },
+    {
+      "id": "040074a01bf12000",
+      "name": "Donkey Kong Bananza",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/a6a480afdb394fb49d12d44501aa6d22_512",
+      "minutes": 1341,
+      "days": 15,
+      "firstPlayedAt": "2025-12-12T13:43:07Z",
+      "lastPlayedAt": "2025-12-27T12:33:10Z"
+    },
+    {
+      "id": "0400a800240fc000",
+      "name": "FINAL FANTASY VII REMAKE INTERGRADE DEMO",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/72ef100cbf364affb4cbda9771a1c9d6_512",
+      "minutes": 35,
+      "days": 1,
+      "firstPlayedAt": "2025-12-17T12:50:06Z",
+      "lastPlayedAt": "2025-12-17T13:26:36Z"
+    },
+    {
+      "id": "01004d300c5ae000",
+      "name": "Kirby and the Forgotten Land – Nintendo Switch 2 Edition + Star-Crossed World",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/f0d0a84256f14a368e2a87a1d22fa44f_512",
+      "minutes": 1689,
+      "days": 13,
+      "firstPlayedAt": "2025-11-30T14:18:57Z",
+      "lastPlayedAt": "2025-12-13T09:14:39Z"
+    },
+    {
+      "id": "0100d71004694000",
+      "name": "Minecraft for Nintendo Switch",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/e38c15f3f627428c999a0739f92c3925_512",
+      "minutes": 32,
+      "days": 2,
+      "firstPlayedAt": "2025-12-07T12:14:30Z",
+      "lastPlayedAt": "2025-12-09T06:59:47Z"
+    },
+    {
+      "id": "0400a4802437e000",
+      "name": "Drag x Drive Demo",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/21010150c72343d29d29d1b073e54148_512",
+      "minutes": 17,
+      "days": 1,
+      "firstPlayedAt": "2025-12-03T13:40:35Z",
+      "lastPlayedAt": "2025-12-03T13:59:14Z"
+    },
+    {
+      "id": "0100a3d008c5c000",
+      "name": "Pokémon Scarlet",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/91bdeb3924c142dead76beb948d86f92_512",
+      "minutes": 646,
+      "days": 9,
+      "firstPlayedAt": "2025-10-15T09:04:25Z",
+      "lastPlayedAt": "2025-11-30T14:18:16Z"
+    },
+    {
+      "id": "0100633007d48000",
+      "name": "Hollow Knight",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/252d426d6b4e4afdbbf9a5c3f48b7386_512",
+      "minutes": 6,
+      "days": 2,
+      "firstPlayedAt": "2025-09-17T03:08:58Z",
+      "lastPlayedAt": "2025-11-27T08:00:53Z"
+    },
+    {
+      "id": "04003f40232de000",
+      "name": "Hyrule Warriors: Age of Imprisonment",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/491d38de35f247878e2d6dfa114355f3_512",
+      "minutes": 48,
+      "days": 1,
+      "firstPlayedAt": "2025-11-22T05:19:08Z",
+      "lastPlayedAt": "2025-11-22T06:07:37Z"
+    },
+    {
+      "id": "0100bb8017f24000",
+      "name": "Teenage Mutant Ninja Turtles: Shredder's Revenge",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/7a8cc96e27834c5a998530c13f791399_512",
+      "minutes": 8,
+      "days": 1,
+      "firstPlayedAt": "2025-11-22T04:45:14Z",
+      "lastPlayedAt": "2025-11-22T04:53:06Z"
+    },
+    {
+      "id": "040078001ccf6000",
+      "name": "STREET FIGHTER 6",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/59611a48473a4458b235a5071cdd02ab_512",
+      "minutes": 4,
+      "days": 1,
+      "firstPlayedAt": "2025-11-22T04:40:39Z",
+      "lastPlayedAt": "2025-11-22T04:44:15Z"
+    },
+    {
+      "id": "0100187003a36000",
+      "name": "Pokémon: Let's Go, Eevee!",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/1fc71707124c4264a269404583d3bdfa_512",
+      "minutes": 1877,
+      "days": 6,
+      "firstPlayedAt": "2025-10-04T11:39:29Z",
+      "lastPlayedAt": "2025-10-09T08:19:08Z"
+    },
+    {
+      "id": "01008db008c2c000",
+      "name": "Pokémon Shield",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/c34aa7c693cd4e20bd2f1cd31f42e71c_512",
+      "minutes": 3181,
+      "days": 11,
+      "firstPlayedAt": "2025-09-23T14:15:57Z",
+      "lastPlayedAt": "2025-10-03T05:26:33Z"
+    },
+    {
+      "id": "0100000011d90000",
+      "name": "Pokémon Brilliant Diamond",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/5f01ffb96c6e49c78a303e060597e7cc_512",
+      "minutes": 1620,
+      "days": 8,
+      "firstPlayedAt": "2025-09-13T12:06:54Z",
+      "lastPlayedAt": "2025-09-20T04:10:32Z"
+    },
+    {
+      "id": "0100559011740000",
+      "name": "MONSTER HUNTER RISE",
+      "image": "https://atum-img-lp1.cdn.nintendo.net/i/c/c3c8f8589f1e447794e936635839c269_512",
+      "minutes": 15,
+      "days": 1,
+      "firstPlayedAt": "2025-09-19T06:21:18Z",
+      "lastPlayedAt": "2025-09-19T06:36:25Z"
+    }
+  ]
+}
