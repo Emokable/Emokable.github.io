@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
-  <link rel="icon" href="/img/emokable.ico">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,58 +19,56 @@
     <meta name="description" content="1.1 ARM 微处理器简介 成立于1990年11月 前身为 Acorn计算机公司 ARM (Advance RISC Machine)   主要设计ARM系列RISC处理器内核 授权ARM内核给生产和销售半导体的合作伙伴 ARM 公司不生产芯片 IP(Intelligence Property)   另外也提供基于ARM架构的开发设计技术 软件工具，评估板，调试工具，应用软件 总线架构，外围设备">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ARM体系结构与编程-第1章-ARM体系结构概述">
-<meta property="og:url" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/index.html">
+<meta property="og:url" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/index.html">
 <meta property="og:site_name" content="哈姆詤的箌悝糖">
 <meta property="og:description" content="1.1 ARM 微处理器简介 成立于1990年11月 前身为 Acorn计算机公司 ARM (Advance RISC Machine)   主要设计ARM系列RISC处理器内核 授权ARM内核给生产和销售半导体的合作伙伴 ARM 公司不生产芯片 IP(Intelligence Property)   另外也提供基于ARM架构的开发设计技术 软件工具，评估板，调试工具，应用软件 总线架构，外围设备">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092647606.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093222674.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093343960.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093401060.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093447141.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093520157.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093649523.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093728732.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093816011.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093901441.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094107849.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094142481.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094754540.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094809784.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094841870.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094857604.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095407582.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095538626.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095611282.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095638325.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095925802.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095937631.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095958062.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326100052287.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101916664.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101942611.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102013105.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102143336.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102251549.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102650087.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103002764.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103049145.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103109460.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103342846.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103351253.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103452042.png">
-<meta property="og:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103524702.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092647606.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093222674.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093343960.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093401060.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093447141.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093520157.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093649523.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093728732.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093816011.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093901441.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094107849.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094142481.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094754540.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094809784.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094841870.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094857604.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095407582.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095538626.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095611282.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095638325.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095925802.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095937631.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095958062.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326100052287.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101916664.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101942611.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102013105.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102143336.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102251549.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102650087.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103002764.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103049145.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103109460.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103342846.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103351253.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103452042.png">
+<meta property="og:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103524702.png">
 <meta property="article:published_time" content="2023-03-25T12:28:53.000Z">
 <meta property="article:modified_time" content="2023-04-02T15:28:26.000Z">
 <meta property="article:author" content="emokable">
 <meta property="article:tag" content="ARM体系结构与编程">
 <meta property="article:tag" content="课件笔记">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.emokable.top/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png">
+<meta name="twitter:image" content="https://emokable.github.io/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>ARM体系结构与编程-第1章-ARM体系结构概述 - 哈姆詤的箌悝糖</title>
@@ -111,7 +109,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"emokable.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -121,21 +119,6 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
 
 
   
@@ -153,175 +136,103 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>
-        哈姆詤的箌悝糖
-      </strong>
+      <strong>Fluid</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-    <!-- 和风天气-->>
-    
-<div id="he-plugin-simple"></div>
-<script>
-WIDGET = {
-  "CONFIG": {
-    "modules": "012",
-    "background": "5",
-    "tmpColor": "FFFFFF",
-    "tmpSize": "17",
-    "cityColor": "FFFFFF",
-    "citySize": "17",
-    "aqiColor": "FFFFFF",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "10px 10px 10px 10px",
-    "shadow": "0",
-    "language": "auto",
-    "fixed": "false",
-    "vertical": "top",
-    "horizontal": "left",
-    "key": "19956233bafd404183052586b94d02f8"
-  }
-}
-</script>
-<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-center">
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/">
-                          <i class="iconfont icon-home-fill"></i>
-                            <span>首页</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/categories/">
-                          <i class="iconfont icon-category-fill"></i>
-                            <span>分类</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/tags/">
-                          <i class="iconfont icon-tags-fill"></i>
-                            <span>标签</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/about/">
-                          <i class="iconfont icon-user-fill"></i>
-                            <span>关于</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/links/">
-                          <i class="iconfont icon-link-fill"></i>
-                            <span>友链</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/steamgames/">
-                          <i class="iconfont icon-steam"></i>
-                            <span>steam</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="iconfont icon-archive-fill"></i>
-                          <span>归档</span>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/archives/">
-                                  
-                                    <span>归档</span>
-                                </a>
-                                
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/pdf/">
-                                  
-                                    <span>PDF</span>
-                                </a>
-                                
-                      </div>
-                    </li>
-                    
-                        
-                          
-                            <li class="nav-item" id="search-btn">
-                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
-                                data-target="#modalSearch" aria-label="Search">
-                                <i class="iconfont icon-search"></i>
-                              </a>
-                            </li>
-                            
-                              
-                                
-                                  <li class="nav-item" id="color-toggle-btn">
-                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-                                    </a>
-                                  </li>
-                                  
-        </ul>
-      </div>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 </nav>
+
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -368,14 +279,6 @@ WIDGET = {
 
     
     
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-      
-    
   </div>
 
 
@@ -399,19 +302,6 @@ WIDGET = {
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
 
     </div>
 
@@ -421,14 +311,6 @@ WIDGET = {
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">ARM体系结构与编程-第1章-ARM体系结构概述</h1>
-            
-              <p class="note note-info">
-                
-                  
-                    本文最后更新于：9 个月前
-                  
-                
-              </p>
             
             
               <div class="markdown-body">
@@ -451,7 +333,7 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="合作伙伴"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092448629.png" srcset="/img/loading.gif" lazyload alt="合作伙伴"></p>
 <h1 id="1-2-ARM微处理器的应用领域及特点-P-1"><a href="#1-2-ARM微处理器的应用领域及特点-P-1" class="headerlink" title="1.2 ARM微处理器的应用领域及特点 (P.1)"></a>1.2 ARM微处理器的应用领域及特点 (P.1)</h1><h2 id="1-2-1-ARM微处理器的应用领域"><a href="#1-2-1-ARM微处理器的应用领域" class="headerlink" title="1.2.1 ARM微处理器的应用领域"></a>1.2.1 ARM微处理器的应用领域</h2><ul>
 <li>工业控制领域 ：高端微控制器 </li>
 <li>无线通讯领域 ：无线通讯设备 </li>
@@ -459,7 +341,7 @@ WIDGET = {
 <li>消费类电子产品 ：数字音频播放器、数字机顶盒和游戏机 </li>
 <li>成像和安全产品 ：数码相机、打印机及32位SIM智能卡</li>
 </ul>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092647606.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="啊"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326092647606.png" srcset="/img/loading.gif" lazyload alt="啊"></p>
 <p><strong>ARM嵌入式处理器的片上系统</strong></p>
 <ul>
 <li>基于ARM嵌入式处理器的片上系统解决方案可应用于企业应用、汽车系统，家庭网络和无线技术等市场领域。</li>
@@ -499,7 +381,7 @@ WIDGET = {
 <li>CortexTM-M3</li>
 </ul>
 <p>其中，ARM7、ARM9、ARM9E和ARM10为4个通用处理器系列，每一个系列提供一套相对独特的性能来满足不同应用领域的需求。SecurCore系列专门为安全要求较高的应用而设计</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093222674.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ARM处理器的技术支持"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093222674.png" srcset="/img/loading.gif" lazyload alt="ARM处理器的技术支持"></p>
 <h2 id="1-3-1-ARM7微处理器系列-P-7"><a href="#1-3-1-ARM7微处理器系列-P-7" class="headerlink" title="1.3.1 ARM7微处理器系列(P.7)"></a>1.3.1 ARM7微处理器系列(P.7)</h2><p>ARM7系列微处理器为低功耗的32位RISC处理器(三级流水：IF,ID,EX)，最适合用于对价位和功耗要求较高的消费类应用。</p>
 <blockquote>
 <p>ARM7TDMI 是基于 ARM7 内核</p>
@@ -522,8 +404,8 @@ WIDGET = {
 <p>虚拟地址空间划分成称为页（page）的单位</p>
 <p>而相应的物理地址空间也被进行划分，单位是页框(frame)</p>
 <p>页和页框的大小必须相同</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093343960.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="映射"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093401060.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="va"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093343960.png" srcset="/img/loading.gif" lazyload alt="映射"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093401060.png" srcset="/img/loading.gif" lazyload alt="va"></p>
 <p><strong>ARM7系列微处理器的主要应用领域为：</strong></p>
 <p>工业控制、Internet设备、网络和调制解调器设备、移动电话等多种多媒体和嵌入式应用。</p>
 <p>数字蜂窝电话和硬盘驱动器。</p>
@@ -535,28 +417,28 @@ WIDGET = {
 <li>ARM7EJ</li>
 </ul>
 <p> 其中，ARM7TMDI是目前使用最广泛的32位嵌入式RISC处理器，属低端ARM处理器核。</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093447141.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="内核信号1"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093520157.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="框图"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093649523.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="内核"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093447141.png" srcset="/img/loading.gif" lazyload alt="内核信号1"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093520157.png" srcset="/img/loading.gif" lazyload alt="框图"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093649523.png" srcset="/img/loading.gif" lazyload alt="内核"></p>
 <h3 id="指令流水线"><a href="#指令流水线" class="headerlink" title="指令流水线"></a>指令流水线</h3><p>为增加处理器指令流的速度，ARM7 系列使用3级流水线.</p>
 <p>允许多个操作同时处理，比逐条指令执行要快。</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093728732.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="流水"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093728732.png" srcset="/img/loading.gif" lazyload alt="流水"></p>
 <p> <strong>PC</strong>指向正被取指的指令，而非正在执行的指令</p>
 <p><strong>最佳(理想)流水线</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093816011.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="最佳"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093816011.png" srcset="/img/loading.gif" lazyload alt="最佳"></p>
 <p>o该例中用6个时钟周期执行了6条指令</p>
 <p>o所有的操作都在寄存器中（单周期执行）</p>
 <p>o指令周期数 (CPI) &#x3D; 1</p>
 <p><strong>LDR 流水线举例</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093901441.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230326093901441"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326093901441.png" srcset="/img/loading.gif" lazyload alt="image-20230326093901441"></p>
 <p>o该例中，用6周期执行了4条指令</p>
 <p>o指令周期数 (CPI) &#x3D; 1.5 </p>
 <p><strong>分支流水线举例</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094107849.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分支"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094107849.png" srcset="/img/loading.gif" lazyload alt="分支"></p>
 <p>o流水线被阻断（ARM没有延时槽）</p>
 <p>o注意:内核运行在ARM状态</p>
 <p><strong>中断流水线举例</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094142481.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="中断"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094142481.png" srcset="/img/loading.gif" lazyload alt="中断"></p>
 <p> IRQ 中断的反应时间最小&#x3D;7周期</p>
 <h2 id="1-3-2-ARM9微处理器系列-P-8"><a href="#1-3-2-ARM9微处理器系列-P-8" class="headerlink" title="1.3.2 ARM9微处理器系列(P.8)"></a>1.3.2 ARM9微处理器系列(P.8)</h2><p>ARM9系列微处理器在<strong>高性能和低功耗特性</strong>方面提供最佳的性能。具有以下特点：</p>
 <ul>
@@ -614,13 +496,13 @@ WIDGET = {
 </li>
 </ul>
 <p><strong>ARM9TDMI流水线的变化</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094754540.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ARM7TDMI"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094809784.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ARM9TDMI"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094754540.png" srcset="/img/loading.gif" lazyload alt="ARM7TDMI"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094809784.png" srcset="/img/loading.gif" lazyload alt="ARM9TDMI"></p>
 <p><strong>ARM9TDMI数据通道 (1)</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094841870.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="数据"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094841870.png" srcset="/img/loading.gif" lazyload alt="数据"></p>
 <p>MU逻辑单元包含有：多路复用器,乘法器和桶形移位器</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094857604.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
-<h4 id="LDR互锁"><a href="#LDR互锁" class="headerlink" title="LDR互锁"></a><strong>LDR互锁</strong></h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095407582.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="互锁"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326094857604.png" srcset="/img/loading.gif" lazyload alt="2"></p>
+<h4 id="LDR互锁"><a href="#LDR互锁" class="headerlink" title="LDR互锁"></a><strong>LDR互锁</strong></h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095407582.png" srcset="/img/loading.gif" lazyload alt="互锁"></p>
 <p>本例中，用了7个时钟周期执行6条指令， CPI &#x3D; 1.2 。</p>
 <p>LDR指令之后立即跟一条数据操作指令，由于使用了相同的寄存器，将会导致互锁 。</p>
 <h4 id="互锁-interlocks-技术"><a href="#互锁-interlocks-技术" class="headerlink" title="互锁(interlocks)技术"></a>互锁(interlocks)技术</h4><ul>
@@ -628,13 +510,13 @@ WIDGET = {
 <li>当管道互锁发生时，硬件会停止这个指令的执行，直到数据准备好为止。</li>
 <li>编译器以及汇编程序员可以通过重新设计代码的顺序或者其他方法来减少管道互锁的数量</li>
 </ul>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095538626.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="最佳(理想)流水线"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095538626.png" srcset="/img/loading.gif" lazyload alt="最佳(理想)流水线"></p>
 <p>本例中，用了6个时钟周期执行6条指令， CPI &#x3D; 1。</p>
 <p>LDR指令没有引起流水线互锁</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095611282.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="LDM互锁 (1)"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095611282.png" srcset="/img/loading.gif" lazyload alt="LDM互锁 (1)"></p>
 <p>本例中，用了8个时钟周期执行5条指令， CPI &#x3D; 1.6</p>
 <p>在LDM期间，有并行的存储器访问和回写周期</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095638325.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230326095638325"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095638325.png" srcset="/img/loading.gif" lazyload alt="image-20230326095638325"></p>
 <p>本例中，用了9个时钟周期执行5条指令， CPI &#x3D; 1.8 </p>
 <p>此处SUB 使用了 R3，增加了一个额外的互锁周期来完成该寄存器数据的获取</p>
 <p>这种情况对任何LDM 指令，像带IA, DB, FD,等，都会发生 。</p>
@@ -680,11 +562,11 @@ WIDGET = {
 <p><strong>ARM1022E</strong></p>
 <p>同上，除了cache大小为16kB</p>
 <p>对SUDL(single user design license )有效</p>
-<h4 id="ARM10-与ARM9的流水线对比"><a href="#ARM10-与ARM9的流水线对比" class="headerlink" title="ARM10 与ARM9的流水线对比"></a>ARM10 与ARM9的流水线对比</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095925802.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="9"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095937631.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="10"></p>
-<h4 id="ARM10-整数单元数据通道"><a href="#ARM10-整数单元数据通道" class="headerlink" title="ARM10 整数单元数据通道"></a>ARM10 整数单元数据通道</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095958062.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="10"></p>
+<h4 id="ARM10-与ARM9的流水线对比"><a href="#ARM10-与ARM9的流水线对比" class="headerlink" title="ARM10 与ARM9的流水线对比"></a>ARM10 与ARM9的流水线对比</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095925802.png" srcset="/img/loading.gif" lazyload alt="9"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095937631.png" srcset="/img/loading.gif" lazyload alt="10"></p>
+<h4 id="ARM10-整数单元数据通道"><a href="#ARM10-整数单元数据通道" class="headerlink" title="ARM10 整数单元数据通道"></a>ARM10 整数单元数据通道</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326095958062.png" srcset="/img/loading.gif" lazyload alt="10"></p>
 <h3 id="顺序代码的执行"><a href="#顺序代码的执行" class="headerlink" title="顺序代码的执行"></a>顺序代码的执行</h3><p> 开始于64位的对齐地址</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326100052287.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20230326100052287"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326100052287.png" srcset="/img/loading.gif" lazyload alt="image-20230326100052287"></p>
 <h2 id="1-3-5-SecurCore微处理器系列-P-10"><a href="#1-3-5-SecurCore微处理器系列-P-10" class="headerlink" title="1.3.5 SecurCore微处理器系列(P.10)"></a>1.3.5 SecurCore微处理器系列(P.10)</h2><p> SecurCore系列微处理器专为安全需要而设计，提供了完善的32位RISC技术的安全解决方案，因此，SecurCore系列微处理器除了具有ARM体系结构的低功耗、高性能的特点外，还具有其独特的优势，即提供了对安全解决方案的支持。</p>
 <p>SecurCore系列微处理器除了具有ARM体系结构各种主要特点外，还在系统安全方面具有如下的特点：</p>
 <ul>
@@ -714,13 +596,13 @@ WIDGET = {
 <p>CortexTM-A8是ARM公司所开发的基于ARMv7架构的首款应用级处理器，同时也是ARM所开发的同类处理器中性能最好、能效最高的处理器。</p>
 <p><strong>Cortex-A8的系统框图</strong></p>
 <p>Cortex-A8第一款基于ARMv7构架的应用处理器。专门提供了新的函数库（Artisan Advantage-CE）</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101916664.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="结构"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101916664.png" srcset="/img/loading.gif" lazyload alt="结构"></p>
 <p><strong>Cortex-R4的系统框图</strong></p>
 <p>Cortex-R4是ARM开发的超标量结构的ARM内核，主要面向实时控制领域，如汽车刹车控制等</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101942611.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="r4"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326101942611.png" srcset="/img/loading.gif" lazyload alt="r4"></p>
 <p><strong>Cortex-M3的系统框图</strong></p>
 <p>Cortex-M系列主要面向单片机领域，可以说是51单品机的完美替代品。</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102013105.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="m"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102013105.png" srcset="/img/loading.gif" lazyload alt="m"></p>
 <h1 id="1-4-ARM微处理器结构"><a href="#1-4-ARM微处理器结构" class="headerlink" title="1.4 ARM微处理器结构"></a>1.4 ARM微处理器结构</h1><h2 id="1-4-1-RISC体系结构"><a href="#1-4-1-RISC体系结构" class="headerlink" title="1.4.1 RISC体系结构"></a>1.4.1 RISC体系结构</h2><p>传统的<strong>CISC</strong>（<strong>Complex Instruction Set Computer</strong>，复杂指令集计算机）结构有其固有的缺点，即随着计算机技术的发展而不断引入新的复杂的指令集，为支持这些新增的指令，计算机的体系结构会越来越复杂，然而，在CISC指令集的各种指令中，其使用频率却相差悬殊，大约有20％的指令会被反复使用，占整个程序代码的80％。而余下的80％的指令却不经常使用，在程序设计中只占20％，显然，这种结构是不太合理的。</p>
 <p>基于以上的不合理性，1979年美国加州大学伯克利分校提出了<strong>RISC</strong>（<strong>Reduced Instruction Set Computer</strong>，精简指令集计算机）的概念，RISC并非只是简单地去减少指令，而是把着眼点放在了如何使计算机的结构更加简单合理地提高运算速度上。RISC结构优先选取使用频度最高的简单指令，避免复杂指令；将指令长度固定，指令格式和寻址方式种类减少；以控制逻辑为主，不用或少用微码控制等措施来达到上述目的。</p>
 <p>到目前为止，RISC体系结构也还没有严格的定义，一般认为，RISC体系结构应具有如下特点：</p>
@@ -737,7 +619,7 @@ WIDGET = {
 <li><strong>在循环处理中使用地址的自动增减来提高运行效率。</strong></li>
 </ul>
 <p>当然，和CISC架构相比较，尽管RISC架构有上述的优点，但决不能认为RISC架构就可以取代CISC架构，事实上，RISC和CISC各有优势，而且界限并不那么明显。现代的CPU往往采用CISC的外围，内部加入了RISC的特性，如<strong>超长指令集</strong>CPU就是融合了RISC和CISC的优势，成为未来的CPU发展方向之一。</p>
-<h4 id="ARM协处理器"><a href="#ARM协处理器" class="headerlink" title="ARM协处理器"></a>ARM协处理器</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102143336.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="协"></p>
+<h4 id="ARM协处理器"><a href="#ARM协处理器" class="headerlink" title="ARM协处理器"></a>ARM协处理器</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102143336.png" srcset="/img/loading.gif" lazyload alt="协"></p>
 <ul>
 <li>多达16个可定义协处理器,用唯一的ID来标示 </li>
 <li>扩充ARM指令集</li>
@@ -759,7 +641,7 @@ WIDGET = {
 <li>ARM 指令集（32-bit） </li>
 <li>Thumb 指令集(T变种)（16-bit ）</li>
 </ul>
-<h4 id="字节顺序"><a href="#字节顺序" class="headerlink" title="字节顺序"></a>字节顺序</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102251549.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="endian"></p>
+<h4 id="字节顺序"><a href="#字节顺序" class="headerlink" title="字节顺序"></a>字节顺序</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102251549.png" srcset="/img/loading.gif" lazyload alt="endian"></p>
 <h2 id="1-4-3-ARM体系结构的异常中断"><a href="#1-4-3-ARM体系结构的异常中断" class="headerlink" title="1.4.3 ARM体系结构的异常中断"></a><strong>1.4.3 ARM</strong>体系结构的异常中断</h2><p>ARM 有7个基本工作模式:</p>
 <ul>
 <li><strong>User</strong>:非特权模式，大部分任务执行在这种模式<ul>
@@ -817,7 +699,7 @@ WIDGET = {
 <blockquote>
 <p>Note:这些操作只能在 ARM 态执行</p>
 </blockquote>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102650087.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="table"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326102650087.png" srcset="/img/loading.gif" lazyload alt="table"></p>
 <h2 id="1-4-5-ARM微处理器的指令结构"><a href="#1-4-5-ARM微处理器的指令结构" class="headerlink" title="1.4.5 ARM微处理器的指令结构"></a>1.4.5 ARM微处理器的指令结构</h2><p>ARM微处理器的在较新的体系结构中支持两种指令集：</p>
 <ul>
 <li>ARM指令集</li>
@@ -846,14 +728,14 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103002764.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="b"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103002764.png" srcset="/img/loading.gif" lazyload alt="b"></p>
 <h4 id="Thumb指令集"><a href="#Thumb指令集" class="headerlink" title="Thumb指令集"></a>Thumb指令集</h4><p>•Thumb 是一个 16-bits 指令集</p>
 <p>​	–优化代码密度 (~65% of ARM )</p>
 <p>​	–提高窄内存操作性能</p>
 <p>​	–是ARM指令集的一个功能子集</p>
 <p>•ARM &#x2F; Thumb 转换使用 <strong>BX</strong> 指令</p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103049145.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="thumb"></p>
-<h4 id="ARM-x2F-Thumb-性能分析"><a href="#ARM-x2F-Thumb-性能分析" class="headerlink" title="ARM &#x2F; Thumb 性能分析"></a>ARM &#x2F; Thumb 性能分析</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103109460.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="性能"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103049145.png" srcset="/img/loading.gif" lazyload alt="thumb"></p>
+<h4 id="ARM-x2F-Thumb-性能分析"><a href="#ARM-x2F-Thumb-性能分析" class="headerlink" title="ARM &#x2F; Thumb 性能分析"></a>ARM &#x2F; Thumb 性能分析</h4><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103109460.png" srcset="/img/loading.gif" lazyload alt="性能"></p>
 <h4 id="Jazelle"><a href="#Jazelle" class="headerlink" title="Jazelle"></a>Jazelle</h4><ul>
 <li>Jazelle 使得 ARM cores 执行 8-bit 的Java 字节码<ul>
 <li>95% 的字节码执行使用 hardware (typical)<ul>
@@ -889,8 +771,8 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<h1 id="1-6-基于ARM系统设计示例"><a href="#1-6-基于ARM系统设计示例" class="headerlink" title="1.6 基于ARM系统设计示例"></a>1.6 基于ARM系统设计示例</h1><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103342846.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="arm"></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103351253.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="AMBA总线"></p>
+<h1 id="1-6-基于ARM系统设计示例"><a href="#1-6-基于ARM系统设计示例" class="headerlink" title="1.6 基于ARM系统设计示例"></a>1.6 基于ARM系统设计示例</h1><p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103342846.png" srcset="/img/loading.gif" lazyload alt="arm"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103351253.png" srcset="/img/loading.gif" lazyload alt="AMBA总线"></p>
 <p>•AMBA</p>
 <p>–Advanced Microcontroller Bus Architecture</p>
 <p>•ADK</p>
@@ -917,12 +799,12 @@ WIDGET = {
 <p><strong><a target="_blank" rel="noopener" href="http://www.arm.com/DevSupp/">http://www.arm.com/DevSupp/</a></strong></p>
 </blockquote>
 <p><strong>使用 Multi-ICE 调试</strong></p>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103452042.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="交叉编译"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103452042.png" srcset="/img/loading.gif" lazyload alt="交叉编译"></p>
 <ul>
 <li>被调试的系统可以是最终系统!</li>
 <li>也可以使用第三方开发调试工具。</li>
 </ul>
-<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103524702.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ARM 实时跟踪"></p>
+<p><img src="/ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BC%96%E7%A8%8B-%E7%AC%AC1%E7%AB%A0-ARM%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%A6%82%E8%BF%B0/image-20230326103524702.png" srcset="/img/loading.gif" lazyload alt="ARM 实时跟踪"></p>
 <ul>
 <li><strong>Embedded Trace</strong> <strong>Macrocell</strong> <strong>(ETM)</strong><ul>
 <li>实时指令 (PC) 跟踪</li>
@@ -990,7 +872,7 @@ WIDGET = {
   <div class="license-box my-3">
     <div class="license-title">
       <div>ARM体系结构与编程-第1章-ARM体系结构概述</div>
-      <div>https://www.emokable.top/ARM体系结构与编程-第1章-ARM体系结构概述/</div>
+      <div>https://emokable.github.io/ARM体系结构与编程-第1章-ARM体系结构概述/</div>
     </div>
     <div class="license-meta">
       
@@ -1056,38 +938,6 @@ WIDGET = {
             </div>
 
             
-  
-  
-    <article id="comments">
-      
-  <div id="waline"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#waline', function() {
-      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
-      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
-        var options = Object.assign(
-          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
-          {
-            el: '#waline',
-            path: window.location.pathname
-          }
-        )
-        Waline.init(options);
-        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
-          var imgSelector = '#waline .vcontent img:not(.vemoji)';
-          Fluid.plugins.imageCaption(imgSelector);
-          Fluid.plugins.fancyBox(imgSelector);
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-    </article>
-  
-
-
           </article>
         </div>
       </div>
@@ -1095,6 +945,19 @@ WIDGET = {
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
   </div>
@@ -1122,19 +985,6 @@ WIDGET = {
 
   
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('mermaid' in window) {
-        mermaid.init();
-      }
-    });
-  });
-</script>
 
 
 
@@ -1180,70 +1030,14 @@ WIDGET = {
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
-    
-      
-        <div class="statistics">
   
-    
-
-      
-                    
-                      <span id="busuanzi_container_site_pv" style="display: none">
-                        总访问量 
-                          <span id="busuanzi_value_site_pv"></span>
-                           次
-                      </span>
-                      
-                        
-                          <span id="busuanzi_container_site_uv" style="display: none">
-                            总访客数 
-                              <span id="busuanzi_value_site_uv"></span>
-                               人
-                          </span>
-                          
-                            
-                                                         
-                                  <span>
-                                    博客总字数274k
-                                  </span>
-
-</div>
-          
-            
-              <!-- 备案信息 ICP for China -->
-              <div class="beian">
-  <span>
-    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
-      
-    </a>
-  </span>
   
-    
-      <span>
-        <a       
-          href="https://icp.gov.moe/?keyword=20230073"
-          rel="nofollow noopener"
-          class="beian-police"
-          target="_blank"
-        >
-          
-            <span style="visibility: hidden; width: 0">|</span>
-            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
-          
-          <span>萌ICP备20230073号</span>
-        </a>
-      </span>
-    
+  
   
 </div>
 
-
-
-                
-                  
-</div>
   </footer>
 
   <!-- Scripts -->
@@ -1285,9 +1079,7 @@ WIDGET = {
 
 
   
-    
-      <script  src="/js/img-lazyload.js" ></script>
-    
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -1388,8 +1180,6 @@ WIDGET = {
 
   <script  src="/js/local-search.js" ></script>
 
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
 
 
 
@@ -1400,8 +1190,7 @@ WIDGET = {
 
 
   
-<!--浏览器搞笑标题-->
-<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>

@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
-  <link rel="icon" href="/img/emokable.ico">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,33 +19,31 @@
     <meta name="description" content="计算机组成与实践 -多核处理器一.简介指令级并行的局限将每个时钟周期处理36条指令的处理器提升一倍的性能，即每个时钟周期处理612条指令，需要该处理器每个时钟周期完成：  处理3~4个存储访问 决策2~3个分支指令 重命名并访问20多个寄存器 提取12~24条指令   实现上述性能的复杂度可能意味着牺牲最高时钟频率  二.Amdahl定律   Amdahl定律    加速比 S  &#x3D; 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="计算机组成原理-L012-Mcore">
-<meta property="og:url" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/index.html">
+<meta property="og:url" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/index.html">
 <meta property="og:site_name" content="哈姆詤的箌悝糖">
 <meta property="og:description" content="计算机组成与实践 -多核处理器一.简介指令级并行的局限将每个时钟周期处理36条指令的处理器提升一倍的性能，即每个时钟周期处理612条指令，需要该处理器每个时钟周期完成：  处理3~4个存储访问 决策2~3个分支指令 重命名并访问20多个寄存器 提取12~24条指令   实现上述性能的复杂度可能意味着牺牲最高时钟频率  二.Amdahl定律   Amdahl定律    加速比 S  &#x3D; 1">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png">
-<meta property="og:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png">
+<meta property="og:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png">
 <meta property="article:published_time" content="2023-06-06T16:12:19.000Z">
 <meta property="article:modified_time" content="2023-06-06T16:52:17.776Z">
 <meta property="article:author" content="emokable">
 <meta property="article:tag" content="课件笔记">
 <meta property="article:tag" content="计算机组成原理">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.emokable.top/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
+<meta name="twitter:image" content="https://emokable.github.io/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>计算机组成原理-L012-Mcore - 哈姆詤的箌悝糖</title>
@@ -86,7 +84,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"emokable.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -96,21 +94,6 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
 
 
   
@@ -128,175 +111,103 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>
-        哈姆詤的箌悝糖
-      </strong>
+      <strong>Fluid</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-    <!-- 和风天气-->>
-    
-<div id="he-plugin-simple"></div>
-<script>
-WIDGET = {
-  "CONFIG": {
-    "modules": "012",
-    "background": "5",
-    "tmpColor": "FFFFFF",
-    "tmpSize": "17",
-    "cityColor": "FFFFFF",
-    "citySize": "17",
-    "aqiColor": "FFFFFF",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "10px 10px 10px 10px",
-    "shadow": "0",
-    "language": "auto",
-    "fixed": "false",
-    "vertical": "top",
-    "horizontal": "left",
-    "key": "19956233bafd404183052586b94d02f8"
-  }
-}
-</script>
-<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-center">
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/">
-                          <i class="iconfont icon-home-fill"></i>
-                            <span>首页</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/categories/">
-                          <i class="iconfont icon-category-fill"></i>
-                            <span>分类</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/tags/">
-                          <i class="iconfont icon-tags-fill"></i>
-                            <span>标签</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/about/">
-                          <i class="iconfont icon-user-fill"></i>
-                            <span>关于</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/links/">
-                          <i class="iconfont icon-link-fill"></i>
-                            <span>友链</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/steamgames/">
-                          <i class="iconfont icon-steam"></i>
-                            <span>steam</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="iconfont icon-archive-fill"></i>
-                          <span>归档</span>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/archives/">
-                                  
-                                    <span>归档</span>
-                                </a>
-                                
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/pdf/">
-                                  
-                                    <span>PDF</span>
-                                </a>
-                                
-                      </div>
-                    </li>
-                    
-                        
-                          
-                            <li class="nav-item" id="search-btn">
-                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
-                                data-target="#modalSearch" aria-label="Search">
-                                <i class="iconfont icon-search"></i>
-                              </a>
-                            </li>
-                            
-                              
-                                
-                                  <li class="nav-item" id="color-toggle-btn">
-                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-                                    </a>
-                                  </li>
-                                  
-        </ul>
-      </div>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 </nav>
+
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -343,14 +254,6 @@ WIDGET = {
 
     
     
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-      
-    
   </div>
 
 
@@ -374,19 +277,6 @@ WIDGET = {
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
 
     </div>
 
@@ -396,14 +286,6 @@ WIDGET = {
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">计算机组成原理-L012-Mcore</h1>
-            
-              <p class="note note-info">
-                
-                  
-                    本文最后更新于：7 个月前
-                  
-                
-              </p>
             
             
               <div class="markdown-body">
@@ -431,7 +313,7 @@ WIDGET = {
 <p>a：可并行计算部分的占比</p>
 <p>n：并行处理节点个数</p>
 <p>加速之前的执行时间 To</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时间占比图"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002814617.png" srcset="/img/loading.gif" lazyload alt="时间占比图"></p>
 <p>加速之后的执行时间 Tp &#x3D; To  * （1 – a + a&#x2F;n）</p>
 <p><strong>例子1</strong></p>
 <p>如果希望在100个处理器上获得90的加速比，请问在原始计算负载中顺序执行部分最多占多少？</p>
@@ -450,7 +332,7 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="左标量，计算只能一次处理一个数据"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607002934659.png" srcset="/img/loading.gif" lazyload alt="左标量，计算只能一次处理一个数据"></p>
 <p><strong>例子2</strong></p>
 <p>执行两个加法：一个加法是10个标量的求和，另一个加法是一对10×10二维矩阵的求和。假设目前只有矩阵求和可以并行，使用10个和40个处理器达到的加速比分别是多少？</p>
 <p>答：</p>
@@ -521,8 +403,8 @@ WIDGET = {
 <li>☺可同时隐藏由短阻塞和长阻塞引起的吞吐量损失</li>
 <li>☹降低了单个线程的执行速度</li>
 </ul>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="sun"></p>
-<h5 id="Niagara整数流水线"><a href="#Niagara整数流水线" class="headerlink" title="Niagara整数流水线"></a>Niagara整数流水线</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="8细粒"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003421004.png" srcset="/img/loading.gif" lazyload alt="sun"></p>
+<h5 id="Niagara整数流水线"><a href="#Niagara整数流水线" class="headerlink" title="Niagara整数流水线"></a>Niagara整数流水线</h5><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607003514006.png" srcset="/img/loading.gif" lazyload alt="8细粒"></p>
 <table>
 <thead>
 <tr>
@@ -555,8 +437,8 @@ WIDGET = {
 <li>每个线程需要单独的重命名表（RUUs），或者需要指明一个表项属于哪个线程</li>
 <li>Intel Pentium 4的SMT称为超线程（hyperthreading）：支持两个线程</li>
 </ul>
-<h4 id="4个线程运行在超标量处理器（4路）"><a href="#4个线程运行在超标量处理器（4路）" class="headerlink" title="4个线程运行在超标量处理器（4路）"></a><strong>4个线程运行在超标量处理器（4路）</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="chu"></p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="粗粒度/细粒度/同时多线程"></p>
+<h4 id="4个线程运行在超标量处理器（4路）"><a href="#4个线程运行在超标量处理器（4路）" class="headerlink" title="4个线程运行在超标量处理器（4路）"></a><strong>4个线程运行在超标量处理器（4路）</strong></h4><p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004021046.png" srcset="/img/loading.gif" lazyload alt="chu"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004033109.png" srcset="/img/loading.gif" lazyload alt="粗粒度/细粒度/同时多线程"></p>
 <blockquote>
 <p>粗的就是到高阻塞才调度，细是每条指令，smt是不需要开销的每条指令轮换</p>
 </blockquote>
@@ -570,7 +452,7 @@ WIDGET = {
 <td>至少两个处理器的计算机系统</td>
 </tr>
 </tbody></table>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004340664.png" srcset="/img/loading.gif" lazyload alt="多核"></p>
 <p>通过任务级并行（task-level parallelism）或进程级并行实现高吞吐量（process-level parallelism）</p>
 <p>将单个程序运行在多个处理器上实现性能的提升，并行处理程序（parallel processing program）</p>
 <h3 id="多核处理器"><a href="#多核处理器" class="headerlink" title="多核处理器"></a><strong>多核处理器</strong></h3><ul>
@@ -623,7 +505,7 @@ WIDGET = {
 </tr>
 </tbody></table>
 <h4 id="简单并行处理程序"><a href="#简单并行处理程序" class="headerlink" title="简单并行处理程序"></a><strong>简单并行处理程序</strong></h4><p>10个处理器求和</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="需要每层同步"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004538519.png" srcset="/img/loading.gif" lazyload alt="需要每层同步"></p>
 <h4 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a><strong>进程同步</strong></h4><ul>
 <li>通过多进程合作完成一项任务</li>
 <li>使用锁变量（信号量）实现进程合作与同步，需要架构提供仲裁机制</li>
@@ -632,14 +514,14 @@ WIDGET = {
 <li>处理器获得总线，共享数据需要加锁，可以通过原子交换实现</li>
 </ul>
 <h4 id="自旋锁同步"><a href="#自旋锁同步" class="headerlink" title="自旋锁同步"></a><strong>自旋锁同步</strong></h4><p>一个处理器成功获得锁变量表示成功将1写入锁变量，其他处理器获得返回值0</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="自旋"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004642755.png" srcset="/img/loading.gif" lazyload alt="自旋"></p>
 <p><strong>例子</strong></p>
 <p>假设对100000个数字进行求和，运行在100个处理器上</p>
 <figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs prolog">sum[<span class="hljs-symbol">Pn</span>] = <span class="hljs-number">0</span>;<br>for (i = <span class="hljs-number">1000</span>*<span class="hljs-symbol">Pn</span>; i&lt;<span class="hljs-number">1000</span>*(<span class="hljs-symbol">Pn</span>+<span class="hljs-number">1</span>); i = i + <span class="hljs-number">1</span>)<br>	sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + <span class="hljs-symbol">A</span>[i];<br><span class="hljs-symbol">Repeat</span><br>   synch(); //synchronize first <br>   if (half<span class="hljs-comment">%2 != 0 &amp;&amp; Pn == 0) &#123; </span><br>        sum[<span class="hljs-number">0</span>] = sum[<span class="hljs-number">0</span>] + sum[half<span class="hljs-number">-1</span>]; <br>   &#125; <br>   half = half/<span class="hljs-number">2</span> <br>   if (<span class="hljs-symbol">Pn</span>&lt;half) &#123; <br>        sum[<span class="hljs-symbol">Pn</span>] = sum[<span class="hljs-symbol">Pn</span>] + sum[<span class="hljs-symbol">Pn</span>+half] <br>   &#125; <br>until (half == <span class="hljs-number">1</span>); //final sum in sum[<span class="hljs-number">0</span>]<br><br></code></pre></td></tr></table></figure>
 
 <h4 id="Synch-例子"><a href="#Synch-例子" class="headerlink" title="Synch()例子"></a><strong>Synch()例子</strong></h4><p>Synch()：生产者-消费者模型下，消费者处理器在提取数据之前必须先同步</p>
 <p>路障同步（Barrier）：处理器需要在路障处等待，直到满足条件</p>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="路障捏"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004746635.png" srcset="/img/loading.gif" lazyload alt="路障捏"></p>
 <h4 id="自旋锁实现路障"><a href="#自旋锁实现路障" class="headerlink" title="自旋锁实现路障"></a><strong>自旋锁实现路障</strong></h4><p>arrive、depart是自旋锁，arrive初始化未锁定，depart初始化锁定</p>
 <figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">procedure</span> <span class="hljs-title">synch</span><span class="hljs-params">()</span> <span class="hljs-comment">&#123; </span></span><br><span class="hljs-comment"><span class="hljs-function">    lock(arrive); </span></span><br><span class="hljs-comment"><span class="hljs-function">    count = count + 1; // count the processors as</span></span><br><span class="hljs-comment"><span class="hljs-function">    if (count &lt; n) &#123; // they arrive at barrier </span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(arrive) </span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> <span class="hljs-title">else</span> <span class="hljs-comment">&#123;</span></span><br><span class="hljs-comment"><span class="hljs-function">           unlock(depart);</span></span><br><span class="hljs-comment"><span class="hljs-function">    &#125;</span> </span><br><span class="hljs-function">    <span class="hljs-title">lock</span><span class="hljs-params">(depart)</span>;</span> <br>    count = count - <span class="hljs-number">1</span>; <span class="hljs-comment">// count the processors as </span><br>    <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">&#123; // they leave barrier </span><br><span class="hljs-comment">          unlock(depart) </span><br><span class="hljs-comment">    &#125;</span> <span class="hljs-keyword">else</span> <span class="hljs-comment">&#123; </span><br><span class="hljs-comment">          unlock(arrive); </span><br><span class="hljs-comment">    &#125;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -663,19 +545,19 @@ WIDGET = {
 <td>通过消息传递（send和receive）实现处理器间合作</td>
 </tr>
 </tbody></table>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="多核-不共享内存"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607004901229.png" srcset="/img/loading.gif" lazyload alt="多核-不共享内存"></p>
 <p><strong>例子</strong></p>
 <p>给每个处理器分配1000个数据进行求和</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">Sum = 0;<br><span class="hljs-keyword">for</span> (i = 0; i&lt;1000; i = i + 1)<br>	<span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + A[i];<br>//将所有处理器计算结果相加 ，send(x,y)将数据y发送给处理器x<br><br>half = 100; l<br>imit = 100; <br>repeat &#123; <br>    half = (half+1)/2; //dividing line <br>    <span class="hljs-keyword">if</span> (Pn&gt;= half &amp;&amp; Pn&lt;<span class="hljs-built_in">limit</span>) send(Pn-half,<span class="hljs-built_in">sum</span>);<br>    <span class="hljs-keyword">if</span> (Pn&lt;(<span class="hljs-built_in">limit</span>/2)) <span class="hljs-built_in">sum</span> = <span class="hljs-built_in">sum</span> + receive(); <br>    <span class="hljs-built_in">limit</span> = half; <br>&#125; until (half == 1); //final <span class="hljs-built_in">sum</span> <span class="hljs-keyword">in</span> P0’s <span class="hljs-built_in">sum</span><br><br></code></pre></td></tr></table></figure>
 
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="消息传递"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005019757.png" srcset="/img/loading.gif" lazyload alt="消息传递"></p>
 <h1 id="五-小结"><a href="#五-小结" class="headerlink" title="五.小结"></a><strong>五.小结</strong></h1><p>多核处理器基础</p>
 <ol>
 <li>如何共享数据？</li>
 <li>如何合作处理任务？</li>
 <li>架构的可扩展性如何？</li>
 </ol>
-<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="m"></p>
+<p><img src="/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90%E5%8E%9F%E7%90%86-L012-Mcore/image-20230607005121724.png" srcset="/img/loading.gif" lazyload alt="m"></p>
 
                 
               </div>
@@ -724,7 +606,7 @@ WIDGET = {
   <div class="license-box my-3">
     <div class="license-title">
       <div>计算机组成原理-L012-Mcore</div>
-      <div>https://www.emokable.top/计算机组成原理-L012-Mcore/</div>
+      <div>https://emokable.github.io/计算机组成原理-L012-Mcore/</div>
     </div>
     <div class="license-meta">
       
@@ -790,38 +672,6 @@ WIDGET = {
             </div>
 
             
-  
-  
-    <article id="comments">
-      
-  <div id="waline"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#waline', function() {
-      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
-      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
-        var options = Object.assign(
-          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
-          {
-            el: '#waline',
-            path: window.location.pathname
-          }
-        )
-        Waline.init(options);
-        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
-          var imgSelector = '#waline .vcontent img:not(.vemoji)';
-          Fluid.plugins.imageCaption(imgSelector);
-          Fluid.plugins.fancyBox(imgSelector);
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-    </article>
-  
-
-
           </article>
         </div>
       </div>
@@ -829,6 +679,19 @@ WIDGET = {
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
   </div>
@@ -856,19 +719,6 @@ WIDGET = {
 
   
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('mermaid' in window) {
-        mermaid.init();
-      }
-    });
-  });
-</script>
 
 
 
@@ -914,70 +764,14 @@ WIDGET = {
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
-    
-      
-        <div class="statistics">
   
-    
-
-      
-                    
-                      <span id="busuanzi_container_site_pv" style="display: none">
-                        总访问量 
-                          <span id="busuanzi_value_site_pv"></span>
-                           次
-                      </span>
-                      
-                        
-                          <span id="busuanzi_container_site_uv" style="display: none">
-                            总访客数 
-                              <span id="busuanzi_value_site_uv"></span>
-                               人
-                          </span>
-                          
-                            
-                                                         
-                                  <span>
-                                    博客总字数274k
-                                  </span>
-
-</div>
-          
-            
-              <!-- 备案信息 ICP for China -->
-              <div class="beian">
-  <span>
-    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
-      
-    </a>
-  </span>
   
-    
-      <span>
-        <a       
-          href="https://icp.gov.moe/?keyword=20230073"
-          rel="nofollow noopener"
-          class="beian-police"
-          target="_blank"
-        >
-          
-            <span style="visibility: hidden; width: 0">|</span>
-            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
-          
-          <span>萌ICP备20230073号</span>
-        </a>
-      </span>
-    
+  
   
 </div>
 
-
-
-                
-                  
-</div>
   </footer>
 
   <!-- Scripts -->
@@ -1019,9 +813,7 @@ WIDGET = {
 
 
   
-    
-      <script  src="/js/img-lazyload.js" ></script>
-    
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -1122,8 +914,6 @@ WIDGET = {
 
   <script  src="/js/local-search.js" ></script>
 
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
 
 
 
@@ -1134,8 +924,7 @@ WIDGET = {
 
 
   
-<!--浏览器搞笑标题-->
-<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>

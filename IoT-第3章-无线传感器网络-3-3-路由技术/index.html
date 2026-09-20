@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/emokable.ico">
-  <link rel="icon" href="/img/emokable.ico">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -19,46 +19,46 @@
     <meta name="description" content="第三章 无线传感器网络3.3 路由技术关于路由协议 路由协议的任务 负责将数据分组从源节点通过网络转发到目的节点。   路由协议的功能 （1）寻找源节点和目的节点间的优化路径； （2）将数据分组沿着优化路径正确转发。     ​	路由协议的核心是路由选择算法。不同的路由选择算法通常会采用不同的评价因子及权重来进行最佳路径的计算，Internet路由协议常见的评价因子包括带宽、可靠性、延迟、负载、跳">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IoT-第3章-无线传感器网络-3-3-路由技术">
-<meta property="og:url" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/index.html">
+<meta property="og:url" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/index.html">
 <meta property="og:site_name" content="哈姆詤的箌悝糖">
 <meta property="og:description" content="第三章 无线传感器网络3.3 路由技术关于路由协议 路由协议的任务 负责将数据分组从源节点通过网络转发到目的节点。   路由协议的功能 （1）寻找源节点和目的节点间的优化路径； （2）将数据分组沿着优化路径正确转发。     ​	路由协议的核心是路由选择算法。不同的路由选择算法通常会采用不同的评价因子及权重来进行最佳路径的计算，Internet路由协议常见的评价因子包括带宽、可靠性、延迟、负载、跳">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112503614.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114655930.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114743320.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114800347.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114934665.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115344312.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115436665.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115527711.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115615303.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115625311.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115634970.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115644042.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115653154.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115703415.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115818401.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120103976.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120306824.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224124930540.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125722999.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125817211.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125912867.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125932321.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130039396.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130257311.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130333552.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130711509.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130806592.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130833961.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130941803.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131007127.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131023649.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131150334.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131252000.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131205581.png">
-<meta property="og:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131319942.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112503614.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114655930.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114743320.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114800347.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114934665.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115344312.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115436665.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115527711.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115615303.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115625311.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115634970.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115644042.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115653154.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115703415.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115818401.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120103976.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120306824.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224124930540.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125722999.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125817211.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125912867.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125932321.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130039396.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130257311.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130333552.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130711509.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130806592.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130833961.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130941803.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131007127.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131023649.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131150334.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131252000.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131205581.png">
+<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131319942.png">
 <meta property="article:published_time" content="2023-12-23T14:07:48.000Z">
 <meta property="article:modified_time" content="2023-12-24T05:14:19.568Z">
 <meta property="article:author" content="emokable">
@@ -66,10 +66,8 @@
 <meta property="article:tag" content="物联网技术与应用">
 <meta property="article:tag" content="IoT">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://www.emokable.top/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png">
+<meta name="twitter:image" content="https://emokable.github.io/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png">
   
-  
-    <meta name="referrer" content="no-referrer-when-downgrade">
   
   
   <title>IoT-第3章-无线传感器网络-3-3-路由技术 - 哈姆詤的箌悝糖</title>
@@ -110,7 +108,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.emokable.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":100,"cursorChar":"♦","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"left","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/mahmoud-habibi.gif","onlypost":true,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"emokable.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -120,21 +118,6 @@
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
 
 
   
@@ -152,175 +135,103 @@
   <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand" href="/">
-      <strong>
-        哈姆詤的箌悝糖
-      </strong>
+      <strong>Fluid</strong>
     </a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <div class="animated-icon"><span></span><span></span><span></span></div>
     </button>
-    <!-- 和风天气-->>
-    
-<div id="he-plugin-simple"></div>
-<script>
-WIDGET = {
-  "CONFIG": {
-    "modules": "012",
-    "background": "5",
-    "tmpColor": "FFFFFF",
-    "tmpSize": "17",
-    "cityColor": "FFFFFF",
-    "citySize": "17",
-    "aqiColor": "FFFFFF",
-    "aqiSize": "16",
-    "weatherIconSize": "24",
-    "alertIconSize": "18",
-    "padding": "10px 10px 10px 10px",
-    "shadow": "0",
-    "language": "auto",
-    "fixed": "false",
-    "vertical": "top",
-    "horizontal": "left",
-    "key": "19956233bafd404183052586b94d02f8"
-  }
-}
-</script>
-<script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script>
-      <!-- Collapsible content -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto text-center">
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/">
-                          <i class="iconfont icon-home-fill"></i>
-                            <span>首页</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/categories/">
-                          <i class="iconfont icon-category-fill"></i>
-                            <span>分类</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/tags/">
-                          <i class="iconfont icon-tags-fill"></i>
-                            <span>标签</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/about/">
-                          <i class="iconfont icon-user-fill"></i>
-                            <span>关于</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/links/">
-                          <i class="iconfont icon-link-fill"></i>
-                            <span>友链</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                      <li class="nav-item">
-                        <a class="nav-link" href="/steamgames/">
-                          <i class="iconfont icon-steam"></i>
-                            <span>steam</span>
-                        </a>
-                      </li>
-                      
-                        
-            
-              
-                
-                  
-                    <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" target="_self" href="javascript:;" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="iconfont icon-archive-fill"></i>
-                          <span>归档</span>
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/archives/">
-                                  
-                                    <span>归档</span>
-                                </a>
-                                
-                          
-                            
-                              
-                                <a class="dropdown-item" href="/pdf/">
-                                  
-                                    <span>PDF</span>
-                                </a>
-                                
-                      </div>
-                    </li>
-                    
-                        
-                          
-                            <li class="nav-item" id="search-btn">
-                              <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal"
-                                data-target="#modalSearch" aria-label="Search">
-                                <i class="iconfont icon-search"></i>
-                              </a>
-                            </li>
-                            
-                              
-                                
-                                  <li class="nav-item" id="color-toggle-btn">
-                                    <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-                                      <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-                                    </a>
-                                  </li>
-                                  
-        </ul>
-      </div>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
   </div>
 </nav>
+
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/top.jpg') no-repeat center center; background-size: cover;">
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -367,14 +278,6 @@ WIDGET = {
 
     
     
-      
-        <span id="busuanzi_container_page_pv" style="display: none">
-          <i class="iconfont icon-eye" aria-hidden="true"></i>
-          <span id="busuanzi_value_page_pv"></span> 次
-        </span>
-        
-      
-    
   </div>
 
 
@@ -398,19 +301,6 @@ WIDGET = {
   <div class="row nomargin-x">
     <div class="side-col d-none d-lg-block col-lg-2">
       
-  <aside class="sidebar" style="padding-left: 2rem; margin-right: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>目录</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
-  </aside>
-
 
     </div>
 
@@ -420,14 +310,6 @@ WIDGET = {
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">IoT-第3章-无线传感器网络-3-3-路由技术</h1>
-            
-              <p class="note note-info">
-                
-                  
-                    本文最后更新于：4 小时前
-                  
-                
-              </p>
             
             
               <div class="markdown-body">
@@ -443,12 +325,12 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="路由协议"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112349263.png" srcset="/img/loading.gif" lazyload alt="路由协议"></p>
 <p>​	<strong>路由协议的核心是路由选择算法。不同的路由选择算法通常会采用不同的评价因子及权重来进行最佳路径的计算，Internet路由协议常见的评价因子包括带宽、可靠性、延迟、负载、跳数和费用等。</strong></p>
-<h3 id="有线Internet网络中的路由"><a href="#有线Internet网络中的路由" class="headerlink" title="有线Internet网络中的路由"></a><strong>有线Internet网络中的路由</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112503614.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="有线路由"></p>
-<h3 id="自组织网络（Ad-Hoc-Networks）"><a href="#自组织网络（Ad-Hoc-Networks）" class="headerlink" title="自组织网络（Ad Hoc Networks）"></a><strong>自组织网络（Ad Hoc Networks）</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114655930.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="adhoc"></p>
+<h3 id="有线Internet网络中的路由"><a href="#有线Internet网络中的路由" class="headerlink" title="有线Internet网络中的路由"></a><strong>有线Internet网络中的路由</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224112503614.png" srcset="/img/loading.gif" lazyload alt="有线路由"></p>
+<h3 id="自组织网络（Ad-Hoc-Networks）"><a href="#自组织网络（Ad-Hoc-Networks）" class="headerlink" title="自组织网络（Ad Hoc Networks）"></a><strong>自组织网络（Ad Hoc Networks）</strong></h3><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114655930.png" srcset="/img/loading.gif" lazyload alt="adhoc"></p>
 <h4 id="Ad-Hoc-网络的特点"><a href="#Ad-Hoc-网络的特点" class="headerlink" title="Ad Hoc 网络的特点"></a>Ad Hoc 网络的特点</h4><p>•独立组网</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114743320.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="adhoc"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114743320.png" srcset="/img/loading.gif" lazyload alt="adhoc"></p>
 <p>​	不需要任何预先网络基础设施</p>
 <p>•动态拓扑</p>
 <p>​	节点移动&#x2F;开机&#x2F;关机</p>
@@ -462,7 +344,7 @@ WIDGET = {
 <p>•多跳路由</p>
 <p>​	接收端和发送端可使用比两者直接通信小得多的功率进行通信，因此节省了能量消耗</p>
 <p>​	通过中间节点参与分组转发，能够有效降低对无线传输设备的设计难度和成本，同时扩大了自组织网络的覆盖范围</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114800347.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="duotiao"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114800347.png" srcset="/img/loading.gif" lazyload alt="duotiao"></p>
 <h4 id="传统的路由协议不适用于Ad-Hoc-网络"><a href="#传统的路由协议不适用于Ad-Hoc-网络" class="headerlink" title="传统的路由协议不适用于Ad Hoc 网络"></a>传统的路由协议不适用于Ad Hoc 网络</h4><ul>
 <li>动态变化的网络拓扑结构<ul>
 <li>节点加入、离开、移动等</li>
@@ -504,9 +386,9 @@ WIDGET = {
 </ul>
 </li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114934665.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="分类"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224114934665.png" srcset="/img/loading.gif" lazyload alt="分类"></p>
 <h5 id="表驱动（Table-Driven）路由"><a href="#表驱动（Table-Driven）路由" class="headerlink" title="表驱动（Table Driven）路由"></a><strong>表驱动（Table Driven）路由</strong></h5><p>先验式(Proactive)路由</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115344312.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115344312.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 <ul>
 <li><p>传统的分布式最短路径路由协议</p>
 <ul>
@@ -525,7 +407,7 @@ WIDGET = {
 <li><p>DSDV、OLSR、TBRPF</p>
 </li>
 </ul>
-<h5 id="按需（On-demand）路由"><a href="#按需（On-demand）路由" class="headerlink" title="按需（On-demand）路由"></a><strong>按需（On-demand）路由</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115436665.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
+<h5 id="按需（On-demand）路由"><a href="#按需（On-demand）路由" class="headerlink" title="按需（On-demand）路由"></a><strong>按需（On-demand）路由</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115436665.png" srcset="/img/loading.gif" lazyload alt="2"></p>
 <ul>
 <li><p>反应式(Reactive)路由</p>
 <ul>
@@ -548,7 +430,7 @@ WIDGET = {
 <li><p>DSR、AODV、DYMO</p>
 </li>
 </ul>
-<h5 id="混合路由"><a href="#混合路由" class="headerlink" title="混合路由"></a><strong>混合路由</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115527711.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="hybird"></p>
+<h5 id="混合路由"><a href="#混合路由" class="headerlink" title="混合路由"></a><strong>混合路由</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115527711.png" srcset="/img/loading.gif" lazyload alt="hybird"></p>
 <ul>
 <li>Ad Hoc网络划分为区域<ul>
 <li>每个节点在区域内部采用表驱动路由</li>
@@ -572,20 +454,20 @@ WIDGET = {
 </ul>
 </blockquote>
 <h4 id="Example-Ad-Hoc-Network"><a href="#Example-Ad-Hoc-Network" class="headerlink" title="Example Ad Hoc Network"></a>Example Ad Hoc Network</h4><p><strong>AODV(Ad hoc On Demand Vector routing)按需距离矢量路由协议</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115615303.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115625311.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Route Requests in AODV"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115634970.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Route Requests in AODV"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115644042.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Route Requests in AODV"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115653154.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Reverse Path Setup in AODV"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115703415.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="Route Reply in AODV"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115818401.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="AODV Route Discovery"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115615303.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115625311.png" srcset="/img/loading.gif" lazyload alt="Route Requests in AODV"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115634970.png" srcset="/img/loading.gif" lazyload alt="Route Requests in AODV"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115644042.png" srcset="/img/loading.gif" lazyload alt="Route Requests in AODV"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115653154.png" srcset="/img/loading.gif" lazyload alt="Reverse Path Setup in AODV"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115703415.png" srcset="/img/loading.gif" lazyload alt="Route Reply in AODV"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224115818401.png" srcset="/img/loading.gif" lazyload alt="AODV Route Discovery"></p>
 <h2 id="WSN特点对路由协议设计的影响"><a href="#WSN特点对路由协议设计的影响" class="headerlink" title="WSN特点对路由协议设计的影响"></a><strong>WSN特点对路由协议设计的影响</strong></h2><p>无线传感器网络的路由协议</p>
 <p>（1）能量优先：考虑节点能耗，高效利用能量；</p>
 <p>（2）基于局部信息：在局部网络拓扑信息的基础上选择合适的路径；</p>
 <p>（3）以数据为中心：路由机制与数据融合技术结合；</p>
 <p>（4）应用相关：应用千差万别，无通用的路由协议。</p>
 <h3 id="能量感知路由"><a href="#能量感知路由" class="headerlink" title="能量感知路由"></a><strong>能量感知路由</strong></h3><h4 id="能量感知路由的考虑因素"><a href="#能量感知路由的考虑因素" class="headerlink" title="能量感知路由的考虑因素"></a><strong>能量感知路由的考虑因素</strong></h4><p><strong>根据节点的可用能量(power available, PA)或传输路径上的能量需求，选择数据的转发路径。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120103976.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120103976.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 <h4 id="能量路由策略"><a href="#能量路由策略" class="headerlink" title="能量路由策略"></a>能量路由策略</h4><p><strong>最少跳数路由：选取从数据源到汇聚节点跳数最少的路径。选择路径3。</strong></p>
 <p><strong>最小能量消耗路由：从数据源到汇聚节点的所有路径中选取节点耗能之和最少的路径。选择路径1。</strong></p>
 <p><strong>最大PA路由：从数据源到汇聚节点的所有路径中选取节点PA之和最大的路径。路径2、路径4的PA之和最大，但路径2包含路径1，不是高效的从而被排除。选择路径4。</strong></p>
@@ -597,7 +479,7 @@ WIDGET = {
 <p> P_Tx &#x3D; E + K_ⅹd_ijα</p>
 <p> P_Rx &#x3D; E</p>
 <p> P(i, j) &#x3D; P_Tx + P_Rx &#x3D; 2E + K_ⅹd_ijα</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120306824.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224120306824.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 </blockquote>
 <p>一条连接源节点i和目的节点j的路径上传送单位数据所消耗的总功率值等于组成该路径各条链路的功率值之和：</p>
 <blockquote>
@@ -668,11 +550,11 @@ WIDGET = {
 <li><strong>优点：实现简单（只需知道一跳内信息），解决内爆、数据重叠等问题。</strong></li>
 <li><strong>缺点：数据有时不能转发，较远节点无法得到；不保证传送可靠性</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224124930540.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="spin"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224124930540.png" srcset="/img/loading.gif" lazyload alt="spin"></p>
 <h4 id="DirectedDifussion-DD-定向扩散路由"><a href="#DirectedDifussion-DD-定向扩散路由" class="headerlink" title="DirectedDifussion(DD)定向扩散路由"></a><strong>DirectedDifussion(DD)定向扩散路由</strong></h4><p><strong>工作原理：</strong></p>
 <p><strong>汇聚节点通过兴趣消息发出查询任务，采用泛洪方式传播兴趣消息到整个区域或部分区域内的所有传感器节点。在兴趣消息的传播过程中，协议逐跳地在每个传感器节点上建立反向的从数据源点到汇聚节点的数据传输梯度，传感器节点将采集到的数据沿着梯度方向传送到汇聚节点。</strong></p>
 <p><strong>周期性的三个阶段：兴趣扩散、梯度建立、路径加强。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125722999.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="DD"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125722999.png" srcset="/img/loading.gif" lazyload alt="DD"></p>
 <h5 id="定向扩散路由的要素"><a href="#定向扩散路由的要素" class="headerlink" title="定向扩散路由的要素"></a><strong>定向扩散路由的要素</strong></h5><p><strong>组成元素</strong></p>
 <ul>
 <li><strong>数据（data）:以属性数值对命名</strong></li>
@@ -681,7 +563,7 @@ WIDGET = {
 <li><strong>事件（event）:事件发生后，事件信息会沿着多条路径向兴趣的发出节点转发</strong></li>
 <li><strong>加强（reinforcement）:一种从多条向汇聚节点发送感知数据的传输路径中选择一条优化路径的机制</strong></li>
 </ul>
-<h5 id="定向扩散路由的任务、兴趣"><a href="#定向扩散路由的任务、兴趣" class="headerlink" title="定向扩散路由的任务、兴趣"></a><strong>定向扩散路由的任务、兴趣</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125817211.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<h5 id="定向扩散路由的任务、兴趣"><a href="#定向扩散路由的任务、兴趣" class="headerlink" title="定向扩散路由的任务、兴趣"></a><strong>定向扩散路由的任务、兴趣</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125817211.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 <h5 id="节点维护的兴趣列表"><a href="#节点维护的兴趣列表" class="headerlink" title="节点维护的兴趣列表"></a><strong>节点维护的兴趣列表</strong></h5><ul>
 <li><strong>每个节点都在本地保存一个兴趣列表</strong><ul>
 <li><strong>兴趣表项：发来该兴趣消息的邻居节点、数据发送速率、时间戳等任务相关信息</strong></li>
@@ -696,18 +578,18 @@ WIDGET = {
 </li>
 <li><strong>如果收到的兴趣消息和节点刚转发的兴趣一样，为避免消息循环则丢弃该信息；否则，转发收到的兴趣消息</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125912867.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125912867.png" srcset="/img/loading.gif" lazyload alt="1"></p>
 <h5 id="定向扩散路由机制的三个阶段"><a href="#定向扩散路由机制的三个阶段" class="headerlink" title="定向扩散路由机制的三个阶段"></a>定向扩散路由机制的三个阶段</h5><p><strong>兴趣扩散阶段：汇聚节点周期性地向邻居节点广播兴趣消息。兴趣消息中含有任务类型，目标区域，数据发送速率，时间戳等参数。逐跳地在每个传感器节点上建立从数据源点到汇聚节点的数据传输梯度。</strong></p>
 <p><strong>梯度建立（数据传播）阶段：当传感器节点采集到与兴趣匹配的数据时，把数据发送到梯度上的邻居节点，并按照梯度上的数据传输速率设定传感器模块采集数据的速率。</strong></p>
 <p><strong>路径加强阶段：兴趣扩散阶段是为了建立源节点到汇聚节点的数据传输路径，数据源节点以较低的速率采集和发送数据，称这个阶段建立的梯度为探测梯度。汇聚节点在收到从源点发来的数据后，启动建立源节点的加强路径，后续数据将沿着加强路径以较高的数据速率进行传输。加强后的梯度称为数据梯度。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125932321.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="三阶段"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224125932321.png" srcset="/img/loading.gif" lazyload alt="三阶段"></p>
 <h5 id="定向扩散路由的路径加强机制"><a href="#定向扩散路由的路径加强机制" class="headerlink" title="定向扩散路由的路径加强机制"></a>定向扩散路由的路径加强机制</h5><p><strong>假设以数据传输延迟作为路由加强的标准，汇聚节点选择首先发来消息的邻居节点作为加强路径的下一跳节点，向该邻居节点发送路径加强消息。路径加强消息包括新设定的较高发送数据速率值。邻居节点收到消息后，经过分析确定该消息描述的是一个已有的兴趣，只是增加了数据发送速率，则断定这是一条路径加强消息，从而更新相应兴趣表项到邻居节点的发送数据速率。同时，按照同样的规则选择加强路径的下一跳邻居节点。</strong></p>
 <p><strong>路由加强的标准不是唯一的，可以选择在一定时间内发送数据最多的节点作为路径加强的下一跳节点，也可以选择数据传输最稳定的节点最为路径加强的下一跳节点。在加强路径上的节点如果发现下一跳节点的发送速率明显减小，或者收到来自其他节点的新位置估计，推断加强路径的下一跳节点失效，就需要使用上述的路径加强机制重新确定下一跳节点。</strong></p>
 <h5 id="定向扩散路由的特点"><a href="#定向扩散路由的特点" class="headerlink" title="定向扩散路由的特点"></a>定向扩散路由的特点</h5><p><strong>定向扩散路由是一种典型的以数据为中心的路由机制。汇聚节点根据不同应用需求定义不同的任务类型、目标区域等参数的兴趣消息，通过向网络中兴趣传播消息启动路由建立过程。中间传感器节点通过兴趣表建立从数据源到汇聚节点的数据传输梯度、自动形成数据传输的多条路径。按照路径优化的标准。定向扩散路由使用路由加强机制生成一条优化的数据传输路径</strong></p>
 <p><strong>但是，定向扩散路由在路由建立时需要一个兴趣扩散的洪泛传播，能量和时间开销都比较大，尤其是当底层MAC协议采用休眠机制时可能造成兴趣建立的不一致。</strong></p>
 <h4 id="Rumor-谣传路由"><a href="#Rumor-谣传路由" class="headerlink" title="Rumor 谣传路由"></a>Rumor 谣传路由</h4><p>有些传感器网络应用中，数据传输量较少，此时定向扩散路由并不是高效的路由机制。谣传路由适用于数据传输量较小的传感器网络。</p>
 <p>基本思想是：事件区域中的传感器节点产生代理，代理消息沿随机路径向外扩散传播，同时汇聚节点发送的查询消息也沿随机路径在网络中传播。当代理消息和查询消息的传输路径交叉在一起时，就会形成一条汇聚节点到事件区域的完整路径。</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130039396.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="rumor"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130039396.png" srcset="/img/loading.gif" lazyload alt="rumor"></p>
 <p>优点： 代理消息、查询消息的单播随机转发，克服了使用泛洪方式建立转发路径带来的开销过大问题。</p>
 <p>缺点：传输路径一般不是最优路径，并可能存在路由环路问题。</p>
 <h3 id="地理位置信息路由"><a href="#地理位置信息路由" class="headerlink" title="地理位置信息路由"></a><strong>地理位置信息路由</strong></h3><p>   <strong>地理位置信息路由假设节点知道自己的地理位置信息，以及目的节点或者目的区域的地理位置，利用这些地理位置信息作为路由选择的依据，节点按照一定策略转发数据到目的节点。地理位置信息的精确度和代价相关，在不同的应用中会选择不同精确度的位置信息来实现数据的路由转发。</strong></p>
@@ -736,11 +618,11 @@ WIDGET = {
 <li><strong>路由空洞：每个节点只根据自身的邻居信息来选择下一跳，可能会出现节点周围没有比距离目标节点比自己更近的邻居节点，导致数据包无法继续转发。</strong></li>
 </ul>
 <p>​	–<strong>空洞绕路（perimeter forwarding）：当节点没有离目标节点更近的邻居节点时（称为路由空洞），它使用右手法则绕过空洞区域。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130257311.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="GPSR"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130257311.png" srcset="/img/loading.gif" lazyload alt="GPSR"></p>
 <h5 id="GPRS中的空洞绕路"><a href="#GPRS中的空洞绕路" class="headerlink" title="GPRS中的空洞绕路"></a><strong>GPRS中的空洞绕路</strong></h5><p><strong>右手法则：分组总是沿着输入边逆时针方向的下一条边转发。</strong></p>
 <p>–<strong>在区域内部使用右手法则时，行进路线沿顺时针方向；</strong></p>
 <p>–<strong>在区域外部使用右手法则时，行进路线沿逆时针方向。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130333552.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="空洞绕路"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130333552.png" srcset="/img/loading.gif" lazyload alt="空洞绕路"></p>
 <p><strong>两种工作模式的切换</strong></p>
 <p><strong>贪婪转发-&gt;空洞绕路：当节点邻居中没有更靠近目标节点的节点时，按照空洞绕路策略转发分组。</strong></p>
 <p><strong>空洞绕路-&gt;贪婪转发：当一个邻居节点到目标节点的距离比目标节点到开始进行空洞绕路时节点的距离更近，就切换回贪婪转发模式</strong></p>
@@ -767,7 +649,7 @@ WIDGET = {
 <p><strong>为此，数据消息中捎带一个能耗字段（初始为0），数据消息传输每经过一个节点时，节点将自身传送消息到下一跳的能耗值累加在能耗字段上，然后转发到下一跳节点。能耗字段值实际上就是从节点发送分组到事件区域的总能耗。</strong></p>
 <p><strong>下一次转发查询消息时，用节点记录的实际能耗值代替上述公式中的d(N, R)，计算它到事件区域的实际代价h(T, R)。节点用调整后的实际代价h(T, R)选择到事件区域的优化路径。</strong></p>
 <p>GEAR 路由： 1）查询消息传送到事件区域 – 空洞绕行</p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130711509.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="空洞绕行"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130711509.png" srcset="/img/loading.gif" lazyload alt="空洞绕行"></p>
 <p><strong>图例：从S开始的路径建立过程，采用上述的贪婪算法。</strong></p>
 <p><strong>局部最优，有可能陷入路由空洞（C是S的邻居节点中到目标T实际代价最小的节点，但G,H,I为失效节点，C的所有邻居到目标T的实际代价都比C大）。</strong></p>
 <p><strong>路径调整方法：</strong></p>
@@ -786,11 +668,11 @@ WIDGET = {
 </li>
 <li><strong>当查询命令到达区域内第一个节点时，如果该节点的邻居数量大于一个预设的阈值，则使用迭代地理转发，否则使用洪泛方式。</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130806592.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="传播"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130806592.png" srcset="/img/loading.gif" lazyload alt="传播"></p>
 <p><strong>GEAR路由中假设节点的地理位置固定或变化不频繁，适用于节点移动性不强的应用环境。</strong></p>
 </blockquote>
 <p><strong>例：在GEAR路由的区域外查询消息传播阶段，节点S有邻居节点A、B、C，它们到事件区域几何中心的距离分别为150、120、90，节点能耗值分别为3、5、10，加权系数设为0.7。试问节点S选取哪个节点作为下一跳？</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130833961.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="ans"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130833961.png" srcset="/img/loading.gif" lazyload alt="ans"></p>
 <h3 id="多径路由"><a href="#多径路由" class="headerlink" title="多径路由"></a><strong>多径路由</strong></h3><p><strong>在传感器网络中，引入多路径路由是为了（1）提高数据传输可靠性、和（2）实现网络负载平衡。当主路径失效时，退而使用次优路径转发。在多路径路由中，如何建立数据源节点到汇聚节点的多条路径是首要问题。</strong></p>
 <p><strong>基本思想：首先建立从数据源节点到汇聚节点的主路径，然后再建立多条备用路径；数据通过主路径进行传播，同时利用备用路径低速传送数据来维护路径的有效性；当主路径失效时，从备用路径中选择次优路径作为新的主路径。</strong></p>
 <p><strong>两种算法：不相交多路径（disjoint multipath）和缠绕多路径（braid multipath）</strong></p>
@@ -801,13 +683,13 @@ WIDGET = {
 <li><strong>如果B在主路径上，则B发回否定增强消息给A，A选择次优节点传递次优增强消息；如果B不在主路径上，则B继续传递次优路径增强消息，直到构造一条次优路径。</strong></li>
 <li><strong>同样方式，可继续构造下一跳次优路径。</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130941803.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="构建法"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224130941803.png" srcset="/img/loading.gif" lazyload alt="构建法"></p>
 <h4 id="缠绕多路径法（部分不相交）"><a href="#缠绕多路径法（部分不相交）" class="headerlink" title="缠绕多路径法（部分不相交）"></a><strong>缠绕多路径法（部分不相交）</strong></h4><p><strong>理想缠绕多路径（一次建立、节点需要知道全局网络拓扑信息）</strong></p>
 <p><strong>理想缠绕多路径由一组缠绕路径形成；一条缠绕路径对应于主路径上的一个节点，在网络不包含该节点时，形成从源节点到目的节点的优化备用路径。主路径上每个节点都有一条对应的缠绕路径。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131007127.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="理想"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131007127.png" srcset="/img/loading.gif" lazyload alt="理想"></p>
 <p><strong>局部缠绕多路径（逐步探索、节点仅需局部信息）</strong></p>
 <p><strong>建立主路径后，主路径上的每一个节点（除了源端和靠近源端的节点）都要发送备用路径增强消息给自己的次优节点A，次优节点A再寻找其最优节点B传播该备用路径增强消息。如果节点B不在主路径上，将继续向自己的最优节点传播，直到与主路径相交形成一条新的备用路径。</strong></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131023649.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="局部"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131023649.png" srcset="/img/loading.gif" lazyload alt="局部"></p>
 <h4 id="多径路由：可靠路由"><a href="#多径路由：可靠路由" class="headerlink" title="多径路由：可靠路由"></a><strong>多径路由：可靠路由</strong></h4><p><strong>多径路由可以克服主路径上单个节点失效的问题。备用路径之间具有不同的优先级，当主路径失效时，次优路径将被激活成为新的主路径。因此，少量节点失效并不影响网络功能正常执行。</strong></p>
 <p><strong>但是，网络内的部分节点需要保存多条路径信息，增加了存储开销和协议复杂度。</strong></p>
 <p><strong>传感器节点由于有限能量供应和工作环境恶劣经常面临失效问题，而某些应用对于数据传输的可靠性提出了较高要求。可靠路由协议主要从两个方面考虑</strong></p>
@@ -822,21 +704,21 @@ WIDGET = {
 <li><strong>SPEED没有考虑估计误差对端到端延迟的影响，MMSPEED在每一跳节点上都需要进行速率补偿和可靠性补偿，不断纠正由于估计误差造成的影响。</strong></li>
 </ul>
 <p><strong>协议包括两个基本组件：时延控制、可靠性控制</strong></p>
-<h5 id="MMSPEED的两个基本组件"><a href="#MMSPEED的两个基本组件" class="headerlink" title="MMSPEED的两个基本组件"></a><strong>MMSPEED的两个基本组件</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131150334.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时延控制"></p>
+<h5 id="MMSPEED的两个基本组件"><a href="#MMSPEED的两个基本组件" class="headerlink" title="MMSPEED的两个基本组件"></a><strong>MMSPEED的两个基本组件</strong></h5><p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131150334.png" srcset="/img/loading.gif" lazyload alt="时延控制"></p>
 <p><strong>速度层次：双层优先级保障</strong></p>
 <ul>
 <li><strong>多个转发队列的不同优先级：高优先级能够更快转发</strong></li>
 <li><strong>利用跨层设计（MAC层），高优先级节点的发包间隔更短、回退窗口更小，更容易抢占信道。</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131252000.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="时延"></p>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131205581.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="可靠性控制"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131252000.png" srcset="/img/loading.gif" lazyload alt="时延"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131205581.png" srcset="/img/loading.gif" lazyload alt="可靠性控制"></p>
 <ul>
 <li><strong>通过多径传输实现</strong></li>
 <li><strong>节点i估算它通过j到sink的端到端收包率RP &#x3D; ( 1 –eij)n，n为估计跳数</strong> </li>
 <li><strong>每个节点都动态选择一到多条转发路径来满足数据流的可靠性要求</strong></li>
 <li><strong>由一路分为多路时，每条路径上要求满足的端到端收包率会降低</strong></li>
 </ul>
-<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131319942.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="可靠性"></p>
+<p><img src="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-3-%E8%B7%AF%E7%94%B1%E6%8A%80%E6%9C%AF/image-20231224131319942.png" srcset="/img/loading.gif" lazyload alt="可靠性"></p>
 <h2 id="无线传感器网络路由协议特点"><a href="#无线传感器网络路由协议特点" class="headerlink" title="无线传感器网络路由协议特点"></a><strong>无线传感器网络路由协议特点</strong></h2><p><strong>（1）能量优先。传统路由协议在选择最优路径时，很少考虑节点的能量消耗问题。而无线传感器网络中节点的能量有限，延长整个网络的生存期成为传感器网络路由协议设计的重要目标，因此需要考虑节点的能量消耗以及网络能量均衡使用的问题。</strong></p>
 <p><strong>（2）基于局部拓扑信息。无线传感器网络为了节省通信能量，通常采用多跳的通信模式，而节点有限的存储资源和计算资源，使得节点不能存储大量的路由信息，不能进行太复杂的路由计算。在节点只能获取局部拓扑信息和资源有限的情况下，如何实现简单高效的路由机制时无线传感器网络的一个基本问题。</strong></p>
 <p><strong>（3）以数据为中心。传统的路由协议通常以地址作为节点的标识和路由的依据，而无线传感器网络中大量节点随机部署，所关注的是监测区域的感知数据，而不是具体哪个节点获取的信息，不依赖于全网惟一的标识。传感器网络通常包含多个传感器节点到少数汇聚节点的数据流，按照对感知数据的需求、数据通信模式和流向等，以数据为中心形成消息的转发路径。</strong></p>
@@ -895,7 +777,7 @@ WIDGET = {
   <div class="license-box my-3">
     <div class="license-title">
       <div>IoT-第3章-无线传感器网络-3-3-路由技术</div>
-      <div>https://www.emokable.top/IoT-第3章-无线传感器网络-3-3-路由技术/</div>
+      <div>https://emokable.github.io/IoT-第3章-无线传感器网络-3-3-路由技术/</div>
     </div>
     <div class="license-meta">
       
@@ -961,38 +843,6 @@ WIDGET = {
             </div>
 
             
-  
-  
-    <article id="comments">
-      
-  <div id="waline"></div>
-  <script type="text/javascript">
-    Fluid.utils.loadComments('#waline', function() {
-      Fluid.utils.createCssLink('https://lib.baomitu.com/waline/2.14.1/waline.min.css')
-      Fluid.utils.createScript('https://lib.baomitu.com/waline/2.14.1/waline.min.js', function() {
-        var options = Object.assign(
-          {"serverURL":"https://comment.emokable.top/","path":"window.location.pathname","meta":["nick","mail","link"],"requiredMeta":["nick"],"lang":"zh-CN","emoji":["https://unpkg.com/@waline/emojis@1.1.0/bilibili","https://unpkg.com/@waline/emojis@1.1.0/tieba"],"dark":"html[data-user-color-scheme=\"dark\"]","wordLimit":0,"pageSize":10,"comment_count":true},
-          {
-            el: '#waline',
-            path: window.location.pathname
-          }
-        )
-        Waline.init(options);
-        Fluid.utils.waitElementVisible('#waline .vcontent', () => {
-          var imgSelector = '#waline .vcontent img:not(.vemoji)';
-          Fluid.plugins.imageCaption(imgSelector);
-          Fluid.plugins.fancyBox(imgSelector);
-        })
-      });
-    });
-  </script>
-  <noscript>Please enable JavaScript to view the comments</noscript>
-
-
-    </article>
-  
-
-
           </article>
         </div>
       </div>
@@ -1000,6 +850,19 @@ WIDGET = {
 
     <div class="side-col d-none d-lg-block col-lg-2">
       
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
 
     </div>
   </div>
@@ -1027,19 +890,6 @@ WIDGET = {
 
   
 
-
-
-  <script>
-  Fluid.utils.createScript('https://lib.baomitu.com/mermaid/8.14.0/mermaid.min.js', function() {
-    mermaid.initialize({"theme":"default"});
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('mermaid' in window) {
-        mermaid.init();
-      }
-    });
-  });
-</script>
 
 
 
@@ -1085,70 +935,14 @@ WIDGET = {
     <div class="footer-inner">
   
     <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
     </div>
-    
-      
-        <div class="statistics">
   
-    
-
-      
-                    
-                      <span id="busuanzi_container_site_pv" style="display: none">
-                        总访问量 
-                          <span id="busuanzi_value_site_pv"></span>
-                           次
-                      </span>
-                      
-                        
-                          <span id="busuanzi_container_site_uv" style="display: none">
-                            总访客数 
-                              <span id="busuanzi_value_site_uv"></span>
-                               人
-                          </span>
-                          
-                            
-                                                         
-                                  <span>
-                                    博客总字数274k
-                                  </span>
-
-</div>
-          
-            
-              <!-- 备案信息 ICP for China -->
-              <div class="beian">
-  <span>
-    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
-      
-    </a>
-  </span>
   
-    
-      <span>
-        <a       
-          href="https://icp.gov.moe/?keyword=20230073"
-          rel="nofollow noopener"
-          class="beian-police"
-          target="_blank"
-        >
-          
-            <span style="visibility: hidden; width: 0">|</span>
-            <img src="https://icp.gov.moe/images/ico64.png" alt="police-icon"/>
-          
-          <span>萌ICP备20230073号</span>
-        </a>
-      </span>
-    
+  
   
 </div>
 
-
-
-                
-                  
-</div>
   </footer>
 
   <!-- Scripts -->
@@ -1190,9 +984,7 @@ WIDGET = {
 
 
   
-    
-      <script  src="/js/img-lazyload.js" ></script>
-    
+    <script  src="/js/img-lazyload.js" ></script>
   
 
 
@@ -1293,8 +1085,6 @@ WIDGET = {
 
   <script  src="/js/local-search.js" ></script>
 
-  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
-
 
 
 
@@ -1305,8 +1095,7 @@ WIDGET = {
 
 
   
-<!--浏览器搞笑标题-->
-<script type="text/javascript" src="\js\FunnyTitle.js"></script>
+
   <noscript>
     <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
   </noscript>
