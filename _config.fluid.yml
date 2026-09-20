@@ -99,6 +99,11 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: fluid
 
+# Footer registration information
+footer:
+  beian:
+    enable: false
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
