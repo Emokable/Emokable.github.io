@@ -16,41 +16,25 @@
   <meta name="author" content="emokable">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第五章5G简述5.1  5G体系结构   5G网络的三大场景及其QoS需求 增强型移动宽带（eMBB）: 面向个人消费市场的核心应用场景。主要关注峰值速率、容量、频谱效率、移动性、网络能效等指标，和传统的3G和4G类似。 海量机器通信（mMTC）：数据速率较低且时延不敏感，连接覆盖生活的方方面面，快速促进各垂直行业（智慧城市、智能家居、环境监测等）的深度融合。主要关注连接数，对下载速率，移动性等指">
+    <meta name="description" content="本文由 AI 生成并根据实际操作记录整理，经本人检查后发布。  背景之前使用的自定义域名因未续费而过期，博客恢复使用 GitHub Pages 默认地址： https:&#x2F;&#x2F;emokable.github.io&#x2F; 这次维护的目标是恢复丢失的站点资源和页面，同时把博客重新构建、备份并部署到 GitHub Pages。 这次完成的更新恢复博客资源整理并恢复了博客首页封面、文章默认头图、作者头像、网站图">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IoT-第5章-5G简述">
-<meta property="og:url" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/index.html">
+<meta property="og:title" content="博客重部署与性能优化记录（2026）">
+<meta property="og:url" content="https://emokable.github.io/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E5%BD%95-2026/index.html">
 <meta property="og:site_name" content="哈姆詤的箌悝糖">
-<meta property="og:description" content="第五章5G简述5.1  5G体系结构   5G网络的三大场景及其QoS需求 增强型移动宽带（eMBB）: 面向个人消费市场的核心应用场景。主要关注峰值速率、容量、频谱效率、移动性、网络能效等指标，和传统的3G和4G类似。 海量机器通信（mMTC）：数据速率较低且时延不敏感，连接覆盖生活的方方面面，快速促进各垂直行业（智慧城市、智能家居、环境监测等）的深度融合。主要关注连接数，对下载速率，移动性等指">
+<meta property="og:description" content="本文由 AI 生成并根据实际操作记录整理，经本人检查后发布。  背景之前使用的自定义域名因未续费而过期，博客恢复使用 GitHub Pages 默认地址： https:&#x2F;&#x2F;emokable.github.io&#x2F; 这次维护的目标是恢复丢失的站点资源和页面，同时把博客重新构建、备份并部署到 GitHub Pages。 这次完成的更新恢复博客资源整理并恢复了博客首页封面、文章默认头图、作者头像、网站图">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172126476.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172136154.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172146084.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172222009.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172244351.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172308972.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172425521.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172435452.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172510342.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172522651.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172540658.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172715557.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172835204.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172917129.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172932085.png">
-<meta property="og:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224173119414.png">
-<meta property="article:published_time" content="2023-12-24T09:20:48.000Z">
-<meta property="article:modified_time" content="2026-09-20T17:24:45.182Z">
+<meta property="article:published_time" content="2026-09-21T08:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-21T11:37:27.911Z">
 <meta property="article:author" content="emokable">
-<meta property="article:tag" content="课件笔记">
-<meta property="article:tag" content="物联网技术与应用">
-<meta property="article:tag" content="IoT">
+<meta property="article:tag" content="博客维护">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="GitHub Pages">
+<meta property="article:tag" content="Nintendo Switch">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://emokable.github.io/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172126476.png">
   
   
   
-  <title>IoT-第5章-5G简述 - 哈姆詤的箌悝糖</title>
+  <title>博客重部署与性能优化记录（2026） - 哈姆詤的箌悝糖</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -253,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="IoT-第5章-5G简述"></span>
+            <span id="subtitle" data-typed-text="博客重部署与性能优化记录（2026）"></span>
           
         </div>
 
@@ -264,8 +248,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-12-24 17:20" pubdate>
-          2023年12月24日 下午
+        <time datetime="2026-09-21 16:30" pubdate>
+          2026年9月21日 下午
         </time>
       </span>
     
@@ -276,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          843 字
+          872 字
         
       </span>
     
@@ -325,56 +309,39 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">IoT-第5章-5G简述</h1>
+            <h1 style="display: none">博客重部署与性能优化记录（2026）</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="第五章5G简述"><a href="#第五章5G简述" class="headerlink" title="第五章5G简述"></a><strong>第五章5G简述</strong></h1><h2 id="5-1-5G体系结构"><a href="#5-1-5G体系结构" class="headerlink" title="5.1  5G体系结构"></a><strong>5.1</strong>  <strong>5G体系结构</strong></h2><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172126476.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="5G"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172136154.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="目标"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172146084.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="技术特征"></p>
-<h3 id="5G网络的三大场景及其QoS需求"><a href="#5G网络的三大场景及其QoS需求" class="headerlink" title="5G网络的三大场景及其QoS需求"></a>5G网络的三大场景及其QoS需求</h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172222009.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="三大"></p>
-<p><strong>增强型移动宽带（eMBB）:</strong> 面向个人消费市场的核心应用场景。主要关注峰值速率、容量、频谱效率、移动性、网络能效等指标，和传统的3G和4G类似。</p>
-<p><strong>海量机器通信（mMTC）</strong>：数据速率较低且时延不敏感，连接覆盖生活的方方面面，快速促进各垂直行业（智慧城市、智能家居、环境监测等）的深度融合。主要关注连接数，对下载速率，移动性等指标不太关心。</p>
-<p><strong>高可靠低时延通信（uRLLC）</strong>：面向车联网、工业控制、远程医疗等高安全、高可靠应用场景。主要关注高可靠性、移动性和超低时延，对连接数，峰值速率，容量，频谱效率，网络能效等指标都没有太大需求。</p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172244351.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="5G网络切片划分"></p>
-<h3 id="5G-全网架构"><a href="#5G-全网架构" class="headerlink" title="5G 全网架构"></a>5G 全网架构</h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172308972.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="全网架构"></p>
-<p>5G网络（接入网+承载网+核心网）</p>
-<p>整个通信网的逻辑架构：</p>
+                <blockquote>
+<p>本文由 AI 生成并根据实际操作记录整理，经本人检查后发布。</p>
+</blockquote>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>之前使用的自定义域名因未续费而过期，博客恢复使用 GitHub Pages 默认地址：</p>
+<p><a href="https://emokable.github.io/">https://emokable.github.io/</a></p>
+<p>这次维护的目标是恢复丢失的站点资源和页面，同时把博客重新构建、备份并部署到 GitHub Pages。</p>
+<h2 id="这次完成的更新"><a href="#这次完成的更新" class="headerlink" title="这次完成的更新"></a>这次完成的更新</h2><h3 id="恢复博客资源"><a href="#恢复博客资源" class="headerlink" title="恢复博客资源"></a>恢复博客资源</h3><p>整理并恢复了博客首页封面、文章默认头图、作者头像、网站图标以及文章配图。主页的各个自定义栏目也重新保留，包括关于页、链接页和 Nintendo Switch 页面。</p>
+<h3 id="新增-Nintendo-Switch-数据页"><a href="#新增-Nintendo-Switch-数据页" class="headerlink" title="新增 Nintendo Switch 数据页"></a>新增 Nintendo Switch 数据页</h3><p>原来的 Steam 页面改为 Nintendo Switch 游戏记录页：</p>
 <ul>
-<li>手机→接入网→承载网→核心网→承载网→接入网→手机</li>
+<li>展示游戏名称、封面、游玩时长、游玩天数和最近游玩日期；</li>
+<li>支持按名称、最近游玩时间和游玩时长排序；</li>
+<li>数据以静态 JSON 发布，登录凭据不会放入博客；</li>
+<li>当前数据由 Nintendo 官方账号导出的历史记录生成。</li>
 </ul>
-<p>1G 到 5G 的逻辑架构基本不变，技术演变</p>
-<p>n无线接入网 </p>
-<h2 id="5-2-无线接入网RAN（Radio-Access-Network）"><a href="#5-2-无线接入网RAN（Radio-Access-Network）" class="headerlink" title="5.2   无线接入网RAN（Radio Access Network）"></a>5.2   无线接入网<strong>RAN（Radio Access Network）</strong></h2><p><strong>无线接入网（RAN）：把所有的手机终端，都接入到通信网络中的网络</strong></p>
-<p><strong>一个基站，通常包括BBU（主要负责信号调制）、RRU（主要负责射频处理），馈线（连接RRU和天线），天线（主要负责线缆上导行波和空气中空间波之间的转换）</strong></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172425521.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="简化版的移动通信架构图"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172435452.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="无线基站"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172510342.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="1"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172522651.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="2"></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172540658.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="3"></p>
-<h3 id="网元功能虚拟化（NFV）"><a href="#网元功能虚拟化（NFV）" class="headerlink" title="网元功能虚拟化（NFV）"></a><strong>网元功能虚拟化（NFV）</strong></h3><p><strong>位于CO（中心机房）的BBU基带池，可以进行虚拟化</strong></p>
-<p><strong>BBU从专门、昂贵的硬件设备，到通用服务器（在虚拟机上运行具备BBU功能的软件）</strong></p>
-<h2 id="5-3-5G组网模式"><a href="#5-3-5G组网模式" class="headerlink" title="5.3  5G组网模式"></a>5.3  <strong>5G组网模式</strong></h2><ul>
-<li><strong>非独立组网NSA</strong></li>
-<li><strong>独立组网SA</strong></li>
+<p>页面地址：<a href="https://emokable.github.io/ns/">https://emokable.github.io/ns/</a></p>
+<p>后续更新数据时，只需要重新导入本地数据、检查 <code>source/ns/data.json</code>，再重新生成并部署博客即可。</p>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>本次还做了几项不改变文章内容的优化：</p>
+<ul>
+<li>首页文章封面启用懒加载，减少首屏同时请求的图片数量；</li>
+<li>修复 NS 页面动态游戏卡片被主题懒加载过滤器替换成占位图的问题；</li>
+<li>精简本地搜索索引，只保留标题等必要字段；</li>
+<li>删除重复生成的 <code>xml/local-search.xml</code>；</li>
+<li>删除 PDF.js 的调试 source map 文件，保留 PDF 阅读器运行所需文件；</li>
+<li>移除项目中没有实际使用的构建依赖。</li>
 </ul>
-<h3 id="3GPP-5G-架构标准中的组网模式"><a href="#3GPP-5G-架构标准中的组网模式" class="headerlink" title="3GPP 5G 架构标准中的组网模式"></a>3GPP 5G 架构标准中的组网模式</h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172715557.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="模式"></p>
-<p><strong>5G组网模式</strong></p>
-<p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172835204.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="模式"></p>
-<h3 id="5G网络架构演进的两条路径"><a href="#5G网络架构演进的两条路径" class="headerlink" title="5G网络架构演进的两条路径"></a><strong>5G网络架构演进的两条路径</strong></h3><p><strong>路径1：独立组网、一步到位</strong>，直接上选项2终极形态。这是土豪的最爱，也是中国移动、联通和电信共同的选择。</p>
-<p><strong>路径2：非独立组网、渐进投资</strong>。选项1 → 选项3x → 选项7x → 选项4 → 选项2，中间的步骤都是可选的。</p>
-<h2 id="5-4-6G-愿景需求及技术"><a href="#5-4-6G-愿景需求及技术" class="headerlink" title="5.4  6G 愿景需求及技术"></a>5.4  6G 愿景需求及技术</h2><h3 id="从5G到6G的典型场景演进"><a href="#从5G到6G的典型场景演进" class="headerlink" title="从5G到6G的典型场景演进"></a><strong>从5G到6G的典型场景演进</strong></h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172917129.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20231224172917129"></p>
-<h3 id="5G、6G的性能对比"><a href="#5G、6G的性能对比" class="headerlink" title="5G、6G的性能对比"></a><strong>5G、6G的性能对比</strong></h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224172932085.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="image-20231224172932085"></p>
-<h3 id="6G主要关键技术"><a href="#6G主要关键技术" class="headerlink" title="6G主要关键技术"></a><strong>6G主要关键技术</strong></h3><ul>
-<li>太赫兹通信技术</li>
-<li>无线网络架构</li>
-<li>人工智能与无线通信的融合</li>
-<li>感知通信融合</li>
-<li>智能超表面</li>
-<li>. . . . . .</li>
-</ul>
-<h3 id="6G使能的物联网"><a href="#6G使能的物联网" class="headerlink" title="6G使能的物联网"></a><strong>6G使能的物联网</strong></h3><p><img src="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/image-20231224173119414.png" srcset="/img/mahmoud-habibi.gif" lazyload alt="使能"></p>
+<p>本地检查时，搜索索引由约 1.49 MB 降到约 40 KB，PDF 阅读器本体仍然可用。</p>
+<h3 id="移除-PDF-归档页"><a href="#移除-PDF-归档页" class="headerlink" title="移除 PDF 归档页"></a>移除 PDF 归档页</h3><p>删除了旧的 <code>/pdf/</code> 归档页面及顶部菜单入口。文章中已有的 PDF、PPTX 资料和 PDF.js 阅读器资源暂时保留，避免影响旧文章内容。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这次更新完成了域名过期后的站点恢复、文章资源整理、Nintendo Switch 数据页替换、搜索和图片加载优化，并清理了不再使用的 PDF 归档入口。源码和部署流程也重新验证，后续可以按上面的步骤继续维护。</p>
 
                 
               </div>
@@ -393,7 +360,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/" class="category-chain-item">学习资料</a>
+  <a href="/categories/%E5%8D%9A%E5%AE%A2/" class="category-chain-item">博客</a>
   
   
 
@@ -408,11 +375,13 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E8%AF%BE%E4%BB%B6%E7%AC%94%E8%AE%B0/">#课件笔记</a>
+        <a href="/tags/%E5%8D%9A%E5%AE%A2%E7%BB%B4%E6%8A%A4/">#博客维护</a>
       
-        <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF%E4%B8%8E%E5%BA%94%E7%94%A8/">#物联网技术与应用</a>
+        <a href="/tags/Hexo/">#Hexo</a>
       
-        <a href="/tags/IoT/">#IoT</a>
+        <a href="/tags/GitHub-Pages/">#GitHub Pages</a>
+      
+        <a href="/tags/Nintendo-Switch/">#Nintendo Switch</a>
       
     </div>
   
@@ -424,8 +393,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>IoT-第5章-5G简述</div>
-      <div>https://emokable.github.io/IoT-第5章-5G简述/</div>
+      <div>博客重部署与性能优化记录（2026）</div>
+      <div>https://emokable.github.io/博客重部署与性能优化记录-2026/</div>
     </div>
     <div class="license-meta">
       
@@ -437,7 +406,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年12月24日</div>
+          <div>2026年9月21日</div>
         </div>
       
       
@@ -469,18 +438,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/%E5%8D%9A%E5%AE%A2%E9%87%8D%E9%83%A8%E7%BD%B2%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E8%AE%B0%E5%BD%95-2026/" title="博客重部署与性能优化记录（2026）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">博客重部署与性能优化记录（2026）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/IoT-%E7%AC%AC3%E7%AB%A0-%E6%97%A0%E7%BA%BF%E4%BC%A0%E6%84%9F%E5%99%A8%E7%BD%91%E7%BB%9C-3-4-%E6%8B%93%E6%89%91%E6%8E%A7%E5%88%B6/" title="IoT-第3章-无线传感器网络-3-4-拓扑控制">
-                        <span class="hidden-mobile">IoT-第3章-无线传感器网络-3-4-拓扑控制</span>
+                      <a href="/IoT-%E7%AC%AC5%E7%AB%A0-5G%E7%AE%80%E8%BF%B0/" title="IoT-第5章-5G简述">
+                        <span class="hidden-mobile">IoT-第5章-5G简述</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
