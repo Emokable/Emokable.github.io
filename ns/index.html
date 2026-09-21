@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://emokable.github.io/ns/$%7Besc(game.image)%7D">
 <meta property="article:published_time" content="2026-09-20T16:40:00.000Z">
-<meta property="article:modified_time" content="2026-09-20T17:12:10.711Z">
+<meta property="article:modified_time" content="2026-09-21T07:50:26.650Z">
 <meta property="article:author" content="emokable">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://emokable.github.io/ns/$%7Besc(game.image)%7D">
@@ -196,14 +196,6 @@
                     <span>归档</span>
                   </a>
                 
-                  
-                  
-                  
-                  <a class="dropdown-item" href="/pdf/">
-                    
-                    <span>PDF</span>
-                  </a>
-                
               </div>
             </li>
           
@@ -284,7 +276,7 @@
   const grid=document.querySelector('#ns-games'),empty=document.querySelector('#ns-empty'),toolbar=document.querySelector('.ns-toolbar'),search=document.querySelector('#ns-search'),sort=document.querySelector('#ns-sort');let games=[];
   const esc=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
   const date=value=>value?new Intl.DateTimeFormat('zh-CN',{dateStyle:'medium'}).format(new Date(value)):'未知';
-  const render=()=>{const keyword=search.value.trim().toLocaleLowerCase();const list=games.filter(game=>game.name.toLocaleLowerCase().includes(keyword)).sort((a,b)=>sort.value==='name'?a.name.localeCompare(b.name,'zh-CN'):sort.value==='recent'?String(b.lastPlayedAt).localeCompare(String(a.lastPlayedAt)):b.minutes-a.minutes);grid.innerHTML=list.map(game=>`<article class="ns-card"><img class="ns-cover" src="${esc(game.image)}" srcset="/img/mahmoud-habibi.gif" lazyload alt="${esc(game.name)}" loading="lazy"><div class="ns-info"><h3>${esc(game.name)}</h3><div class="ns-time">${(game.minutes/60).toFixed(1)} 小时</div><span class="ns-meta">${game.days} 天 · 最近 ${date(game.lastPlayedAt)}</span></div></article>`).join('')};
+  const render=()=>{const keyword=search.value.trim().toLocaleLowerCase();const list=games.filter(game=>game.name.toLocaleLowerCase().includes(keyword)).sort((a,b)=>sort.value==='name'?a.name.localeCompare(b.name,'zh-CN'):sort.value==='recent'?String(b.lastPlayedAt).localeCompare(String(a.lastPlayedAt)):b.minutes-a.minutes);grid.innerHTML=list.map(game=>`<article class="ns-card"><img class="ns-cover" src="${esc(game.image)}" alt="${esc(game.name)}" loading="lazy"><div class="ns-info"><h3>${esc(game.name)}</h3><div class="ns-time">${(game.minutes/60).toFixed(1)} 小时</div><span class="ns-meta">${game.days} 天 · 最近 ${date(game.lastPlayedAt)}</span></div></article>`).join('')};
   fetch('/ns/data.json',{cache:'no-cache'}).then(response=>response.ok?response.json():Promise.reject()).then(data=>{games=Array.isArray(data.games)?data.games:[];document.querySelector('#ns-updated').textContent=games.length?`数据更新于 ${date(data.updatedAt)}`:'等待首次导入';document.querySelector('#ns-game-count').textContent=games.length;document.querySelector('#ns-hours').textContent=Math.round(games.reduce((sum,game)=>sum+game.minutes,0)/60);document.querySelector('#ns-days').textContent=games.reduce((sum,game)=>sum+game.days,0);empty.hidden=games.length>0;toolbar.hidden=games.length===0;render()}).catch(()=>{document.querySelector('#ns-updated').textContent='数据读取失败';empty.hidden=false});search.addEventListener('input',render);sort.addEventListener('change',render);
 })();
 </script>
