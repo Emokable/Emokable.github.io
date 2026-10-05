@@ -1,0 +1,215 @@
+@font-face {
+  font-family: 'XiaoMiao';
+  src: url('/fonts/小喵心事手写体.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-family-sans-serif: 'XiaoMiao', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+body,
+h1, h2, h3, h4, h5, h6,
+.navbar .navbar-brand,
+.navbar .nav-link,
+.post-title,
+.post-content,
+.post-content p,
+.post-content li,
+.post-content span,
+.post-content td,
+.post-content th,
+.markdown-body {
+  font-family: 'XiaoMiao', 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
+}
+
+/* ===== 页面加载淡入动画 ===== */
+body {
+  animation: fadeInPage 0.6s ease-in-out;
+}
+
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 顶部栏全透明 ===== */
+.navbar,
+.navbar.scrolling-navbar,
+.navbar.top-nav-collapse,
+.navbar.navbar-col-show {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* ===== 文章卡片圆角 + 阴影 ===== */
+.index-card {
+  background: var(--board-bg-color, #fff);
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.index-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.index-img img {
+  border-radius: 12px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== 代码块 Mac 风格 ===== */
+.markdown-body figure.highlight,
+.markdown-body .code-wrapper {
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin-top: 1.2rem;
+}
+
+.markdown-body figure.highlight::before,
+.markdown-body .code-wrapper::before {
+  content: '';
+  display: block;
+  height: 32px;
+  background: linear-gradient(180deg, #3a3a3c 0%, #2c2c2e 100%);
+  position: relative;
+  z-index: 1;
+}
+
+.markdown-body figure.highlight::after,
+.markdown-body .code-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #28c940;
+  z-index: 2;
+}
+
+.markdown-body figure.highlight table,
+.markdown-body .code-wrapper pre {
+  border-radius: 0 0 10px 10px !important;
+  margin-top: 0 !important;
+}
+
+/* ===== 鼠标悬停动效 ===== */
+.post-content a {
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.post-content a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--link-hover-color, #0366d6);
+  transition: width 0.3s ease;
+}
+
+.post-content a:hover::after {
+  width: 100%;
+}
+
+.post-content img {
+  border-radius: 8px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.post-content img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.index-header a {
+  transition: color 0.25s ease, transform 0.25s ease;
+  display: inline-block;
+}
+
+.index-header a:hover {
+  transform: translateX(4px);
+}
+
+/* ===== 滚动条美化 ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(128, 128, 128, 0.35);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(128, 128, 128, 0.55);
+}
+
+/* ===== 返回顶部按钮美化 ===== */
+#scroll-top-button {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background: var(--link-color, #0366d6) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(3, 102, 214, 0.35) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#scroll-top-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(3, 102, 214, 0.5) !important;
+  background: var(--link-hover-color, #0256b9) !important;
+}
+
+#scroll-top-button i {
+  font-size: 18px !important;
+  line-height: 1 !important;
+}
+
+/* ===== 暗黑模式切换按钮美化 ===== */
+#color-toggle-btn {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+#color-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: rotate(30deg);
+}
+
+#color-toggle-icon {
+  font-size: 18px !important;
+  color: var(--navbar-text-color, #fff);
+}
